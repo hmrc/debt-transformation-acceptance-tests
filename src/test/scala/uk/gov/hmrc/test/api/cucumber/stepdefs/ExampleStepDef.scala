@@ -20,13 +20,13 @@ import uk.gov.hmrc.test.api.client.ServiceResponse
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
 class ExampleStepDef extends BaseStepDef {
-  When("a request is made to get customer contact information") { () =>
-    val response = exampleService.getInformation(validRegime, validIdType, validId)
+  When("a request is made to get response from hello world endpoint") { () =>
+    val response = exampleService.getInformation("hello-world")
     ScenarioContext.set("response", response)
   }
 
-  When("an invalid request is made to get customer contact information") { () =>
-    val response = exampleService.getInformation(validRegime, validIdType, invalidId)
+  When("a request is made to an invalid endpoint") { () =>
+    val response = exampleService.getInformation("helloo-world")
     ScenarioContext.set("response", response)
   }
 
@@ -34,16 +34,4 @@ class ExampleStepDef extends BaseStepDef {
     val response: ServiceResponse = ScenarioContext.get("response")
     response.status should be(expectedCode)
   }
-
-  And("I am returned an invalid VRN response") { () =>
-    val response: ServiceResponse = ScenarioContext.get("response")
-    response.body shouldBe Some(invalidVRNResponse)
-  }
-
-  val validRegime        = "VATC"
-  val validIdType        = "VRN"
-  val validId            = "919951000"
-  val invalidId          = "<ID>"
-  val invalidVRNResponse = "VRN contained a non digit character: <ID>"
-
 }
