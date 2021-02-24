@@ -20,7 +20,7 @@ git commit
 sm --start DTD_ALL
 ./run_interesting_forecasting_api_tests.sh
 
-To run Interesting forecasting api tests against localhost, use the following command:
+To run statement of liability api tests against localhost, use the following command:
 
 sm --start DTD_ALL
 run_statement_of_liability_api_tests.sh
