@@ -11,7 +11,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.play"          %% "play-ws-standalone-json" % "1.1.7",
   "com.typesafe.play"          %% "play-ws-standalone-xml"  % "1.1.7",
   "org.scalatest"              %% "scalatest"               % "3.0.8" % "test",
-  "io.cucumber"                %% "cucumber-scala"          % "4.7.1" % "test",
+  "io.cucumber"                %% "cucumber-scala"          % CucumberVersion % "test",
   "io.cucumber"                % "cucumber-junit"           % CucumberVersion % "test",
   "io.cucumber"                % "cucumber-picocontainer"   % CucumberVersion % "test",
   "com.novocode"               % "junit-interface"          % "0.11" % "test",
