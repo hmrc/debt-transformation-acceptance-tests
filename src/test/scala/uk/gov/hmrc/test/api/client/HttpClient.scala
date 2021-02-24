@@ -15,8 +15,8 @@
  */
 
 package uk.gov.hmrc.test.api.client
-
 import akka.actor.ActorSystem
+import play.api.Play.{current, materializer}
 import play.api.libs.ws.DefaultBodyWritables._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 
