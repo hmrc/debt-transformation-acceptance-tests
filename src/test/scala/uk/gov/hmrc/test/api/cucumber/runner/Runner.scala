@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
 @CucumberOptions(
   features = Array("src/test/resources/features"),
   glue = Array("uk.gov.hmrc.test.api.cucumber.stepdefs"),
-  plugin = Array("pretty","json:target/cucumber.json","html:target/test-reports/html-report"),
+  plugin = Array("pretty", "json:target/cucumber.json", "html:target/test-reports/html-report"),
   tags = ""
 )
 class Runner {}

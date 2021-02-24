@@ -1,46 +1,35 @@
-**This is a template README.md.  Be sure to update this with project specific content that describes your api test project.**
-
 # debt-transformation-acceptance-tests
-API test suite for the `<digital service name>` using Cucumber and [play-ws](https://github.com/playframework/play-ws) client.  
 
-## Running the tests
+### Source code formatting
+We use [Scalafmt](https://scalameta.org/scalafmt/) to format our code base.
 
-Prior to executing the tests ensure you have:
- - Installed [MongoDB](https://docs.mongodb.com/manual/installation/) 
- - Installed/configured [service manager](https://github.com/hmrc/service-manager).  
+In case of contribution and you are an IntelliJ user, you should install the [scalafmt plugin](https://plugins.jetbrains.com/plugin/8236-scalafmt), select Scalafmt as **Formatter** and flag the checkbox "**Reformat on file save**" (_Settings -> Editor -> Code Style -> Scala).
+You can format your code by using the _alt+shift+L_ or _option+command+L_ shortcut
 
-Run the following command to start services locally:
+Format at project level under src/test
+```
+sbt test:scalafmt
+```
 
-    sudo mongod
-    sm --start DIRECT_DEBIT_STUBS -r --wait 100
+Formatting is also taken care as part of pre-commit hooks by running 
+```
+git commit
+```  
+ To run Interesting forecasting api tests against localhost, use the following command:
 
-Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.    
+sm --start DTD_ALL
+./run_interesting_forecasting_api_tests.sh
 
-Then execute the Cucumber tests:
+To run Interesting forecasting api tests against localhost, use the following command:
 
-    sbt clean test
+sm --start DTD_ALL
+run_statement_of_liability_api_tests.sh
 
-The tests default to the `local` environment.  For a complete list of supported param values, see:
- - `src/test/resources/application.conf` for **environment** 
 
-#### Running the tests against a test environment
-
-To run the tests against an environment set the corresponding `host` environment property as specified under
- `<env>.host.services` in the [application.conf](/src/test/resources/application.conf). 
-
- ### Scalafmt
- This repository uses [Scalafmt](https://scalameta.org/scalafmt/), a code formatter for Scala. The formatting rules configured for this repository are defined within [.scalafmt.conf](.scalafmt.conf).
-
- To apply formatting to this repository using the configured rules in [.scalafmt.conf](.scalafmt.conf) execute:
-
- ```
- sbt scalafmtAll
- ```
-
- To check files have been formatted as expected execute:
-
- ```
- sbt scalafmtCheckAll scalafmtSbtCheck
- ```
-
-[Visit the official Scalafmt documentation to view a complete list of tasks which can be run.](https://scalameta.org/scalafmt/docs/installation.html#task-keys)
+To run zap tests for any of the services, download from https://www.zaproxy.org/download/, extract and execute the following in the root of the extracted folder:
+```
+./zap.sh -daemon -config api.disablekey=true -port 11000
+```
+and run 
+```
+./run_{service_name}_api_zap_tests.sh
