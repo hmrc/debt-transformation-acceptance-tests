@@ -10,8 +10,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.play"          %% "play-ahc-ws-standalone"  % "1.1.7",
   "com.typesafe.play"          %% "play-ws-standalone-json" % "1.1.7",
   "com.typesafe.play"          %% "play-ws-standalone-xml"  % "1.1.7",
-  "io.github.bonigarcia"       % "webdrivermanager"         % "3.7.1",
-  "org.seleniumhq.selenium"    % "selenium-java"            % "3.141.59",
   "org.scalatest"              %% "scalatest"               % "3.0.8" % "test",
   "io.cucumber"                %% "cucumber-scala"          % "4.7.1" % "test",
   "io.cucumber"                % "cucumber-junit"           % CucumberVersion % "test",
