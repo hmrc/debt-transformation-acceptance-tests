@@ -19,7 +19,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"          %% "akka-http"               % "10.1.11" % "test",
   "com.typesafe.akka"          %% "akka-stream"             % "2.5.27" % "test",
   "com.github.mifmif"          % "generex"                  % "1.0.2",
-  "uk.gov.hmrc"                %% "webdriver-factory"       % "0.11.0" % "test",
   "uk.gov.hmrc"                %% "zap-automation"          % "2.7.0" % "test",
   "uk.gov.hmrc"                %% "simple-reactivemongo"    % "7.30.0-play-26",
   "com.google.zxing"           % "core"                     % "3.3.3",
