@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.cucumber.stepdefs
 
-import io.cucumber.scala.{EN, ScalaDsl}
+import cucumber.api.scala.{EN, ScalaDsl}
 import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import uk.gov.hmrc.test.api.client.HttpClient
