@@ -23,6 +23,6 @@ import uk.gov.hmrc.test.api.client.HttpClient
 import uk.gov.hmrc.test.api.service.ExampleService
 
 trait BaseStepDef extends ScalaDsl with EN with Eventually with Matchers {
-  val httpClient     = new HttpClient
-  val exampleService = new ExampleService(httpClient)
+//  val httpClient     = new HttpClient
+//  val exampleService = new ExampleService(httpClient)
 }
