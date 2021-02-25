@@ -16,34 +16,31 @@
 
 package uk.gov.hmrc.test.api.cucumber.stepdefs
 
-import uk.gov.hmrc.test.api.client.ServiceResponse
+import play.api.libs.json.Json
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.HelloWorld
+import uk.gov.hmrc.test.api.requests.HelloWorldRequests
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
-class ExampleStepDef extends BaseStepDef {
-  When("a request is made to get customer contact information") { () =>
-    val response = exampleService.getInformation(validRegime, validIdType, validId)
+class HelloWorldStepDef extends BaseStepDef {
+  When("a request is made to get response from hello world endpoint") { () =>
+    val response = HelloWorldRequests.getSolService("/hello-world")
     ScenarioContext.set("response", response)
   }
 
-  When("an invalid request is made to get customer contact information") { () =>
-    val response = exampleService.getInformation(validRegime, validIdType, invalidId)
+  When("a request is made to an invalid endpoint") { () =>
+    val response = HelloWorldRequests.getSolService("/helloo-world")
     ScenarioContext.set("response", response)
   }
 
   Then("the response code should be {int}") { expectedCode: Int =>
-    val response: ServiceResponse = ScenarioContext.get("response")
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(expectedCode)
   }
 
-  And("I am returned an invalid VRN response") { () =>
-    val response: ServiceResponse = ScenarioContext.get("response")
-    response.body shouldBe Some(invalidVRNResponse)
+  And("""the response body should contain (.*)""") {message: String =>
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
+    val responseBody = Json.parse(response.body).as[HelloWorld]
+    responseBody.message should be (message)
   }
-
-  val validRegime        = "VATC"
-  val validIdType        = "VRN"
-  val validId            = "919951000"
-  val invalidId          = "<ID>"
-  val invalidVRNResponse = "VRN contained a non digit character: <ID>"
-
 }
