@@ -16,7 +16,9 @@
 
 package uk.gov.hmrc.test.api.cucumber.stepdefs
 
-import play.api.libs.ws.ahc.StandaloneAhcWSResponse
+import play.api.libs.json.Json
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.HelloWorld
 import uk.gov.hmrc.test.api.requests.HelloWorldRequests
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
@@ -32,7 +34,13 @@ class ExampleStepDef extends BaseStepDef {
   }
 
   Then("the response code should be {int}") { expectedCode: Int =>
-    val response: StandaloneAhcWSResponse = ScenarioContext.get("response")
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(expectedCode)
+  }
+
+  And("""the response body should contain (.*)""") {message: String =>
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
+    val responseBody = Json.parse(response.body).as[HelloWorld]
+    responseBody.message should be (message)
   }
 }
