@@ -25,11 +25,11 @@ import scala.concurrent.duration._
 class ExampleService(client: HttpClient) {
   val host: String = TestConfiguration.url("des")
 
-  def getInformation(regime: String, idType: String, id: String): ServiceResponse = {
-    val url                                      = s"$host/cross-regime/customer/$regime/$idType/$id/information"
+  def getInformation(endpoint: String): ServiceResponse = {
+    val url                                      = s"$host/$endpoint"
     def envHeader(env: String): (String, String) = ("Environment", env)
     Await.result(
-      client.GET(url, ("Authorization", "Bearer EvYRlYH8AS_hZGw32ffqJ25Mz04a"), envHeader("ist0")),
+      client.GET(url),
       10.seconds
     )
   }

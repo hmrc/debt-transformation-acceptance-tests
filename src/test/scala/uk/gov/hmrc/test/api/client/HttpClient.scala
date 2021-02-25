@@ -28,25 +28,10 @@ class HttpClient {
   val wsClient                          = StandaloneAhcWSClient()
   implicit val ec: ExecutionContext     = ExecutionContext.global
 
-  def GET(url: String, headers: (String, String)*): Future[ServiceResponse] =
+  def GET(url: String): Future[ServiceResponse] =
     wsClient
       .url(url)
-      .withHttpHeaders(headers: _*)
       .get
-      .map(response => ServiceResponse(response.status, Option(response.headers), Option(response.body)))
-
-  def POST(url: String, bodyAsJson: String, headers: (String, String)*): Future[ServiceResponse] =
-    wsClient
-      .url(url)
-      .withHttpHeaders(headers: _*)
-      .post(bodyAsJson)
-      .map(response => ServiceResponse(response.status, Option(response.headers), Option(response.body)))
-
-  def DELETE(url: String, headers: (String, String)*): Future[ServiceResponse] =
-    wsClient
-      .url(url)
-      .withHttpHeaders(headers: _*)
-      .delete
       .map(response => ServiceResponse(response.status, Option(response.headers), Option(response.body)))
 }
 
