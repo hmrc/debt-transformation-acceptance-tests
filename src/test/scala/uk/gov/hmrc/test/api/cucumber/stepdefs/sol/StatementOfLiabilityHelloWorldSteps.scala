@@ -14,33 +14,34 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.api.cucumber.stepdefs
+package uk.gov.hmrc.test.api.cucumber.stepdefs.sol
 
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.cucumber.stepdefs.BaseStepDef
 import uk.gov.hmrc.test.api.models.HelloWorld
 import uk.gov.hmrc.test.api.requests.HelloWorldRequests
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
-class HelloWorldStepDef extends BaseStepDef {
-  When("a request is made to get response from hello world endpoint") { () =>
-    val response = HelloWorldRequests.getSolService("/hello-world")
+class StatementOfLiabilityHelloWorldSteps extends BaseStepDef {
+  When("a request is made to get response from sol hello world endpoint") { () =>
+    val response = HelloWorldRequests.getStatementLiabilityService("/hello-world")
     ScenarioContext.set("response", response)
   }
 
-  When("a request is made to an invalid endpoint") { () =>
-    val response = HelloWorldRequests.getSolService("/helloo-world")
+  When("a request is made to an invalid sol endpoint") { () =>
+    val response = HelloWorldRequests.getStatementLiabilityService("/helloo-world")
     ScenarioContext.set("response", response)
   }
 
-  Then("the response code should be {int}") { expectedCode: Int =>
-    val response: StandaloneWSResponse = ScenarioContext.get("response")
-    response.status should be(expectedCode)
-  }
-
-  And("""the response body should contain (.*)""") {message: String =>
+  And("""the sol hello world response body should be (.*)""") { message: String =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     val responseBody = Json.parse(response.body).as[HelloWorld]
-    responseBody.message should be (message)
+    responseBody.message should be(message)
+  }
+
+  Then("the sol response code should be {int}") { expectedCode: Int =>
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
+    response.status should be(expectedCode)
   }
 }
