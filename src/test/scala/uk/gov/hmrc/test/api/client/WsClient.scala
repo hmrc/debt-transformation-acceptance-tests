@@ -5,7 +5,6 @@ import akka.stream.ActorMaterializer
 import akka.util.ByteString
 import com.typesafe.scalalogging.LazyLogging
 import play.api.libs.json.{JsNull, JsValue, Json}
-import play.api.libs.ws.DefaultBodyWritables._
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 
@@ -53,11 +52,11 @@ object WsClient extends LazyLogging {
     cookies:         Seq[WSCookie] = Seq.empty[WSCookie],
     followRedirects: Boolean = false): StandaloneWSResponse = {
     println("")
-    logger.info("*********** NEW REQUEST ***********")
-    logger.info(s"GET request URI: $uri")
-    logger.info(s"GET request query parameters: $queryParameters")
-    logger.info(s"GET request headers: $headers")
-    logger.info(s"GET request cookies: $cookies")
+    logger.debug("*********** NEW REQUEST ***********")
+    logger.debug(s"GET request URI: $uri")
+    logger.debug(s"GET request query parameters: $queryParameters")
+    logger.debug(s"GET request headers: $headers")
+    logger.debug(s"GET request cookies: $cookies")
 
     val client  = asyncClient
     val request = client.url(uri)
@@ -72,9 +71,9 @@ object WsClient extends LazyLogging {
     )
 
     println("")
-    logger.info(s"GET response status: ${response.status}")
-    logger.info(s"GET response headers: ${response.headers}")
-    logger.info(s"GET response body: ${response.body}")
+    logger.debug(s"GET response status: ${response.status}")
+    logger.debug(s"GET response headers: ${response.headers}")
+    logger.debug(s"GET response body: ${response.body}")
 
     response
   }
