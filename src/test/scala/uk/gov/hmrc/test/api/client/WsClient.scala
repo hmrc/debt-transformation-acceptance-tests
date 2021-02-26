@@ -26,8 +26,8 @@ object WsClient extends LazyLogging {
 
   def get(uri: String): StandaloneWSResponse = {
     println("")
-    logger.info("*********** NEW REQUEST ***********")
-    logger.info(s"GET request URI: $uri")
+    logger.debug("*********** NEW REQUEST ***********")
+    logger.debug(s"GET request URI: $uri")
 
     val client  = asyncClient
     val request = client.url(uri)
@@ -38,9 +38,9 @@ object WsClient extends LazyLogging {
     )
 
     println("")
-    logger.info(s"GET response status: ${response.status}")
-    logger.info(s"GET response headers: ${response.headers}")
-    logger.info(s"GET response body: ${response.body}")
+    logger.debug(s"GET response status: ${response.status}")
+    logger.debug(s"GET response headers: ${response.headers}")
+    logger.debug(s"GET response body: ${response.body}")
 
     response
   }
