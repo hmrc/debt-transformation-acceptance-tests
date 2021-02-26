@@ -24,27 +24,6 @@ object WsClient extends LazyLogging {
     StandaloneAhcWSClient()
   }
 
-  def get(uri: String): StandaloneWSResponse = {
-    println("")
-    logger.debug("*********** NEW REQUEST ***********")
-    logger.debug(s"GET request URI: $uri")
-
-    val client  = asyncClient
-    val request = client.url(uri)
-    val response = Await.result(
-      request
-        .get(),
-      timeout
-    )
-
-    println("")
-    logger.debug(s"GET response status: ${response.status}")
-    logger.debug(s"GET response headers: ${response.headers}")
-    logger.debug(s"GET response body: ${response.body}")
-
-    response
-  }
-
   def get(
     uri:             String,
     queryParameters: Map[String, String] = Map.empty[String, String],
@@ -54,9 +33,9 @@ object WsClient extends LazyLogging {
     println("")
     logger.debug("*********** NEW REQUEST ***********")
     logger.debug(s"GET request URI: $uri")
-    logger.debug(s"GET request query parameters: $queryParameters")
-    logger.debug(s"GET request headers: $headers")
-    logger.debug(s"GET request cookies: $cookies")
+    if(!queryParameters.isEmpty){logger.debug(s"GET request query parameters: $queryParameters")}
+    if(!headers.isEmpty){logger.debug(s"GET request headers: $headers")}
+    if(!cookies.isEmpty){logger.debug(s"GET request cookies: $cookies")}
 
     val client  = asyncClient
     val request = client.url(uri)
