@@ -19,10 +19,5 @@ package uk.gov.hmrc.test.api.cucumber.stepdefs
 import cucumber.api.scala.{EN, ScalaDsl}
 import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
-import uk.gov.hmrc.test.api.client.HttpClient
-import uk.gov.hmrc.test.api.service.ExampleService
 
-trait BaseStepDef extends ScalaDsl with EN with Eventually with Matchers {
-  val httpClient     = new HttpClient
-  val exampleService = new ExampleService(httpClient)
-}
+trait BaseStepDef extends ScalaDsl with EN with Eventually with Matchers {}

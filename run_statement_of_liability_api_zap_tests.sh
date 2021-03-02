@@ -10,6 +10,6 @@ fi
 
 echo "*** running on $environment for tags '$tags' ***"
 
-sbt -Denvironment="$environment" -Dcucumber.options="--tags '$tags'" clean 'testOnly uk.gov.hmrc.test.cucumber.runners.StatementOfLiabilityApiTestRunner'
+sbt -Denvironment="$environment" -Dcucumber.options="--tags '$tags'" clean 'testOnly uk.gov.hmrc.test.api.cucumber.runner.StatementOfLiabilityApiZapTestRunner'
 
-sbt 'testOnly uk.gov.hmrc.test.cucumber.runners.StatementOfLiabilityApiZapTestRunner'
+sbt 'testOnly uk.gov.hmrc.test.api.cucumber.runner.StatementOfLiabilityApiZapTestRunner'

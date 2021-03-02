@@ -2,7 +2,7 @@ name := "debt-transformation-acceptance-tests"
 version := "0.1"
 scalaVersion := "2.12.11"
 
-val CucumberVersion = "4.8.0"
+val CucumberVersion = "4.7.1"
 
 resolvers += "hmrc-releases" at "https://artefacts.tax.service.gov.uk/artifactory/hmrc-releases/"
 
