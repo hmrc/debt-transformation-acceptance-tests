@@ -44,6 +44,7 @@ object WsClient extends LazyLogging {
     }
 
     val client = asyncClient
+
     val request = client.url(uri)
     val response = Await.result(
       request
