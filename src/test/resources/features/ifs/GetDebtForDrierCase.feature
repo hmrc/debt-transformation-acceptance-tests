@@ -17,122 +17,124 @@ Feature: Get Debt For DRIER case (mvp)
 
   Scenario: Interest Bearing DRIER debt (MVP)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
-      | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays |
-      | 13            | 109           | 1       | 500000           | 500109                  | 8                    |
+    | expectedResponse      |
+    | expectedResponse1     |
 
+@ignore
   Scenario: Non Interest Bearing DRIER debt (MVP)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-01 | 2021-03-08        | DRIER  | HIPG       | false           |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-04-18        | DRIER  | NI         | false           | 0            | 1            |
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
-      | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays |
-      | 0             | 0             | 0       | 500000             | 500000                    | 0                    |
+      | expectedResponse      |
+      | expectedResponse2     |
 
   Scenario: DRIER debt Zero Amount Edge Case
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 0      | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 0      | 2020-12-20 | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
-      | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays |
-      | 0             | 0             | 1       | 0                | 0                       | 8                    |
+      | expectedResponse      |
+      | expectedResponse3     |
 
 # Below scenario currently fails as api returns daily interest of -0.0001. Should negative amounts be possible?
   @ignore
   Scenario: DRIER debt Amount is negative (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | -1     | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | -1     | 2020-12-20 | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
-      | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays |
-      | 0             | 0             | 1       | 0                | 0                       | 8                    |
+      | expectedResponse      |
+      | expectedResponse4     |
 
   Scenario: DRIER debt Amount non integer (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | \"\"      | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | \"\"   | 2020-12-20 | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/amount' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/amount
 
+  @ignore
   Scenario: DRIER debt Amount non integer (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 1.2    | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 1.2    | 2020-12-20 | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/amount' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/amount
 
   Scenario: DRIER debt invalid entry in Date Amount (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | d          | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | d          | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/dateAmount' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/dateAmount
 
   Scenario: DRIER debt empty entry in Date Amount (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 |            | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 |            | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/dateAmount' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/dateAmount
 
   Scenario: DRIER debt invalid Date Amount (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-02-30 | 2021-03-08        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2021-02-30 | 2021-04-18        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/dateAmount' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/dateAmount
 
   Scenario: DRIER debt invalid entry in dateCalculationTo (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-08 | d                 | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | d                 | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/dateCalculationTo' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/dateCalculationTo
 
   Scenario: DRIER debt empty dateCalculationTo (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-08 |                   | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 |                   | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/dateCalculationTo' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/dateCalculationTo
 
   Scenario: DRIER debt invalid dateCalculationTo (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-02-01 | 2021-02-30        | DRIER  | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-02-30        | DRIER  | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/dateCalculationTo' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/dateCalculationTo
 
   Scenario: DRIER debt invalid regime (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-01 | 2021-03-08        | DRIdER | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-04-18        | DRIdER | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/regime' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/regime
 
   Scenario: DRIER debt empty regime (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-01 | 2021-03-08        |        | NI         | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-04-18        |        | NI         | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/regime' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/regime
 
   Scenario: DRIER debt invalid chargeType (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-01 | 2021-03-08        | DRIER  | invalid    | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-04-18        | DRIER  | invalid    | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/chargeType' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/chargeType
 
   Scenario: DRIER debt empty chargeType (Edge Case)
     Given a debt item
-      | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
-      | 500000 | 2021-03-01 | 2021-03-08        | DRIER  |            | true            |
+      | uniqueItemReference | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing | numberOfDays | interestRate |
+      | UniqueReference1    | 500000 | 2020-12-20 | 2021-04-18        | DRIER  |            | true            | 0            | 1            |
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with '/chargeType' missing or invalid
+    Then the ifs service will respond with Invalid DebtCalculationRequest payload: List((/debtItems(0)/chargeType

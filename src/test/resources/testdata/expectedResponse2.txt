@@ -1,0 +1,20 @@
+{
+	"dailyInterestAccrued": 0,
+	"interestRateApplied": 0,
+	"numberOfChargeableDays": 120,
+	"totalAmountToPay": 500000,
+	"totalInterestAccrued": 0,
+	"totalAmountWithInterest": 500000,
+	"debtCalculations": [
+	{
+		"calculationWindow": [
+		{
+			"dateFrom": "2020-12-20",
+			"dateTo": "2021-04-18",
+			"numberOfChargeableDays": 120,
+			"interestRateApplied": 0,
+			"dailyInterestAccrued": 0,
+			"totalInterestAccrued": 0
+		}]
+	}]
+}

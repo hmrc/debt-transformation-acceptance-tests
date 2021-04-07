@@ -23,7 +23,8 @@ libraryDependencies ++= Seq(
   "uk.gov.hmrc"                %% "simple-reactivemongo"    % "7.30.0-play-26",
   "com.google.zxing"           % "core"                     % "3.3.3",
   "com.google.zxing"           % "javase"                   % "3.4.1",
-  "commons-io"                 % "commons-io"               % "2.6"
+  "commons-io"                 % "commons-io"               % "2.6",
+  "com.google.code.gson"       % "gson"                     % "2.8.0"
 )
 
 addCompilerPlugin(

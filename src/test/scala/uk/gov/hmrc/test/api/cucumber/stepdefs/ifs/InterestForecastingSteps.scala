@@ -16,6 +16,9 @@
 
 package uk.gov.hmrc.test.api.cucumber.stepdefs.ifs
 
+import com.google.gson.{JsonParser}
+import org.scalatest.Assertions._
+import scala.collection.JavaConversions._
 import io.cucumber.datatable.DataTable
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
@@ -28,38 +31,43 @@ import uk.gov.hmrc.test.api.utils.ScenarioContext
 class InterestForecastingSteps extends BaseStepDef {
 
   Given("a debt item") { (dataTable: DataTable) =>
-    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val maps = dataTable.asMaps(classOf[String], classOf[String])
+
+    var request:String = "{\"debtItems\":["
+    for(value <- maps) {
+      request += getBodyAsString("debtCalculation")
+        .replaceAll("<REPLACE_uniqueItemReference>", value.get("uniqueItemReference"))
+        .replaceAll("<REPLACE_amount>", value.get("amount"))
+        .replaceAll("<REPLACE_chargeType>", value.get("chargeType"))
+        .replaceAll("<REPLACE_regime>", value.get("regime"))
+        .replaceAll("<REPLACE_dateAmount>", value.get("dateAmount"))
+        .replaceAll("<REPLACE_dateCalculationTo>", value.get("dateCalculationTo"))
+        .replaceAll("<REPLACE_paymentHistory>", value.get("paymentHistory"))
+        .replaceAll("<REPLACE_numberOfDays>", value.get("numberOfDays"))
+        .replaceAll("<REPLACE_interestRate>", value.get("interestRate"))
+    }
+    request += "]}"
 
     ScenarioContext.set(
-      "debtItem",
-      getBodyAsString("debtCalculation")
-        .replaceAll("<REPLACE_amount>", asMapTransposed.get("amount"))
-        .replaceAll("<REPLACE_chargeType>", asMapTransposed.get("chargeType"))
-        .replaceAll("<REPLACE_regime>", asMapTransposed.get("regime"))
-        .replaceAll("<REPLACE_dateAmount>", asMapTransposed.get("dateAmount"))
-        .replaceAll("<REPLACE_dateCalculationTo>", asMapTransposed.get("dateCalculationTo"))
+      "debtItems", request
     )
   }
 
   When("the debt item is sent to the ifs service") { () =>
     val response =
-      InterestForecastingRequests.getDebtCalculation(ScenarioContext.get("debtItem"))
+      InterestForecastingRequests.getDebtCalculation(ScenarioContext.get("debtItems"))
     ScenarioContext.set("response", response)
   }
 
   Then("the ifs service will respond with") { (dataTable: DataTable) =>
-    val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asMap = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(200)
 
-    val responseBody = Json.parse(response.body).as[DebtItem]
-
-    responseBody.dailyInterestAccrued.toString    shouldBe asMapTransposed.get("dailyInterest").toString
-    responseBody.totalInterestAccrued.toString    shouldBe asMapTransposed.get("totalInterest").toString
-    responseBody.interestRateApplied.toString     shouldBe asMapTransposed.get("intRate").toString
-    responseBody.totalAmountToPay.toString        shouldBe asMapTransposed.get("totalAmountToPay").toString
-    responseBody.totalAmountWithInterest.toString shouldBe asMapTransposed.get("totalAmountWithInterest").toString
-    responseBody.numberOfChargeableDays.toString  shouldBe asMapTransposed.get("numberChargeableDays").toString
+    val parser = new JsonParser()
+    val responseBody = parser.parse(response.body)
+    val expectedJson = parser.parse(getBodyAsString(asMap.get("expectedResponse")))
+    assert(responseBody == expectedJson)
   }
 
   Then("""the ifs service will respond with (.*)""") { (expectedMessage: String) =>

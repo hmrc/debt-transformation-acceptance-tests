@@ -1,7 +1,11 @@
 {
+  "uniqueItemReference": "<REPLACE_uniqueItemReference>",
   "amount": <REPLACE_amount>,
   "chargeType": "<REPLACE_chargeType>",
   "regime": "<REPLACE_regime>",
   "dateAmount": "<REPLACE_dateAmount>",
-  "dateCalculationTo": "<REPLACE_dateCalculationTo>"
+  "dateCalculationTo": "<REPLACE_dateCalculationTo>",
+  "paymentHistory": [],
+  "numberOfDays": <REPLACE_numberOfDays>,
+  "interestRate": <REPLACE_interestRate>
 }

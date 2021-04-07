@@ -1,0 +1,10 @@
+{
+	"dailyInterestAccrued": 0,
+	"interestRateApplied": 1,
+	"numberOfChargeableDays": 120,
+	"totalAmountToPay": 0,
+	"totalInterestAccrued": 0,
+	"totalAmountWithInterest": 0,
+	"debtCalculations": [
+	]
+}
