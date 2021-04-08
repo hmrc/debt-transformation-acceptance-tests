@@ -73,7 +73,7 @@ class InterestForecastingSteps extends BaseStepDef {
     val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
 
-    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head.calculationWindows
+    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head.calculationWindow
 
     responseBody.head.dateFrom.toString               shouldBe asMapTransposed.get("dateFrom").toString
     responseBody.head.dateTo.toString                 shouldBe asMapTransposed.get("dateTo").toString

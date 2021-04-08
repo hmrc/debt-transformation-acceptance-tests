@@ -14,8 +14,7 @@ case class DebtItemCalculationWindow(dateFrom: LocalDate,
                                      numberOfChargeableDays: Long,
                                      interestRateApplied: Long,
                                      dailyInterestAccrued: BigDecimal,
-                                     totalInterestAccrued: BigDecimal,
-                                     totalAmountOnWhichInterestDue: BigDecimal)
+                                     totalInterestAccrued: BigDecimal)
 
 object DebtItemCalculationWindow {
   implicit val formatDebtItemCalculationWindow: OFormat[DebtItemCalculationWindow] = Json.format[DebtItemCalculationWindow]
