@@ -14,7 +14,6 @@
 
 Feature: Multiple Debt Items
 
-  @runMe
   Scenario: 1. Non Interest Bearing. 1 Payment of 1 debt.
     Given a debt item
       | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
@@ -31,8 +30,8 @@ Feature: Multiple Debt Items
       | 0             | 0             | 400000           | 400000                  | 0                    | 400000                        |
     And the debt summary will have calculation windows
       | dateFrom   | dateTo     | numberDays | intRate | dailyInterest | totalInterest | totalAmountOnWhichInterestDue |
-      | 2020-12-16 | 2021-02-02 | 50         | 0       | 0             | 0             | 500000                        |
-      | 2021-02-03 | 2021-04-14 | 70         | 0       | 0             | 0             | 400000                        |
+      | 2020-12-16 | 2021-02-02 | 49         | 0       | 0             | 0             | 500000                        |
+      | 2021-02-03 | 2021-04-14 | 71         | 0       | 0             | 0             | 400000                        |
 
   Scenario: 2. Interest Bearing. 1 Payment of 1 debt.
     Given a debt item
@@ -44,10 +43,10 @@ Feature: Multiple Debt Items
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | dailyInterest | totalInterest | totalAmountToPay | totalAmountWithInterest | totalAmountOnWhichInterestDue |
-      | 13            | 400000        | 401499           | 401499                  | 400000                        |
+      | 13            | 1499          | 401499           | 401499                  | 400000                        |
     And the ifs service wilL return a debt summary of
       | dailyInterest | totalInterest | totalAmountToPay | totalAmountWithInterest | totalAmountOnWhichInterestDue |
-      | 1499          | 400000        | 401499           | 401499                  | 120                           |
+      | 10            | 1499          | 401499           | 401499                  | 400000                           |
     And the debt summary will have calculation windows
       | dateFrom   | dateTo     | numberDays | intRate | dailyInterest | totalInterest | totalAmountOnWhichInterestDue |
       | 2020-12-16 | 2021-02-02 | 49         | 1       | 13            | 671           | 500000                        |

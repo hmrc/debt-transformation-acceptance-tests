@@ -20,6 +20,7 @@ import io.cucumber.datatable.DataTable
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
+import shapeless.syntax.std.tuple.productTupleOps
 import uk.gov.hmrc.test.api.cucumber.stepdefs.BaseStepDef
 import uk.gov.hmrc.test.api.models.DebtCalculation
 import uk.gov.hmrc.test.api.requests.InterestForecastingRequests
@@ -84,8 +85,8 @@ class InterestForecastingSteps extends BaseStepDef {
     //WIP Jayasree adding in this 9/4/21
     //responseBody.totalAmountOnWhichInterestDue.toString    shouldBe asMapTransposed.get("totalAmountOnWhichInterestDue").toString
     responseBody.totalAmountWithInterest.toString shouldBe asMapTransposed.get("totalAmountWithInterest").toString
-    //tbc
-    //responseBody.numberOfChargeableDays.toString  shouldBe asMapTransposed.get("numberChargeableDays").toString
+  //tbc
+  //responseBody.numberOfChargeableDays.toString  shouldBe asMapTransposed.get("numberChargeableDays").toString
 
   }
 
@@ -112,16 +113,21 @@ class InterestForecastingSteps extends BaseStepDef {
   }
 
   Then("the debt summary will have calculation windows") { (dataTable: DataTable) =>
-    val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
+    var window                         = ""
 
-    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head.calculationWindows
+    asMapTransposed.zipWithIndex.foreach { case (window, index) =>
+      val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head.calculationWindows(index)
 
-    responseBody.head.dateFrom.toString               shouldBe asMapTransposed.get("dateFrom").toString
-    responseBody.head.dateTo.toString                 shouldBe asMapTransposed.get("dateTo").toString
-    responseBody.head.numberOfChargeableDays.toString shouldBe asMapTransposed.get("numberDays").toString
-    responseBody.head.interestRateApplied.toString    shouldBe asMapTransposed.get("intRate").toString
-    responseBody.head.dailyInterestAccrued.toString   shouldBe asMapTransposed.get("dailyInterest").toString
-    responseBody.head.totalInterestAccrued.toString   shouldBe asMapTransposed.get("totalInterest").toString
+      responseBody.dateFrom.toString               shouldBe window.get("dateFrom").toString
+      responseBody.dateTo.toString                 shouldBe window.get("dateTo").toString
+      responseBody.numberOfChargeableDays.toString shouldBe window.get("numberDays").toString
+      responseBody.interestRateApplied.toString    shouldBe window.get("intRate").toString
+      responseBody.dailyInterestAccrued.toString   shouldBe window.get("dailyInterest").toString
+      responseBody.totalInterestAccrued.toString   shouldBe window.get("totalInterest").toString
+      responseBody.totalAmountOnWhichInterestDue
+        .toString()                                     shouldBe window.get("totalAmountOnWhichInterestDue").toString
+    }
   }
 }
