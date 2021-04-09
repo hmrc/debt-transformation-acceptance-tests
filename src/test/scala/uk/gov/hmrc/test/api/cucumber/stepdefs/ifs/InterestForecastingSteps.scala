@@ -20,7 +20,6 @@ import io.cucumber.datatable.DataTable
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
-import shapeless.syntax.std.tuple.productTupleOps
 import uk.gov.hmrc.test.api.cucumber.stepdefs.BaseStepDef
 import uk.gov.hmrc.test.api.models.DebtCalculation
 import uk.gov.hmrc.test.api.requests.InterestForecastingRequests
@@ -30,17 +29,27 @@ import uk.gov.hmrc.test.api.utils.ScenarioContext
 class InterestForecastingSteps extends BaseStepDef {
 
   Given("a debt item") { (dataTable: DataTable) =>
-    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asMapTransposed   = dataTable.transpose().asMap(classOf[String], classOf[String])
+    var firstItem         = false
+    var debtItems: String = null
+
+    try ScenarioContext.get("debtItems")
+    catch { case e: Exception => firstItem = true }
+
+    val debtItem = getBodyAsString("debtItem")
+      .replaceAll("<REPLACE_uniqueItemReference>", "123")
+      .replaceAll("<REPLACE_amount>", asMapTransposed.get("amount"))
+      .replaceAll("<REPLACE_chargeType>", asMapTransposed.get("chargeType"))
+      .replaceAll("<REPLACE_regime>", asMapTransposed.get("regime"))
+      .replaceAll("<REPLACE_dateAmount>", asMapTransposed.get("dateAmount"))
+      .replaceAll("<REPLACE_dateCalculationTo>", asMapTransposed.get("dateCalculationTo"))
+
+    if (firstItem == true) { debtItems = debtItem }
+    else { debtItems = ScenarioContext.get("debtItems").toString.concat(",").concat(debtItem) }
 
     ScenarioContext.set(
-      "debtItem",
-      getBodyAsString("debtCalculation")
-        .replaceAll("<REPLACE_uniqueItemReference>", "123")
-        .replaceAll("<REPLACE_amount>", asMapTransposed.get("amount"))
-        .replaceAll("<REPLACE_chargeType>", asMapTransposed.get("chargeType"))
-        .replaceAll("<REPLACE_regime>", asMapTransposed.get("regime"))
-        .replaceAll("<REPLACE_dateAmount>", asMapTransposed.get("dateAmount"))
-        .replaceAll("<REPLACE_dateCalculationTo>", asMapTransposed.get("dateCalculationTo"))
+      "debtItems",
+      debtItems
     )
   }
 
@@ -57,18 +66,26 @@ class InterestForecastingSteps extends BaseStepDef {
 
       if (index + 1 < asMapTransposed.size) payments = payments.concat(",")
     }
-    val jsonWithPayments = ScenarioContext.get("debtItem").toString.replaceAll("<REPLACE_payments>", payments)
 
-    ScenarioContext.set("debtItem", jsonWithPayments)
+    val jsonWithPayments = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_payments>", payments)
+    ScenarioContext.set("debtItems", jsonWithPayments)
   }
 
   Given("the debt item has no payment history") { () =>
-    ScenarioContext.set("debtItem", ScenarioContext.get("debtItem").toString.replaceAll("<REPLACE_payments>", ""))
+    ScenarioContext.set(
+      "debtItems",
+      ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_payments>", "")
+    )
   }
 
   When("the debt item is sent to the ifs service") { () =>
+    val request = getBodyAsString("debtCalcRequest")
+      .replaceAllLiterally("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
+
+    Console.println("Calc request is...." + request)
+
     val response =
-      InterestForecastingRequests.getDebtCalculation(ScenarioContext.get("debtItem"))
+      InterestForecastingRequests.getDebtCalculation(request)
     ScenarioContext.set("response", response)
 
   }
@@ -82,20 +99,16 @@ class InterestForecastingSteps extends BaseStepDef {
     responseBody.dailyInterestAccrued.toString    shouldBe asMapTransposed.get("dailyInterest").toString
     responseBody.totalInterestAccrued.toString    shouldBe asMapTransposed.get("totalInterest").toString
     responseBody.totalAmountToPay.toString        shouldBe asMapTransposed.get("totalAmountToPay").toString
-    //WIP Jayasree adding in this 9/4/21
-    //responseBody.totalAmountOnWhichInterestDue.toString    shouldBe asMapTransposed.get("totalAmountOnWhichInterestDue").toString
+    responseBody.totalAmountOnWhichInterestDue.toString    shouldBe asMapTransposed.get("totalAmountOnWhichInterestDue").toString
     responseBody.totalAmountWithInterest.toString shouldBe asMapTransposed.get("totalAmountWithInterest").toString
-  //tbc
-  //responseBody.numberOfChargeableDays.toString  shouldBe asMapTransposed.get("numberChargeableDays").toString
-
   }
 
-  Then("the ifs service wilL return a debt summary of") { (dataTable: DataTable) =>
+  Then("the ([0-9])(?:st|nd|rd|th) debt summary will contain") { (index: Int,dataTable: DataTable) =>
     val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(200)
 
-    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head
+    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations(index-1)
     responseBody.dailyInterestAccrued.toString          shouldBe asMapTransposed.get("dailyInterest").toString
     responseBody.totalInterestAccrued.toString          shouldBe asMapTransposed.get("totalInterest").toString
     responseBody.totalAmountOnWhichInterestDue.toString shouldBe asMapTransposed
@@ -112,13 +125,12 @@ class InterestForecastingSteps extends BaseStepDef {
     response.status should be(400)
   }
 
-  Then("the debt summary will have calculation windows") { (dataTable: DataTable) =>
+  Then("the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows") { (summaryIndex: Int, dataTable: DataTable) =>
     val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
-    var window                         = ""
 
     asMapTransposed.zipWithIndex.foreach { case (window, index) =>
-      val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head.calculationWindows(index)
+      val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations(summaryIndex-1).calculationWindows(index)
 
       responseBody.dateFrom.toString               shouldBe window.get("dateFrom").toString
       responseBody.dateTo.toString                 shouldBe window.get("dateTo").toString
@@ -127,7 +139,7 @@ class InterestForecastingSteps extends BaseStepDef {
       responseBody.dailyInterestAccrued.toString   shouldBe window.get("dailyInterest").toString
       responseBody.totalInterestAccrued.toString   shouldBe window.get("totalInterest").toString
       responseBody.totalAmountOnWhichInterestDue
-        .toString()                                     shouldBe window.get("totalAmountOnWhichInterestDue").toString
+        .toString()                                shouldBe window.get("totalAmountOnWhichInterestDue").toString
     }
   }
 }

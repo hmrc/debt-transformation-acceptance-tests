@@ -12,6 +12,7 @@ case class DebtItemCalculation(
                                 dailyInterestAccrued: BigDecimal,
                                 totalInterestAccrued: BigDecimal,
                                 totalAmountOnWhichInterestDue: BigDecimal,
+                                numberOfChargeableDays: Long,
                                 totalAmountWithInterest: BigDecimal,
                                 totalAmountToPay: BigDecimal,
                                 calculationWindows: List[DebtItemCalculationWindow] = Nil
