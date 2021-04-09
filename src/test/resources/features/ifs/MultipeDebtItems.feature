@@ -48,7 +48,7 @@ Feature: Multiple Debt Items
       | 13            | 1449          | 400000           | 401449                  | 400000                        |
     And the ifs service wilL return a debt summary of
       | dailyInterest | totalInterest | totalAmountToPay | totalAmountWithInterest | totalAmountOnWhichInterestDue |
-      | 13            | 1449          | 400000           | 401449                  | 400000                        |
+      | 10            | 1449          | 400000           | 401449                  | 400000                        |
     And the debt summary will have calculation windows
       | dateFrom   | dateTo     | numberDays | intRate | dailyInterest | totalInterest | totalAmountOnWhichInterestDue |
       | 2020-12-16 | 2021-02-02 | 49         | 1       | 13            | 671           | 500000                        |
