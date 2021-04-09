@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.api.cucumber.stepdefs.ifs
 import io.cucumber.datatable.DataTable
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
+import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
 import uk.gov.hmrc.test.api.cucumber.stepdefs.BaseStepDef
 import uk.gov.hmrc.test.api.models.DebtCalculation
 import uk.gov.hmrc.test.api.requests.InterestForecastingRequests
@@ -42,10 +43,49 @@ class InterestForecastingSteps extends BaseStepDef {
     )
   }
 
+  Given("the debt item has payment history") { (dataTable: DataTable) =>
+    val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
+    var payments        = ""
+
+    asMapTransposed.zipWithIndex.foreach { case (payment, index) =>
+      payments = payments.concat(
+        getBodyAsString("payment")
+          .replaceAll("<REPLACE_amountPaid>", payment.get("amountPaid"))
+          .replaceAll("<REPLACE_dateOfPayment>", payment.get("dateOfPayment"))
+      )
+
+      if (index + 1 < asMapTransposed.size) payments = payments.concat(",")
+    }
+    val jsonWithPayments = ScenarioContext.get("debtItem").toString.replaceAll("<REPLACE_payments>", payments)
+
+    ScenarioContext.set("debtItem", jsonWithPayments)
+  }
+
+  Given("the debt item has no payment history") { () =>
+    ScenarioContext.set("debtItem", ScenarioContext.get("debtItem").toString.replaceAll("<REPLACE_payments>", ""))
+  }
+
   When("the debt item is sent to the ifs service") { () =>
     val response =
       InterestForecastingRequests.getDebtCalculation(ScenarioContext.get("debtItem"))
     ScenarioContext.set("response", response)
+
+  }
+
+  Then("the ifs service wilL return a total debts summary of") { (dataTable: DataTable) =>
+    val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
+
+    val responseBody = Json.parse(response.body).as[DebtCalculation]
+
+    responseBody.dailyInterestAccrued.toString    shouldBe asMapTransposed.get("dailyInterest").toString
+    responseBody.totalInterestAccrued.toString    shouldBe asMapTransposed.get("totalInterest").toString
+    responseBody.totalAmountToPay.toString        shouldBe asMapTransposed.get("totalAmountToPay").toString
+    //WIP Jayasree adding in this 9/4/21
+    //responseBody.totalAmountOnWhichInterestDue.toString    shouldBe asMapTransposed.get("totalAmountOnWhichInterestDue").toString
+    responseBody.totalAmountWithInterest.toString shouldBe asMapTransposed.get("totalAmountWithInterest").toString
+    //tbc
+    //responseBody.numberOfChargeableDays.toString  shouldBe asMapTransposed.get("numberChargeableDays").toString
 
   }
 
@@ -54,12 +94,15 @@ class InterestForecastingSteps extends BaseStepDef {
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(200)
 
-    val responseBody = Json.parse(response.body).as[DebtCalculation]
+    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations.head
+    responseBody.dailyInterestAccrued.toString          shouldBe asMapTransposed.get("dailyInterest").toString
+    responseBody.totalInterestAccrued.toString          shouldBe asMapTransposed.get("totalInterest").toString
+    responseBody.totalAmountOnWhichInterestDue.toString shouldBe asMapTransposed
+      .get("totalAmountOnWhichInterestDue")
+      .toString
+    responseBody.totalAmountWithInterest.toString       shouldBe asMapTransposed.get("totalAmountWithInterest").toString
+    responseBody.totalAmountToPay.toString              shouldBe asMapTransposed.get("totalAmountToPay").toString
 
-    responseBody.totalInterestAccrued.toString    shouldBe asMapTransposed.get("totalInterest").toString
-    responseBody.totalAmountToPay.toString        shouldBe asMapTransposed.get("totalAmountToPay").toString
-    responseBody.totalAmountWithInterest.toString shouldBe asMapTransposed.get("totalAmountWithInterest").toString
-    responseBody.dailyInterestAccrued.toString    shouldBe asMapTransposed.get("dailyInterest").toString
   }
 
   Then("""the ifs service will respond with (.*)""") { (expectedMessage: String) =>
