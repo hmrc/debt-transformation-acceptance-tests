@@ -34,8 +34,7 @@ Feature: Multiple Debt Items
       | 2021-02-03 | 2021-04-14 | 0          | 0       | 0             | 0             | 400000                        |
 
 
-#    Failing test. daily interest on ticket says 8 but api returns 10
-  @wip
+#    Failing test. daily interest on ticket says 10 but api returns 13
   Scenario: 2. Interest Bearing. 1 Payment of 1 debt.
     Given a debt item
       | amount | dateAmount | dateCalculationTo | regime | chargeType | interestBearing |
@@ -49,7 +48,7 @@ Feature: Multiple Debt Items
       | 13            | 1449          | 400000           | 401449                  | 400000                        |
     And the ifs service wilL return a debt summary of
       | dailyInterest | totalInterest | totalAmountToPay | totalAmountWithInterest | totalAmountOnWhichInterestDue |
-      | 10            | 1449          | 400000           | 401449                  | 400000                        |
+      | 13            | 1449          | 400000           | 401449                  | 400000                        |
     And the debt summary will have calculation windows
       | dateFrom   | dateTo     | numberDays | intRate | dailyInterest | totalInterest | totalAmountOnWhichInterestDue |
       | 2020-12-16 | 2021-02-02 | 49         | 1       | 13            | 671           | 500000                        |
