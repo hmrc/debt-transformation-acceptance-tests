@@ -1,11 +1,12 @@
 #  Assumptions
-#  Initial amount and date
 #  REGIME == DRIERd
+#  Charge type NI is interest bearning
+#  Charge type HIPG is non interest bearing
 #  NO suppression period
 #  NO breathing space
 #  Date Amount  == Interest start date
 
-
+#DTD-171
 #Multiple Debt Items
 #1 payment of 1 debt no interest
 #1 payment of 1 debt with interest
