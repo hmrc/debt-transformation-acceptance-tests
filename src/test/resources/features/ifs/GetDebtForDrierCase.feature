@@ -11,6 +11,7 @@
 #  No outstanding interests to pay
 #  When bearing the interest rate is 1%
 
+#  DTD-170 Get Debt For DRIER case
 Feature: Get Debt For DRIER case (mvp)
 
   Scenario: Interest Bearing DRIER debt (MVP)

@@ -1,3 +1,5 @@
+#Hello world smoke tests to verifuy existance of service
+
 Feature: Interest Forecasting Hello World test
 
   Scenario: Retrieve hello world response from Interest Forecasting Service
