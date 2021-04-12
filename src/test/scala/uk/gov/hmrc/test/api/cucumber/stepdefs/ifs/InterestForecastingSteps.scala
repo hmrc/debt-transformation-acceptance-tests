@@ -85,7 +85,6 @@ class InterestForecastingSteps extends BaseStepDef {
     val response =
       InterestForecastingRequests.getDebtCalculation(request)
     ScenarioContext.set("response", response)
-
   }
 
   Then("the ifs service wilL return a total debts summary of") { (dataTable: DataTable) =>
@@ -116,7 +115,6 @@ class InterestForecastingSteps extends BaseStepDef {
       .toString
     responseBody.totalAmountWithInterest.toString       shouldBe asMapTransposed.get("totalAmountWithInterest").toString
     responseBody.totalAmountToPay.toString              shouldBe asMapTransposed.get("totalAmountToPay").toString
-
   }
 
   Then("""the ifs service will respond with (.*)""") { (expectedMessage: String) =>
