@@ -52,7 +52,6 @@ Feature: Multiple Debt Items
       | 2020-12-16 | 2021-02-02 | 49         | 1       | 13            | 671           | 500000                        |
       | 2021-02-03 | 2021-04-14 | 71         | 1       | 10            | 778           | 400000                        |
 
-
 #    Failing test. debt summary daily interest on ticket says 8 but api returns 13
 #    Failing test. total interest on ticket says 1390 but api returns 1391
   @wip
