@@ -82,8 +82,6 @@ class InterestForecastingSteps extends BaseStepDef {
     val request = getBodyAsString("debtCalcRequest")
       .replaceAllLiterally("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
 
-    Console.println("Calc request is...." + request)
-
     val response =
       InterestForecastingRequests.getDebtCalculation(request)
     ScenarioContext.set("response", response)
@@ -96,19 +94,21 @@ class InterestForecastingSteps extends BaseStepDef {
 
     val responseBody = Json.parse(response.body).as[DebtCalculation]
 
-    responseBody.dailyInterestAccrued.toString    shouldBe asMapTransposed.get("dailyInterest").toString
-    responseBody.totalInterestAccrued.toString    shouldBe asMapTransposed.get("totalInterest").toString
-    responseBody.totalAmountToPay.toString        shouldBe asMapTransposed.get("totalAmountToPay").toString
-    responseBody.totalAmountOnWhichInterestDue.toString    shouldBe asMapTransposed.get("totalAmountOnWhichInterestDue").toString
-    responseBody.totalAmountWithInterest.toString shouldBe asMapTransposed.get("totalAmountWithInterest").toString
+    responseBody.dailyInterestAccrued.toString          shouldBe asMapTransposed.get("dailyInterest").toString
+    responseBody.totalInterestAccrued.toString          shouldBe asMapTransposed.get("totalInterest").toString
+    responseBody.totalAmountToPay.toString              shouldBe asMapTransposed.get("totalAmountToPay").toString
+    responseBody.totalAmountOnWhichInterestDue.toString shouldBe asMapTransposed
+      .get("totalAmountOnWhichInterestDue")
+      .toString
+    responseBody.totalAmountWithInterest.toString       shouldBe asMapTransposed.get("totalAmountWithInterest").toString
   }
 
-  Then("the ([0-9])(?:st|nd|rd|th) debt summary will contain") { (index: Int,dataTable: DataTable) =>
+  Then("the ([0-9])(?:st|nd|rd|th) debt summary will contain") { (index: Int, dataTable: DataTable) =>
     val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(200)
 
-    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations(index-1)
+    val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations(index - 1)
     responseBody.dailyInterestAccrued.toString          shouldBe asMapTransposed.get("dailyInterest").toString
     responseBody.totalInterestAccrued.toString          shouldBe asMapTransposed.get("totalInterest").toString
     responseBody.totalAmountOnWhichInterestDue.toString shouldBe asMapTransposed
@@ -125,21 +125,23 @@ class InterestForecastingSteps extends BaseStepDef {
     response.status should be(400)
   }
 
-  Then("the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows") { (summaryIndex: Int, dataTable: DataTable) =>
-    val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
-    val response: StandaloneWSResponse = ScenarioContext.get("response")
+  Then("the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows") {
+    (summaryIndex: Int, dataTable: DataTable) =>
+      val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
+      val response: StandaloneWSResponse = ScenarioContext.get("response")
 
-    asMapTransposed.zipWithIndex.foreach { case (window, index) =>
-      val responseBody = Json.parse(response.body).as[DebtCalculation].debtCalculations(summaryIndex-1).calculationWindows(index)
+      asMapTransposed.zipWithIndex.foreach { case (window, index) =>
+        val responseBody =
+          Json.parse(response.body).as[DebtCalculation].debtCalculations(summaryIndex - 1).calculationWindows(index)
 
-      responseBody.dateFrom.toString               shouldBe window.get("dateFrom").toString
-      responseBody.dateTo.toString                 shouldBe window.get("dateTo").toString
-      responseBody.numberOfChargeableDays.toString shouldBe window.get("numberDays").toString
-      responseBody.interestRateApplied.toString    shouldBe window.get("intRate").toString
-      responseBody.dailyInterestAccrued.toString   shouldBe window.get("dailyInterest").toString
-      responseBody.totalInterestAccrued.toString   shouldBe window.get("totalInterest").toString
-      responseBody.totalAmountOnWhichInterestDue
-        .toString()                                shouldBe window.get("totalAmountOnWhichInterestDue").toString
-    }
+        responseBody.dateFrom.toString               shouldBe window.get("dateFrom").toString
+        responseBody.dateTo.toString                 shouldBe window.get("dateTo").toString
+        responseBody.numberOfChargeableDays.toString shouldBe window.get("numberDays").toString
+        responseBody.interestRateApplied.toString    shouldBe window.get("intRate").toString
+        responseBody.dailyInterestAccrued.toString   shouldBe window.get("dailyInterest").toString
+        responseBody.totalInterestAccrued.toString   shouldBe window.get("totalInterest").toString
+        responseBody.totalAmountOnWhichInterestDue
+          .toString()                                shouldBe window.get("totalAmountOnWhichInterestDue").toString
+      }
   }
 }
