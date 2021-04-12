@@ -29,6 +29,6 @@ object ScenarioContext {
       .fold(throw new Exception(s"Key $key not found in scenario context"))(_.asInstanceOf[T])
 
   def reset() {
-    scenarioValues.foreach(x => scenarioValues - x._1)
+    scenarioValues = Map.empty[String, Any]
   }
 }

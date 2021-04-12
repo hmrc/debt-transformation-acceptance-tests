@@ -7,7 +7,9 @@
       "regime": "<REPLACE_regime>",
       "dateAmount": "<REPLACE_dateAmount>",
       "dateCalculationTo": "<REPLACE_dateCalculationTo>",
-      "paymentHistory": []
+      "paymentHistory": [
+      		 <REPLACE_payments>
+      ]
     }
   ]
 }
