@@ -19,7 +19,7 @@ Feature: Get Debt For DRIER case (mvp)
       | 500000 | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
     And the debt item has no payment history
     When the debt item is sent to the ifs service
-    Then the ifs service wilL return a debt summary of
+    Then the 1st debt summary will contain
       | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays | totalAmountOnWhichInterestDue |
       | 13            | 109           | 1       | 500000           | 500109                  | 8                    | 500000                        |
 
@@ -29,7 +29,7 @@ Feature: Get Debt For DRIER case (mvp)
       | 500000 | 2021-03-01 | 2021-03-08        | DRIER  | HIPG       | false           |
     And the debt item has no payment history
     When the debt item is sent to the ifs service
-    Then the ifs service wilL return a debt summary of
+    Then the 1st debt summary will contain
       | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays | totalAmountOnWhichInterestDue |
       | 0             | 0             | 0       | 500000           | 500000                  | 0                    | 500000                        |
 
@@ -39,7 +39,7 @@ Feature: Get Debt For DRIER case (mvp)
       | 0      | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
     And the debt item has no payment history
     When the debt item is sent to the ifs service
-    Then the ifs service wilL return a debt summary of
+    Then the 1st debt summary will contain
       | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays | totalAmountOnWhichInterestDue |
       | 0             | 0             | 1       | 0                | 0                       | 8                    | 0                             |
 
@@ -51,7 +51,7 @@ Feature: Get Debt For DRIER case (mvp)
       | -1     | 2021-03-01 | 2021-03-08        | DRIER  | NI         | true            |
     And the debt item has no payment history
     When the debt item is sent to the ifs service
-    Then the ifs service wilL return a debt summary of
+    Then the 1st debt summary will contain
       | dailyInterest | totalInterest | intRate | totalAmountToPay | totalAmountWithInterest | numberChargeableDays | totalAmountOnWhichInterestDue |
       | 0             | 0             | 1       | 0                | 0                       | 8                    | 0                             |
 
