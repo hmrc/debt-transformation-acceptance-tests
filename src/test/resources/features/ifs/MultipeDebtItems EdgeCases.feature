@@ -160,3 +160,32 @@ Feature: Multiple Debt Items - Edge Cases
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2020-12-16 | 2021-04-14 | 120          | 2.6          | 35                      | 4273              | 500000               | 500000             |
+
+    #failing test
+  Scenario: 10. date calculationTo in the past.
+    Given a debt item
+      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2020-12-16  | 2020-12-16        | 1920-11-18        | 1520      | 1090     | true            |
+    And the debt item has no payment history
+    When the debt item is sent to the ifs service
+    Then the ifs service will respond with DateCalculationTo should be after dateCreated
+
+
+  Scenario: 11. negative original debt amount.
+    Given a debt item
+      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | -500000         | 2020-12-16  | 2020-12-16        | 2021-04-10        | 1520      | 1090     | true            |
+    And the debt item has no payment history
+    When the debt item is sent to the ifs service
+    Then the ifs service will respond with Negative Amount
+
+  @smoke  #failing test
+  Scenario: 12. date of payement is before date created
+    Given a debt item
+      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2020-12-16  | 2020-12-16        | 2021-04-14        | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | amountPaid | dateOfPayment |
+      | 100000     | 2020-02-03    |
+    When the debt item is sent to the ifs service
+    Then the ifs service will respond with Date of payement is before date created
