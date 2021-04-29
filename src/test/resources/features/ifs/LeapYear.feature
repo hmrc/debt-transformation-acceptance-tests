@@ -86,5 +86,27 @@ Feature: Leap years
       | 2020-01-01 | 2020-03-29 | 88           | 3.25         | 35                      | 3125              | 400000               | 403125             |
       | 2020-03-30 | 2020-04-06 | 7            | 2.75         | 30                      | 210               | 400000               | 400210             |
       | 2020-04-07 | 2020-05-05 | 28           | 2.6          | 28                      | 795               | 400000               | 400795             |
+    
+  Scenario: Debt spanning multiple leap years
+    Given a debt item
+      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2011-01-01  | 2011-01-01        | 2017-02-22        | 1525      | 1000     | true            |
+    And the debt item has no payment history
+    And no breathing spaces have been applied to the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | 37                   | 91282                | 500000            | 591282              | 500000              |
+    And the 1st debt summary will contain
+      | numberOfDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
+      | 2239         | 37                      | 91282                | 500000           | 591282             | 0                    | 500000             |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
+      | 2011-01-01 | 2011-12-31 | 364          | 3.0          | 41                      | 14958             | 500000               | 514958             |
+      | 2012-01-01 | 2012-12-31 | 365          | 3.0          | 40                      | 14959             | 500000               | 514959             |
+      | 2013-01-01 | 2015-12-31 | 1094         | 3.0          | 41                      | 44958             | 500000               | 544958             |
+      | 2016-01-01 | 2016-08-15 | 227          | 3.0          | 40                      | 9303              | 500000               | 509303             |
+      | 2016-08-16 | 2016-12-31 | 137          | 2.75         | 37                      | 5146              | 500000               | 505146             |
+      | 2017-01-01 | 2017-02-22 | 52           | 2.75         | 37                      | 1958              | 500000               | 501958             |
 
 
