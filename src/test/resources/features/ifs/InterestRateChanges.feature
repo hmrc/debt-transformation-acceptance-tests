@@ -12,28 +12,29 @@
 
 Feature: Interest Rate Changes
 
-  Scenario: Interest rate changes from 3% to 3.25% with 2 payments on same date
+  Scenario: Interest rate changes from 3% to 3.25% with 2 payments on same date in a leap
     Given a debt item
       | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
-      | 500000         | 2018-01-01  | 2018-01-01        | 2019-03-31        | 1525      | 1000     | true            |
+      | 500000         | 2019-01-01  | 2019-01-01        | 2020-03-31        | 1525      | 1000     | true            |
     And the debt item has payment history
       | amountPaid | dateOfPayment |
-      | 100000     | 2018-09-01    |
-      | 100000     | 2018-09-01    |
+      | 100000     | 2020-02-01    |
+      | 100000     | 2020-02-01    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
-      | 26                   | 15617                | 300000            | 315617              | 300000              |
+      | 22                   | 19121                | 300000            | 319121              | 300000              |
     And the 1st debt summary will contain
       | numberOfDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
-      | 695          | 26                      | 15617                | 300000           | 315617             | 695                  | 300000             |
+      | 848          | 22                      | 19121                | 300000           | 319121             | 848                  | 300000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
-      | 2018-01-01 | 2018-08-20 | 231          | 3.0          | 16                      | 3797              | 203797             | 200000               |
-      | 2018-08-21 | 2018-09-01 | 11           | 3.25         | 17                      | 195               | 200195             | 200000               |
-      | 2018-01-01 | 2018-08-20 | 231          | 3.0          | 24                      | 5695              | 305695             | 300000               |
-      | 2018-08-21 | 2019-03-31 | 222          | 3.25         | 26                      | 5930              | 305930             | 300000               |
+      | 2019-01-01 | 2019-12-31 | 364          | 3.25         | 17                      | 6482              | 206482             | 200000               |
+      | 2020-01-01 | 2020-02-01 | 31           | 3.25         | 17                      | 550               | 200550             | 200000               |
+      | 2019-01-01 | 2019-12-31 | 364          | 3.25         | 26                      | 9723              | 309723             | 300000               |
+      | 2020-01-01 | 2020-03-29 | 88           | 3.25         | 26                      | 2344              | 302344             | 300000               |
+      | 2020-03-30 | 2020-03-31 | 1            | 2.75         | 22                      | 22                | 300022             | 300000               |
 
 
   Scenario: Interest rate changes from 3% to 3.25%
@@ -144,6 +145,7 @@ Feature: Interest Rate Changes
       | 2018-08-21 | 2019-01-20 | 152          | 3.25         | 8                       | 1353              | 101353             | 100000               |
       | 2018-01-16 | 2018-08-20 | 216          | 3.0          | 24                      | 5326              | 305326             | 300000               |
       | 2018-08-21 | 2019-04-14 | 236          | 3.25         | 26                      | 6304              | 306304             | 300000               |
+
 
   Scenario: Interest rate changes from 2.75% to 2.6% - dateCalculationTo before interestStartDate
     Given a debt item
