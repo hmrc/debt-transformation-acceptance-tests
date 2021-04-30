@@ -201,4 +201,25 @@ Feature: Multiple Debt Items - Edge Cases
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be greater than Original Amount
 
+  Scenario: 6. 1 debts, 1 payment amount paid less than zero
+    Given a debt item
+      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | 50             | 2019-12-16  | 2019-12-16        | 2020-05-05        | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | amountPaid | dateOfPayment |
+      | -1000       | 2019-02-03    |
+    And no breathing spaces have been applied to the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be negative values
 
+  Scenario: 7. 1 debts, 2 payment amount paid less than zero
+    Given a debt item
+      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | 50000             | 2019-12-16  | 2019-12-16        | 2020-05-05        | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | amountPaid | dateOfPayment |
+      | 1000       | 2019-02-03    |
+      | -1000       | 2019-03-03    |
+    And no breathing spaces have been applied to the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be negative values

@@ -86,6 +86,7 @@ Feature: Interest Rate Changes
       | amountPaid | dateOfPayment |
       | 100000     | 2018-09-01    |
       | 100000     | 2018-09-01    |
+    And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
