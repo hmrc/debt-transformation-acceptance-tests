@@ -157,7 +157,7 @@ Feature: Interest Rate Changes
       | 0                    | 0                    | 500000            | 500000              | 500000              |
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
-      | false            | 0                    | 0                       | 0                    | 500000           | 500000             | 500000             |
+      | true            | 0                    | 0                       | 0                    | 500000           | 500000             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2020-04-10 | 2020-03-31 | 0            | 0.0          | 0                       | 0                 | 500000               | 500000             |

@@ -21,8 +21,8 @@ Feature: Interest Rate Changes - Edge cases
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
       | 13200                | 3782700              | 150000000         | 153782700           | 150000000           |
     And the 300th debt summary will contain
-      | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
-      | 301          | 44                      | 12609                 | 500000          | 512609             | 500000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | true            | 301          | 44                      | 12609                 | 500000          | 512609             | 500000             |
 
   Scenario: 2 Debts - Interest rate changes from 3.25% to 2.75% - leap year - payment is made for 1 debt - Interest rate changes from 2.75% to 2.6%
     Given a debt item
