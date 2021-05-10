@@ -27,8 +27,8 @@ Feature: Breathing Space
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
       | 35                   | 534                  | 500000            | 500534              | 500000              |
     And the 1st debt summary will contain
-      | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
-      | 15                   | 35                      | 534                  | 500000           | 500534             | 500000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | true            | 15                   | 35                      | 534                  | 500000           | 500534             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2021-03-01 | 2021-03-06 | 5            | 2.6          | 35                      | 178               | 500000               | 500178             |
@@ -48,8 +48,8 @@ Feature: Breathing Space
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
       | 0                    | 178                  | 500000            | 500178              | 500000              |
     And the 1st debt summary will contain
-      | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
-      | 5                    | 0                       | 178                  | 500000           | 500178             | 500000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | true            | 5                    | 0                       | 178                  | 500000           | 500178             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2021-03-01 | 2021-03-06 | 5            | 2.6          | 35                      | 178               | 500000               | 500178             |

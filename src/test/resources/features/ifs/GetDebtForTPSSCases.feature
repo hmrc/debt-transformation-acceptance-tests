@@ -26,8 +26,8 @@ Feature: Debt Calculation For TPSS MainTrans (1525) case (MVP)
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
       | 35                   | 249                  | 500000            | 500249              | 500000              |
     Then the 1st debt summary will contain
-      | interestDueDailyAccrual | interestDueDebtTotal | intRate | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
-      | 35                      | 249                  | 2.6     | 500000           | 500249             | 7                    | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDebtTotal | intRate | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
+      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7                    | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2021-03-01 | 2021-03-08 | 7            | 2.6          | 35                      | 249               | 500000               | 500249             |
@@ -43,8 +43,8 @@ Feature: Debt Calculation For TPSS MainTrans (1525) case (MVP)
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
       | 0                    | 0                    | 500000            | 500000              | 500000              |
     Then the 1st debt summary will contain
-      | interestDueDailyAccrual | interestDueDebtTotal | intRate | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
-      | 0                       | 0                    | 0       | 500000           | 500000             | 0                    | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDebtTotal | intRate | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
+      | false           | 0                       | 0                    | 0       | 500000           | 500000             | 0                    | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2021-03-01 | 2021-03-08 | 0            | 0.0          | 0                       | 0                 | 500000               | 500000             |
@@ -58,8 +58,8 @@ Feature: Debt Calculation For TPSS MainTrans (1525) case (MVP)
 #    And no breathing spaces have been applied to the customer
 #    When the debt item is sent to the ifs service
 #    Then the 1st debt summary will contain
-#      | interestDueDailyAccrual | interestDueDebtTotal | intRate | unpaidAmountDebt | totalAmountIntDebt | numberOfDays | amountOnIntDueDebt |
-#      | 0                       | 0                    | 1       | 0                | 0                  | 8            | 0                  |
+#      | interestBearing | interestDueDailyAccrual | interestDueDebtTotal | intRate | unpaidAmountDebt | totalAmountIntDebt | numberOfDays | amountOnIntDueDebt |
+#      | false           | 0                       | 0                    | 1       | 0                | 0                  | 8            | 0                  |
 
 
   Scenario: TPSS MainTrans (1525) debt Amount is negative (Edge Case)
