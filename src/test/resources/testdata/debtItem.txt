@@ -1,11 +1,11 @@
      {
-          "uniqueItemReference": "<REPLACE_uniqueItemReference>",
+          "debtID": "<REPLACE_debtID>",
           "originalAmount": <REPLACE_originalAmount>,
           "subTrans": "<REPLACE_subTrans>",
           "mainTrans": "<REPLACE_mainTrans>",
           "dateCreated": "<REPLACE_dateCreated>",
           "interestStartDate": "<REPLACE_interestStartDate>",
-          "dateCalculationTo": "<REPLACE_dateCalculationTo>",
+          "interestRequestedTo": "<REPLACE_interestRequestedTo>",
           "paymentHistory": [
           		 <REPLACE_payments>
           ]

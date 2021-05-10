@@ -16,7 +16,7 @@ Feature: Breathing Space
 
   Scenario: Breathing Space applied to 1 debt
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-20        | 1530      | 1000     | true            |
     And the debt item has no payment history
     And the customer has breathing spaces applied
@@ -24,10 +24,10 @@ Feature: Breathing Space
       | 2021-03-07      | 2021-03-10    |
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 35                   | 534                  | 500000            | 500534              | 500000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 15                   | 35                      | 534                  | 500000           | 500534             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -37,7 +37,7 @@ Feature: Breathing Space
 
   Scenario: Breathing Space - open ended
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-20        | 1530      | 1000     | true            |
     And the debt item has no payment history
     And the customer has breathing spaces applied
@@ -45,10 +45,10 @@ Feature: Breathing Space
       | 2021-03-07      |               |
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 0                    | 178                  | 500000            | 500178              | 500000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 5                    | 0                       | 178                  | 500000           | 500178             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |

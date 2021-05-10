@@ -10,7 +10,7 @@ import play.api.libs.json.{Json, OFormat}
 case class DebtCalculation(
   combinedDailyAccrual: BigDecimal,
   interestDueCallTotal: BigDecimal,
-  totalAmountIntTotal: BigDecimal,
+  amountIntTotal: BigDecimal,
   amountOnIntDueTotal: BigDecimal,
   unpaidAmountTotal: BigDecimal,
   debtCalculations: List[DebtItemCalculation]

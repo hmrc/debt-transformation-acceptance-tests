@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 import play.api.libs.json.{Json, OFormat}
 
-case class Payment(amountPaid: BigDecimal, dateOfPayment: LocalDate)
+case class Payment(paymentAmount: BigDecimal, paymentDate: LocalDate)
 
 object Payment {
   implicit val formatPayment: OFormat[Payment] = Json.format[Payment]

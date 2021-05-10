@@ -37,13 +37,13 @@ class InterestForecastingSteps extends BaseStepDef {
     catch { case e: Exception => firstItem = true }
 
     val debtItem = getBodyAsString("debtItem")
-      .replaceAll("<REPLACE_uniqueItemReference>", "123")
+      .replaceAll("<REPLACE_debtID>", "123")
       .replaceAll("<REPLACE_originalAmount>", asMapTransposed.get("originalAmount"))
       .replaceAll("<REPLACE_subTrans>", asMapTransposed.get("subTrans"))
       .replaceAll("<REPLACE_mainTrans>", asMapTransposed.get("mainTrans"))
       .replaceAll("<REPLACE_dateCreated>", asMapTransposed.get("dateCreated"))
       .replaceAll("<REPLACE_interestStartDate>", asMapTransposed.get("interestStartDate"))
-      .replaceAll("<REPLACE_dateCalculationTo>", asMapTransposed.get("dateCalculationTo"))
+      .replaceAll("<REPLACE_interestRequestedTo>", asMapTransposed.get("interestRequestedTo"))
 
     if (firstItem == true) { debtItems = debtItem }
     else { debtItems = ScenarioContext.get("debtItems").toString.concat(",").concat(debtItem) }
@@ -61,13 +61,13 @@ class InterestForecastingSteps extends BaseStepDef {
 
     while (n < numberItems) {
       val debtItem = getBodyAsString("debtItem")
-        .replaceAll("<REPLACE_uniqueItemReference>", "123")
+        .replaceAll("<REPLACE_debtID>", "123")
         .replaceAll("<REPLACE_originalAmount>", "500000")
         .replaceAll("<REPLACE_subTrans>", "1000")
         .replaceAll("<REPLACE_mainTrans>", "1525")
         .replaceAll("<REPLACE_dateCreated>", "2021-12-16")
         .replaceAll("<REPLACE_interestStartDate>", "2021-12-16")
-        .replaceAll("<REPLACE_dateCalculationTo>", "2022-04-14")
+        .replaceAll("<REPLACE_interestRequestedTo>", "2022-04-14")
 
       if (n == 0) {
         debtItems = debtItem
@@ -86,13 +86,13 @@ class InterestForecastingSteps extends BaseStepDef {
 
     while (n < numberItems) {
       val debtItem = getBodyAsString("debtItem")
-        .replaceAll("<REPLACE_uniqueItemReference>", "123")
+        .replaceAll("<REPLACE_debtID>", "123")
         .replaceAll("<REPLACE_originalAmount>", "500000")
         .replaceAll("<REPLACE_subTrans>", "1000")
         .replaceAll("<REPLACE_mainTrans>", "1525")
         .replaceAll("<REPLACE_dateCreated>", "2018-01-01")
         .replaceAll("<REPLACE_interestStartDate>", "2018-01-01")
-        .replaceAll("<REPLACE_dateCalculationTo>", "2018-10-30")
+        .replaceAll("<REPLACE_interestRequestedTo>", "2018-10-30")
 
       if (n == 0) {
         debtItems = debtItem
@@ -112,8 +112,8 @@ class InterestForecastingSteps extends BaseStepDef {
     asMapTransposed.zipWithIndex.foreach { case (payment, index) =>
       payments = payments.concat(
         getBodyAsString("payment")
-          .replaceAll("<REPLACE_amountPaid>", payment.get("amountPaid"))
-          .replaceAll("<REPLACE_dateOfPayment>", payment.get("dateOfPayment"))
+          .replaceAll("<REPLACE_paymentAmount>", payment.get("paymentAmount"))
+          .replaceAll("<REPLACE_paymentDate>", payment.get("paymentDate"))
       )
 
       if (index + 1 < asMapTransposed.size) payments = payments.concat(",")
@@ -153,7 +153,7 @@ class InterestForecastingSteps extends BaseStepDef {
     responseBody.amountOnIntDueTotal.toString  shouldBe asMapTransposed
       .get("amountOnIntDueTotal")
       .toString
-    responseBody.totalAmountIntTotal.toString  shouldBe asMapTransposed.get("totalAmountIntTotal").toString
+    responseBody.amountIntTotal.toString  shouldBe asMapTransposed.get("amountIntTotal").toString
   }
 
   Then("the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain") { (index: Int, dataTable: DataTable) =>
@@ -165,12 +165,12 @@ class InterestForecastingSteps extends BaseStepDef {
     responseBody.interestBearing.toString         shouldBe asMapTransposed.get("interestBearing").toString
     responseBody.numberOfChargeableDays.toString  shouldBe asMapTransposed.get("numberChargeableDays").toString
     responseBody.interestDueDailyAccrual.toString shouldBe asMapTransposed.get("interestDueDailyAccrual").toString
-    responseBody.interestDueDebtTotal.toString    shouldBe asMapTransposed.get("interestDueDebtTotal").toString
-    responseBody.amountOnIntDueDebt.toString      shouldBe asMapTransposed
-      .get("amountOnIntDueDebt")
+    responseBody.interestDueDutyTotal.toString    shouldBe asMapTransposed.get("interestDueDutyTotal").toString
+    responseBody.amountOnIntDueDuty.toString      shouldBe asMapTransposed
+      .get("amountOnIntDueDuty")
       .toString
-    responseBody.totalAmountIntDebt.toString      shouldBe asMapTransposed.get("totalAmountIntDebt").toString
-    responseBody.unpaidAmountDebt.toString        shouldBe asMapTransposed.get("unpaidAmountDebt").toString
+    responseBody.totalAmountIntDuty.toString      shouldBe asMapTransposed.get("totalAmountIntDuty").toString
+    responseBody.unpaidAmountDuty.toString        shouldBe asMapTransposed.get("unpaidAmountDuty").toString
 
   }
 

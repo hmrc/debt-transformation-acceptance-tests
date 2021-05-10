@@ -16,29 +16,29 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 1. 2 debts, 1 interest bearing. 1 non interest bearing
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-02-03    |
     And a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1520      | 1090     | false           |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 35                   | 4674                 | 900000            | 904674              | 900000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 168                  | 35                      | 4674                 | 400000           | 404674             | 400000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 8                       | 436               | 100000               | 100436             |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 4238              | 400000               | 404238             |
     And the 2nd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | false            | 0                    | 0                       | 0                    | 500000           | 500000             | 500000             |
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -47,31 +47,31 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 2. 2 debts, 1 payment each of different amounts
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-02-03    |
     And a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1520      | 1090     | false           |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-02-03    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 35                   | 4674                 | 800000            | 804674              | 800000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 168                  | 35                      | 4674                 | 400000           | 404674             | 400000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 8                       | 436               | 100000               | 100436             |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 4238              | 400000               | 404238             |
     And the 2nd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | false           | 0                    | 0                       | 0                    | 400000           | 400000             | 400000             |
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -81,39 +81,39 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 3. 3 debts, 1 payments
     And a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has no payment history
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-02-03    |
     And a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 123                  | 15268                | 1400000           | 1415268             | 1400000             |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 119                  | 44                      | 5297                 | 500000           | 505297             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 5297              | 500000               | 505297             |
     And the 2nd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 168                  | 35                      | 4674                 | 400000           | 404674             | 400000             |
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 8                       | 436               | 100000               | 100436             |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 4238              | 400000               | 404238             |
     And the 3rd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 119                  | 44                      | 5297                 | 500000           | 505297             | 500000             |
     And the 3rd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -125,35 +125,35 @@ Feature: Multiple Debt Items - Edge Cases
     And no breathing spaces have been applied to the customer
     When the debt items is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 10500                | 1271400              | 150000000         | 151271400           | 150000000           |
     And the 300th debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 119                  | 35                      | 4238                 | 500000           | 504238             | 500000             |
 
 
   Scenario: 5. 2 debts, 5 payments on 1 debt
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 1000000        | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-02-03    |
       | 200000     | 2019-02-03    |
       | 100000     | 2019-02-13    |
       | 100000     | 2019-02-06    |
       | 100000     | 2019-02-13    |
     And a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16  | 2018-12-16        | 2019-04-14        | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 79                   | 12356                | 900000            | 912356              | 900000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 279                  | 35                      | 7059                 | 400000           | 407059             | 400000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -162,7 +162,7 @@ Feature: Multiple Debt Items - Edge Cases
       | 2018-12-16 | 2019-02-13 | 59           | 3.25         | 17                      | 1050              | 200000               | 201050             |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 4238              | 400000               | 404238             |
     And the 2nd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 119          | 44                      | 5297                 | 500000           | 505297             | 500000             |
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -171,19 +171,19 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 6. 1 debts, 1 payment, payment date before date created
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2019-12-16  | 2019-12-16        | 2020-05-05        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-02-03    |
 
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 28                   | 4664                 | 400000            | 404664              | 400000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 138                  | 28                      | 4664                 | 400000           | 404664             | 400000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -196,10 +196,10 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 7. 1 debts, 1 Payment  Amount paid greater than original debt amount
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 50             | 2019-12-16  | 2019-12-16        | 2020-05-05        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 1000       | 2019-02-03    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
@@ -207,10 +207,10 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 6. 1 debts, 1 payment amount paid less than zero
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 50             | 2019-12-16  | 2019-12-16        | 2020-05-05        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | -1000      | 2019-02-03    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
@@ -218,10 +218,10 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 7. 1 debts, 2 payment amount paid less than zero
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 50000          | 2019-12-16  | 2019-12-16        | 2020-05-05        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 1000       | 2019-02-03    |
       | -1000      | 2019-03-03    |
     And no breathing spaces have been applied to the customer
@@ -230,18 +230,18 @@ Feature: Multiple Debt Items - Edge Cases
 
   Scenario: 8. 1 debt, 1 payment, interest start date is before the debt created
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2020-12-22  | 2020-10-16        | 2021-02-22        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2021-02-23    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 28                   | 2176                 | 400000            | 402176              | 400000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 123          | 28                      | 2176                 | 400000           | 402176             | 400000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |

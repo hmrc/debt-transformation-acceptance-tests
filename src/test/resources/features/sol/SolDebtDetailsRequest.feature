@@ -27,9 +27,9 @@
 #Debt 5 subTrans 7012
 #Debt 5 interestStartDate 2019-01-01
 #Debt 5 dateCreated 2019-01-01
-#Debt 5 dateCalculationTo 2020-04-15
-#Debt 5 amountPaid 100000
-#Debt 5 dateOfPayment 2020-02-23
+#Debt 5 interestRequestedTo 2020-04-15
+#Debt 5 paymentAmount 100000
+#Debt 5 paymentDate 2020-02-23
 Feature: statement of liability Debt details
 
   Scenario: 1. TPSS Account Tax Assessment debt statement of liability, 2 duties, no payment history.
@@ -42,15 +42,15 @@ Feature: statement of liability Debt details
       | "duty02" |
     When a debt statement of liability is requested
     Then service returns debt statement of liability data
-      | totalAmountIntDebt | combinedDailyAccrual |
+      | totalAmountIntDuty | combinedDailyAccrual |
       | 6166               | 63                   |
 
     And the 1st sol debt summary will contain
-      | uniqueItemReference | mainTrans | description                 | periodEnd  | interestDueDebtTotal | interestRequestedTo | combinedDailyAccrual |
+      | debtID | mainTrans | description                 | periodEnd  | interestDueDutyTotal | interestRequestedTo | combinedDailyAccrual |
       | debt001             | 1525      | TPSS Account Tax Assessment | 2020-01-01 | 6166                 | 2021-05-04          | 63                   |
 
     And the 1st sol debt summary will contain duties
-      | debtItemChargeID | subTrans | description | unpaidAmountDebt | combinedDailyAccrual |
+      | debtItemChargeID | subTrans | description | unpaidAmountDuty | combinedDailyAccrual |
       | duty01           | 1000     | IT          | 500000           | 35                   |
       | duty02           | 1000     | IT          | 400000           | 28                   |
 
@@ -66,15 +66,15 @@ Feature: statement of liability Debt details
     When a debt statement of liability is requested
 
     Then service returns debt statement of liability data
-      | totalAmountIntDebt | combinedDailyAccrual |
+      | totalAmountIntDuty | combinedDailyAccrual |
       | 2156               | 14                   |
 
     And the 1st sol debt summary will contain
-      | uniqueItemReference | mainTrans | description  | periodEnd  | interestDueDebtTotal | interestRequestedTo | combinedDailyAccrual |
+      | debtID | mainTrans | description  | periodEnd  | interestDueDutyTotal | interestRequestedTo | combinedDailyAccrual |
       | debt003             | 5330      | UI: ChB Debt | 2020-01-01 | 2156                 | 2021-05-05          | 14                   |
 
     And the 1st sol debt summary will contain duties
-      | debtItemChargeID | subTrans | description            | unpaidAmountDebt | combinedDailyAccrual |
+      | debtItemChargeID | subTrans | description            | unpaidAmountDuty | combinedDailyAccrual |
       | duty01           | 7006     | UI: Child Benefit Debt | 400000           | 0                    |
       | duty02           | 1000     | IT                     | 200000           | 14                   |
 
@@ -88,15 +88,15 @@ Feature: statement of liability Debt details
     When a debt statement of liability is requested
 
     Then service returns debt statement of liability data
-      | totalAmountIntDebt | combinedDailyAccrual |
+      | totalAmountIntDuty | combinedDailyAccrual |
       | 0                  | 0                    |
 
     And the 1st sol debt summary will contain
-      | uniqueItemReference | mainTrans | description           | periodEnd  | interestDueDebtTotal | interestRequestedTo | combinedDailyAccrual |
+      | debtID | mainTrans | description           | periodEnd  | interestDueDutyTotal | interestRequestedTo | combinedDailyAccrual |
       | debt004             | 5350      | CO: ChB Migrated Debt | 2020-01-01 | 0                    | 2021-05-05          | 0                    |
 
     And the 1st sol debt summary will contain duties
-      | debtItemChargeID | subTrans | description                     | unpaidAmountDebt | combinedDailyAccrual |
+      | debtItemChargeID | subTrans | description                     | unpaidAmountDuty | combinedDailyAccrual |
       | duty04           | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    |
 
 
@@ -110,13 +110,13 @@ Feature: statement of liability Debt details
     When a debt statement of liability is requested
 
     Then service returns debt statement of liability data
-      | totalAmountIntDebt | combinedDailyAccrual |
+      | totalAmountIntDuty | combinedDailyAccrual |
       | 0                  | 0                    |
 
     And the 1st sol debt summary will contain
-      | uniqueItemReference | mainTrans | description           | periodEnd  | interestDueDebtTotal | interestRequestedTo | combinedDailyAccrual |
+      | debtID | mainTrans | description           | periodEnd  | interestDueDutyTotal | interestRequestedTo | combinedDailyAccrual |
       | debt005             | 5350      | CO: ChB Migrated Debt | 2020-01-01 | 0                    | 2021-05-05          | 0                    |
 
     And the 1st sol debt summary will contain duties
-      | debtItemChargeID | subTrans | description                     | unpaidAmountDebt | combinedDailyAccrual |
+      | debtItemChargeID | subTrans | description                     | unpaidAmountDuty | combinedDailyAccrual |
       | duty06           | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    |

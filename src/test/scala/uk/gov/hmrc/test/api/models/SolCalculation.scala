@@ -10,11 +10,11 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDate
 
 case class SolCalculation(
-  uniqueItemReference: String,
+  debtID: String,
   mainTrans: String,
   description: String,
   periodEnd: LocalDate,
-  interestDueDebtTotal: Int,
+  interestDueDutyTotal: Int,
   interestRequestedTo: LocalDate,
   combinedDailyAccrual: Int,
   duties: Seq[SolDuty]

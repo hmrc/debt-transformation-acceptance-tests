@@ -1,4 +1,4 @@
         {
-      		  "amountPaid": <REPLACE_amountPaid>,
-      		  "dateOfPayment" :"<REPLACE_dateOfPayment>"
+      		  "paymentAmount": <REPLACE_paymentAmount>,
+      		  "paymentDate" :"<REPLACE_paymentDate>"
       	}

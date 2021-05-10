@@ -11,7 +11,7 @@ case class SolDuty(
   debtItemChargeID: String,
   subTrans: String,
   description: String,
-  unpaidAmountDebt: Int,
+  unpaidAmountDuty: Int,
   combinedDailyAccrual: Int
 ) {}
 

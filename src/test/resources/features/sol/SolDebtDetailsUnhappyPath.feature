@@ -26,7 +26,7 @@ Feature: Statement of liability Unhappy Path (Service Errors)
     And the sol service will respond with {name: ReferenceDataLookupError, statusCode: 404, uniqueReference: 1085, 1000}
 
     @runMe
-  Scenario: Sol IFS 400 failure - DateCalculationTo should be after dateCreated
+  Scenario: Sol IFS 400 failure - interestRequestedTo should be after dateCreated
     Given debt details
       | solType | debtId  | mainTrans | subTrans |
       | UI      | debt006 | 1525      | 1000     |

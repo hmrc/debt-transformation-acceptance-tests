@@ -102,7 +102,7 @@ class StatementOfLiabilityStepDef extends BaseStepDef {
 
     val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse]
 
-    responseBody.totalAmountIntDebt.toString   shouldBe asMapTransposed.get("totalAmountIntDebt").toString
+    responseBody.totalAmountIntDuty.toString   shouldBe asMapTransposed.get("totalAmountIntDuty").toString
     responseBody.combinedDailyAccrual.toString shouldBe asMapTransposed.get("combinedDailyAccrual").toString
 
   }
@@ -113,11 +113,11 @@ class StatementOfLiabilityStepDef extends BaseStepDef {
     response.status should be(200)
 
     val debt: SolCalculation = Json.parse(response.body).as[SolCalculationSummary].debts(index - 1)
-    debt.uniqueItemReference           shouldBe asMapTransposed.get("uniqueItemReference").toString
+    debt.debtID           shouldBe asMapTransposed.get("debtID").toString
     debt.mainTrans                     shouldBe asMapTransposed.get("mainTrans").toString
     debt.description                   shouldBe asMapTransposed.get("description").toString
     debt.periodEnd.toString            shouldBe asMapTransposed.get("periodEnd").toString
-    debt.interestDueDebtTotal.toString shouldBe asMapTransposed.get("interestDueDebtTotal").toString
+    debt.interestDueDutyTotal.toString shouldBe asMapTransposed.get("interestDueDutyTotal").toString
   }
 
   Then("the ([0-9])(?:st|nd|rd|th) sol debt summary will contain duties") { (debtIndex: Int, dataTable: DataTable) =>
@@ -134,7 +134,7 @@ class StatementOfLiabilityStepDef extends BaseStepDef {
       responseBody.debtItemChargeID              shouldBe duty.get("debtItemChargeID").toString
       responseBody.subTrans                      shouldBe duty.get("subTrans").toString
       responseBody.description                   shouldBe duty.get("description").toString
-      responseBody.unpaidAmountDebt.toString     shouldBe duty.get("unpaidAmountDebt").toString
+      responseBody.unpaidAmountDuty.toString     shouldBe duty.get("unpaidAmountDuty").toString
       responseBody.combinedDailyAccrual.toString shouldBe duty.get("combinedDailyAccrual").toString
     }
   }

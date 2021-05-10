@@ -12,19 +12,19 @@ Feature: Interest Rate Changes
 
   Scenario: Interest rate changes from 3% to 3.25% with 2 payments on same date in a leap
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2019-01-01  | 2019-01-01        | 2020-03-31        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2020-02-01    |
       | 100000     | 2020-02-01    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 22                   | 19121                | 300000            | 319121              | 300000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 848                  | 22                      | 19121                | 300000           | 319121             | 300000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
@@ -37,16 +37,16 @@ Feature: Interest Rate Changes
 
   Scenario: Interest rate changes from 3% to 3.25%
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2017-12-01  | 2017-12-01        | 2019-03-31        | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 44                   | 20650                | 500000            | 520650              | 500000              |
     And the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
       | true            | 44                      | 20650                | 500000           | 520650             | 484                  | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
@@ -58,18 +58,18 @@ Feature: Interest Rate Changes
   #TBD: No test data currently available to implement this scenario
   Scenario: Interest rate changes from 3% to 3.25% after a payment is made
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-01-01  | 2018-01-01        | 2019-03-31        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2018-03-15    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 35                   | 16100                | 400000            | 416100              | 400000              |
     And the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
       | true            | 35                      | 16100                | 400000           | 416100             | 526                  | 400000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
@@ -79,19 +79,19 @@ Feature: Interest Rate Changes
 
   Scenario: Interest rate changes from 3% to 3.25% with 2 payments on same date
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-01-01  | 2018-01-01        | 2019-03-31        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2018-09-01    |
       | 100000     | 2018-09-01    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 26                   | 15617                | 300000            | 315617              | 300000              |
     And the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | numberChargeableDays | amountOnIntDueDebt |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
       | true            | 26                      | 15617                | 300000           | 315617             | 695                  | 300000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
@@ -103,26 +103,26 @@ Feature: Interest Rate Changes
 
   Scenario: 2 Debts - Interest rate changes from 3% to 3.25% and then multiple payments are made for both debts
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-01-01  | 2018-01-01        | 2019-03-31        | 1525      | 1000     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-03-15    |
       | 100000     | 2019-04-15    |
     And a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-01-16  | 2018-01-16        | 2019-04-14        | 1545      | 1090     | true            |
     And the debt item has payment history
-      | amountPaid | dateOfPayment |
+      | paymentAmount | paymentDate |
       | 100000     | 2019-01-20    |
       | 100000     | 2019-03-10    |
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 52                   | 37687                | 600000            | 637687              | 600000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 1358                 | 26                      | 19365                | 300000           | 319365             | 300000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
@@ -133,7 +133,7 @@ Feature: Interest Rate Changes
       | 2018-01-01 | 2018-08-20 | 231          | 3.0          | 24                      | 5695              | 305695             | 300000               |
       | 2018-08-21 | 2019-03-31 | 222          | 3.25         | 26                      | 5930              | 305930             | 300000               |
     And the 2nd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 1237                 | 26                      | 18322                | 300000           | 318322             | 300000             |
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
@@ -145,18 +145,18 @@ Feature: Interest Rate Changes
       | 2018-08-21 | 2019-04-14 | 236          | 3.25         | 26                      | 6304              | 306304             | 300000               |
 
 
-  Scenario: Interest rate changes from 2.75% to 2.6% - dateCalculationTo before interestStartDate
+  Scenario: Interest rate changes from 2.75% to 2.6% - interestRequestedTo before interestStartDate
     Given a debt item
-      | originalAmount | dateCreated | interestStartDate | dateCalculationTo | mainTrans | subTrans | interestBearing |
+      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2020-01-01  | 2020-04-10        | 2020-03-31        | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | totalAmountIntTotal | amountOnIntDueTotal |
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 0                    | 0                    | 500000            | 500000              | 500000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDebtTotal | unpaidAmountDebt | totalAmountIntDebt | amountOnIntDueDebt |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 0                    | 0                       | 0                    | 500000           | 500000             | 500000             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |

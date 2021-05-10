@@ -8,7 +8,7 @@ package uk.gov.hmrc.test.api.models
 import play.api.libs.json.{Json, OFormat}
 
 case class SolCalculationSummaryResponse(
-  totalAmountIntDebt: Int,
+  totalAmountIntDuty: Int,
   combinedDailyAccrual: Int,
   debts: List[SolCalculation]
 ) {}
@@ -18,7 +18,7 @@ object SolCalculationSummaryResponse {
 
   def apply(solCalculationSummary: SolCalculationSummary): SolCalculationSummaryResponse =
     SolCalculationSummaryResponse(
-      totalAmountIntDebt = solCalculationSummary.totalAmountIntDebt,
+      totalAmountIntDuty = solCalculationSummary.totalAmountIntDuty,
       combinedDailyAccrual = solCalculationSummary.combinedDailyAccrual,
       debts = solCalculationSummary.debts
     )
