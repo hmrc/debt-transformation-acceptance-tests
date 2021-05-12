@@ -21,8 +21,8 @@ Feature: Interest Rate Changes - Edge cases
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 13200                | 3782700              | 150000000         | 153782700           | 150000000           |
     And the 300th debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
-      | true            | 301          | 44                      | 12609                 | 500000          | 512609             | 500000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty | interestOnlyIndicator |
+      | true            | 301          | 44                      | 12609                 | 500000          | 512609             | 500000             |         false                 |
 
   Scenario: 2 Debts - Interest rate changes from 3.25% to 2.75% - leap year - payment is made for 1 debt - Interest rate changes from 2.75% to 2.6%
     Given a debt item
@@ -42,8 +42,8 @@ Feature: Interest Rate Changes - Edge cases
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 62                   | 48293                | 800000            | 848293              | 800000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
-      | true            | 1995         | 21                      | 33823                | 300000           |  333823             | 300000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty | interestOnlyIndicator |
+      | true            | 1995         | 21                      | 33823                | 300000           |  333823             | 300000             |        false                 |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
       | 2018-06-01 | 2018-08-20 | 80           | 3.0          | 8                       | 657               | 100657             | 100000               |
@@ -60,8 +60,8 @@ Feature: Interest Rate Changes - Edge cases
       | 2020-04-07 | 2020-12-31 | 268          | 2.6          | 21                      | 5711              | 305711             | 300000               |
       | 2021-01-01 | 2021-03-31 | 89           | 2.6          | 21                      | 1901              | 301901             | 300000               |
     And the 2nd debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
-      | true            | 361          | 41                      | 14470                | 500000           | 514470             | 500000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty | interestOnlyIndicator |
+      | true            | 361          | 41                      | 14470                | 500000           | 514470             | 500000             |         false                 |
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
       | 2009-01-01 | 2009-01-05 | 4            | 5.5          | 75                      | 301               | 500301             | 500000               |
@@ -83,8 +83,8 @@ Feature: Interest Rate Changes - Edge cases
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
       | 28                   | 14326                | 400000            | 414326              | 400000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty |  amountOnIntDueDuty |
-      | true            | 548          | 28                      | 14326                | 400000           | 414326                              | 400000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty |  amountOnIntDueDuty |         interestOnlyIndicator |
+      | true            | 548          | 28                      | 14326                | 400000           | 414326                              | 400000             | false                 |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
       | 2020-01-01 | 2020-03-29 | 88           | 3.25         | 8                       | 781               | 100781             | 100000               |
@@ -106,8 +106,8 @@ Feature: Interest Rate Changes - Edge cases
 #      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
 #      | 0                    | 0                    | 500000            | 500000              | 500000              |
 #    And the 1st debt summary will contain
-#      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
-#      | true            | 0                       | 0                    | 500000           | 500000             | 0                    | 500000             |
+#      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty | interestOnlyIndicator |
+#      | true            | 0                       | 0                    | 500000           | 500000             | 0                    | 500000             | false                 |
 #    And the 1st debt summary will have calculation windows
 #      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | amountOnIntDueWindow | interestDueWindow | unpaidAmountWindow |
 #      | 2000-01-01 | 2000-02-05 | 0            | 0.0          | 0                       | 500000               | 0                 | 500000             |

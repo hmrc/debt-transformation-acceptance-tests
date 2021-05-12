@@ -8,8 +8,8 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
-      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |interestOnlyIndicator |
+      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |        false                 |
 
   Scenario: Interest Bearing TPSS MainTrans (1535) debt SubTrans (1000)
     Given a debt item
@@ -19,8 +19,8 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
-      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |interestOnlyIndicator |
+      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |        false                 |
 
   Scenario: Interest Bearing TPSS MainTrans (1540) debt SubTrans (1000)
     Given a debt item
@@ -30,8 +30,8 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
-      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty | interestOnlyIndicator |
+      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |         false                 |
 
   Scenario: Interest Bearing TPSS MainTrans (1545) debt SubTrans (1000)
     Given a debt item
@@ -41,8 +41,19 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
-      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |interestOnlyIndicator |
+      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |        false                 |
+
+  Scenario: No Interest Bearing and InterestOnlyDebt MainTrans (1546) debt SubTrans (2000)
+      Given a debt item
+        | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+        | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-08        | 1546      | 2000     | false            |
+      And the debt item has no payment history
+      And no breathing spaces have been applied to the customer
+      When the debt item is sent to the ifs service
+      Then the 1st debt summary will contain
+        | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |interestOnlyIndicator |
+        | false           | 0                       | 0                    | 0       | 500000           | 500000             | 0                    | 500000             | true                 |
 
   Scenario: Interest Bearing TPSS MainTrans (1545) debt SubTrans (1090)
     Given a debt item
@@ -52,8 +63,8 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     And no breathing spaces have been applied to the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
-      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |
-      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |
+      | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | intRate | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty |interestOnlyIndicator |
+      | true            | 35                      | 249                  | 2.6     | 500000           | 500249             | 7            | 500000             |        false                 |
 
   Scenario: All Non Interest Bearing MainTrans and SunTrans
     Given a debt item

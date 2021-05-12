@@ -171,6 +171,7 @@ class InterestForecastingSteps extends BaseStepDef {
       .toString
     responseBody.totalAmountIntDuty.toString      shouldBe asMapTransposed.get("totalAmountIntDuty").toString
     responseBody.unpaidAmountDuty.toString        shouldBe asMapTransposed.get("unpaidAmountDuty").toString
+    responseBody.interestOnlyIndicator.toString    shouldBe asMapTransposed.get("interestOnlyIndicator").toString
 
   }
 

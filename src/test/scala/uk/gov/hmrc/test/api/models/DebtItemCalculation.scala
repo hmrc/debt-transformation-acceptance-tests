@@ -16,6 +16,7 @@ case class DebtItemCalculation(
   numberOfChargeableDays: Long,
   totalAmountIntDuty: BigDecimal,
   unpaidAmountDuty: BigDecimal,
+  interestOnlyIndicator: Boolean,
   calculationWindows: List[DebtItemCalculationWindow] = Nil
 )
 object DebtItemCalculation {
