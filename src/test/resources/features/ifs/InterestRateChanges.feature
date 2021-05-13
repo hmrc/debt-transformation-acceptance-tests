@@ -23,16 +23,16 @@ Feature: Interest Rate Changes
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
-      | 22                   | 19144                | 300000            | 319144         | 300000              |
+      | 22                   | 19188                | 300000            | 319188         | 300000              |
     And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
-      | true            | 849                  | 22                      | 19144                | 300000           | 319144             | 300000             |
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |  interestOnlyIndicator |
+      | true            | 851                  | 22                      | 19188                | 300000           | 319188             | 300000             |  false                 |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | unpaidAmountWindow | amountOnIntDueWindow |
       | 2019-01-01 | 2019-12-31 | 364          | 3.25         | 17                      | 6482              | 206482             | 200000               |
-      | 2020-01-01 | 2020-02-01 | 31           | 3.25         | 17                      | 550               | 200550             | 200000               |
+      | 2020-01-01 | 2020-02-01 | 32           | 3.25         | 17                      | 568               | 200568             | 200000               |
       | 2019-01-01 | 2019-12-31 | 364          | 3.25         | 26                      | 9723              | 309723             | 300000               |
-      | 2020-01-01 | 2020-03-29 | 89           | 3.25         | 26                      | 2344              | 302344             | 300000               |
+      | 2020-01-01 | 2020-03-29 | 89           | 3.25         | 26                      | 2370              | 302370             | 300000               |
       | 2020-03-30 | 2020-03-31 | 2            | 2.75         | 22                      | 45                | 300045             | 300000               |
 
 

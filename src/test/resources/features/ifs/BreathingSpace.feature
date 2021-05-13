@@ -26,15 +26,15 @@ Feature: Breathing Space
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
-      | 35                   | 534                  | 500000            | 500534              | 500000              |
+      | 35                   | 569                  | 500000            | 500569         | 500000              |
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty | interestOnlyIndicator |
-      | true            | 15                   | 35                      | 534                  | 500000           | 500534             | 500000             | false                 |
+      | true            | 16                   | 35                      | 569                  | 500000           | 500569             | 500000             | false                 |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2021-03-01 | 2021-03-06 | 5            | 2.6          | 35                      | 178               | 500000               | 500178             |
       | 2021-03-07 | 2021-03-10 | 3            | 0.0          | 0                       | 0                 | 500000               | 500000             |
-      | 2021-03-10 | 2021-03-20 | 11           | 2.6          | 35                      | 356               | 500000               | 500356             |
+      | 2021-03-10 | 2021-03-20 | 11           | 2.6          | 35                      | 391               | 500000               | 500391             |
 
   Scenario: Breathing Space - open ended
     Given a debt item

@@ -13,7 +13,7 @@ Feature: Leap years
       | 37                   | 35727                | 500000            | 535727         | 500000              |
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |interestOnlyIndicator|
-      | true            | 821                  | 37                      | 35727                | 500000           | 5035727            | 500000             |false                |
+      | true            | 821                  | 37                      | 35727                | 500000           | 535727            | 500000             |false                |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2018-01-01 | 2018-08-20 | 231          | 3.0          | 41                      | 9493              | 500000               | 509493             |
