@@ -182,8 +182,8 @@ Feature: Debt Calculation For TPSS MainTrans 1525 case
   Scenario: TPSS interestStartDate debt before 2001 jan 01 - Edge Case
         Given a debt item
           | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
-          | -1             | 2000-03-01  | 2000-12-01        | 2001-03-08          | 1525      | 1000     | true            |
+          | 500000             | 2000-03-01  | 2000-12-01        | 2001-03-08          | 1525      | 1000     | true            |
         And the debt item has no payment history
         And no breathing spaces have been applied to the customer
         When the debt item is sent to the ifs service
-        Then the ifs service will respond with Could not parse body due to requirement failed: Invalid Interest Start Date. IFS does not store or calculate historic interest rates
+        Then the ifs service will respond with Invalid Interest Start Date. IFS does not store or calculate historic interest rates
