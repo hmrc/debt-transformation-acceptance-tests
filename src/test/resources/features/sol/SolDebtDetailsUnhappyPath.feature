@@ -17,7 +17,7 @@ Feature: Statement of liability Unhappy Path (Service Errors)
   Scenario: Sol Reference data service failure - invalid main trans
     Given debt details
       | solType | debtId  | mainTrans | subTrans |interestRequestedTo |solRequestedDate|
-      | UI      | debt002 | 1525      | 1000     |2021-08-10          |2021-05-13      |
+      | UI      | debt007 | 1525      | 1000     |2021-08-10          |2021-05-13      |
     And add debt item chargeIDs to the debt
       | dutyId   |
       | "duty01" |
@@ -25,4 +25,4 @@ Feature: Statement of liability Unhappy Path (Service Errors)
       | "duty03" |
     When a debt statement of liability is requested
     Then the sol response code should be 404
-    And the sol service will respond with {name: ReferenceDataLookupError, statusCode: 404, uniqueReference: 1085, 1000}
+    And the sol service will respond with {name: ReferenceDataLookupError, statusCode: 404, uniqueReference: [{\"mainTrans\":\"1085\",\"subTrans\":\"1000\"}]}

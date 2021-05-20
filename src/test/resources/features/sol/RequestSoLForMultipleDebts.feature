@@ -36,11 +36,11 @@ Feature: statement of liability multiple debts
     When a debt statement of liability is requested
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
-      | 1107917        | 63                   |
+      | 1107754        | 63                   |
 
     And the 1st multiple statement of liability debt summary will contain duties
       | debtID  | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrualDebt | dutyID | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
-      | debt001 | 1525      | TPSS Account Tax Assessment | 7917                 | 907917             | 63                       | duty01 | 1000     | IT                  | 500000           | 35                   | true            | false                 |
+      | debt001 | 1525      | TPSS Account Tax Assessment | 7754                 | 907754             | 63                       | duty01 | 1000     | IT                  | 500000           | 35                   | true            | false                 |
 
     And the statement of liability debt summary response
       | debtID  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrualDebt | dutyID | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
