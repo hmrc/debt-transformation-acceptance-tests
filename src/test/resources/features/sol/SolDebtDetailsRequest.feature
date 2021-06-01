@@ -35,11 +35,11 @@ Feature: statement of liability Debt details
     When a debt statement of liability is requested
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
-      | 907917         | 63                   |
+      | 913624         | 63                   |
 
     And the 1st sol debt summary will contain
       | debtID  | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt001 | 1525      | TPSS Account Tax Assessment | 7917                | 907917            | 63                   |
+      | debt001 | 1525      | TPSS Account Tax Assessment | 13624                | 913624            | 63                   |
 
     And the 1st sol debt summary will contain duties
       | dutyID | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
