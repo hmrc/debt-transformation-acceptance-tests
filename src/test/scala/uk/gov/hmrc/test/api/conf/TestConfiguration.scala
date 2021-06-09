@@ -22,11 +22,14 @@ object TestConfiguration {
   val config: Config        = ConfigFactory.load()
   val env: String           = config.getString("environment")
   val defaultConfig: Config = config.getConfig("local")
+  val qaConfig: Config = config.getConfig("qa")
+
   val envConfig: Config     = config.getConfig(env).withFallback(defaultConfig)
 
   def url(service: String): String = {
     val host = env match {
       case "local" => s"$environmentHost:${servicePort(service)}"
+      case "qa" => s"$environmentHost:${servicePort(service)}"
       case _       => s"${envConfig.getString(s"services.host")}"
     }
     s"$host${serviceRoute(service)}"
@@ -35,7 +38,8 @@ object TestConfiguration {
   def zapProxy: Boolean = envConfig.getBoolean("zapProxy")
 
   def environmentHost: String = envConfig.getString("services.host")
-
+  def clientId:       String = envConfig.getString("clientId")
+  def clientSecret:   String = envConfig.getString("clientSecret")
   def servicePort(serviceName: String): String =
     envConfig.getString(s"services.$serviceName.port")
 
