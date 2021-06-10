@@ -22,7 +22,6 @@ object TestConfiguration {
   val config: Config        = ConfigFactory.load()
   val env: String           = config.getString("environment")
   val defaultConfig: Config = config.getConfig("local")
-  val qaConfig: Config = config.getConfig("qa")
 
   val envConfig: Config     = config.getConfig(env).withFallback(defaultConfig)
 
