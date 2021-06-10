@@ -9,7 +9,6 @@
 
 Feature: Suppression
 
-
   Scenario: Suppression applied to sub trans
     Given suppression data has been created
       | reason | enabled | fromDate   | toDate     |
@@ -145,35 +144,7 @@ Feature: Suppression
       | numberChargeableDays |
       | 2                    |
 
-  Scenario: Suppression not applied to customers previous postcode
-    Given suppression data has been created
-      | reason | enabled | fromDate   | toDate     |
-      | POLICY | true    | 2021-01-04 | 2021-05-04 |
-    And suppression rules have been created
-      | ruleId | postCode | suppressionIds |
-      | 1      | TW3      | 1              |
-    And a debt item
-      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans |
-      | 500000         | 2020-01-01  | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
-    And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
-    And the customer has post codes
-      | postCode | postCodeDate |
-      | TW2 4TW  | 2018-07-06   |
-      | TW3 4QQ  | 2019-07-06   |
-      | TW43 4QR | 2020-07-06   |
-    When the debt item is sent to the ifs service
-    Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal |
-      | 35                   | 5520                 |
-    And the 1st debt summary will contain
-      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-      | 155                  | 35                      | 505520             |
-    And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual |
-      | 2021-02-01 | 2021-07-06 | 155          | 2.6          | 35                      |
-
-  Scenario: Suppression, 2 payments before suppression dates
+   Scenario: Suppression, 2 payments before suppression dates
     Given suppression data has been created
       | reason      | enabled | fromDate   | toDate     |
       | LEGISLATIVE | true    | 2021-04-04 | 2021-05-04 |
@@ -205,7 +176,6 @@ Feature: Suppression
       | 2021-02-01 | 2021-04-03 | 61           | 2.6          | 24                      | 351520             |             |      |
       | 2021-04-04 | 2021-05-04 | 31           | 0.0          | 0                       | 350000             | LEGISLATIVE | 1    |
       | 2021-05-05 | 2021-07-06 | 63           | 2.6          | 24                      | 351570             |             |      |
-
 
   Scenario: Suppression, 2 payments after suppression dates
     Given suppression data has been created
