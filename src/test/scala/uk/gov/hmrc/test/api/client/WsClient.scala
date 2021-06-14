@@ -63,7 +63,6 @@ object WsClient extends LazyLogging {
   }
 
   def post(uri: String, headers: Map[String, String], json: JsValue): StandaloneWSResponse = {
-    println("")
     logger.info(s"POST request URI: $uri")
     logger.debug(s"POST request headers: $headers")
     logger.debug(s"POST request body: $json")
