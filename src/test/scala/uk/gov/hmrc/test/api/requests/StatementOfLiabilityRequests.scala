@@ -55,4 +55,19 @@ object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
     ScenarioContext.set("debtDetails", jsonWithCustomerPostCodes)
     print("duty id **********************   " + jsonWithCustomerPostCodes)
   }
+
+
+
+  def  qaSolRequests(endpoint: String): StandaloneWSResponse = {
+    val token = getQaStatementOfLiabilityAccessToken
+    print("New qa token:::::::::::::::::::::::::::::::::::::::" +token)
+    val baseUri     = s"$statementOfLiabilityApiUrl$endpoint"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $token",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.get(baseUri, headers = headers)
+  }
+
 }

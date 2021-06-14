@@ -30,6 +30,8 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
 
   def getDebtCalculation(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(enrolments = Seq("read:interest-forecasting"))
+    print("New bearerToken ::::::::::::::::::" + bearerToken)
+
     val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",

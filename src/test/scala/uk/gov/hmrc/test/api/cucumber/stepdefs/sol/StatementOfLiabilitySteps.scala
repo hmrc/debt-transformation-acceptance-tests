@@ -110,7 +110,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     val request = ScenarioContext.get("debtDetails").toString
 
     val response =
-      StatementOfLiabilityRequests.getStatementOfLiability(request)
+      StatementOfLiabilityRequests.qaSolRequests(request)
     println(s"RESP --> ${response.body}")
     ScenarioContext.set("response", response)
   }

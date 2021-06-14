@@ -116,7 +116,7 @@ Feature: Suppression
     And the 2nd debt summary will contain
       | numberChargeableDays | unpaidAmountDuty |
       | 124                  | 400000           |
-
+  @wip5
   Scenario: Suppression, open ended suppression
     Given suppression data has been created
       | reason      | enabled | fromDate   | toDate     |
