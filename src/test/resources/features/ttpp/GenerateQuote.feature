@@ -13,7 +13,6 @@ Feature: Generate Quote test
     And customer values are
       | quoteType   | instalmentStartDate | instalmentAmount | frequency | duration | debtAmount | initialPaymentAmount | initialPaymentDate | paymentPlanType |
       | quoteType   | 2021-01-01          | 100              | 0.6       | 1 month  | 100        | 100                  | 2021-01-01         | paymentPlanType |
-      | aaquoteType | 2021-01-01          | 100              | 0.6       | 1 month  | 100        | 100                  | 2021-01-01         | paymentPlanType |
 
     And Debt is
       | debtId  | mainTrans |
@@ -28,9 +27,9 @@ Feature: Generate Quote test
       | 2021-01-10      | 2021-02-10    | 2021-01-01  | 100           |
       | 2021-03-10      | 2021-04-10    | 2021-01-01  | 200           |
 
-    When the quote is sent to the ttpp service
+    When the generate quote request is sent to the ttpp service
 
-    Then the ttp service is going to return a response with
+    Then the ttp service is going to return a generate quote response with
       | quoteReference | customerReference | quoteType | totalDebtAmount | numberOfInstalments | totalInterest |
       | quoteRef1234   | customerRef1234   | xyz       | 1000            | 2                   | 0.26          |
 

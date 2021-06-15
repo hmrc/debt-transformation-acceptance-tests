@@ -23,7 +23,7 @@ import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.models.ttpp.GenerateQuoteResponse
+import uk.gov.hmrc.test.api.models.ttpp.{GenerateQuoteResponse, UpdateQuoteResponse}
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests._
 import uk.gov.hmrc.test.api.utils.{ScenarioContext, TestData}
@@ -38,7 +38,21 @@ class TimeToPayProxySteps
 
   }
 
-  When("the quote is sent to the ttpp service") { () =>
+  Given("an update quote request") { (dataTable: DataTable) =>
+    TimeToPayProxyRequests.createUpdateQuoteRequestBodyAndParams(dataTable)
+  }
+
+  When("the update quote request is sent to the ttpp service") { () =>
+
+    val request = ScenarioContext.get("updateQuoteRequest").toString
+    val customerReference = ScenarioContext.get("customerReference").toString
+    val planId = ScenarioContext.get("planId").toString
+    val response = TimeToPayProxyRequests.putGenerateQuote(request, customerReference, planId)
+
+    ScenarioContext.set("response", response)
+  }
+
+  When("the generate quote request is sent to the ttpp service") { () =>
     addAdHocsToGenerateQuoteRequest()
     addCustomersToGenerateQuoteRequest()
     addDebtsToGenerateQuoteRequest()
@@ -103,11 +117,45 @@ class TimeToPayProxySteps
       }
   }
 
-  Then("the ttp service is going to return a response with") {
+  Then("the ttp service is going to return an update response with") {
     dataTable: DataTable =>
       val asMapTransposed =
         dataTable.transpose().asMap(classOf[String], classOf[String])
       val response: StandaloneWSResponse = ScenarioContext.get("response")
+
+      val responseBody = Json.parse(response.body).as[UpdateQuoteResponse]
+
+      if (asMapTransposed.containsKey("customerReference")) {
+        responseBody.customerReference shouldBe asMapTransposed
+          .get("customerReference")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("planId")) {
+        responseBody.pegaPlanId shouldBe asMapTransposed
+          .get("planId")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("quoteStatus")) {
+        responseBody.quoteStatus shouldBe asMapTransposed
+          .get("quoteStatus")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("quoteUpdatedDate")) {
+        responseBody.quoteUpdatedDate.toString shouldBe asMapTransposed
+          .get("quoteUpdatedDate")
+          .toString
+      }
+  }
+
+  Then("the ttp service is going to return a generate quote response with") {
+    dataTable: DataTable =>
+      val asMapTransposed =
+        dataTable.transpose().asMap(classOf[String], classOf[String])
+      val response: StandaloneWSResponse = ScenarioContext.get("response")
+
 
       val responseBody = Json.parse(response.body).as[GenerateQuoteResponse]
 

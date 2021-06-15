@@ -1,0 +1,9 @@
+{
+  "customerReference": "<REPLACE_customerReference>",
+  "pegaPlanId": "<REPLACE_planId>",
+  "updateType": "<REPLACE_updateType>",
+  "cancellationReason": "<REPLACE_cancellationReason>",
+  "paymentMethod": "<REPLACE_paymentMethod>",
+  "paymentReference": "<REPLACE_paymentReference>",
+  "thirdPartyBank": <REPLACE_thirdPartyBank>
+}

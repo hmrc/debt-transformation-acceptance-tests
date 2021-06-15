@@ -84,11 +84,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
 
         val replaced = getBodyAsString("adHoc")
           .replaceAll("<REPLACE_description>", adHoc.get("description"))
-          .replaceAll(
-            "<REPLACE_adHocAmount>",
-            adHoc.get("adHocAmount")
-          )
-
+          .replaceAll("<REPLACE_adHocAmount>", adHoc.get("adHocAmount"))
 
         if (index + 1 < asMapTransposed.size)
           s"$acc$replaced,"
@@ -149,10 +145,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
       Try(ScenarioContext.get[String]("adHocs"))
         .fold(_ => "", identity)
     val generateQuoteRequest =
-      currentGenerateQuoteRequest.replace(
-        "<REPLACE_adHocs>",
-        currentAdHocs
-      )
+      currentGenerateQuoteRequest.replace("<REPLACE_adHocs>", currentAdHocs)
     ScenarioContext.set("generateQuoteRequest", generateQuoteRequest)
   }
 
@@ -250,8 +243,8 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
   }
 
   private def addLastToList(maybePrevious: Option[String],
-                          maybeCurrentBucket: Option[String],
-                          key: String) = {
+                            maybeCurrentBucket: Option[String],
+                            key: String) = {
     (maybePrevious, maybeCurrentBucket) match {
       case (None, None)        => ()
       case (Some(d), Some(ds)) => ScenarioContext.set(key, s"$ds,$d")
@@ -261,19 +254,70 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
   }
 
   def createGenerateQuoteRequestBody(dataTable: DataTable): Unit = {
-    val asmapTransposed =
+    val asMapTransposed =
       dataTable.transpose().asMap(classOf[String], classOf[String])
 
     val generateQuoteRequest = getBodyAsString("generateQuoteRequest")
       .replaceAll(
         "<REPLACE_customerReference>",
-        asmapTransposed.get("customerReference")
+        asMapTransposed.get("customerReference")
       )
-      .replaceAll("<REPLACE_debtAmount>", asmapTransposed.get("debtAmount"))
+      .replaceAll("<REPLACE_debtAmount>", asMapTransposed.get("debtAmount"))
       .replaceAll("<REPLACE_adHoc>", "")
 
     ScenarioContext.set("generateQuoteRequest", generateQuoteRequest)
 
+  }
+
+  def createUpdateQuoteRequestBodyAndParams(dataTable: DataTable): Unit = {
+    val asMapTransposed =
+      dataTable.transpose().asMap(classOf[String], classOf[String])
+
+    val updateQuoteRequest = getBodyAsString("updateQuoteRequest")
+      .replaceAll(
+        "<REPLACE_customerReference>",
+        asMapTransposed.get("customerReference")
+      )
+      .replaceAll("<REPLACE_planId>", asMapTransposed.get("planId"))
+      .replaceAll("<REPLACE_updateType>", asMapTransposed.get("updateType"))
+      .replaceAll(
+        "<REPLACE_cancellationReason>",
+        asMapTransposed.get("cancellationReason")
+      )
+      .replaceAll(
+        "<REPLACE_paymentMethod>",
+        asMapTransposed.get("paymentMethod")
+      )
+      .replaceAll(
+        "<REPLACE_paymentReference>",
+        asMapTransposed.get("paymentReference")
+      )
+      .replaceAll(
+        "<REPLACE_thirdPartyBank>",
+        asMapTransposed.get("thirdPartyBank")
+      )
+
+    ScenarioContext.set("customerReference", asMapTransposed.get("customerReference"))
+    ScenarioContext.set("planId", asMapTransposed.get("planId"))
+    ScenarioContext.set("updateQuoteRequest", updateQuoteRequest)
+  }
+
+  def putGenerateQuote(json: String,
+                       customerReference: String,
+                       planId: String): StandaloneWSResponse = {
+    val bearerToken = createBearerToken(
+      enrolments = Seq("read:time-to-pay-proxy")
+    )
+
+    val baseUri =
+      s"$timeToPayProxyApiUrl/individuals/time-to-pay/quote/$customerReference/$planId"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type" -> "application/json",
+      "Accept" -> "application/vnd.hmrc.1.0+json"
+    )
+
+    WsClient.put(baseUri, headers = headers, Json.parse(json))
   }
 
   def postGenerateQuote(json: String): StandaloneWSResponse = {
