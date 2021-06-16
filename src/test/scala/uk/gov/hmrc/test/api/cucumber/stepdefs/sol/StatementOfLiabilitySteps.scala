@@ -89,8 +89,8 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     val SolMultipleDebts = getBodyAsString("SolMultipleDebts")
       .replaceAll("<REPLACE_solType>", asMapTransposed.get("solType"))
       .replaceAll("REPLACE_solRequestedDate", asMapTransposed.get("solRequestedDate"))
-      .replaceAll("REPLACE_debtID", asMapTransposed.get("debtID"))
-      .replaceAll("REPLACE_ID", asMapTransposed.get("debtID2"))
+      .replaceAll("REPLACE_debtId", asMapTransposed.get("debtId"))
+      .replaceAll("REPLACE_Id", asMapTransposed.get("debtId2"))
       .replaceAll("REPLACE_interestRequestedTo", asMapTransposed.get("interestRequestedTo"))
       .replaceAll("REPLACE_interestRequestedTo2", asMapTransposed.get("interestRequestedTo"))
 

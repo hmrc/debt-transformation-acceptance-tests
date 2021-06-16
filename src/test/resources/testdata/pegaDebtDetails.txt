@@ -1,0 +1,24 @@
+{
+  "solType" : "<REPLACE_solType>",
+  "solRequestedDate" :"<REPLACE_solRequestedDate>",
+  "customerUniqueRef": "NEHA1234",
+  "debts" : [{
+    "debtId": "<REPLACE_debtID>",
+    "dutyIds":[<REPLACE_dutyItemChargeId>],
+    "interestRequestedTo": "REPLACE_interestRequestedTo"
+   }]
+}
+
+{
+"solType" : "UI",
+  "solRequestedDate": "2021-05-13",
+  "customerUniqueRef": "NEHA1234",
+  "debts" : [ {
+    "debtId" : "<REPLACE_debtID>",
+    "interestRequestedTo": "2021-08-01"
+  },
+  {
+    "dutyIds":[<REPLACE_dutyItemChargeId>]
+    "interestRequestedTo": "REPLACE_interestRequestedTo"  }
+  ]
+}

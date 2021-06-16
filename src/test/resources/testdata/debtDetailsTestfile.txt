@@ -4,7 +4,7 @@
   "customerUniqueRef": "NEHA1234",
   "debts" : [{
     "debtId": "<REPLACE_debtID>",
-    "dutyIds":[<REPLACE_dutyItemChargeId>],
+    "dutyId":[<REPLACE_dutyItemChargeId>],
     "interestRequestedTo": "REPLACE_interestRequestedTo"
    }]
 }
