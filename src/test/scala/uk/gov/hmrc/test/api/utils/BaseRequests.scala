@@ -4,7 +4,6 @@ import org.scalatest.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.conf.TestConfiguration
 
 trait BaseRequests extends RandomValues with BaseUris {
 
@@ -43,15 +42,10 @@ trait BaseRequests extends RandomValues with BaseUris {
   }
 
   def getQaStatementOfLiabilityAccessToken:String = {
-    TestConfiguration.env match {
-      case "local" => createBearerToken()
-      case _ =>
-        val clientId     = TestConfiguration.clientId
-        val clientSecret = TestConfiguration.clientSecret
     val accessToken: StandaloneWSResponse = {  val json = Json.obj(
       "grant_type" -> "client_credentials",
-      "client_secret" -> s"$clientId",
-      "client_id" -> s"$clientSecret",
+      "client_secret" -> "6c2fc716-b9c6-4bb8-a57e-4908d32b9b27",
+      "client_id" -> "reRg5ZSks9hGLpzxS5RRnYHjHYtW",
       "scope" -> "read:statement-of-liability")
     val accessTokenResponse = WsClient.post(s"https://api.qa.tax.service.gov.uk/oauth/token",
       Map("Content-Type" -> "application/json", "Accept" -> "application/vnd.hmrc.1.0+json"),
@@ -62,6 +56,5 @@ trait BaseRequests extends RandomValues with BaseUris {
     }
 
     (Json.parse(accessToken.body) \ "access_token").as[String]
-  }
   }
 }
