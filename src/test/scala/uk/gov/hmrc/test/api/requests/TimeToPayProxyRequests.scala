@@ -310,7 +310,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
     )
 
     val baseUri =
-      s"$timeToPayProxyApiUrl/individuals/time-to-pay/quote/$customerReference/$planId"
+      s"$timeToPayProxyApiUrl/quote/$customerReference/$planId"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type" -> "application/json",
@@ -325,7 +325,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
       enrolments = Seq("read:time-to-pay-proxy")
     )
 
-    val baseUri = s"$timeToPayProxyApiUrl/individuals/time-to-pay/quote"
+    val baseUri = s"$timeToPayProxyApiUrl/quote"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type" -> "application/json",
