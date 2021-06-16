@@ -34,8 +34,6 @@ object TestConfiguration {
     s"$host${serviceRoute(service)}"
   }
 
-  def zapProxy: Boolean = envConfig.getBoolean("zapProxy")
-
   def environmentHost: String = envConfig.getString("services.host")
   def clientId:       String = envConfig.getString("clientId")
   def clientSecret:   String = envConfig.getString("clientSecret")
