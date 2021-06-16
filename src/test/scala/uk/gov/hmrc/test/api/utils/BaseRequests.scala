@@ -1,6 +1,8 @@
 package uk.gov.hmrc.test.api.utils
 
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 import play.api.libs.json.Json
+import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 
 trait BaseRequests extends RandomValues with BaseUris {
@@ -39,35 +41,21 @@ trait BaseRequests extends RandomValues with BaseUris {
 
   }
 
-  def getQaStatementOfLiabilityAccessToken:Map[String, Seq[String]] = {
+  def getQaStatementOfLiabilityAccessToken:String = {
     val redirectUri = "https://www.example.com/redirect"
-    val json = Json.obj(
+    val accessToken: StandaloneWSResponse = {  val json = Json.obj(
       "grant_type" -> "client_credentials",
       "client_secret" -> "6c2fc716-b9c6-4bb8-a57e-4908d32b9b27",
       "client_id" -> "reRg5ZSks9hGLpzxS5RRnYHjHYtW",
       "scope" -> "read:statement-of-liability")
-
-    println(s"Bearer Token Request JSON: $json")
-
-    /**
-     * https://auth-login-api.protected.mdtp/government-gateway/session/login
-     *
-     *     auth-login-api {
-     *       host: "https://auth-login-api.protected.mdtp"
-     *       productionRoute: "/government-gateway"
-     *     }
-     *
-     */
-    val response = WsClient.post(s"https://api.qa.tax.service.gov.uk/oauth/token",
+    val accessTokenResponse = WsClient.post(s"https://api.qa.tax.service.gov.uk/oauth/token",
       Map("Content-Type" -> "application/json", "Accept" -> "application/vnd.hmrc.1.0+json"),
       json)
+    println(s"Bearer Token: ${accessTokenResponse.body}")
+      accessTokenResponse.status shouldBe 200
+      accessTokenResponse
+    }
 
-    println(s"Bearer Token Response JSON: ${response.body}")
-
-    val authHeader: Map[String, Seq[String]] = response.headers
-      .filter(header => header._1.equalsIgnoreCase("Authorization"))
-    authHeader
-
+    (Json.parse(accessToken.body) \ "access_token").as[String]
   }
-
 }

@@ -66,6 +66,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     val debtDetailsTestfile = getBodyAsString("debtDetailsTestfile")
       .replaceAll("<REPLACE_solType>", asMapTransposed.get("solType"))
       .replaceAll("<REPLACE_debtID>", asMapTransposed.get("debtId"))
+      .replaceAll("<REPLACE_solRequestedDate>", asMapTransposed.get("solRequestedDate"))
       .replaceAll("<REPLACE_customerReference>", asMapTransposed.get("customerUniqueRef"))
       .replaceAll("REPLACE_interestRequestedTo", asMapTransposed.get("interestRequestedTo"))
       .replaceAll("<REPLACE_mainTrans>", asMapTransposed.get("mainTrans"))
@@ -108,9 +109,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
 
   When("""a debt statement of liability is requested""") {
     val request = ScenarioContext.get("debtDetails").toString
-
-    val response =
-      StatementOfLiabilityRequests.qaSolRequests(request)
+    val response = StatementOfLiabilityRequests.qaSolRequests(request)
     println(s"RESP --> ${response.body}")
     ScenarioContext.set("response", response)
   }
