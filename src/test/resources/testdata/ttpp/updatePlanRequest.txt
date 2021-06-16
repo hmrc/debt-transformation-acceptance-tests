@@ -1,6 +1,6 @@
 {
   "customerReference": "<REPLACE_customerReference>",
-  "pegaPlanId": "<REPLACE_planId>",
+  "planId": "<REPLACE_planId>",
   "updateType": "<REPLACE_updateType>",
   "cancellationReason": "<REPLACE_cancellationReason>",
   "paymentMethod": "<REPLACE_paymentMethod>",

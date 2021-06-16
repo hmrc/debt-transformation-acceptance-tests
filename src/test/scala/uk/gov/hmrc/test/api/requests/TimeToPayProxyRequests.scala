@@ -269,11 +269,11 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
 
   }
 
-  def createUpdateQuoteRequestBodyAndParams(dataTable: DataTable): Unit = {
+  def createUpdatePlanRequestBodyAndParams(dataTable: DataTable): Unit = {
     val asMapTransposed =
       dataTable.transpose().asMap(classOf[String], classOf[String])
 
-    val updateQuoteRequest = getBodyAsString("updateQuoteRequest")
+    val updatePlanRequest = getBodyAsString("updatePlanRequest")
       .replaceAll(
         "<REPLACE_customerReference>",
         asMapTransposed.get("customerReference")
@@ -299,7 +299,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
 
     ScenarioContext.set("customerReference", asMapTransposed.get("customerReference"))
     ScenarioContext.set("planId", asMapTransposed.get("planId"))
-    ScenarioContext.set("updateQuoteRequest", updateQuoteRequest)
+    ScenarioContext.set("updatePlanRequest", updatePlanRequest)
   }
 
   def putGenerateQuote(json: String,

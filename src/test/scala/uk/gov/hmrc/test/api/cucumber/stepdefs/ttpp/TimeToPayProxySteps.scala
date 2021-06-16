@@ -23,7 +23,7 @@ import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.models.ttpp.{GenerateQuoteResponse, UpdateQuoteResponse}
+import uk.gov.hmrc.test.api.models.ttpp.{GenerateQuoteResponse, UpdatePlanResponse}
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests._
 import uk.gov.hmrc.test.api.utils.{ScenarioContext, TestData}
@@ -38,13 +38,13 @@ class TimeToPayProxySteps
 
   }
 
-  Given("an update quote request") { (dataTable: DataTable) =>
-    TimeToPayProxyRequests.createUpdateQuoteRequestBodyAndParams(dataTable)
+  Given("an update plan request") { (dataTable: DataTable) =>
+    TimeToPayProxyRequests.createUpdatePlanRequestBodyAndParams(dataTable)
   }
 
-  When("the update quote request is sent to the ttpp service") { () =>
+  When("the update plan request is sent to the ttpp service") { () =>
 
-    val request = ScenarioContext.get("updateQuoteRequest").toString
+    val request = ScenarioContext.get("updatePlanRequest").toString
     val customerReference = ScenarioContext.get("customerReference").toString
     val planId = ScenarioContext.get("planId").toString
     val response = TimeToPayProxyRequests.putGenerateQuote(request, customerReference, planId)
@@ -123,7 +123,7 @@ class TimeToPayProxySteps
         dataTable.transpose().asMap(classOf[String], classOf[String])
       val response: StandaloneWSResponse = ScenarioContext.get("response")
 
-      val responseBody = Json.parse(response.body).as[UpdateQuoteResponse]
+      val responseBody = Json.parse(response.body).as[UpdatePlanResponse]
 
       if (asMapTransposed.containsKey("customerReference")) {
         responseBody.customerReference shouldBe asMapTransposed
@@ -132,7 +132,7 @@ class TimeToPayProxySteps
       }
 
       if (asMapTransposed.containsKey("planId")) {
-        responseBody.pegaPlanId shouldBe asMapTransposed
+        responseBody.planId shouldBe asMapTransposed
           .get("planId")
           .toString
       }
