@@ -23,7 +23,7 @@ import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.models.ttpp.{GenerateQuoteResponse, UpdatePlanResponse}
+import uk.gov.hmrc.test.api.models.ttpp.{GenerateQuoteResponse, UpdatePlanResponse, ViewPlanResponse}
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests._
 import uk.gov.hmrc.test.api.utils.{ScenarioContext, TestData}
@@ -39,15 +39,30 @@ class TimeToPayProxySteps
   }
 
   Given("an update plan request") { (dataTable: DataTable) =>
-    TimeToPayProxyRequests.createUpdatePlanRequestBodyAndParams(dataTable)
+    TimeToPayProxyRequests.createRequestParameters(dataTable)
+    TimeToPayProxyRequests.createUpdatePlanRequestBody(dataTable)
   }
+
+  Given("an view plan request") { (dataTable: DataTable) =>
+    TimeToPayProxyRequests.createRequestParameters(dataTable)
+  }
+
+  When("the view plan request is sent to the ttpp service") { () =>
+
+    val customerReference = ScenarioContext.get("customerReference").toString
+    val planId = ScenarioContext.get("planId").toString
+    val response = TimeToPayProxyRequests.getPlan(customerReference, planId)
+
+    ScenarioContext.set("response", response)
+  }
+
 
   When("the update plan request is sent to the ttpp service") { () =>
 
     val request = ScenarioContext.get("updatePlanRequest").toString
     val customerReference = ScenarioContext.get("customerReference").toString
     val planId = ScenarioContext.get("planId").toString
-    val response = TimeToPayProxyRequests.putGenerateQuote(request, customerReference, planId)
+    val response = TimeToPayProxyRequests.putPlan(request, customerReference, planId)
 
     ScenarioContext.set("response", response)
   }
@@ -59,7 +74,7 @@ class TimeToPayProxySteps
 
     val request = ScenarioContext.get("generateQuoteRequest").toString
 
-    val response = TimeToPayProxyRequests.postGenerateQuote(request)
+    val response = TimeToPayProxyRequests.postQuote(request)
 
     ScenarioContext.set("response", response)
   }
@@ -150,12 +165,62 @@ class TimeToPayProxySteps
       }
   }
 
+  And("the ([0-9]\\d*)(?:st|nd|rd|th) view response instalment will contain") {
+    (index: Int, dataTable: DataTable) =>
+      val asMapTransposed =
+        dataTable.transpose().asMap(classOf[String], classOf[String])
+      val response: StandaloneWSResponse = ScenarioContext.get("response")
+      response.status should be(200)
+
+      val generateQuoteResponse =
+        ScenarioContext.get[ViewPlanResponse]("viewPlanResponse")
+
+      val nthInstalment = generateQuoteResponse.instalments(index - 1)
+      if (asMapTransposed.containsKey("dutyId")) {
+        nthInstalment.dutyId shouldBe asMapTransposed.get("dutyId").toString
+      }
+
+      if (asMapTransposed.containsKey("debtId")) {
+        nthInstalment.debtId shouldBe asMapTransposed.get("debtId").toString
+      }
+
+      if (asMapTransposed.containsKey("dueDate")) {
+        nthInstalment.dueDate.toString shouldBe asMapTransposed
+          .get("dueDate")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("balance")) {
+        nthInstalment.balance.toString shouldBe asMapTransposed
+          .get("balance")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("interest")) {
+        nthInstalment.interest.toString shouldBe asMapTransposed
+          .get("interest")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("interestRate")) {
+        nthInstalment.interestRate.toString shouldBe asMapTransposed
+          .get("interestRate")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("instalmentNumber")) {
+        nthInstalment.instalmentNumber.toString shouldBe asMapTransposed
+          .get("instalmentNumber")
+          .toString
+      }
+  }
+
   Then("the ttp service is going to return a generate quote response with") {
     dataTable: DataTable =>
       val asMapTransposed =
         dataTable.transpose().asMap(classOf[String], classOf[String])
-      val response: StandaloneWSResponse = ScenarioContext.get("response")
 
+      val response: StandaloneWSResponse = ScenarioContext.get("response")
 
       val responseBody = Json.parse(response.body).as[GenerateQuoteResponse]
 
@@ -178,6 +243,63 @@ class TimeToPayProxySteps
           .get("quoteType")
           .toString
       }
+      if (asMapTransposed.containsKey("numberOfInstalments")) {
+        responseBody.numberOfInstalments.toString shouldBe asMapTransposed
+          .get("numberOfInstalments")
+          .toString
+      }
+      if (asMapTransposed.containsKey("totalDebtAmount")) {
+        responseBody.totalDebtAmount.toString shouldBe asMapTransposed
+          .get("totalDebtAmount")
+          .toString
+      }
+      if (asMapTransposed.containsKey("totalInterest")) {
+        responseBody.totalInterest.toString shouldBe asMapTransposed
+          .get("totalInterest")
+          .toString
+      }
+  }
+
+  Then("the ttp service is going to return an view response with") {
+    dataTable: DataTable =>
+      val asMapTransposed =
+      dataTable.transpose().asMap(classOf[String], classOf[String])
+      val response: StandaloneWSResponse = ScenarioContext.get("response")
+
+      val responseBody = Json.parse(response.body).as[ViewPlanResponse]
+
+      ScenarioContext.set("viewPlanResponse", responseBody)
+
+      if (asMapTransposed.containsKey("customerReference")) {
+        responseBody.customerReference shouldBe asMapTransposed
+          .get("customerReference")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("planId")) {
+        responseBody.planId shouldBe asMapTransposed
+          .get("planId")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("quoteType")) {
+        responseBody.quoteType shouldBe asMapTransposed
+          .get("quoteType")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("paymentMethod")) {
+        responseBody.paymentMethod shouldBe asMapTransposed
+          .get("paymentMethod")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("paymentReference")) {
+        responseBody.paymentReference shouldBe asMapTransposed
+          .get("paymentReference")
+          .toString
+      }
+
       if (asMapTransposed.containsKey("numberOfInstalments")) {
         responseBody.numberOfInstalments.toString shouldBe asMapTransposed
           .get("numberOfInstalments")

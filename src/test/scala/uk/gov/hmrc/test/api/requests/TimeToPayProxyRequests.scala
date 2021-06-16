@@ -269,7 +269,14 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
 
   }
 
-  def createUpdatePlanRequestBodyAndParams(dataTable: DataTable): Unit = {
+  def createRequestParameters(dataTable: DataTable): Unit = {
+    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+
+    ScenarioContext.set("customerReference", asMapTransposed.get("customerReference"))
+    ScenarioContext.set("planId", asMapTransposed.get("planId"))
+  }
+
+  def createUpdatePlanRequestBody(dataTable: DataTable): Unit = {
     val asMapTransposed =
       dataTable.transpose().asMap(classOf[String], classOf[String])
 
@@ -297,12 +304,28 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
         asMapTransposed.get("thirdPartyBank")
       )
 
-    ScenarioContext.set("customerReference", asMapTransposed.get("customerReference"))
-    ScenarioContext.set("planId", asMapTransposed.get("planId"))
     ScenarioContext.set("updatePlanRequest", updatePlanRequest)
   }
 
-  def putGenerateQuote(json: String,
+  def getPlan(customerReference: String,
+                       planId: String): StandaloneWSResponse = {
+    val bearerToken = createBearerToken(
+      enrolments = Seq("read:time-to-pay-proxy")
+    )
+
+    val baseUri =
+      s"$timeToPayProxyApiUrl/quote/$customerReference/$planId"
+
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type" -> "application/json",
+      "Accept" -> "application/vnd.hmrc.1.0+json"
+    )
+
+    WsClient.get(baseUri, headers = headers)
+  }
+
+  def putPlan(json: String,
                        customerReference: String,
                        planId: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
@@ -320,7 +343,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
     WsClient.put(baseUri, headers = headers, Json.parse(json))
   }
 
-  def postGenerateQuote(json: String): StandaloneWSResponse = {
+  def postQuote(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:time-to-pay-proxy")
     )
