@@ -5,7 +5,7 @@ Feature: Generate Quote test
       | customerReference | debtAmount |
       | customerRef1234   | 100        |
 
-    And adHoc values are
+    And adHocs are
       | description  | adHocAmount |
       | description1 | 500         |
       | description2 | 600         |

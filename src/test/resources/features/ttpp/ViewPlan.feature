@@ -1,6 +1,6 @@
 Feature: Generate Quote test
 
-  Scenario: Retrieve generate quote response from Time to Pay Proxy
+  Scenario: Retrieve view plan response from Time to Pay Proxy
     Given an view plan request
       | customerReference | planId   |
       | customerRef1234   | pega1234 |

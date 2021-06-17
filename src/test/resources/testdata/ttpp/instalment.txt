@@ -1,0 +1,9 @@
+{
+  "dutyId": "<REPLACE_dutyId>",
+  "debtId": "<REPLACE_debtId>",
+  "dueDate": "<REPLACE_dueDate>",
+  "amountDue": <REPLACE_amountDue>,
+  "expectedPayment": <REPLACE_expectedPayment>,
+  "interestRate": <REPLACE_interestRate>,
+  "instalmentNumber": <REPLACE_instalmentNumber>
+}

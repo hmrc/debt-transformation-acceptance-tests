@@ -1,6 +1,6 @@
 Feature: Generate Quote test
 
-  Scenario: Retrieve generate quote response from Time to Pay Proxy
+  Scenario: Retrieve update plan response from Time to Pay Proxy
     Given an update plan request
       | customerReference | planId  | updateType | cancellationReason | paymentMethod | paymentReference | thirdPartyBank |
       | customerRef1234   | some id | some type  | some reason        | CC            | some reference   | false          |

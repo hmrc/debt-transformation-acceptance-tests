@@ -1,0 +1,11 @@
+{
+  "customerReference": "<REPLACE_customerReference>",
+  "planId": "<REPLACE_planId>",
+  "paymentMethod": "<REPLACE_paymentMethod>",
+  "paymentReference": "<REPLACE_paymentReference>",
+  "thirdPartyBank": <REPLACE_thirdPartyBank>,
+  "instalments": [<REPLACE_instalments>],
+  "numberOfInstalments": "<REPLACE_numberOfInstalments>",
+  "totalDebtAmount": <REPLACE_totalDebtAmount>,
+  "totalInterest": <REPLACE_totalInterest>
+}

@@ -23,7 +23,7 @@ import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.models.ttpp.{GenerateQuoteResponse, UpdatePlanResponse, ViewPlanResponse}
+import uk.gov.hmrc.test.api.models.ttpp.{CreatePlanResponse, GenerateQuoteResponse, UpdatePlanResponse, ViewPlanResponse}
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests
 import uk.gov.hmrc.test.api.requests.TimeToPayProxyRequests._
 import uk.gov.hmrc.test.api.utils.{ScenarioContext, TestData}
@@ -36,6 +36,10 @@ class TimeToPayProxySteps
   Given("a generate quote request") { (dataTable: DataTable) =>
     TimeToPayProxyRequests.createGenerateQuoteRequestBody(dataTable)
 
+  }
+
+  Given("a create plan request") { (dataTable: DataTable) =>
+    TimeToPayProxyRequests.createCreatePlanRequestBody(dataTable)
   }
 
   Given("an update plan request") { (dataTable: DataTable) =>
@@ -79,10 +83,24 @@ class TimeToPayProxySteps
     ScenarioContext.set("response", response)
   }
 
+  When("the create plan request is sent to the ttpp service") { () =>
+    addInstalmentToCreatePlanRequest()
+
+    val request = ScenarioContext.get("createPlanRequest").toString
+
+    val response = TimeToPayProxyRequests.postPlan(request)
+
+    ScenarioContext.set("response", response)
+  }
+
+
   And("customer values are") { dataTable: DataTable => addCustomer(dataTable)
   }
 
-  And("adHoc values are") { dataTable: DataTable => addAdHocs(dataTable)
+  And("adHocs are") { dataTable: DataTable => addAdHocs(dataTable)
+  }
+
+  And("instalments are") { dataTable: DataTable => addInstalments(dataTable)
   }
 
   And("Debt is") { dataTable: DataTable => addDebt(dataTable)
@@ -128,6 +146,32 @@ class TimeToPayProxySteps
       if (asMapTransposed.containsKey("instalmentNumber")) {
         nthInstalment.instalmentNumber.toString shouldBe asMapTransposed
           .get("instalmentNumber")
+          .toString
+      }
+  }
+
+  Then("the ttp service is going to return a create plan response with") {
+    dataTable: DataTable =>
+      val asMapTransposed =
+        dataTable.transpose().asMap(classOf[String], classOf[String])
+      val response: StandaloneWSResponse = ScenarioContext.get("response")
+      val responseBody = Json.parse(response.body).as[CreatePlanResponse]
+
+      if (asMapTransposed.containsKey("customerReference")) {
+        responseBody.customerReference shouldBe asMapTransposed
+          .get("customerReference")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("planId")) {
+        responseBody.planId shouldBe asMapTransposed
+          .get("planId")
+          .toString
+      }
+
+      if (asMapTransposed.containsKey("planStatus")) {
+        responseBody.planStatus shouldBe asMapTransposed
+          .get("planStatus")
           .toString
       }
   }
