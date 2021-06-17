@@ -12,7 +12,7 @@ object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
   val bearerToken = createBearerToken(enrolments = Seq("read:statement-of-liability"))
 
   def getStatementOfLiability(json: String): StandaloneWSResponse = {
-    val baseUri = s"$statementOfLiabilityApiUrl/sol"
+    val baseUri = s"individuals/$statementOfLiabilityApiUrl/sol"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
