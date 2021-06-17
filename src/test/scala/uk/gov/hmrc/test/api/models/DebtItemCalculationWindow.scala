@@ -20,7 +20,7 @@ case class DebtItemCalculationWindow(
   suppressionApplied: Option[SuppressionApplied]
 )
 
-case class SuppressionApplied(reason: String, code: String)
+case class SuppressionApplied(reason: String, description: String, code: String)
 
 object SuppressionApplied {
   implicit val formatCalculationWindow: OFormat[SuppressionApplied] = Json.format[SuppressionApplied]

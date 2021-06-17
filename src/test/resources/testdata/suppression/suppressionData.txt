@@ -1,6 +1,7 @@
      {
           "code": "<REPLACE_code>",
           "reason":"<REPLACE_reason>",
+          "description":"<REPLACE_reason>",
           "enabled": <REPLACE_enabled>,
           "fromDate": "<REPLACE_fromDate>",
           "toDate": "<REPLACE_toDate>"

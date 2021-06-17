@@ -4,7 +4,7 @@ Feature: Configuration
     Given a new interest rate table
     When a rule has been updated
       | mainTrans | subTrans | intRate |
-      | 5330      | 7006     |  22  |
+      | 5330      | 7006     |  22     |
     And a debt item
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2010-01-01  | 2011-02-01        | 2021-07-06          | 5330      | 7006     |
@@ -22,7 +22,7 @@ Feature: Configuration
   Scenario: A new interest rate is added
     Given a new interest rate table
     When a new interest rate is added
-      | interestRate | date |
+      | interestRate | date       |
       | 30.0         | 2021-04-01 |
     And a debt item
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans |
