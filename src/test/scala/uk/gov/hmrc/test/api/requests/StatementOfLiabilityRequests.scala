@@ -18,7 +18,9 @@ object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
+    print("request url******************** "+baseUri)
     WsClient.post(baseUri, headers = headers, Json.parse(json))
+
   }
 
   //Used by hello world only

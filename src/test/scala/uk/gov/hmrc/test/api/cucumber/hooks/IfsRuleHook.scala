@@ -2,8 +2,6 @@ package uk.gov.hmrc.test.api.cucumber.hooks
 
 import com.typesafe.scalalogging.LazyLogging
 import cucumber.api.scala.ScalaDsl
-import org.scalatest.Matchers.{be, convertToAnyShouldWrapper}
-import uk.gov.hmrc.test.api.requests.InterestForecastingRequests
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
 class IfsRuleHook extends ScalaDsl with LazyLogging {
