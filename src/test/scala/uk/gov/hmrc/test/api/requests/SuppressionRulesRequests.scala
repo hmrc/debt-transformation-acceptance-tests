@@ -88,6 +88,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
         getSuppressionBodyAsString("suppressionData")
           .replaceAll("<REPLACE_code>", "1")
           .replaceAll("<REPLACE_reason>", suppression.get("reason").toString)
+          .replaceAll("<REPLACE_description>", suppression.get("description").toString)
           .replaceAll("<REPLACE_enabled>", suppression.get("enabled"))
           .replaceAll("<REPLACE_fromDate>", suppression.get("fromDate").toString)
           .replaceAll("<REPLACE_toDate>", suppression.get("toDate").toString)

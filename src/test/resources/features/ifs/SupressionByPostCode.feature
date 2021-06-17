@@ -4,7 +4,7 @@ Feature: Suppression by Postcode
   Scenario: Suppression applied to postcode
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-04-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-04-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW3      | 1              |
@@ -26,14 +26,14 @@ Feature: Suppression by Postcode
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow | reason | code | description |
       | 2021-02-01 | 2021-04-03 | 61           | 2.6          | 35                      | 502172             |        |      |             |
-      | 2021-04-04 | 2021-05-04 | 31           | 0.0          | 0                       | 500000             | POLICY | 1    | POLICY      |
+      | 2021-04-04 | 2021-05-04 | 31           | 0.0          | 0                       | 500000             | POLICY | 1    | COVID       |
       | 2021-05-05 | 2021-07-06 | 63           | 2.6          | 35                      | 502243             |        |      |             |
 
 
   Scenario: Suppression not applied to customers previous postcode
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY |   COVID     | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW3      | 1              |
@@ -63,7 +63,7 @@ Feature: Suppression by Postcode
   Scenario: Suppression applied to customers latest postcode - 2 postcodes
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW3      | 1              |
@@ -92,7 +92,7 @@ Feature: Suppression by Postcode
   Scenario: Suppression applied to customers latest postcode 3 postcodes
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW3      | 1              |
@@ -121,7 +121,7 @@ Feature: Suppression by Postcode
   Scenario: Suppression should not be applied where postcode date after suppression period - border case
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW3      | 1              |
@@ -147,7 +147,7 @@ Feature: Suppression by Postcode
   Scenario: Suppression should be applied if customer moved in on last day of suppression period - border case
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW3      | 1              |
@@ -175,7 +175,7 @@ Feature: Suppression by Postcode
   Scenario Outline: Suppression should be applied to customer sub district
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode      | suppressionIds |
       | 1      | <subDistrict> | 1              |
@@ -203,7 +203,7 @@ Feature: Suppression by Postcode
   Scenario Outline: Suppression should not be applied for non matching postcodes
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY | POLICY      | true    | 2021-02-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-02-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | postCode      | suppressionIds |
       | 1      | <subDistrict> | 1              |

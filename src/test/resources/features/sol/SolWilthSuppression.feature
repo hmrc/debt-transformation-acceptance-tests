@@ -3,7 +3,7 @@ Feature: Sol With Suppression
   Scenario: Customer Outputs SoL where suppression is applied
     Given suppression data has been created
       | reason      | description | enabled | fromDate   | toDate     |
-      | LEGISLATIVE | LEGISLATIVE | true    | 2021-03-04 | 2021-03-05 |
+      | LEGISLATIVE | COVID       | true    | 2021-03-04 | 2021-03-05 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW33     | 1              |
@@ -27,7 +27,7 @@ Feature: Sol With Suppression
   Scenario: Customer Outputs SoL suppression NOT applied to a different postcode
     Given suppression data has been created
       | reason      | description | enabled | fromDate   | toDate     |
-      | LEGISLATIVE | LEGISLATIVE | true    | 2021-03-04 | 2021-03-05 |
+      | LEGISLATIVE | COVID       | true    | 2021-03-04 | 2021-03-05 |
     And suppression rules have been created
       | ruleId | postCode | suppressionIds |
       | 1      | TW34     | 1              |
@@ -50,7 +50,7 @@ Feature: Sol With Suppression
   Scenario: Customer Outputs SoL where suppression is applied by Period End
     Given suppression data has been created
       | reason      | description | enabled | fromDate   | toDate     |
-      | LEGISLATIVE | LEGISLATIVE | true    | 2021-03-04 | 2021-03-05 |
+      | LEGISLATIVE | COVID       | true    | 2021-03-04 | 2021-03-05 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2021-04-20 | 1              |
@@ -74,7 +74,7 @@ Feature: Sol With Suppression
   Scenario: Customer Outputs SoL where suppression is applied by Main Trans
     Given suppression data has been created
       | reason      | description | enabled | fromDate   | toDate     |
-      | LEGISLATIVE | LEGISLATIVE | true    | 2021-03-04 | 2021-03-05 |
+      | LEGISLATIVE | COVID       | true    | 2021-03-04 | 2021-03-05 |
     And suppression rules have been created
       | ruleId | mainTrans | suppressionIds |
       | 1      | 1545      | 1              |
@@ -98,7 +98,7 @@ Feature: Sol With Suppression
   Scenario: Customer Outputs SoL suppression NOT applied to a different mainTrans
     Given suppression data has been created
       | reason      | description | enabled | fromDate   | toDate     |
-      | LEGISLATIVE | LEGISLATIVE | true    | 2021-03-04 | 2021-03-05 |
+      | LEGISLATIVE | COVID       | true    | 2021-03-04 | 2021-03-05 |
     And suppression rules have been created
       | ruleId | mainTrans | suppressionIds |
       | 1      | 1540      | 1              |
