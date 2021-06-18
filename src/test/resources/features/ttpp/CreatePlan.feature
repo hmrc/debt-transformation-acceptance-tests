@@ -1,4 +1,4 @@
-Feature: Create Plan test
+Feature: Create Plan
 
   Scenario: Retrieve create plan response from Time to Pay Proxy
     Given a create plan request
@@ -14,4 +14,4 @@ Feature: Create Plan test
 
     Then the ttp service is going to return a create plan response with
       | customerReference | planId     | planStatus |
-      | customerRef1234   | planId1234   | xyz        |
+      | customerRef1234   | planId1234 | xyz        |

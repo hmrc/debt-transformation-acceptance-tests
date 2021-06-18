@@ -1,6 +1,4 @@
 {
   "debtRespiteFrom": "<REPLACE_debtRespiteFrom>",
-  "debtRespiteTo": "<REPLACE_debtRespiteTo>",
-  "paymentDate": "<REPLACE_paymentDate>",
-  "paymentAmount": <REPLACE_paymentAmount>
+  "debtRespiteTo": "<REPLACE_debtRespiteTo>"
 }

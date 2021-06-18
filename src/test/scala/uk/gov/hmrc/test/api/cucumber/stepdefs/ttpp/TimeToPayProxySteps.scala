@@ -47,7 +47,7 @@ class TimeToPayProxySteps
     TimeToPayProxyRequests.createUpdatePlanRequestBody(dataTable)
   }
 
-  Given("an view plan request") { (dataTable: DataTable) =>
+  Given("a view plan request") { (dataTable: DataTable) =>
     TimeToPayProxyRequests.createRequestParameters(dataTable)
   }
 
@@ -111,6 +111,10 @@ class TimeToPayProxySteps
 
   And("Breathing spaces are") { dataTable: DataTable =>
     addBreathingSpaces(dataTable)
+  }
+
+  And("Payments are") { dataTable: DataTable =>
+    addPayments(dataTable)
   }
 
   And("the ([0-9]\\d*)(?:st|nd|rd|th) instalment will contain") {
@@ -234,15 +238,15 @@ class TimeToPayProxySteps
           .toString
       }
 
-      if (asMapTransposed.containsKey("balance")) {
-        nthInstalment.balance.toString shouldBe asMapTransposed
-          .get("balance")
+      if (asMapTransposed.containsKey("amountDue")) {
+        nthInstalment.amountDue.toString shouldBe asMapTransposed
+          .get("amountDue")
           .toString
       }
 
-      if (asMapTransposed.containsKey("interest")) {
-        nthInstalment.interest.toString shouldBe asMapTransposed
-          .get("interest")
+      if (asMapTransposed.containsKey("expectedPayment")) {
+        nthInstalment.expectedPayment.toString shouldBe asMapTransposed
+          .get("expectedPayment")
           .toString
       }
 
@@ -309,7 +313,6 @@ class TimeToPayProxySteps
       val asMapTransposed =
       dataTable.transpose().asMap(classOf[String], classOf[String])
       val response: StandaloneWSResponse = ScenarioContext.get("response")
-
       val responseBody = Json.parse(response.body).as[ViewPlanResponse]
 
       ScenarioContext.set("viewPlanResponse", responseBody)

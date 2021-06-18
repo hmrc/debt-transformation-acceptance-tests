@@ -83,7 +83,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
         val (adHoc, index) = current
 
         val replaced = getBodyAsString("adHoc")
-          .replaceAll("<REPLACE_description>", adHoc.get("description"))
+          .replaceAll("<REPLACE_adHocDate>", adHoc.get("adHocDate"))
           .replaceAll("<REPLACE_adHocAmount>", adHoc.get("adHocAmount"))
 
         if (index + 1 < asMapTransposed.size)
@@ -163,14 +163,6 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
             "<REPLACE_debtRespiteTo>",
             breathingSpace.get("debtRespiteTo")
           )
-          .replaceAll(
-            "<REPLACE_paymentDate>",
-            breathingSpace.get("paymentDate")
-          )
-          .replaceAll(
-            "<REPLACE_paymentAmount>",
-            breathingSpace.get("paymentAmount")
-          )
 
         if (index + 1 < asMapTransposed.size)
           s"$acc$replaced,"
@@ -182,6 +174,37 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
       .get("currentDuty")
       .toString
       .replaceAll("<REPLACE_breathingSpaces>", breathingSpaces)
+    ScenarioContext.set("currentDuty", currentDuty)
+
+  }
+
+  def addPayments(dataTable: DataTable): Unit = {
+    val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
+
+    val payments =
+      asMapTransposed.zipWithIndex.foldLeft[String]("")((acc, current) => {
+        val (payment, index) = current
+
+        val replaced = getBodyAsString("payment")
+          .replaceAll(
+            "<REPLACE_paymentDate>",
+            payment.get("paymentDate")
+          )
+          .replaceAll(
+            "<REPLACE_paymentAmount>",
+            payment.get("paymentAmount")
+          )
+
+        if (index + 1 < asMapTransposed.size)
+          s"$acc$replaced,"
+        else
+          s"$acc$replaced"
+      })
+
+    val currentDuty = ScenarioContext
+      .get("currentDuty")
+      .toString
+      .replaceAll("<REPLACE_payments>", payments)
     ScenarioContext.set("currentDuty", currentDuty)
 
   }

@@ -1,4 +1,4 @@
-Feature: Generate Quote test
+Feature: Update Plan
 
   Scenario: Retrieve update plan response from Time to Pay Proxy
     Given an update plan request

@@ -1,4 +1,4 @@
 {
-    "description": "<REPLACE_description>",
+    "adHocDate": "<REPLACE_adHocDate>",
     "adHocAmount": <REPLACE_adHocAmount>
 }

@@ -5,5 +5,8 @@
     "interestStartDate": "<REPLACE_interestStartDate>",
     "breathingSpaces": [
         <REPLACE_breathingSpaces>
+    ],
+    "payments": [
+        <REPLACE_payments>
     ]
 }

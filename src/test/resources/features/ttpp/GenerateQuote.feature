@@ -1,4 +1,4 @@
-Feature: Generate Quote test
+Feature: Generate Quote
 
   Scenario: Retrieve generate quote response from Time to Pay Proxy
     Given a generate quote request
@@ -6,9 +6,9 @@ Feature: Generate Quote test
       | customerRef1234   | 100        |
 
     And adHocs are
-      | description  | adHocAmount |
-      | description1 | 500         |
-      | description2 | 600         |
+      | adHocDate  | adHocAmount |
+      | 2021-05-13 | 500         |
+      | 2021-06-13 | 600         |
 
     And customer values are
       | quoteType   | instalmentStartDate | instalmentAmount | frequency | duration | debtAmount | initialPaymentAmount | initialPaymentDate | paymentPlanType |
@@ -27,6 +27,11 @@ Feature: Generate Quote test
       | 2021-01-10      | 2021-02-10    | 2021-01-01  | 100           |
       | 2021-03-10      | 2021-04-10    | 2021-01-01  | 200           |
 
+    And Payments are
+      | paymentDate | paymentAmount |
+      | 2021-05-13  | 100           |
+      | 2021-06-13  | 100           |
+
     When the generate quote request is sent to the ttpp service
 
     Then the ttp service is going to return a generate quote response with
@@ -34,8 +39,8 @@ Feature: Generate Quote test
       | quoteRef1234   | customerRef1234   | xyz       | 1000            | 2                   | 0.26          |
 
     And the 1st instalment will contain
-      | dutyId | debtId | dueDate    | amountDue | interestRate | instalmentNumber |
-      | duty01 | debt01 | 2021-05-01 | 100       | 0.26         | 1                |
+      | dutyId | debtId | dueDate    | amountDue | expectedPayment | interestRate | instalmentNumber |
+      | duty01 | debt01 | 2021-05-01 | 100       | 100             | 0.26         | 1                |
     And the 2nd instalment will contain
-      | dutyId | debtId | dueDate    | amountDue | interestRate | instalmentNumber |
-      | duty01 | debt01 | 2021-06-01 | 100       | 0.26         | 2                |
+      | dutyId | debtId | dueDate    | amountDue | expectedPayment | interestRate | instalmentNumber |
+      | duty01 | debt01 | 2021-06-01 | 100       | 100             | 0.26         | 2                |
