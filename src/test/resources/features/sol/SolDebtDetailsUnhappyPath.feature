@@ -12,7 +12,7 @@ Feature: Statement of liability Unhappy Path (Service Errors)
       | duty02 |
     When a debt statement of liability is requested
     Then the sol response code should be 404
-    And the sol service will respond with {name: DebtCaseManagementError, statusCode: 404, uniqueReference: debt999}
+    And the sol service will respond with {"statusCode":404,"reason":"DebtCaseManagementError","message":"The service returned with an 404 for the following identifier: debt999"}
 
   Scenario: Sol Reference data service failure - invalid main trans
     Given debt details
@@ -25,4 +25,4 @@ Feature: Statement of liability Unhappy Path (Service Errors)
       | duty03 |
     When a debt statement of liability is requested
     Then the sol response code should be 404
-    And the sol service will respond with {name: ReferenceDataLookupError, statusCode: 404, uniqueReference: [{\"mainTrans\":\"1085\",\"subTrans\":\"1000\"}]}
+    And the sol service will respond with {"statusCode":404,"reason":"ReferenceDataLookupError","message":"The service returned with an 404 for the following identifier: [{\"mainTrans\":\"1085\",\"subTrans\":\"1000\"}]"}
