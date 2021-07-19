@@ -47,7 +47,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     Then the 1st debt summary will contain
       | interestBearing | interestDueDailyAccrual | totalAmountIntDuty | interestOnlyIndicator |
       | true            | 35                      | 500249             | false                 |
-
+@wip34
   Scenario: No Interest Bearing and InterestOnlyDebt MainTrans (1546) debt SubTrans (2000)
     Given the current set of rules
     And a debt item

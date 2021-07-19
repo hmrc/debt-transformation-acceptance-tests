@@ -27,18 +27,16 @@ object TestConfiguration {
   def url(service: String): String = {
     val host = env match {
       case "local" => s"$environmentHost:${servicePort(service)}"
-      case _       => s"${envConfig.getString(s"services.host")}"
+      case _       => s"${envConfig.getString(s"services.$service.host")}"
     }
     s"$host${serviceRoute(service)}"
   }
 
-  def zapProxy: Boolean = envConfig.getBoolean("zapProxy")
-
   def environmentHost: String = envConfig.getString("services.host")
-
+  def clientId:       String = envConfig.getString("clientId")
+  def clientSecret:   String = envConfig.getString("clientSecret")
   def servicePort(serviceName: String): String =
     envConfig.getString(s"services.$serviceName.port")
-
   def serviceRoute(serviceName: String): String =
     envConfig.getString(s"services.$serviceName.productionRoute")
 }

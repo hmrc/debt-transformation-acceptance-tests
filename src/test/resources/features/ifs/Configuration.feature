@@ -1,5 +1,5 @@
 Feature: Configuration
-
+  @wip34
   Scenario: A Rule has been updated
     Given a new interest rate table
     When a rule has been updated
@@ -18,7 +18,7 @@ Feature: Configuration
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
       | true            | 3808                  | 273                      | 145793                | 500000           | 645793             | 500000             |
-
+  @wip34
   Scenario: A new interest rate is added
     Given a new interest rate table
     When a new interest rate is added

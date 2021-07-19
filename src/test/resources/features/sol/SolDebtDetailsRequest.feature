@@ -90,7 +90,7 @@ Feature: statement of liability Debt details
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty04 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
-
+  @wip56
   Scenario: 4. MainTrans and subTrans non interest bearing - IFS still calculates interest and it is zero
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
@@ -112,7 +112,7 @@ Feature: statement of liability Debt details
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty06 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
-  @smoke
+  @pega
   Scenario: PEGA only -TPSS Account Tax Assessment debt statement of liability, 2 duties, no payment history
     Given debt details
       | solType | debtId  | customerUniqueRef | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
@@ -127,9 +127,9 @@ Feature: statement of liability Debt details
       | 250            | 0                    |
 
     And the 1st sol debt summary will contain
-      | debtId  | mainTrans | debtTypeDescription              | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | Idle_01 | 1520      | TPSS Accounting For Tax Charge + | 0                    | 250                | 0                    |
+      | debtId  | mainTrans | debtTypeDescription | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
+      | Idle_01 | 1520      | TPSS Penalty        | 0                    | 250                | 0                    |
 
     And the 1st sol debt summary will contain duties
-      | dutyId  | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
-      | Idle_01 | 1090     | Tax Interest        | 250              | 0                    | false           | false                 |
+      | dutyId       | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
+      | Idle_01-1090 | 1090     | Penalty             | 250              | 0                    | false           | false                 |

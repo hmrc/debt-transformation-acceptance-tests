@@ -29,7 +29,7 @@ import uk.gov.hmrc.test.api.utils.{BaseRequests, ScenarioContext, TestData}
 object InterestForecastingRequests extends ScalaDsl with EN with Eventually with Matchers with BaseRequests {
 
   def getDebtCalculation(json: String): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(enrolments = Seq("read:interest-forecasting"))
+    val bearerToken = createBearerToken(enrolments = Seq("read:interest-forecasting"),userType = getRandomAffinityGroup,utr="123456789012")
     val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -66,8 +66,6 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     )
     (baseUri, headers)
   }
-
-
 
   def getBodyAsString(variant: String): String =
     TestData.loadedFiles(variant)

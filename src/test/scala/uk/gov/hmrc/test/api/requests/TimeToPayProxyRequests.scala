@@ -21,10 +21,8 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
 
   def baseCall(endpoint: String, maybeBearerToken: Option[String]) = {
     val baseUri = s"$timeToPayProxyApiUrl$endpoint"
-    val headers =
-      maybeBearerToken.fold[Map[String, String]](Map())(
-        bearerToken => Map("Authorization" -> s"Bearer $bearerToken")
-      )
+    val headers = maybeBearerToken.fold[Map[String, String]](Map())(
+     bearerToken => Map("Authorization" -> s"Bearer $bearerToken"))
     WsClient.get(baseUri, headers = headers)
   }
 

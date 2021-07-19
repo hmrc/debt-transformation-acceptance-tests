@@ -1,11 +1,12 @@
 {
-  "solType" : "<REPLACE_solType>",
-  "customerUniqueRef": "NEHA1234",
-  "debts" : [{
-    "debtId": "<REPLACE_debtId>",
-    "dutyIds":[<REPLACE_dutyItemChargeId>],
+"solType" : "<REPLACE_solType>",
+  "solRequestedDate": "<REPLACE_solRequestedDate>",
+  "customerUniqueRef": "<REPLACE_customerUniqueRef>",
+  "debts" : [
+  {
+    "debtId" : "<REPLACE_debtId>",
     "interestRequestedTo": "REPLACE_interestRequestedTo"
-   }]
+  }
+  ]
 }
-
 
