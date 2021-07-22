@@ -220,7 +220,6 @@ Feature: Suppression by Postcode
     Examples:
       | subDistrict | postCode |
       | AA9A        | AA9A 9AA |
-      | A9A         | A9A 9AA  |
       | A9          | A9 9AA   |
       | A99         | A99 9AA  |
       | AA9         | AA9 9AA  |
