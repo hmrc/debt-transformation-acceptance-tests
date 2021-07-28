@@ -28,7 +28,10 @@ object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
   //Used by hello world only
   def getStatementLiabilityHelloWorld(endpoint: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-      enrolments = Seq("read:statement-of-liability"),userType = getRandomAffinityGroup, utr = "123456789012")
+      enrolments = Seq("read:statement-of-liability"),
+      userType = getRandomAffinityGroup,
+      utr = "123456789012"
+    )
     val baseUri     = s"$statementOfLiabilityApiUrl$endpoint"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
