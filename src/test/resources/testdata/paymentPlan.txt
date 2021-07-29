@@ -6,5 +6,5 @@
 	"instalmentDate": "<REPLACE_instalmentDate>",
 	"mainTrans": "<REPLACE_mainTrans>",
 	"subTrans": "<REPLACE_subTrans>",
-	"outstandingInterest": <REPLACE_outstandingInterest>
+	"interestAccrued": <REPLACE_interestAccrued>
 }

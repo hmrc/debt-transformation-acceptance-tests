@@ -293,8 +293,11 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     response.status should be(200)
 
     val responseBody = Json.parse(response.body).as[PaymentPlanSummary]
+    if (asMapTransposed.containsKey("totalNumberOfInstalments")) {
+      responseBody.totalNumberOfInstalments.toString shouldBe asMapTransposed.get("totalNumberOfInstalments").toString
+    }
     if (asMapTransposed.containsKey("totalDebtAmount")) {
-      responseBody.totalDebtAmount.toString shouldBe asMapTransposed.get("totalDebtAmount").toString
+      responseBody.expectedPayment.toString shouldBe asMapTransposed.get("expectedPayment").toString
     }
     if (asMapTransposed.containsKey("totalPlanInt")) {
       responseBody.totalPlanInt.toString shouldBe asMapTransposed.get("totalPlanInt").toString
@@ -318,9 +321,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
       }
       if (window.containsKey("paymentDueDate")) {
         responseBody.paymentDueDate.toString shouldBe window.get("paymentDueDate").toString
-      }
-      if (window.containsKey("numberOfDays")) {
-        responseBody.numberOfDays.toString shouldBe window.get("numberOfDays").toString
       }
       if (window.containsKey("amountDue")) {
         responseBody.amountDue.toString shouldBe window.get("amountDue").toString
