@@ -1,26 +1,3 @@
-#Assumptions
-#
-#Customer reference = see format from ARC
-#Debt amount = 1,200
-#Debt ID = see format from ARC
-#Duty ID = see format from ARC
-#Main Trans = 1545 (interest bearing)
-#Sub Trans = 1000
-#Original debt amount = 1,200
-#Payment amount = 200
-#Payment date = 25/08/2020
-#Interest start date = 05/04/2020
-#Quote type = Duration
-#Instalment date = 01/06/2021
-#Instalment amount = 100
-#Frequency = monthly
-#Duration = Not known as IFS will calculate
-#No initial payment
-#No suppressions
-#No BS
-#Type of payment plan = Time to pay - not relevant for IFS to do calculation
-
-
 Feature: Payment plan frequency calculation for 1 debt 1 duty with no initial payment
 
   Scenario: Payment plan calculation instalment - Single payment frequency
