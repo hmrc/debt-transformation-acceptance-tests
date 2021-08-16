@@ -107,3 +107,76 @@ Feature: Multiple Debt Items
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
 
+  Scenario: 5. 1 debt, no payment interest requested to date is before the interest start date
+      Given a debt item
+        | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
+        | 1000000        | 2023-03-03        | 2022-02-02          | 1525      | 1000     |
+      And the debt item has no payment history
+      And no breathing spaces have been applied to the customer
+      And no post codes have been provided for the customer
+      When the debt item is sent to the ifs service
+      Then the ifs service wilL return a total debts summary of
+        | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal |
+        | 0                    | 1000000        | 1000000            |
+      And the 1st debt summary will contain
+        | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+        | true            | 0                    | 0                       | 1000000            |
+      And the 1st debt summary will have calculation windows
+        | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+        | 2023-03-03 | 2022-02-02 | 0            | 0.0          | 0                       | 1000000            |
+
+  Scenario: 6. 1 debt, no payment interest requested to date is same as interest start date
+        Given a debt item
+          | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
+          | 1000000        | 2022-02-02        | 2022-02-02          | 1525      | 1000     |
+        And the debt item has no payment history
+        And no breathing spaces have been applied to the customer
+        And no post codes have been provided for the customer
+        When the debt item is sent to the ifs service
+        Then the ifs service wilL return a total debts summary of
+          | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal |
+          | 71                   | 1000000        | 1000000            |
+        And the 1st debt summary will contain
+          | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+          | true            | 0                    | 71                      | 1000000            |
+        And the 1st debt summary will have calculation windows
+          | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+          | 2022-02-02 | 2022-02-02 | 0            | 2.6          | 71                      | 1000000            |
+
+  Scenario: 7. 1 debt, 1 payment interest requested to date is before the interest start date
+        Given a debt item
+          | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
+          | 1000000        | 2023-03-03        | 2022-02-02          | 1525      | 1000     |
+        And the debt item has payment history
+          | paymentAmount | paymentDate |
+          | 100000        | 2021-01-01  |
+        And no breathing spaces have been applied to the customer
+        And no post codes have been provided for the customer
+        When the debt item is sent to the ifs service
+        Then the ifs service wilL return a total debts summary of
+          | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal |
+          | 0                    | 900000         | 900000              |
+        And the 1st debt summary will contain
+          | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+          | true            | 0                    | 0                       | 900000             |
+        And the 1st debt summary will have calculation windows
+          | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+          | 2023-03-03 | 2021-01-01 | 0            | 0.0          | 0                       | 100000             |
+          | 2023-03-03 | 2022-02-02 | 0            | 0.0          | 0                       | 900000             |
+
+  Scenario: 8. 1 debt, non interest bearing, interest requested to date is before the interest start date, no dates are required
+           Given a debt item
+            | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
+            | 1000000        | 2023-03-03        | 2022-02-02          | 1520      | 1090     |
+          And the debt item has payment history
+            | paymentAmount | paymentDate |
+            | 100000        | 2021-01-01  |
+          And no breathing spaces have been applied to the customer
+          And no post codes have been provided for the customer
+          When the debt item is sent to the ifs service
+          Then the ifs service wilL return a total debts summary of
+            | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal |
+            | 0                    | 900000         | 900000              |
+          And the 1st debt summary will contain
+            | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+            | false           | 0                    | 0                        | 900000            |
