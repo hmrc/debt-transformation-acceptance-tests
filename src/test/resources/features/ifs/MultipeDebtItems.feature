@@ -137,7 +137,10 @@ Feature: Multiple Debt Items
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
       | true            | 0                    | 71                      | 1000000            |
-    And the 1st debt summary will not have any calculation windows
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2022-02-02 | 2022-02-02 | 0            | 2.6          | 71                      | 1000000             |
+
 
   Scenario: 7. 1 debt, 1 payment interest requested to date is before the interest start date
     Given a debt item

@@ -172,4 +172,10 @@ Feature: Interest Rate Changes
     And no breathing spaces have been applied to the customer
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
-    Then the ifs service will respond with Could not parse body due to requirement failed: interestRequestedTo should be after interestStartDate
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal |
+      | 0                    | 500000         | 500000              |
+    And the 1st debt summary will contain
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | true            | 0                    | 0                       | 500000             |
+    And the 1st debt summary will not have any calculation windows

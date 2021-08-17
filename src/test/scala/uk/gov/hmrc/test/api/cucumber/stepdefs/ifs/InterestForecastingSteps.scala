@@ -179,9 +179,9 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   When("the debt item(s) is sent to the ifs service") { () =>
     val request  = ScenarioContext.get("debtItems").toString
-    println(s"IFS REQUST --> $request")
+    println(s"IFS REQUEST --> $request")
     val response = getDebtCalculation(request)
-    println(s"RESP --> ${response.body}")
+    println(s"IFS RESPONSE --> ${response.body}")
     ScenarioContext.set("response", response)
   }
 
