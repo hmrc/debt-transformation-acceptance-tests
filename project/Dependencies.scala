@@ -1,4 +1,4 @@
-import sbt._
+import sbt.{Test, _}
 
 object Dependencies {
 
