@@ -61,6 +61,10 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   }
 
+  Given("no debt item") { () =>
+    createInterestForcastingRequestWithNoDebtItems()
+  }
+
   Given("a new interest rate table") { () =>
     val newIntTable = InterestRates(
       22,
