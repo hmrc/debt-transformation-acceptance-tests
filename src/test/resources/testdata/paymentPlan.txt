@@ -8,4 +8,5 @@
 	"mainTrans": "<REPLACE_mainTrans>",
 	"subTrans": "<REPLACE_subTrans>",
 	"interestCallDueTotal": <REPLACE_interestCallDueTotal>
+	<REPLACE_initialPayment>
 }

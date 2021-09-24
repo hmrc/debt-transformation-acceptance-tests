@@ -222,16 +222,24 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", "")
     )
   }
-  def noInstalmentDate() {
+  def noInitialPayment() {
     ScenarioContext.set(
-      "paymentPlan",
-      getBodyAsString("InitialPaymentNoDate")
-        .replaceAllLiterally("<REPLACE_initialPaymentDate>", ScenarioContext.get("paymentPlan"))
-    )
-    ScenarioContext.set(
-      "paymentPlan",
-      ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPaymentDate>", "")
-    )
+      "debtPaymentPlan",
+    ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPayment>", ""))
+  }
+
+  def addInitialPayment(dataTable: DataTable): Unit = {
+      val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
+
+    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val initialPaymentDate = dateTime.plusDays(129).toString("yyyy-MM-dd")
+    val planWithInitialPayments = getBodyAsString("initialPayment")
+        .replaceAll("<REPLACE_initialPaymentDate>",initialPaymentDate)
+        .replaceAll("<REPLACE_initialPaymentAmount>",asmapTransposed.get("initialPaymentAmount"))
+
+  val debtPaymentPlan= ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPayment>",planWithInitialPayments)
+    ScenarioContext.set("debtPaymentPlan", debtPaymentPlan)
+    print(s"plan with initial payment **********************  $debtPaymentPlan")
   }
 
   def addCustomerPostCodes(dataTable: DataTable): Unit = {
@@ -298,42 +306,42 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     print("plan with initail payment request json ::::::::::::::::::::::::::::::" + paymentPlan)
   }
 
-  def debtPlanDetailsWithInitailPaymentRequest(dataTable: DataTable): Unit = {
-    val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
-    var firstItem           = false
-    var paymentPlan: String = null
-    try ScenarioContext.get("paymentPlan")
-    catch { case e: Exception => firstItem = true }
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val quoteDate          = dateTime.toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(129).toString("yyyy-MM-dd")
-    val initialPaymentDate = dateTime.plusDays(129).toString("yyyy-MM-dd")
-    var periodEnd          = ""
-    if (asmapTransposed.toString.contains("periodEnd")) {
-      periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
-    } else { periodEnd = "" }
-    paymentPlan = getBodyAsString("DebtPlanWithInitialPayment")
-      .replaceAll("<REPLACE_debtId>", "debtId")
-      .replaceAll("<REPLACE_debtAmount>", asmapTransposed.get("debtAmount"))
-      .replaceAll("<REPLACE_instalmentAmount>", asmapTransposed.get("instalmentPaymentAmount"))
-      .replaceAll("<REPLACE_paymentFrequency>", asmapTransposed.get("paymentFrequency"))
-      .replaceAll("<REPLACE_instalmentDate>", instalmentPaymentDate)
-      .replaceAll("<REPLACE_quoteDate>", quoteDate)
-      .replaceAll("<REPLACE_mainTrans>", asmapTransposed.get("mainTrans"))
-      .replaceAll("<REPLACE_subTrans>", asmapTransposed.get("subTrans"))
-      .replaceAll("<REPLACE_interestCallDueTotal>", asmapTransposed.get("interestCallDueTotal"))
-      .replaceAll("<REPLACE_initialPaymentDate>", initialPaymentDate)
-      .replaceAll("<REPLACE_initialPaymentAmount>", asmapTransposed.get("initialPaymentAmount"))
-
-    if (firstItem == true) { paymentPlan = paymentPlan }
-    else { paymentPlan = ScenarioContext.get("paymentPlan").toString.concat(",").concat(paymentPlan) }
-
-    ScenarioContext.set(
-      "paymentPlan",
-      paymentPlan
-    )
-    print("plan with initail payment request json ::::::::::::::::::::::::::::::" + paymentPlan)
-  }
+//  def debtPlanDetailsWithInitailPaymentRequest(dataTable: DataTable): Unit = {
+//    val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
+//    var firstItem           = false
+//    var paymentPlan: String = null
+//    try ScenarioContext.get("paymentPlan")
+//    catch { case e: Exception => firstItem = true }
+//    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+//    val quoteDate          = dateTime.toString("yyyy-MM-dd")
+//    val instalmentPaymentDate     = dateTime.plusDays(129).toString("yyyy-MM-dd")
+//    val initialPaymentDate = dateTime.plusDays(129).toString("yyyy-MM-dd")
+//    var periodEnd          = ""
+//    if (asmapTransposed.toString.contains("periodEnd")) {
+//      periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
+//    } else { periodEnd = "" }
+//    paymentPlan = getBodyAsString("DebtPlanWithInitialPayment")
+//      .replaceAll("<REPLACE_debtId>", "debtId")
+//      .replaceAll("<REPLACE_debtAmount>", asmapTransposed.get("debtAmount"))
+//      .replaceAll("<REPLACE_instalmentAmount>", asmapTransposed.get("instalmentPaymentAmount"))
+//      .replaceAll("<REPLACE_paymentFrequency>", asmapTransposed.get("paymentFrequency"))
+//      .replaceAll("<REPLACE_instalmentDate>", instalmentPaymentDate)
+//      .replaceAll("<REPLACE_quoteDate>", quoteDate)
+//      .replaceAll("<REPLACE_mainTrans>", asmapTransposed.get("mainTrans"))
+//      .replaceAll("<REPLACE_subTrans>", asmapTransposed.get("subTrans"))
+//      .replaceAll("<REPLACE_interestCallDueTotal>", asmapTransposed.get("interestCallDueTotal"))
+//      .replaceAll("<REPLACE_initialPaymentDate>", initialPaymentDate)
+//      .replaceAll("<REPLACE_initialPaymentAmount>", asmapTransposed.get("initialPaymentAmount"))
+//
+//    if (firstItem == true) { paymentPlan = paymentPlan }
+//    else { paymentPlan = ScenarioContext.get("paymentPlan").toString.concat(",").concat(paymentPlan) }
+//
+//    ScenarioContext.set(
+//      "paymentPlan",
+//      paymentPlan
+//    )
+//    print("plan with initail payment request json ::::::::::::::::::::::::::::::" + paymentPlan)
+//  }
 
   def createPaymentPlanRequestBody(dataTable: DataTable): Unit = {
     val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
@@ -343,7 +351,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     catch { case e: Exception => firstItem = true }
     val dateTime       = new DateTime(new Date()).withZone(DateTimeZone.UTC)
     val quoteDate      = dateTime.toString("yyyy-MM-dd")
-    val instalmentPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(asmapTransposed.get("numberOfDay")).toString("yyyy-MM-dd")
     var periodEnd      = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","

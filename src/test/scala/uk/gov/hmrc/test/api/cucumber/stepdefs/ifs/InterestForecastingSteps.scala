@@ -287,7 +287,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
       }
   }
   When("the payment plan detail(s) is sent to the ifs service") { () =>
-    val request  = ScenarioContext.get("paymentPlan").toString
+    val request  = ScenarioContext.get("debtPaymentPlan").toString
     println(s"IFS REQUST --> $request")
     val response = getPaymentPlan(request)
     println(s"RESP --> ${response.body}")
@@ -929,9 +929,14 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     noBreathingSpace()
   }
 
-  Given("no initial payment date for the plan") { () =>
-    noInstalmentDate()
+  Given("no initial payment for the debtItem") { () =>
+    noInitialPayment()
   }
+
+  And("add initial payment for the debtItem"){(dataTable:DataTable) =>
+    addInitialPayment(dataTable)
+  }
+
 
   Given("the customer has post codes") { (dataTable: DataTable) =>
     addCustomerPostCodes(dataTable)
@@ -967,10 +972,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   Given("debt payment plan details") { (dataTable: DataTable) =>
     createPaymentPlanRequestBody(dataTable)
-  }
-
-  Given("debt plan details with initial payment") { (dataTable: DataTable) =>
-    debtPlanDetailsWithInitailPaymentRequest(dataTable)
   }
 
   Given("debt instalment payment plan request details") { (dataTable: DataTable) =>
