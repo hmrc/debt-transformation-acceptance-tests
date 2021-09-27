@@ -2,7 +2,7 @@
 "quoteType": "<REPLACE_quoteType>",
 "quoteDate": "<REPLACE_quoteDate>",
 "instalmentStartDate": "<REPLACE_instalmentStartDate>",
-"instalmentPaymentAmount": <REPLACE_instalmentAmount>,
+"instalmentAmount": <REPLACE_instalmentAmount>,
 "frequency": "<REPLACE_frequency>",
 "duration": <REPLACE_duration>,
 "initialPaymentAmount": <REPLACE_initialPaymentAmount>,

@@ -167,13 +167,13 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
 
       if (index + 1 < asMapTransposed.size) payments = payments.concat(",")
     }
-    val jsonWithPayments = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_payments>", payments)
+    val jsonWithPayments = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_paymentHistory>", payments)
     ScenarioContext.set("debtItems", jsonWithPayments)
     print("debt with payment history ::::::::::::::::::::::::::::::" + jsonWithPayments)
 
   }
 
-  def customerWithNoPaymentHistory(): Unit =
+  def  customerWithNoPaymentHistory(): Unit =
     ScenarioContext.set("debtItems", ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_payments>", ""))
 
   def addBreathingSpace(dataTable: DataTable): Unit = {

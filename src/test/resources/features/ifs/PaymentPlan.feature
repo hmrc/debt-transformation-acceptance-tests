@@ -1,4 +1,3 @@
-@wip32
 Feature: Payment plan frequency calculation for 1 debt 1 duty with initial payment
 
   Scenario: Payment plan calculation instalment - Single payment frequency

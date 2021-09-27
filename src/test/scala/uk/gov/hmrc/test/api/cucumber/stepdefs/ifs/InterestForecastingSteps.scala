@@ -147,10 +147,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     }
   }
 
-  Given("the debt item has payment history") { (dataTable: DataTable) =>
-    addPaymentHistory(dataTable)
-  }
-
   Given("the debt item has no payment history") { () =>
     customerWithNoPaymentHistory()
   }
@@ -940,10 +936,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   Given("the customer has post codes") { (dataTable: DataTable) =>
     addCustomerPostCodes(dataTable)
-  }
-
-  Given("no post codes have been provided for the customer") { () =>
-    noCustomerPostCodes()
   }
 
   Given("debt payment plan frequency details") { (dataTable: DataTable) =>

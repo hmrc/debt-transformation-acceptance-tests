@@ -3,7 +3,7 @@
 		"quoteType": "<REPLACE_quoteType>",
 		"quoteDate": "<REPLACE_quoteDate>",
 		"instalmentStartDate": "<REPLACE_instalmentStartDate>",
-		"instalmentPaymentAmount": <REPLACE_instalmentAmount>,
+		"instalmentAmount": <REPLACE_instalmentAmount>,
 		"paymentPlanType": "<REPLACE_paymentPlanType>",
 		"thirdPartyBank": <REPLACE_thirdPartyBank>,
 		"numberOfInstalments": <REPLACE_numberOfInstalments>,
