@@ -138,13 +138,14 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | false           | 0                       | 0                    | 2.6     | 400000           | 400000             | 0                    | 400000             | false                 |
     And the 1st debt summary will not have any calculation windows
 
+
   Scenario: interestStartDate should be optional for non interest bearing debt. Multiple debts (for bug DTD-496)
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-03-01        | 2021-03-08          | 1525      | 1000     |
-    And the debt item has payment history
-      | paymentAmount | paymentDate |
-      | 100000        | 2021-03-04  |
+      And the debt item has payment history
+        | paymentAmount | paymentDate |
+        | 100000        | 2021-03-04  |
     Given a debt item
       | originalAmount | dateCreated | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-03-01  | 2021-03-08          | 1520      | 1090     |

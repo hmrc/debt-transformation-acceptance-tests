@@ -9,7 +9,7 @@ Feature: Payment plan frequency calculation for 1 debt 1 duty with initial payme
       | debtId | debtAmount | mainTrans | subTrans |
       | debtId | 100000     | 1530      | 1000     |
     When the instalment calculation detail is sent to the ifs service
-    Then ifs service returns single payment freqeuncy instalment calculation plan
+    Then ifs service returns single payment frequency instalment calculation plan
 
 
   Scenario: Payment plan calculation instalment - weekly payment frequency

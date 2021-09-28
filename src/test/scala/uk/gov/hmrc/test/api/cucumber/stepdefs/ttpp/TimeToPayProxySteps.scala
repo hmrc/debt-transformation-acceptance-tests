@@ -102,7 +102,7 @@ class TimeToPayProxySteps extends ScalaDsl with EN with Eventually with Matchers
   }
   And("customer debtItem details") { dataTable: DataTable => addDebtItem(dataTable) }
 
-  And("the debtItem payment history") { (dataTable: DataTable) =>
+  And("payment history for the debt Item") { (dataTable: DataTable) =>
     addDebtPaymentHistory(dataTable)
   }
 

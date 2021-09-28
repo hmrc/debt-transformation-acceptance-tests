@@ -13,7 +13,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -42,7 +42,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -70,7 +70,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -98,7 +98,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -126,7 +126,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -154,7 +154,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -182,7 +182,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details
@@ -210,7 +210,7 @@ Feature: TTP Create Plan Request
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1525      | 1000     | 100                | 2021-05-13        |
-    And the debtItem payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     And debt payment method details

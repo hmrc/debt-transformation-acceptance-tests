@@ -21,7 +21,6 @@ import io.cucumber.datatable.DataTable
 import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.requests.InterestForecastingRequests.addPaymentHistory
 import uk.gov.hmrc.test.api.requests.SuppressionRulesRequests.{addSuppressionRules, addSuppressions}
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
@@ -44,10 +43,6 @@ class commonSteps extends ScalaDsl with EN with Eventually with Matchers {
     val responseBody                   = response.body.stripMargin
     print("response message*****************************" + responseBody)
     responseBody should be(expectedMessage)
-  }
-
-  Given("the debt item has payment history") { (dataTable: DataTable) =>
-    addPaymentHistory(dataTable)
   }
 
 }

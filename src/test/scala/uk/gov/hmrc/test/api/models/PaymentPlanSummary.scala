@@ -8,7 +8,6 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 case class PaymentPlanSummary(
-
   dateOfCalculation: LocalDate,
   numberOfInstalments: Long,
   interestAccrued: BigDecimal,

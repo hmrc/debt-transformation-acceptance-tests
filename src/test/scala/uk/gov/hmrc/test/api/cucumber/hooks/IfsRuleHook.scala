@@ -25,7 +25,7 @@ class IfsRuleHook extends ScalaDsl with LazyLogging {
     deleteResponse.status should be(200)
 
     val deleteRuleResponse = SuppressionRulesRequests.deleteSuppressionRules()
-     deleteRuleResponse.status should be(200)
+    deleteRuleResponse.status should be(200)
 
     if (scenario.isFailed) {
       println("")

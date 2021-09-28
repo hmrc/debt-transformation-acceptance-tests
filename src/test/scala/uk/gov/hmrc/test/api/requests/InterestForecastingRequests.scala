@@ -167,13 +167,13 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
 
       if (index + 1 < asMapTransposed.size) payments = payments.concat(",")
     }
-    val jsonWithPayments = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_paymentHistory>", payments)
+    val jsonWithPayments = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_payments>", payments)
     ScenarioContext.set("debtItems", jsonWithPayments)
     print("debt with payment history ::::::::::::::::::::::::::::::" + jsonWithPayments)
 
   }
 
-  def  customerWithNoPaymentHistory(): Unit =
+  def customerWithNoPaymentHistory(): Unit =
     ScenarioContext.set("debtItems", ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_payments>", ""))
 
   def addBreathingSpace(dataTable: DataTable): Unit = {
@@ -225,19 +225,21 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
   def noInitialPayment() {
     ScenarioContext.set(
       "debtPaymentPlan",
-    ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPayment>", ""))
+      ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPayment>", "")
+    )
   }
 
   def addInitialPayment(dataTable: DataTable): Unit = {
-      val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asmapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
 
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val initialPaymentDate = dateTime.plusDays(129).toString("yyyy-MM-dd")
+    val dateTime                = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val initialPaymentDate      = dateTime.plusDays(129).toString("yyyy-MM-dd")
     val planWithInitialPayments = getBodyAsString("initialPayment")
-        .replaceAll("<REPLACE_initialPaymentDate>",initialPaymentDate)
-        .replaceAll("<REPLACE_initialPaymentAmount>",asmapTransposed.get("initialPaymentAmount"))
+      .replaceAll("<REPLACE_initialPaymentDate>", initialPaymentDate)
+      .replaceAll("<REPLACE_initialPaymentAmount>", asmapTransposed.get("initialPaymentAmount"))
 
-  val debtPaymentPlan= ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPayment>",planWithInitialPayments)
+    val debtPaymentPlan =
+      ScenarioContext.get("paymentPlan").toString.replaceAll("<REPLACE_initialPayment>", planWithInitialPayments)
     ScenarioContext.set("debtPaymentPlan", debtPaymentPlan)
     print(s"plan with initial payment **********************  $debtPaymentPlan")
   }
@@ -275,11 +277,11 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     var paymentPlan: String = null
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val quoteDate          = dateTime.toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    val initialPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    var periodEnd          = ""
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val quoteDate             = dateTime.toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    val initialPaymentDate    = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -349,10 +351,10 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     var paymentPlan: String = null
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
-    val dateTime       = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val quoteDate      = dateTime.toString("yyyy-MM-dd")
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val quoteDate             = dateTime.toString("yyyy-MM-dd")
     val instalmentPaymentDate = dateTime.plusDays(asmapTransposed.get("numberOfDay")).toString("yyyy-MM-dd")
-    var periodEnd      = ""
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -382,11 +384,11 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
 
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val QuoteDate          = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.minusDays(1) toString "yyyy-MM-dd"
-    val initialPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    var periodEnd          = ""
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val QuoteDate             = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.minusDays(1) toString "yyyy-MM-dd"
+    val initialPaymentDate    = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -418,11 +420,11 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     var paymentPlan: String = null
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val quoteDate          = dateTime.toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    val initialPaymentDate = dateTime.plusDays(5).toString("yyyy-MM-dd")
-    var periodEnd          = ""
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val quoteDate             = dateTime.toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    val initialPaymentDate    = dateTime.plusDays(5).toString("yyyy-MM-dd")
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -456,10 +458,10 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
 
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val quoteDate          = dateTime.toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(1) toString "yyyy-MM-dd"
-    val initialPaymentDate = dateTime
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val quoteDate             = dateTime.toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(1) toString "yyyy-MM-dd"
+    val initialPaymentDate    = dateTime
 
     var periodEnd = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
@@ -491,10 +493,10 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
 
-    val dateTime       = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val QuoteDate      = dateTime.toString("yyyy-MM-dd")
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val QuoteDate             = dateTime.toString("yyyy-MM-dd")
     val instalmentPaymentDate = dateTime.plusDays(1) toString "yyyy-MM-dd"
-    var periodEnd      = ""
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -527,11 +529,11 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
 
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val QuoteDate          = dateTime.toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(1) toString "yyyy-MM-dd"
-    val initialPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    var periodEnd          = ""
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val QuoteDate             = dateTime.toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(1) toString "yyyy-MM-dd"
+    val initialPaymentDate    = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -564,11 +566,11 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
 
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val QuoteDate          = dateTime.minusDays(1).toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(1) toString "yyyy-MM-dd"
-    val initialPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    var periodEnd          = ""
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val QuoteDate             = dateTime.minusDays(1).toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(1) toString "yyyy-MM-dd"
+    val initialPaymentDate    = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -638,10 +640,10 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     try ScenarioContext.get("paymentPlan")
     catch { case e: Exception => firstItem = true }
 
-    val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-    val initialPaymentDate = dateTime.plusDays(1).toString("yyyy-MM-dd")
-    val instalmentPaymentDate     = dateTime.plusDays(1) toString "yyyy-MM-dd"
-    var periodEnd          = ""
+    val dateTime              = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+    val initialPaymentDate    = dateTime.plusDays(1).toString("yyyy-MM-dd")
+    val instalmentPaymentDate = dateTime.plusDays(1) toString "yyyy-MM-dd"
+    var periodEnd             = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
       periodEnd = "\"periodEnd\": \"" + asmapTransposed.get("periodEnd") + "\","
     } else { periodEnd = "" }
@@ -682,4 +684,3 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
   }
 
 }
-

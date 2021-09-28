@@ -49,12 +49,12 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
 
     val dateTime = new DateTime(new Date()).withZone(DateTimeZone.UTC)
 
-    var addNumberOfDays = ""
+    var addNumberOfDays       = ""
     var instalmentPaymentDate = ""
     if (asmapTransposed.toString.contains("instalmentPaymentDay")) {
       addNumberOfDays = asmapTransposed.get("instalmentPaymentDay")
-      val localDate               = LocalDate.now()
-      instalmentPaymentDate   = localDate.plusDays(addNumberOfDays.toInt).toString
+      val localDate = LocalDate.now()
+      instalmentPaymentDate = localDate.plusDays(addNumberOfDays.toInt).toString
     }
 
     var quoteDate = dateTime.toString("yyyy-MM-dd")

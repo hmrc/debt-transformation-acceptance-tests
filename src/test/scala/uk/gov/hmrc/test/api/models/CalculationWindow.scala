@@ -9,16 +9,16 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDate
 
 case class CalculationWindow(
-                              periodFrom: LocalDate,
-                              periodTo: LocalDate,
-                              numberOfDays: Long,
-                              interestRate: Double,
-                              interestDueWindow: BigDecimal,
-                              interestDueDailyAccrual: BigDecimal,
-                              amountOnIntDueWindow: BigDecimal,
-                              unpaidAmountWindow: BigDecimal,
-                              suppressionApplied: Option[SuppressionApplied]
-                            )
+  periodFrom: LocalDate,
+  periodTo: LocalDate,
+  numberOfDays: Long,
+  interestRate: Double,
+  interestDueWindow: BigDecimal,
+  interestDueDailyAccrual: BigDecimal,
+  amountOnIntDueWindow: BigDecimal,
+  unpaidAmountWindow: BigDecimal,
+  suppressionApplied: Option[SuppressionApplied]
+)
 
 case class SuppressionApplied(reason: String, description: String, code: String)
 

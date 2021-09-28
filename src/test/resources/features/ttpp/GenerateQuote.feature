@@ -210,7 +210,7 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
     And customer debtItem details
       | debtItemId  | debtItemChargeId | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 |                  | 1546      | 1090     | 100                | 2021-05-13        |
-    And the debt item has payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     When the generate quote request is sent to the ttpp service
@@ -252,7 +252,7 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
     And customer debtItem details
       | debtItemId | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       |            | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
-    And the debt item has payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     When the generate quote request is sent to the ttpp service
@@ -294,7 +294,7 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
-    And the debt item has payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | debtItemId1 | 100           |
     When the generate quote request is sent to the ttpp service
@@ -315,7 +315,7 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
     And customer debtItem details
       | debtItemId  | debtItemChargeId | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId | 1546      | 1090     | 100                | 2021-05-13        |
-    And the debt item has payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
     When the generate quote request is sent to the ttpp service
@@ -335,7 +335,7 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
-    And the debt item has payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | debtItemId1 | 100           |
     When the generate quote request is sent to the ttpp service
@@ -355,7 +355,7 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
     And customer debtItem details
       | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
       | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
-    And the debt item has payment history
+    And payment history for the debt Item
       | paymentDate | paymentAmount |
       | debtItemId1 | 100           |
     When the generate quote request is sent to the ttpp service
