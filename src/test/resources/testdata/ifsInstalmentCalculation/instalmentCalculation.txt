@@ -1,0 +1,9 @@
+    {
+      "debtItemCharges":[<REPLACE_debtItemCharges>],
+      "quoteDate": "<REPLACE_quoteDate>",
+      "instalmentPaymentDate": "<REPLACE_instalmentPaymentDate>",
+      "instalmentPaymentAmount": <REPLACE_instalmentAmount>,
+      "paymentFrequency":"<REPLACE_paymentFrequency>",
+	    "interestCallDueTotal": <REPLACE_interestCallDueTotal>
+	    <REPLACE_initialPayment>
+    }

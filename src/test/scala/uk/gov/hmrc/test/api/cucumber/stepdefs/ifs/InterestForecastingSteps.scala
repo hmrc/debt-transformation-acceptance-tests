@@ -396,7 +396,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody.map(_.instalmentBalance) shouldBe expectedPaymentPlanResponse.instalments.map(_.instalmentBalance)
   }
 
-  Then("ifs service returns 2-Weekly freqeuncy instalment calculation plan") { () =>
+  Then("ifs service returns 2-Weekly frequency instalment calculation plan") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -443,7 +443,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody.map(_.instalmentBalance) shouldBe expectedPaymentPlanResponse.instalments.map(_.instalmentBalance)
   }
 
-  Then("ifs service returns monthly payment freqeuncy instalment calculation plan") { () =>
+  Then("ifs service returns monthly payment frequency instalment calculation plan") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -482,7 +482,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody.map(_.instalmentBalance) shouldBe expectedPaymentPlanResponse.instalments.map(_.instalmentBalance)
   }
 
-  Then("ifs service returns 4-Weekly freqeuncy instalment calculation plan") { () =>
+  Then("ifs service returns 4-Weekly frequency instalment calculation plan") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -537,7 +537,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody.map(_.instalmentBalance) shouldBe expectedPaymentPlanResponse.instalments.map(_.instalmentBalance)
   }
 
-  Then("ifs service returns Quarterly payment freqeuncy instalment calculation plan") { () =>
+  Then("ifs service returns Quarterly payment frequency instalment calculation plan") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -665,7 +665,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody.map(_.instalmentBalance) shouldBe expectedPaymentPlanResponse.instalments.map(_.instalmentBalance)
   }
 
-  Then("ifs service returns 6Monthly payment freqeuncy instalment calculation plan") { () =>
+  Then("ifs service returns 6Monthly payment frequency instalment calculation plan") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -792,7 +792,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody.map(_.instalmentBalance) shouldBe expectedPaymentPlanResponse.instalments.map(_.instalmentBalance)
   }
 
-  Then("ifs service returns Annually payment freqeuncy instalment calculation plan") { () =>
+  Then("ifs service returns Annually payment frequency instalment calculation plan") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -869,7 +869,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   }
 
-  Then("ifs service returns weekly freqeuncy instalment calculation plan with initial payment") { () =>
+  Then("ifs service returns weekly frequency instalment calculation plan with initial payment") { () =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status shouldBe 200
     val quoteDate                 = LocalDate.now
@@ -927,6 +927,10 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   Given("no initial payment for the debtItem") { () =>
     noInitialPayment()
+  }
+
+  Given("no post codes have been provided for the customer") { () =>
+    noCustomerPostCodes()
   }
 
   And("add initial payment for the debtItem"){(dataTable:DataTable) =>

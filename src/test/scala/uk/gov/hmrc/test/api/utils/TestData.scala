@@ -26,6 +26,19 @@ object TestData extends LazyLogging {
       file.getName.replace(".txt", "") -> data
     }.toMap
 
+  private lazy val ifsInstalmentCalculationFiles: Seq[File] = FileUtils
+    .listFiles(new File("src/test/resources/testdata/ifsInstalmentCalculation"), Array("txt"), false)
+    .asScala
+    .toList
+
+  lazy val loadedIFSInstalmentCalculationFiles: Map[String, String] =
+    ifsInstalmentCalculationFiles.map { file =>
+      val source = Source.fromFile(file.getCanonicalPath)
+      val data   = source.mkString
+      source.close()
+      file.getName.replace(".txt", "") -> data
+    }.toMap
+
   private lazy val ttppFiles: Seq[File] = FileUtils
     .listFiles(new File("src/test/resources/testdata/ttpp"), Array("txt"), false)
     .asScala
