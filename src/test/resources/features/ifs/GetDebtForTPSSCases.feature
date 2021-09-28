@@ -30,6 +30,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2021-03-01 | 2021-03-08 | 7            | 2.6          | 35                      | 249               | 500000               | 500249             |
 
+
   Scenario: Non Interest Bearing TPSS MainTrans 1520 debt
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
