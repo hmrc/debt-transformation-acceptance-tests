@@ -11,8 +11,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -35,8 +35,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -59,8 +59,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -83,8 +83,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -107,8 +107,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -131,8 +131,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -155,8 +155,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -179,8 +179,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -203,8 +203,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 |                  | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      |                  | 1546      | 1090     | 100                | 2021-05-13        |
     And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -224,35 +224,14 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | -100            |
     When the generate quote request is sent to the ttpp service
     Then service returns response code 400
     And service returns error message {"statusCode":400,"errorMessage":"Could not parse body due to requirement failed: paymentAmount should be a positive amount."}
-
-
-  Scenario: TTP service returns  -Invalid debtItemId.
-    Given a generate quote request
-      | customerReference | channelIdentifier |
-      | uniqRef1234       | selfService       |
-    And payment plan details
-      | quoteType        | quoteDate  | instalmentStartDate | instalmentAmount | frequency | duration | initialPaymentAmount | initialPaymentDate | paymentPlanType |
-      | instalmentAmount | 2021-05-13 | 2021-05-13          | 100              | annually  | 12       | 100                  | 2021-05-13         | timeToPay       |
-    And post codes details
-      | addressPostcode | postcodeDate |
-      | NW9 5XW         | 2021-05-13   |
-    And customer debtItem details
-      | debtItemId | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      |            | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
-    And payment history for the debt Item
-      | paymentDate | paymentAmount |
-      | 2021-05-13  | 100           |
-    When the generate quote request is sent to the ttpp service
-    Then service returns response code 400
-    And service returns error message {"statusCode":400,"errorMessage":"Could not parse body due to requirement failed: debtItemId should not be empty"}
 
 
   Scenario: TTP service returns  -Invalid mainTrans .
@@ -266,8 +245,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1525k        | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1525k        | 1090     | 100                | 2021-05-13        |
     And Payments are
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -287,8 +266,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And payment history for the debt Item
       | paymentDate | paymentAmount |
       | debtItemId1 | 100           |
@@ -308,8 +287,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | NW9 5XW         | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId | 1546      | 1090     | 100                | 2021-05-13        |
     And payment history for the debt Item
       | paymentDate | paymentAmount |
       | 2021-05-13  | 100           |
@@ -329,8 +308,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       |                 | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And payment history for the debt Item
       | paymentDate | paymentAmount |
       | debtItemId1 | 100           |
@@ -349,8 +328,8 @@ Feature: Retrieve generate quote response from Time to Pay Proxy
       | addressPostcode | postcodeDate |
       | 2021-05-13        | 2021-05-13   |
     And customer debtItem details
-      | debtItemId  | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
-      | debtItemId1 | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
+      | debtItemChargeId  | mainTrans | subTrans | originalDebtAmount | interestStartDate |
+      | debtItemChargeId1 | 1546      | 1090     | 100                | 2021-05-13        |
     And payment history for the debt Item
       | paymentDate | paymentAmount |
       | debtItemId1 | 100           |

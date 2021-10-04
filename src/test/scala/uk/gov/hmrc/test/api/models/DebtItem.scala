@@ -29,7 +29,6 @@ object DebtItemChargeId extends ValueTypeFormatter {
 }
 
 final case class DebtItem(
-  debtItemId: DebtItemId,
   debtItemChargeId: DebtItemChargeId,
   mainTrans: MainTransType,
   subTrans: SubTransType,

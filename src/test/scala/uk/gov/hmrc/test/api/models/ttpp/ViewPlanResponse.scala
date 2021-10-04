@@ -1,17 +1,16 @@
 package uk.gov.hmrc.test.api.models.ttpp
 
 import play.api.libs.json.Json
+import uk.gov.hmrc.test.api.models.DebtItem
 
 case class ViewPlanResponse(
   customerReference: String,
-  planId: String,
-  quoteType: String,
-  paymentMethod: String,
-  paymentReference: String,
-  instalments: List[Instalment],
-  numberOfInstalments: String,
-  totalDebtAmount: BigDecimal,
-  totalInterest: Double
+  channelIdentifier: String,
+  plan: Plan,
+  debtItemCharges: Seq[DebtItem],
+  payments: Seq[PaymentInformation],
+  customerPostcodes: Seq[CustomerPostCode],
+  instalments: List[Instalment]
 )
 
 object ViewPlanResponse {

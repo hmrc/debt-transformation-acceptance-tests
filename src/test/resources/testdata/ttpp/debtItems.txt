@@ -1,5 +1,4 @@
 {
-         "debtItemId": "<REPLACE_debtItemId>",
          "debtItemChargeId": "<REPLACE_debtItemChargeId>",
          "mainTrans": "<REPLACE_mainTrans>",
          "subTrans": "<REPLACE_subTrans>",

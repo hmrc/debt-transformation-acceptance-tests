@@ -152,7 +152,6 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
     val asMapTransposed                           =
       dataTable.transpose().asMap(classOf[String], classOf[String])
     val replaceDebtItem                           = getBodyAsString("debtItems")
-      .replaceAll("<REPLACE_debtItemId>", asMapTransposed.get("debtItemId"))
       .replaceAll("<REPLACE_debtItemChargeId>", asMapTransposed.get("debtItemChargeId"))
       .replaceAll("<REPLACE_mainTrans>", asMapTransposed.get("mainTrans"))
       .replaceAll("<REPLACE_subTrans>", asMapTransposed.get("subTrans"))

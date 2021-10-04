@@ -10,5 +10,5 @@ object QuoteType extends Enum[QuoteType] with PlayJsonEnum[QuoteType] {
   val values: immutable.IndexedSeq[QuoteType] = findValues
 
   case object Duration extends QuoteType("duration")
-  case object InstalmentAmount extends QuoteType("instalmentPaymentAmount")
+  case object InstalmentAmount extends QuoteType("instalmentAmount")
 }
