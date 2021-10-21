@@ -6,7 +6,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       | customerRef1234 | quoteReference | advisor           |
     And create instalment calculation details
-      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 | instalmentAmount | 2021-09-08 | 2021-05-13          |100               |timeToPay       | true           | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -35,7 +35,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |                   | quoteReference | advisor           |
     And create payment plan details
-      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 | instalmentAmount | 2021-09-08 | 2021-05-13          |100               |timeToPay       | true           | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -63,7 +63,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |  customerRef1234  |                | advisor           |
     And create payment plan details
-      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 | instalmentAmount | 2021-09-08 | 2021-05-13          |100               |timeToPay       | true           | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -91,7 +91,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |  customerRef1234  | quoteReference |                   |
     And create payment plan details
-      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 | instalmentAmount | 2021-09-08 | 2021-05-13       |100              |timeToPay      | true          | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -119,7 +119,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |  customerRef1234  | quoteReference | advisor           |
     And create payment plan details
-      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId  | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       |          | instalmentAmount | 2021-09-08 | 2021-05-13       |100              |timeToPay      | true          | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -147,7 +147,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |  customerRef1234  | quoteReference |    advisor               |
     And create payment plan details
-      | quoteId     | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId     | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 |                  | 2021-09-08 | 2021-05-13       |100              |timeToPay      | true          | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -175,7 +175,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |  customerRef1234  | quoteReference |     advisor       |
     And create payment plan details
-      | quoteId     | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId     | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 | instalmentAmount |            | 2021-05-13       |100              |timeToPay      | true          | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |
@@ -203,7 +203,7 @@ Feature: TTP Create Plan Request
       | customerReference | quoteReference | channelIdentifier |
       |  customerRef1234  | quoteReference |     advisor       |
     And create payment plan details
-      | quoteId     | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtincInt | totalInterest | interestAccrued | planInterest |
+      | quoteId     | quoteType        | quoteDate  | instalmentStartDate |instalmentAmount |paymentPlanType | thirdPartyBank | numberOfInstalments | frequency | duration | initialPaymentDate | initialPaymentAmount | totalDebtIncInt | totalInterest | interestAccrued | planInterest |
       | quoteId1234 | instalmentAmount |  2021-09-08| 2021-05-13          |-100              |timeToPay      | true          | 1                   | annually  | 12       | 2021-05-13         | 100                  | 100             | 10             | 10             |10            |
     And customer address details
       | addressPostcode | postcodeDate |

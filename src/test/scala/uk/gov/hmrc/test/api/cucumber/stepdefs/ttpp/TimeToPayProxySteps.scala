@@ -263,8 +263,8 @@ class TimeToPayProxySteps extends ScalaDsl with EN with Eventually with Matchers
     if (asMapTransposed.containsKey("numberOfInstalments")) {
       responseBody.numberOfInstalments.toString shouldBe asMapTransposed.get("numberOfInstalments").toString
     }
-    if (asMapTransposed.containsKey("totalDebtincInt")) {
-      responseBody.totalDebtincInt.toString() shouldBe asMapTransposed.get("totalDebtincInt").toString
+    if (asMapTransposed.containsKey("totalDebtIncInt")) {
+      responseBody.totalDebtIncInt.toString() shouldBe asMapTransposed.get("totalDebtIncInt").toString
     }
 
     if (asMapTransposed.containsKey("interestAccrued")) {

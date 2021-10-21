@@ -11,7 +11,7 @@
 		"duration": <REPLACE_duration>,
 		"initialPaymentDate": "<REPLACE_initialPaymentDate>",
 		"initialPaymentAmount": <REPLACE_initialPaymentAmount>,
-		"totalDebtincInt": <REPLACE_totalDebtincInt>,
+		"totalDebtIncInt": <REPLACE_totalDebtIncInt>,
 		"totalInterest": <REPLACE_totalInterest>,
 		"interestAccrued": <REPLACE_interestAccrued>,
 		"planInterest": <REPLACE_planInterest>

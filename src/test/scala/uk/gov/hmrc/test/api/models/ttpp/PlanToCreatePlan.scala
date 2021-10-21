@@ -18,7 +18,7 @@ final case class PlanToCreatePlan(
   duration: Duration,
   initialPaymentDate: LocalDate,
   initialPaymentAmount: BigDecimal,
-  totalDebtincInt: BigDecimal,
+  totalDebtIncInt: BigDecimal,
   totalInterest: BigDecimal,
   interestAccrued: BigDecimal,
   planInterest: BigDecimal

@@ -69,7 +69,7 @@ object TimeToPayProxyRequests extends BaseRequests with BaseUris {
       .replaceAll("<REPLACE_duration>", plan.get("duration"))
       .replaceAll("<REPLACE_initialPaymentDate>", plan.get("initialPaymentDate"))
       .replaceAll("<REPLACE_initialPaymentAmount>", plan.get("initialPaymentAmount"))
-      .replaceAll("<REPLACE_totalDebtincInt>", plan.get("totalDebtincInt"))
+      .replaceAll("<REPLACE_totalDebtIncInt>", plan.get("totalDebtIncInt"))
       .replaceAll("<REPLACE_totalInterest>", plan.get("totalInterest"))
       .replaceAll("<REPLACE_interestAccrued>", plan.get("interestAccrued"))
       .replaceAll("<REPLACE_planInterest>", plan.get("planInterest"))

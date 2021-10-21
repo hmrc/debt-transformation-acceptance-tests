@@ -7,7 +7,7 @@ case class GenerateQuoteResponse(
   quoteType: String,
   quoteDate: String,
   numberOfInstalments: Int,
-  totalDebtincInt: BigDecimal,
+  totalDebtIncInt: BigDecimal,
   interestAccrued: BigDecimal,
   planInterest: BigDecimal,
   instalments: List[Instalment]
