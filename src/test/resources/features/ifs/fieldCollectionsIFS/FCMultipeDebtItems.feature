@@ -1,3 +1,4 @@
+@ops
 Feature: FC Debt Calculation End point testing
 
   Scenario: 1. Interest Indicators. 2 debt. 1 payment history
@@ -11,9 +12,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | workItemType | subType | interestIndicator |
       | 300000         | 2018-12-16        | 2019-04-14          | 1520         | 1090    | Y                 |
     And the fc debt item has no payment history
-    And the fc customer has breathing spaces applied
-      | debtRespiteFrom | debtRespiteTo |
-      | 2020-04-06      | 2021-04-06    |
+    And no breathing spaces have been applied to the fc customer
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -32,9 +31,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And the fc customer has breathing spaces applied
-      | debtRespiteFrom | debtRespiteTo |
-      | 2020-04-06      | 2021-04-06    |
+    And no breathing spaces have been applied to the fc customer
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -53,9 +50,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And the fc customer has breathing spaces applied
-      | debtRespiteFrom | debtRespiteTo |
-      | 2020-04-06      | 2021-04-06    |
+    And no breathing spaces have been applied to the fc customer
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -65,7 +60,7 @@ Feature: FC Debt Calculation End point testing
       | 0                    | 400000            | 0                    | 400000              | 400000              |
     And the 1st fc debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty |
-      | true            | 0                    | 0                       | 0                    | 400000           | 400000             | 400000             |
+      | false            | 0                    | 0                       | 0                    | 400000           | 400000             | 400000             |
     And the 1st fc debt summary will not have any calculation windows
 
   Scenario: 4. Interest Indicator. 1 Payment of 1 debt. No breathing space.
