@@ -52,3 +52,15 @@ and run
 
 ```
 ./run_{service_name}_api_zap_tests.sh
+
+```
+
+
+To run Bridging tool. 
+
+```
+./TTP_proxy-polling.sh
+```
+
+To test the bridging tool script in QA, replace ETttpProxyEndpoint with QAttpProxyEndpoint
+eg ETttpStubEndpointRequests=$QAttpProxyEndpoint"test-only/requests"

@@ -7,6 +7,10 @@
 # 3) Returns the response back to the ET TTP Proxy.
 #
 # If an error is found calling the QA TTP service, the error will be written to the ET response endpoint and processing of the request will end.
+
+#Testing. To test this script in QA replace ETttpProxyEndpoint with QAttpProxyEndpoint
+# eg ETttpStubEndpointRequests=$QAttpProxyEndpoint"test-only/requests"
+
 countRequests=0
 lastProcessedTime;
 
