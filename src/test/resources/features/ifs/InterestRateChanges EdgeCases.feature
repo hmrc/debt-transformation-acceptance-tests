@@ -73,7 +73,6 @@ Feature: Interest Rate Changes - Edge cases
       | 2009-03-24 | 2009-09-28 | 189          | 2.5          | 34                      | 6472              | 500000               |
       | 2009-09-29 | 2010-01-01 | 95           | 3.0          | 41                      | 3904              | 500000               |
 
-
   Scenario:  Interest rate changes from 2.75% to 2.6% - leap year - payment is made for 1 debt on the same day the interest rate changes
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
@@ -93,51 +92,69 @@ Feature: Interest Rate Changes - Edge cases
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
       | 2020-01-01 | 2020-03-29 | 3.25         | 8                       | 781               | 100000               |
-      | 2020-03-30 | 2020-04-07 | 2.75         | 7                       | 67                | 100000               |
+      | 2020-03-30 | 2020-04-06 | 2.75         | 7                       | 60                | 100000               |
+      | 2020-04-07 | 2020-04-07 | 2.6          | 7                       | 7                 | 100000               |
       | 2020-01-01 | 2020-03-29 | 3.25         | 35                      | 3125              | 400000               |
       | 2020-03-30 | 2020-04-06 | 2.75         | 30                      | 240               | 400000               |
       | 2020-04-07 | 2020-12-31 | 2.6          | 28                      | 7643              | 400000               |
       | 2021-01-01 | 2021-03-31 | 2.6          | 28                      | 2564              | 400000               |
 
-  @wip
+  Scenario:  Interest rate changes on same day as interest requested to
+    Given a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2020-03-31        | 2020-04-07          | 1525      | 1000     | true            |
+    And the debt item has no payment history
+    And no breathing spaces have been applied to the customer
+    And no post codes have been provided for the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal |
+      | 35                   | 260                  | 500000            |
+    And the 1st debt summary will contain
+      | interestBearing | numberChargeableDays | totalAmountIntDuty |
+      | true            | 7                    | 500260             |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
+      | 2020-03-31 | 2020-04-06 | 2.75         | 37                      | 225               | 500000               |
+      | 2020-04-07 | 2020-04-07 | 2.6          | 35                      | 35                | 500000               |
+
+
   Scenario:  Interest rate changes on same day as interest start date
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
-      | 500000         | 2020-04-07        | 2020-12-31          | 1525      | 1000     | true            |
+      | 500000         | 2020-03-30        | 2020-04-06          | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal |
-      | 35                   | 9519                 | 500000            |
+      | 37                   | 262                  | 500000            |
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | totalAmountIntDuty |
-      | true            | 268                  | 509519             |
+      | true            | 7                    | 500262             |
     And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | interestRate | numberOfDays | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
-      | 2020-04-07 | 2020-12-31 | 2.6          | 268          | 35                      | 9519              | 500000               |
+      | periodFrom | periodTo   | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
+      | 2020-03-30 | 2020-04-06 | 2.75         | 37                      | 262               | 500000               |
 
-  @wip
   Scenario:  Interest rate changes day prior to interest start date
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
-      | 500000         | 2020-04-06        | 2020-12-31          | 1525      | 1000     | true            |
+      | 500000         | 2020-03-29        | 2020-04-05          | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal |
-      | 35                   | 9554                 | 500000            |
+      | 37                   | 262                  | 500000            |
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | totalAmountIntDuty |
-      | true            | 269                  | 509554            |
+      | true            | 7                    | 500262             |
     And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | interestRate | numberOfDays | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
-      | 2020-04-06 | 2020-04-06 | 2.75         | 0            | 7                       | 67                | 500000               |
-      | 2020-04-07 | 2020-12-31 | 2.6          | 269          | 35                      | 9554              | 500000               |
-
+      | periodFrom | periodTo   | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
+      | 2020-03-29 | 2020-03-29 | 3.25         | 44                      | 0               | 500000               |
+      | 2020-03-30 | 2020-04-05 | 2.75         | 37                      | 262               | 500000               |
 
 #  BUG: Test failing due to issue with interest accrued returned
 #  Scenario: Interest rate changes from 0% to 8.5%
