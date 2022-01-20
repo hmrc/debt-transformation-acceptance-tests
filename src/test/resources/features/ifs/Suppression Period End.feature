@@ -4,7 +4,7 @@ Feature: Suppression - Period End
   Scenario: Suppression applied to period End
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2021-04-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-04-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2020-12-20 | 1              |
@@ -24,13 +24,13 @@ Feature: Suppression - Period End
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow | reason | code | description |
       | 2021-02-01 | 2021-04-03 | 61           | 2.6          | 35                      | 502172             |        |      |             |
-      | 2021-04-04 | 2021-05-04 | 31           | 0.0          | 0                       | 500000             | POLICY | 1    |  COVID      |
+      | 2021-04-04 | 2021-05-04 | 31           | 0.0          | 0                       | 500000             | POLICY | 1    | COVID       |
       | 2021-05-05 | 2021-07-06 | 63           | 2.6          | 35                      | 502243             |        |      |             |
 
   Scenario: Suppression should NOT be applied for non matching period End
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2021-04-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-04-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2020-12-20 | 1              |
@@ -48,7 +48,7 @@ Feature: Suppression - Period End
   Scenario: Period End Suppression should NOT be applied where suppression period is before interest start date
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2019-02-04 | 2019-05-04 |
+      | POLICY | COVID       | true    | 2019-02-04 | 2019-05-04 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2021-05-20 | 1              |
@@ -69,10 +69,11 @@ Feature: Suppression - Period End
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual |
       | 2021-02-01 | 2021-07-06 | 155          | 2.6          | 35                      |
 
+  @BugRelatedToDTD-784 @wip
   Scenario: Period End Suppression should NOT be applied where suppression start is same day as interest requested to
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2019-07-06 | 2019-08-01 |
+      | POLICY | COVID       | true    | 2019-07-06 | 2019-08-01 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2019-05-20 | 1              |
@@ -90,7 +91,7 @@ Feature: Suppression - Period End
   Scenario: Suppression for multiple period ends
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2021-04-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-04-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2020-11-20 | 1              |
@@ -115,7 +116,7 @@ Feature: Suppression - Period End
   Scenario: Suppression for multiple period ends and postcode
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2021-04-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-04-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2020-11-20 | 1              |
@@ -145,7 +146,7 @@ Feature: Suppression - Period End
   Scenario: Suppression for multiple period ends, postcode and main trans
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
-      | POLICY |  COVID      | true    | 2021-04-04 | 2021-05-04 |
+      | POLICY | COVID       | true    | 2021-04-04 | 2021-05-04 |
     And suppression rules have been created
       | ruleId | periodEnd  | suppressionIds |
       | 1      | 2020-11-20 | 1              |
