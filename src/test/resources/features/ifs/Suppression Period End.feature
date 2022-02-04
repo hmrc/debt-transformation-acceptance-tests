@@ -69,6 +69,7 @@ Feature: Suppression - Period End
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual |
       | 2021-02-01 | 2021-07-06 | 155          | 2.6          | 35                      |
 
+  @BugRelatedToDTD-784 @wip
   Scenario: Period End Suppression should NOT be applied where suppression start is same day as interest requested to
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
