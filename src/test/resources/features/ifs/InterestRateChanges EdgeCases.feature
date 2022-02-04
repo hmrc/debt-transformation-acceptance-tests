@@ -92,8 +92,7 @@ Feature: Interest Rate Changes - Edge cases
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
       | 2020-01-01 | 2020-03-29 | 3.25         | 8                       | 781               | 100000               |
-      | 2020-03-30 | 2020-04-06 | 2.75         | 7                       | 60                | 100000               |
-      | 2020-04-07 | 2020-04-07 | 2.6          | 7                       | 7                 | 100000               |
+      | 2020-03-30 | 2020-04-07 | 2.75         | 7                       | 67                | 100000               |
       | 2020-01-01 | 2020-03-29 | 3.25         | 35                      | 3125              | 400000               |
       | 2020-03-30 | 2020-04-06 | 2.75         | 30                      | 240               | 400000               |
       | 2020-04-07 | 2020-12-31 | 2.6          | 28                      | 7643              | 400000               |
