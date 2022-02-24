@@ -73,7 +73,6 @@ Feature: Instalment calculation for 1 debt 1 duty with initial payment
     And ifs service returns Quarterly payment frequency instalment calculation plan
 
   Scenario: Payment plan calculation instalment - 6Monthly payment frequency instalment Date starts in non leap year to Leap year
-
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType |
       | 10000                   | 6Monthly         | 1                    | 3538                 | duration  |

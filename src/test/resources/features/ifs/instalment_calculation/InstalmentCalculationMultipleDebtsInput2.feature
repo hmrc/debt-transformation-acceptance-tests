@@ -1,4 +1,4 @@
-Feature: Instalment calculation for multiple debts - Input 1
+Feature: Instalment calculation for multiple debts - Input 2
 
   Scenario: Should calculate instalment amount for multiple debts no initial payment debt 1 (input 2)
     Given debt instalment calculation with details
@@ -13,7 +13,7 @@ Feature: Instalment calculation for multiple debts - Input 1
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
       | instalmentNumber | daysAfterToday | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
-      | 1                | 1              | monthly          | 0               | 10690     | 100000            | 2.75         | 25                          |
+      | 1                | 1              | monthly          | 0               | 10715     | 100000            | 3.0         | 25                          |
 
   Scenario: Should calculate instalment amount for multiple debts no initial payment debt 2 (input 2)
     Given debt instalment calculation with details
@@ -28,4 +28,4 @@ Feature: Instalment calculation for multiple debts - Input 1
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
       | instalmentNumber | daysAfterToday | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
-      | 11               | 274            | monthly          | 0               | 4276      | 150000            | 2.75         | 25                          |
+      | 11               | 274            | monthly          | 0               | 4286      | 150000            | 3.0         | 25                          |

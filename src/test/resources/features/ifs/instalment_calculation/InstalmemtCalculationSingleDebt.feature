@@ -12,7 +12,7 @@ Feature: Instalment calculation for single debt - Input 2
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
       | instalmentNumber | daysAfterToday | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
-      | 1                | 1              | monthly          | 0               | 4275      | 100000            | 2.75         | 24                          |
+      | 1                | 1              | monthly          | 0               | 4285      | 100000            | 3.0        | 24                          |
 
 # DTD-397 Edge-cases below
 
