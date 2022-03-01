@@ -206,10 +206,13 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
   }
 
   def validateIfsResponseContainsExpectedValues(dataTable: DataTable): Unit = {
-    val asmapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val index: Int          = asmapTransposed.get("instalmentNumber").toString.toInt - 1
+    var daysAfterToday: Int = 0
 
-    val index: Int                       = asmapTransposed.get("instalmentNumber").toString.toInt - 1
-    val daysAfterToday: Int              = asmapTransposed.get("daysAfterToday").toString.toInt
+    if (asmapTransposed.toString.contains("daysAfterToday")) {
+      daysAfterToday = asmapTransposed.get("daysAfterToday").toString.toInt
+    }
     val plusFrequency: String            = asmapTransposed.get("paymentFrequency").toString
     val plusUnit: Int                    = asmapTransposed.get("frequencyPassed").toString.toInt
     val paymentAmount: Int               = asmapTransposed.get("amountDue").toString.toInt // in pennies
@@ -229,8 +232,10 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
     response.status.shouldBe(200)
     responseBody.numberOfInstalments shouldBe expectedNumberOfInstalments
     val instalment = responseBody.instalments(index)
-    instalment.dueDate           shouldBe date
-    instalment.amountDue         shouldBe paymentAmount
+    if (asmapTransposed.toString.contains("daysAfterToday")) {
+      instalment.dueDate shouldBe date
+    }
+    instalment.amountDue shouldBe paymentAmount
     instalment.instalmentBalance shouldBe balance
     instalment.instalmentNumber  shouldBe index + 1
     instalment.intRate           shouldBe intRate
