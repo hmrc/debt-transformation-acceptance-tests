@@ -9,6 +9,7 @@
 # If an error is found calling the QA TTP service, the error will be written to the ET response endpoint and processing of the request will end.
 countRequests=0
 lastProcessedTime;
+set -x
 
 QAttpProxyEndpoint="https://api.qa.tax.service.gov.uk"
 ETttpProxyEndpoint="https://test-api.service.hmrc.gov.uk/individuals/time-to-pay-proxy/"
