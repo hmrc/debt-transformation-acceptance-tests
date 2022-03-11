@@ -1,9 +1,0 @@
-{
-    "customerReference":"<REPLACE_customerReference>",
-    "channelIdentifier":"<REPLACE_channelIdentifier>",
-    "plan": <REPLACE_plan>,
-
-    "customerPostCodes": [<REPLACE_customerPostCodes>],
-
-    "debtItemCharges":[<REPLACE_debtItems>]
-}

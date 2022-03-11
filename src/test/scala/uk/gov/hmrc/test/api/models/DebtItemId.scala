@@ -1,4 +1,4 @@
-package uk.gov.hmrc.test.api.models.ttpp
+package uk.gov.hmrc.test.api.models
 
 final case class DebtItemId(value: String) extends AnyVal
 

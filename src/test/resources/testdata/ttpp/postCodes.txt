@@ -1,4 +1,0 @@
-{
-         "addressPostcode":"<REPLACE_addressPostcode>",
-         "postcodeDate": "<REPLACE_postcodeDate>"
-         }

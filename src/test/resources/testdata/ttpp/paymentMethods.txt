@@ -1,4 +1,0 @@
-{
-      		  "paymentMethod": "<REPLACE_paymentMethod>",
-      		  "paymentReference" :"<REPLACE_paymentReference>"
-      		  }

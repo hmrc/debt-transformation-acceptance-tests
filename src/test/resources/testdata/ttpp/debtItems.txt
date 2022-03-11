@@ -1,8 +1,0 @@
-{
-         "debtItemChargeId": "<REPLACE_debtItemChargeId>",
-         "mainTrans": "<REPLACE_mainTrans>",
-         "subTrans": "<REPLACE_subTrans>",
-         "originalDebtAmount": <REPLACE_originalDebtAmount>,
-         "interestStartDate": "<REPLACE_interestStartDate>",
-         "paymentHistory": [<REPLACE_paymentHistory>
-         ]}

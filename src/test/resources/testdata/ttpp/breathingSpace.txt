@@ -1,4 +1,0 @@
-{
-  "debtRespiteFrom": "<REPLACE_debtRespiteFrom>",
-  "debtRespiteTo": "<REPLACE_debtRespiteTo>"
-}
