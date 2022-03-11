@@ -5,8 +5,6 @@ import uk.gov.hmrc.test.api.conf.TestConfiguration
 trait BaseUris {
   val statementOfLiabilityApiUrl: String =
     TestConfiguration.url("statement-of-liability")
-  val timeToPayProxyApiUrl: String       =
-    TestConfiguration.url("time-to-pay-proxy")
   val interestForecostingApiUrl: String  =
     TestConfiguration.url("interest-forecasting")
   val authLoginApiUri: String            =

@@ -1,7 +1,0 @@
-    {
-      "debtId": "<REPLACE_debtId>",
-      "mainTrans": "<REPLACE_mainTrans>",
-      "duties": [
-        <REPLACE_duties>
-      ]
-    }

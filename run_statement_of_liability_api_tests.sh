@@ -5,7 +5,7 @@ tags="not @smoke and not @ignore"
 if [ $# -gt 0 -a "$1" != "$environment" ];
 then
   environment="$1"
-  tags="not @ignore"
+  tags="not @wip and not @ignore"
 fi
 
 echo "*** running on $environment for tags '$tags' ***"

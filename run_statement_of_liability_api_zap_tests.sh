@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+git checkout maingit checkout main#!/usr/bin/env bash
 
 set -e
 

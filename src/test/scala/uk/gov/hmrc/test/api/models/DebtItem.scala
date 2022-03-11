@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.api.models
 
 import play.api.libs.json.Json
-import uk.gov.hmrc.test.api.models.ttpp.{DebtItemId, ValueTypeFormatter}
+import uk.gov.hmrc.test.api.models.{DebtItemId, ValueTypeFormatter}
 
 import java.time.LocalDate
 
