@@ -55,5 +55,6 @@ following in the root of the extracted folder:
 
 and run
 
+
 ```
 ./run_{service_name}_api_zap_tests.sh
