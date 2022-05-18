@@ -38,37 +38,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   Given("no debt item") { () =>
     createInterestForcastingRequestWithNoDebtItems()
   }
-
-  Given("a new interest rate table") { () =>
-    val newIntTable = InterestRates(
-      22,
-      Seq(
-        InterestRate(LocalDate.of(2010, 1, 1), 1),
-        InterestRate(LocalDate.of(2020, 1, 1), 10),
-        InterestRate(LocalDate.of(2021, 1, 1), 20)
-      )
-    )
-    postNewInterestRatesTable(Json.toJson(newIntTable).toString())
-  }
-
-  When("a rule has been updated") { (dataTable: DataTable) =>
-    val asmapTransposed        = dataTable.transpose().asMap(classOf[String], classOf[String])
-    val newRule                = asmapTransposed.get("rule")
-    val responseGEtRules       = getAllRules
-    val collection             = Json.parse(responseGEtRules.body).as[GetRulesResponse]
-    val newRules: List[String] = collection.rules.find(_.enabled) match {
-      case Some(activeRules) =>
-        val rules = activeRules.rules.filterNot(vl =>
-          vl.contains(asmapTransposed.get("mainTrans")) && vl.contains(asmapTransposed.get("subTrans"))
-        )
-        rules ++ List(s"IF mainTrans == '${asmapTransposed.get("mainTrans")}' AND subTrans == '${asmapTransposed
-          .get("subTrans")}' -> intRate = ${asmapTransposed.get("intRate")} AND interestOnlyDebt = false")
-
-    }
-
-    postNewRulesTable(Json.toJson(CreateRuleRequest(newRules)).toString())
-  }
-
   Given("the current set of rules") { () =>
     val responseGEtRules = getAllRules
 

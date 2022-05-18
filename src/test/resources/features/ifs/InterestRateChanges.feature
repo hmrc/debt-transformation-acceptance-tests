@@ -179,10 +179,10 @@ Feature: Interest Rate Changes
       | true            | 0                    | 0                       | 500000             |
     And the 1st debt summary will not have any calculation windows
 
-  Scenario: Interest rate changes from 3% to 3.25% effective from 05/04/2022
+  Scenario: Interest rate changes from 3% -> 3.25% -> 3.5%
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
-      | 500000         | 2022-04-03        | 2023-04-05          | 1525      | 1000     |
+      | 500000         | 2022-04-03        | 2023-05-16          | 1525      | 1000     |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     And no post codes have been provided for the customer
@@ -196,4 +196,5 @@ Feature: Interest Rate Changes
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2022-04-03 | 2022-04-04 | 1            | 3.0          | 41                      | 41                | 500000               | 500041             |
+      | 2022-04-05 | 2023-04-05 | 366          | 3.25         | 44                      | 16294             | 500000               | 516294             |
       | 2022-04-05 | 2023-04-05 | 366          | 3.25         | 44                      | 16294             | 500000               | 516294             |

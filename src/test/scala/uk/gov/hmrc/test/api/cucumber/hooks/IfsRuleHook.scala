@@ -9,11 +9,6 @@ import uk.gov.hmrc.test.api.utils.ScenarioContext
 class IfsRuleHook extends ScalaDsl with LazyLogging {
 
   Before("@suppression") { _ =>
-//    val deleteResponse = SuppressionRulesRequests.deleteSuppressionData()
-//    deleteResponse.status should be(200)
-//
-//    val deleteRuleResponse = SuppressionRulesRequests.deleteSuppressionRules()
-//    deleteRuleResponse.status should be(200)
   }
 
   Before() { _ =>

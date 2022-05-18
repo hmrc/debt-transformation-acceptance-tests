@@ -178,7 +178,7 @@ Feature: Suppression - Edge cases
       | 108                  |
 
 # TODO Fails. IFS returns 400 when suppression starts before interest start date
-  @DTD-371 @wip
+  @DTD-371  @wip
   Scenario: Suppression period starts before interest start date
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
