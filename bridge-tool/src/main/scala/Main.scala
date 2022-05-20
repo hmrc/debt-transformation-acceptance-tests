@@ -32,7 +32,6 @@ final case class TokenResponse(`access_token`: String) {
 val defaultHeaders = Map("Content-Type" -> "application/json")
 
 val externalTestTokenURL = "https://test-api.service.hmrc.gov.uk/oauth/token"
-val qaTokenURL = "https://api.qa.tax.service.gov.uk/oauth/token"
 
 val externalTestTokenParams = Map(
   "client_secret" -> "a3438df2-c78a-4926-92b5-bc50382e6d0c",
@@ -41,15 +40,8 @@ val externalTestTokenParams = Map(
   "scope"         -> "read:time-to-pay-proxy"
 )
 
-val qaTokenParams = Map(
-  "client_secret" -> "6c2fc716-b9c6-4bb8-a57e-4908d32b9b27",
-  "client_id"     -> "reRg5ZSks9hGLpzxS5RRnYHjHYtW",
-  "grant_type"    -> "client_credentials",
-  "scope"         -> "read:debt-management-api"
-)
-
 val externalTestTTPURL = "https://test-api.service.hmrc.gov.uk/individuals/time-to-pay-proxy/"
-val qaAPIURL = "https://api.qa.tax.service.gov.uk"
+val qaAPIURL = "https://admin.qa.tax.service.gov.uk/ifs"
 
 val externalTestsRequestsURL = s"${externalTestTTPURL}test-only/requests"
 val externalTestsResponseURL = s"${externalTestTTPURL}test-only/response"
@@ -76,9 +68,6 @@ def retrieveAccessToken(url: String, data: Map[String, String]): Result[TokenRes
 
 def retrieveExternalTestToken(): Result[TokenResponse] =
   retrieveAccessToken(externalTestTokenURL, externalTestTokenParams)
-
-def retrieveQAToken(): Result[TokenResponse] =
-  retrieveAccessToken(qaTokenURL, qaTokenParams)
 
 def retrieveAllUnprocessedRequests(token: TokenResponse): Result[List[RequestDetail]] =
   for {
@@ -137,7 +126,12 @@ def postRequestDetailsToQA(token: TokenResponse, details: RequestDetail): Result
                 }
   } yield response
 
-def postResponseToExternalTest(token: TokenResponse, details: RequestDetail, qaResponse: Json, status: Int): Result[Int] = {
+def postResponseToExternalTest(
+  token: TokenResponse,
+  details: RequestDetail,
+  qaResponse: Json,
+  status: Int
+): Result[Int] = {
   val responseDetails = RequestDetail(
     isResponse = true,
     requestId = details.requestId,
@@ -219,9 +213,15 @@ def pollForRequests(qaToken: TokenResponse, externalTestToken: TokenResponse): U
 
 object Main extends App {
 
-  for {
-    externalTestToken <- retrieveExternalTestToken()
-    qaToken           <- retrieveQAToken()
-  } yield pollForRequests(qaToken, externalTestToken)
+  def main(qaToken: Option[String]) =
+    qaToken match {
+      case Some(token) =>
+        for {
+          externalTestToken <- retrieveExternalTestToken()
+        } yield pollForRequests(TokenResponse(token), externalTestToken)
+
+      case None =>
+        logging.error(s"Token not provided")
+    }
 
 }
