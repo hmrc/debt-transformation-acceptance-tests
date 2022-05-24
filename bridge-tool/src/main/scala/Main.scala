@@ -1,12 +1,13 @@
 package main
 
 import errors.BridgeToolError
-import errors.BridgeToolError._
-import io.circe._
-import io.circe.generic.auto._
-import io.circe.parser._
-import io.circe.syntax._
-import requests._
+import errors.BridgeToolError.*
+import io.circe.*
+import io.circe.generic.auto.*
+import io.circe.parser.*
+import io.circe.syntax.*
+import requests.*
+import requests.RequestAuth.Bearer
 
 import java.net.ConnectException
 import java.time.LocalDateTime
@@ -68,6 +69,12 @@ def retrieveAccessToken(url: String, data: Map[String, String]): Result[TokenRes
 
 def retrieveExternalTestToken(): Result[TokenResponse] =
   retrieveAccessToken(externalTestTokenURL, externalTestTokenParams)
+
+def retrieveQAToken(): Result[TokenResponse] =
+  sys.env.get("ADMIN_QA_TOKEN") match {
+    case Some(value) => Right(TokenResponse(value))
+    case None        => Left(BridgeToolError.MissingQAToken())
+  }
 
 def retrieveAllUnprocessedRequests(token: TokenResponse): Result[List[RequestDetail]] =
   for {
@@ -213,15 +220,9 @@ def pollForRequests(qaToken: TokenResponse, externalTestToken: TokenResponse): U
 
 object Main extends App {
 
-  def main(qaToken: Option[String]) =
-    qaToken match {
-      case Some(token) =>
-        for {
-          externalTestToken <- retrieveExternalTestToken()
-        } yield pollForRequests(TokenResponse(token), externalTestToken)
-
-      case None =>
-        logging.error(s"Token not provided")
-    }
+  for {
+    externalTestToken <- retrieveExternalTestToken()
+    qaToken           <- retrieveQAToken()
+  } yield pollForRequests(qaToken, externalTestToken)
 
 }
