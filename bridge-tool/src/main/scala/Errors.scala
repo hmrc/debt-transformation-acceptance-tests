@@ -25,7 +25,7 @@ sealed abstract class BridgeToolError {
       case MissingURL(badDetails: RequestDetail) =>
         s"Missing URL from request details; details: $badDetails"
 
-      case MissingQAToken() =>
+      case MissingQAToken =>
         s"Missing QAToken from local environment"
 
       case BadMethod(badDetails: RequestDetail) =>
@@ -55,7 +55,7 @@ object BridgeToolError {
   final case class BadResponse(error: Response) extends BridgeToolError
   final case class BadResponseWithDetails(error: Response, details: RequestDetail) extends BridgeToolError
   final case class MissingURL(badDetails: RequestDetail) extends BridgeToolError
-  final case class MissingQAToken() extends BridgeToolError
+  case object MissingQAToken extends BridgeToolError
   final case class BadMethod(badDetails: RequestDetail) extends BridgeToolError
   final case class Decode(badObject: String, error: CirceError) extends BridgeToolError
   case object NoRequestsToProcess extends BridgeToolError

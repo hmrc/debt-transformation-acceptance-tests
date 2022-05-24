@@ -73,7 +73,7 @@ def retrieveExternalTestToken(): Result[TokenResponse] =
 def retrieveQAToken(): Result[TokenResponse] =
   sys.env.get("ADMIN_QA_TOKEN") match {
     case Some(value) => Right(TokenResponse(value))
-    case None        => Left(BridgeToolError.MissingQAToken())
+    case None        => Left(BridgeToolError.MissingQAToken)
   }
 
 def retrieveAllUnprocessedRequests(token: TokenResponse): Result[List[RequestDetail]] =
