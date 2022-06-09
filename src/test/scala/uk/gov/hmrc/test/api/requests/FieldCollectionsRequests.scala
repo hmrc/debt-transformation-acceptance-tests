@@ -22,9 +22,10 @@ import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
-import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.utils.{BaseRequests, ScenarioContext, TestData}
+
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 object FieldCollectionsRequests extends ScalaDsl with EN with Eventually with Matchers with BaseRequests {
 

@@ -7,13 +7,13 @@ import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
-import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.{Frequency, InstalmentCalculation, InstalmentCalculationSummaryResponse}
 import uk.gov.hmrc.test.api.utils.{BaseRequests, ScenarioContext, TestData}
 
 import java.time.LocalDate
 import java.util.Date
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually with Matchers with BaseRequests {
 
@@ -189,8 +189,8 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
     val asmapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
     val dateTime        = new DateTime(new Date()).withZone(DateTimeZone.UTC)
 
-    var initialPaymentDate      = ""
-    var initialPaymentAmount    = "\"\""
+    var initialPaymentDate   = ""
+    var initialPaymentAmount = "\"\""
     if (asmapTransposed.toString.contains("initialPaymentDays")) {
       var addNumberOfDays = ""
       addNumberOfDays = asmapTransposed.get("initialPaymentDays")

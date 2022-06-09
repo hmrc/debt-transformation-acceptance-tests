@@ -3,9 +3,10 @@ package uk.gov.hmrc.test.api.requests
 import io.cucumber.datatable.DataTable
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
-import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, ScenarioContext, TestData}
+
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
 

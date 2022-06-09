@@ -22,12 +22,12 @@ import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
-import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
 import uk.gov.hmrc.test.api.models._
 import uk.gov.hmrc.test.api.requests.InterestForecastingRequests.{getBodyAsString, _}
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
 import java.time.LocalDate
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Matchers {
 
@@ -67,7 +67,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
       case _           => println("Error. No rules with version 1 found")
     }
   }
-
 
   Given("(.*) debt items") { (numberItems: Int) =>
     var debtItems: String = null

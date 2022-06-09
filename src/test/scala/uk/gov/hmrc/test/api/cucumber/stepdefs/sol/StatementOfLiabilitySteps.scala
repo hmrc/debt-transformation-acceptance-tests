@@ -22,10 +22,11 @@ import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
-import play.twirl.api.TwirlHelperImports.twirlJavaCollectionToScala
 import uk.gov.hmrc.test.api.models.sol.{HelloWorld, SolCalculation, SolCalculationSummaryResponse}
 import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.utils.{ScenarioContext, TestData}
+
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Matchers {
 
   When("a request is made to get response from sol hello world endpoint") { () =>
