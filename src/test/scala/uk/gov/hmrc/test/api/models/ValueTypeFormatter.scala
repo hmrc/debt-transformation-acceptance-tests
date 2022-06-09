@@ -4,9 +4,9 @@ import play.api.libs.json.{Format, JsNull, JsResult, JsValue, Json, Reads, Write
 
 trait ValueTypeFormatter {
   def valueTypeFormatter[T, U](
-                                apply: T => U,
-                                unapply: U => Option[T]
-                              )(implicit readsT: Reads[T], writesT: Writes[T]): Format[U] =
+    apply: T => U,
+    unapply: U => Option[T]
+  )(implicit readsT: Reads[T], writesT: Writes[T]): Format[U] =
     new Format[U] {
       override def reads(json: JsValue): JsResult[U] =
         json.validate[T].map(apply)

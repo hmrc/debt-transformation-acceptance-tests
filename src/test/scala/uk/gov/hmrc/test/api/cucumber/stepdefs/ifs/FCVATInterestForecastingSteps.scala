@@ -42,7 +42,6 @@ class FCVATInterestForecastingSteps extends ScalaDsl with EN with Eventually wit
     fcVatCustomerWithNoPaymentHistory()
   }
 
-
   When("the debt item(s) is sent to the fc vat ifs service") { () =>
     addFcVatDebtItemRequest()
     val request  = ScenarioContext.get("fcVatDebtItem").toString
