@@ -189,10 +189,10 @@ Feature: Interest Rate Changes
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal | amountOnIntDueTotal |
-      | 47                   | 17420                | 500000            | 517448         | 500000              |
+      | 47                   | 17420                | 500000            | 517420         | 500000              |
     And the 1st debt summary will contain
       | interestBearing | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | numberChargeableDays | amountOnIntDueDuty | interestOnlyIndicator |
-      | true            | 47                      | 17420                | 500000           | 517448             | 367                  | 500000             | false                 |
+      | true            | 47                      | 17420                | 500000           | 517420             | 367                  | 500000             | false                 |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow |
       | 2022-04-03 | 2022-04-04 | 1            | 3.0          | 41                      | 41                | 500000               | 500041             |
