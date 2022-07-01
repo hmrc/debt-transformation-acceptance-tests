@@ -54,7 +54,7 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
     When the instalment calculation detail is sent to the ifs service
     Then the instalment calculation summary contains values
       | numberOfInstalments | duration | interestAccrued | planInterest | totalInterest |
-      | 25                  | 24       | 0               | 1571         | 1571          |
+      | 25                  | 24       | 0               | 1568         | 1568          |
     And IFS response contains expected values
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
       | 1                | 2022-03-14 | monthly          | 0               | 8494      | 100000            | 3.0          | 25                          |
