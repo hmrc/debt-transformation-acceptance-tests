@@ -243,6 +243,9 @@ def pollForRequests(tokens: Tokens): Unit =
 
 object Main extends App {
 
-  getNewTokens().map(pollForRequests)
+  getNewTokens().map(pollForRequests) match {
+    case Left(error) => logging.error(error)
+    case Right(()) => ()
+  }
 
 }
