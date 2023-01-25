@@ -1,5 +1,5 @@
 Feature: Debt Calculation Validation
-
+@@verify
   Scenario: Send error message where no debt items are provided when IFS is called DTD-545
     Given no debt item
     When the debt item is sent to the ifs service
