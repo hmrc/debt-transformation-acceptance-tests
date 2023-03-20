@@ -1,3 +1,4 @@
+@wip4
 Feature: Get Debt For all the SUPPORTED REGIMES
 
   Scenario Outline: Interest Bearing TPSS MainTrans SubTrans
@@ -324,7 +325,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4620      | 1175     | true                  |
       | 4622      | 1175     | true                  |
       | 4624      | 1175     | true                  |
-      | 4638      | 1175     | true                  |
+      | 4672      | 1175     | true                  |
       | 4658      | 1175     | true                  |
       | 4660      | 1175     | true                  |
       | 4662      | 1175     | true                  |
@@ -346,4 +347,11 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4784      | 1175     | true                  |
       | 4791      | 1175     | true                  |
       | 4794      | 1175     | true                  |
-      | 4797      | 1175     | true                  |
+      | 4670      | 1175     | true                  |
+      | 4674      | 1175     | true                  |
+      | 4732      | 1174     | true                  |
+      | 4774      | 1175     | true                  |
+      | 4759      | 1090     | true                  |
+      | 4758      | 1090     | true                  |
+      | 4735      | 1090     | true                  |
+      | 4771      | 1175     | true                  |
