@@ -68,7 +68,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Invalid combination of mainTrans and subTrans. No rule found in the configured ones
 
-
+@wip4
   Scenario Outline: Interest Bearing Employer PAYE charges
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
@@ -134,7 +134,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 2100      | 1100     | false                 |
       | 2130      | 1355     | false                 |
       | 4759      | 1090     | false                 |
-
+      | 4758      | 1090     | false                 |
 
   Scenario Outline: Non Interest Bearing Employer PAYE MainTrans and SubTrans
     Given the current set of rules
