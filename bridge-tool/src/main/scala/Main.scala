@@ -40,9 +40,9 @@ val defaultHeaders = Map("Content-Type" -> "application/json")
 
 val externalTestTokenURL = "https://test-api.service.hmrc.gov.uk/oauth/token"
 
-val externalTestTokenParams = Map(
-  "client_secret" -> "a3438df2-c78a-4926-92b5-bc50382e6d0c",
-  "client_id"     -> "IRSzWvRL34nBwQqhKVV8ACzchThp",
+val externalTestTokenParams: Map[String, String] = Map(
+  "client_secret" -> retrieveETSecret,
+  "client_id"     -> retrieveETId,
   "grant_type"    -> "client_credentials",
   "scope"         -> "read:time-to-pay-proxy"
 )
@@ -77,6 +77,22 @@ def retrieveQAToken(): Result[TokenResponse] =
   sys.env.get("ADMIN_QA_TOKEN") match {
     case Some(value) => Right(TokenResponse(value))
     case None        => Left(BridgeToolError.MissingQAToken)
+  }
+
+lazy val retrieveETSecret: String =
+  sys.env.get("ET_SECRET") match {
+    case Some(value) => value
+    case None =>
+      logging.error("ET_SECRET environment variable not found, please export it.")
+      "XXX"
+  }
+
+lazy val retrieveETId: String =
+  sys.env.get("ET_ID") match {
+    case Some(value) => value
+    case None =>
+      logging.error("ET_ID environment variable not found, please export it.")
+      "XXX"
   }
 
 def getNewTokens(): Result[Tokens] =
@@ -205,8 +221,8 @@ def process(oldTokens: Tokens): Result[Unit] =
     details         <- nextProcessableRequest(requests)
     qaResponse      <- postRequestDetailsToQA(updatedTokens.qaToken, details)
     responseContent <- parseQAResponse(qaResponse)
-    _               <- postResponseToExternalTest(updatedTokens.externalTestToken, details, responseContent, qaResponse.statusCode)
-    _               <- deleteRequest(updatedTokens.externalTestToken, details)
+    _ <- postResponseToExternalTest(updatedTokens.externalTestToken, details, responseContent, qaResponse.statusCode)
+    _ <- deleteRequest(updatedTokens.externalTestToken, details)
   } yield ()
 
 @scala.annotation.tailrec
