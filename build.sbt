@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"          %% "akka-stream"              % "2.5.27"        % "test",
   "com.github.mifmif"           % "generex"                  % "1.0.2",
   "com.google.zxing"            % "core"                     % "3.3.3",
-  "uk.gov.hmrc"                %% "webdriver-factory"        % "0.38.0"        % "test",
+  "uk.gov.hmrc"                %% "webdriver-factory"        % "0.39.0"        % "test",
   "com.google.zxing"            % "javase"                   % "3.4.1",
   "commons-io"                  % "commons-io"               % "2.6",
   "org.julienrf"               %% "play-json-derived-codecs" % "7.0.0",
