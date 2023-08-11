@@ -168,7 +168,7 @@ Feature: Debt Calculation Validation
   Scenario: TPSS interestStartDate debt before 2001 jan 01 - Edge Case
     Given a debt item
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
-      | 500000         | 2000-03-01  | 2000-12-01        | 2001-03-08          | 1525      | 1000     | true            |
+      | 500000         | 2000-03-01  | 2000-02-05        | 2001-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
     And no breathing spaces have been applied to the customer
     And no post codes have been provided for the customer
