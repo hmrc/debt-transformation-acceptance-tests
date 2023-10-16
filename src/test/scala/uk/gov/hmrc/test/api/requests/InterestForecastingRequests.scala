@@ -46,6 +46,24 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
+  def getDebtInterestTypeRequestBody(json: String): StandaloneWSResponse = {
+    val bearerToken = createBearerToken(
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup,
+      utr = "123456789012"
+    )
+    val baseUri = s"$interestForecostingApiUrl/debt-interest-type"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type" -> "application/json",
+      "Accept" -> "application/vnd.hmrc.1.0+json"
+    )
+    print("IFS debt-interest type baseUri ************************" + baseUri)
+    print("IFS debt-interest Type json********************" + Json.parse(json))
+
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
+  }
+
   def getAllRules =
     WsClient.get(dataForIFSApis("rules")._1, headers = dataForIFSApis("rules")._2)
 
@@ -212,6 +230,31 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       "debtItems",
       ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_customerPostCodes>", "")
     )
+  }
+
+  def createInterestTypeRequestBody(dataTable: DataTable): Unit = {
+    val asmapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    var firstItem = false
+    var debtInterestTypes: String = null
+    try ScenarioContext.get("debtInterestTypes")
+    catch {
+      case e: Exception => firstItem = true
+    }
+    val debtInterestType = getBodyAsString("debtInterestType")
+      .replaceAll("<REPLACE_subTrans>", asmapTransposed.get("subTrans"))
+      .replaceAll("<REPLACE_mainTrans>", asmapTransposed.get("mainTrans"))
+    if (firstItem == true) {
+      debtInterestTypes = debtInterestType
+    }
+    else {
+      debtInterestTypes = ScenarioContext.get("debtInterestTypes").toString.concat(",").concat(debtInterestType)
+    }
+
+    ScenarioContext.set(
+      "debtInterestTypes",
+      debtInterestTypes
+    )
+    print("Ifs debt-interest-type request::::::::::::::::::" + debtInterestTypes)
   }
 
 }

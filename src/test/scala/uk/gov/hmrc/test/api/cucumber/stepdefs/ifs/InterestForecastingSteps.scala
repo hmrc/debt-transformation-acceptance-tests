@@ -135,6 +135,15 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     ScenarioContext.set("response", response)
   }
 
+  When("the debt interest type request is sent to the ifs service") { () =>
+    val request = ScenarioContext.get("debtInterestTypes").toString
+    println(s"IFS REQUEST --> $request")
+    val response = getDebtInterestTypeRequestBody(request)
+    println(s"IFS Service RESPONSE --> ${response.body}")
+    ScenarioContext.set("response", response)
+
+  }
+
   Then("the ifs service wilL return a total debts summary of") { (dataTable: DataTable) =>
     val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
@@ -292,6 +301,37 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   Then("the ([0-9])(?:st|nd|rd|th) debt summary will not have any calculation windows") { (summaryIndex: Int) =>
     getCountOfCalculationWindows(summaryIndex) shouldBe 0
   }
+
+  Given("a debt interest type item") { (dataTable: DataTable) =>
+    createInterestTypeRequestBody(dataTable)
+  }
+
+
+  Then("the ([0-9])(?:st|nd|rd|th) debt interest type response summary will contain") { (index: Int, dataTable: DataTable) =>
+    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val response: StandaloneWSResponse = ScenarioContext.get("response")
+    response.status should be(200)
+
+    val responseBody: DebtInterestType =Json.parse(response.body).as[DebtInterestTypeResponse].debts(index-1)
+
+    if (asMapTransposed.containsKey("interestBearing")) {
+      responseBody.interestBearing.toString shouldBe asMapTransposed.get("interestBearing").toString
+    }
+
+      if (asMapTransposed.containsKey("mainTrans")) {
+        responseBody.mainTrans.toString shouldBe asMapTransposed.get("mainTrans").toString
+      }
+
+      if (asMapTransposed.containsKey("subTrans")) {
+        responseBody.subTrans.toString shouldBe asMapTransposed.get("subTrans").toString
+      }
+
+      if (asMapTransposed.containsKey("useChargeReference")) {
+        responseBody.useChargeReference.toString shouldBe asMapTransposed.get("useChargeReference").toString
+
+    }
+  }
+
 
   def getCountOfCalculationWindows(summaryIndex: Int): Int = {
     val response: StandaloneWSResponse = ScenarioContext.get("response")
