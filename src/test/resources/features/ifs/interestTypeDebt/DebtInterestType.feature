@@ -69,11 +69,11 @@ Feature: IFS provide details on whether the charges - use the charge reference o
       | 2095      | 2023     | false           | true               |
       | 2095      | 2026     | false           | true               |
       | 2095      | 2100     | false           | true               |
-      | 2100      | 1000     | true            | false              |
-      | 2100      | 1023     | true            | false              |
-      | 2100      | 1026     | true            | false              |
-      | 2100      | 1030     | true            | false              |
-      | 2100      | 1100     | true            | false              |
+      | 2100      | 1000     | true            | true              |
+      | 2100      | 1023     | true            | true              |
+      | 2100      | 1026     | true            | true              |
+      | 2100      | 1030     | true            | true              |
+      | 2100      | 1100     | true            | true              |
       | 2105      | 2000     | false           | true               |
       | 2105      | 2023     | false           | true               |
       | 2105      | 2026     | false           | true               |
