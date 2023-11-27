@@ -1,5 +1,6 @@
 Feature: IFS provide details on whether the charges - use the charge reference or ASN and interest bearing
 
+  @DTD-2025
   Scenario Outline: Debt Interest type - use the charge reference or ASN and interest bearing
     Given a debt interest type item
       | mainTrans   | subTrans   |
@@ -46,7 +47,7 @@ Feature: IFS provide details on whether the charges - use the charge reference o
       | 2040      | 1000     | true            | true               |
       | 2045      | 2000     | false           | true               |
       | 2045      | 2100     | false           | true               |
-      | 2060      | 1020     | true            | false              |
+      | 2060      | 1020     | true            | true               |
       | 2065      | 2020     | false           | true               |
       | 2090      | 1000     | true            | false              |
       | 2090      | 1020     | true            | false              |

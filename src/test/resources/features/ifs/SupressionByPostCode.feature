@@ -59,7 +59,7 @@ Feature: Suppression by Postcode
       | 2021-02-01 | 2021-07-06 | 155          | 2.6          | 35                      |
 
  #TODO Fails Suppression not applied when customer has 2 matching postcodes
-  @wip @DTD-400
+  @wip @DTD-400 @DTD-2025
   Scenario: Suppression applied to customers latest postcode - 2 postcodes
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
@@ -82,13 +82,13 @@ Feature: Suppression by Postcode
       | 35                   | 5520                 |
     And the 1st debt summary will contain
       | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-      | 155                   | 35                      | 502314             |
+      | 155                  | 35                      | 505520             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual |
       | 2021-02-01 | 2021-07-06 | 155          | 2.6          | 35                      |
 
   #TODO Fails Suppression not applied when customer has 2 or more matching postcodes
-  @wip @DTD-400
+  @wip @DTD-400 @DTD-2025
   Scenario: Suppression applied to customers latest postcode 3 postcodes
     Given suppression data has been created
       | reason | description | enabled | fromDate   | toDate     |
@@ -112,7 +112,7 @@ Feature: Suppression by Postcode
       | 35                   | 5520                 |
     And the 1st debt summary will contain
       | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-      | 155                   | 35                      | 502314             |
+      | 155                  | 35                      | 505520             |
     And the 1st debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual |
       | 2021-02-01 | 2021-07-06 | 155          | 2.6          | 35                      |
