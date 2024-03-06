@@ -2,11 +2,6 @@
   "debtItems": [
     <REPLACE_debtItems>
   ],
-
-  "breathingSpaces": [
-    <REPLACE_breathingSpaces>
-  ],
-
   "customerPostCodes": [
   <REPLACE_customerPostCodes>
   ]

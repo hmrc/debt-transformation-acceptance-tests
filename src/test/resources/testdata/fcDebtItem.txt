@@ -5,14 +5,15 @@
           "periodEnd": "<REPLACE_periodEnd>",
           "interestStartDate": "<REPLACE_interestStartDate>",
           "interestRequestedTo": "<REPLACE_interestRequestedTo>",
+           "breathingSpaces": [
+                          <REPLACE_breathingSpaces>
+                    ],
           "paymentHistory": [
           		  <REPLACE_payments>
           ],
           "customerPostcodes": [
                 <REPLACE_fcCustomerPostCodes>
-          ],
-          "breathingSpaces": [
-                <REPLACE_breathingSpaces>
           ]
+
      }
 

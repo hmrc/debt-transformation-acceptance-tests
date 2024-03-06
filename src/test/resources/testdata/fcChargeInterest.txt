@@ -15,5 +15,6 @@
           "breathingSpaces": [
                 <REPLACE_breathingSpaces>
           ]
+
      }
 

@@ -7,4 +7,3 @@
                 "interestIndicator": "<REPLACE_interestIndicator>",
                 "periodEnd": "<REPLACE_periodEnd>",
                 "paymentHistory": [<REPLACE_payments>]
-}
