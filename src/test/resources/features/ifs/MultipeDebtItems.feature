@@ -245,7 +245,7 @@ Feature: Multiple Debt Items
       | 2019-02-03 | 2019-04-14 | 71           | 3.25         | 35                      | 2528              | 400000               | false                 |
 
   @wip4
-  Scenario: 4. Interest Bearing. 2 debts. 1 debt with payment the second debt with no payment.
+  Scenario: 4. Interest Bearing. 2 debts 1 payment history both with breathing space.
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     | true            |
