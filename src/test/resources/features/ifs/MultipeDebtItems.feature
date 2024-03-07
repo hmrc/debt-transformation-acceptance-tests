@@ -12,7 +12,6 @@
 #3. 2 payments of 1 debt with interest
 #4. 2 debts, 1 debt with a payment, the second debt with no payment
 Feature: Multiple Debt Items
-
   Scenario: 1. Non Interest Bearing. 1 Payment of 1 debt.
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
@@ -125,7 +124,6 @@ Feature: Multiple Debt Items
       | true            | 0                    | 0                       | 1000000            |
     And the 1st debt summary will not have any calculation windows
 
-
   Scenario: 6. 1 debt, no payment interest requested to date is same as interest start date
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -181,43 +179,6 @@ Feature: Multiple Debt Items
       | false           | 0                    | 0                       | 900000             |
     And the 1st debt summary will not have any calculation windows
 
-  @wip44
-  Scenario: 4. Customer in Breathing Space (Mental Health) & a further charge is created & becomes due after the BS start date.
-    Given a debt item
-      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
-      | 500000         | 2022-02-01        | 2022-02-28          | 1525      | 1000     | true            |
-    And the debt item has payment history
-      | paymentAmount | paymentDate |
-      | 500000        | 2023-04-01  |
-
-    And a debt item
-      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
-      | 500000         | 2022-07-31        | 2023-03-31          | 1525      | 1000     | true            |
-    And the debt item has payment history
-      | paymentAmount | paymentDate |
-      | 100000        | 2023-06-17  |
-    And the customer has breathing spaces applied
-      | debtRespiteFrom | debtRespiteTo |
-      | 2022-04-01      | 2023-06-17    |
-    And no post codes have been provided for the customer
-    When the debt item is sent to the ifs service
-    Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | amountIntTotal |
-      | 71                   | 436103         |
-    And the 1st debt summary will contain
-      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-      | 424                  | 0                       | 17358              |
-    And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
-      | 2022-02-01 | 2022-02-20 | 19           | 2.75         | 37                      | 500715             |
-      | 2022-02-21 | 2023-04-01 | 405          | 3.0          | 41                      | 516643             |
-    And the 2nd debt summary will contain
-      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-      | 119                  | 44                      | 505297             |
-    And the 2nd debt summary will have calculation windows
-      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow | breathingSpaceApplied |
-      | 2022-07-31 | 2022-08-22 | 22           | 3.75         | 10                      | 100226             | false                 |
-
 
   Scenario: 2. Interest Bearing. 1 Payment of 1 debt - eligible for Breathing Space protections
     Given a debt item
@@ -226,7 +187,7 @@ Feature: Multiple Debt Items
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-01-23  |
-    And the customer has breathing spaces applied
+    And the debt item has breathing spaces applied
       | debtRespiteFrom | debtRespiteTo |
       | 2019-01-03      | 2019-02-03    |
     And no post codes have been provided for the customer
@@ -252,14 +213,16 @@ Feature: Multiple Debt Items
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-04  |
-    And the customer has breathing spaces applied
+    And the debt item has breathing spaces applied
       | debtRespiteFrom | debtRespiteTo |
       | 2019-01-03      | 2019-02-03    |
     And a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     | true            |
-    And the debt item has no payment history
-    And the customer has breathing spaces applied
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 100000        | 2019-02-04  |
+    And the debt item has breathing spaces applied
       | debtRespiteFrom | debtRespiteTo |
       | 2019-01-03      | 2019-02-03    |
     And no post codes have been provided for the customer
@@ -318,7 +281,7 @@ Feature: Multiple Debt Items
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 10000         | 2022-07-20  |
-    And the customer has breathing spaces applied
+    And the debt item has breathing spaces applied
       | debtRespiteFrom | debtRespiteTo |
       | 2022-04-01      | 2023-06-17    |
     And no post codes have been provided for the customer
@@ -343,4 +306,41 @@ Feature: Multiple Debt Items
     And the 2nd debt summary will have calculation windows
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
+
+  @wip44
+  Scenario: 4. Customer in Breathing Space (Mental Health) & a further charge is created & becomes due after the BS start date.
+    Given a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2022-02-01        | 2022-02-28          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 500000        | 2023-04-01  |
+
+    And a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2022-07-31        | 2023-03-31          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 100000        | 2023-06-17  |
+    And the debt item has breathing spaces applied
+      | debtRespiteFrom | debtRespiteTo |
+      | 2022-04-01      | 2023-06-17    |
+    And no post codes have been provided for the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | amountIntTotal |
+      | 71                   | 436103         |
+    And the 1st debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 424                  | 0                       | 17358              |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2022-02-01 | 2022-02-20 | 19           | 2.75         | 37                      | 500715             |
+      | 2022-02-21 | 2023-04-01 | 405          | 3.0          | 41                      | 516643             |
+    And the 2nd debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 119                  | 44                      | 505297             |
+    And the 2nd debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow | breathingSpaceApplied |
+      | 2022-07-31 | 2022-08-22 | 22           | 3.75         | 10                      | 100226             | false                 |
 

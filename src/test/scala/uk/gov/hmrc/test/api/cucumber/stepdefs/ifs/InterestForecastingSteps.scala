@@ -416,8 +416,9 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     responseBody should be(expectedMessage)
   }
 
-  Given("the customer has breathing spaces applied") { (dataTable: DataTable) =>
-    addBreathingSpace(dataTable)
+  Given("the debt item has breathing spaces applied") { (dataTable: DataTable) =>
+    addDebtBreathingSpace(dataTable)
+    //addBreathingSpace(dataTable)
   }
 
   Given("no breathing spaces have been applied to the customer") { () =>
