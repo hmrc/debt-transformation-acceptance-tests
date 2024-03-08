@@ -121,8 +121,11 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       .replaceAll("<REPLACE_interestRequestedTo>", asmapTransposed.get("interestRequestedTo"))
       .replaceAll("<REPLACE_periodEnd>", periodEnd)
 
-    if (firstItem) { debtItems = debtItem }
-    else { debtItems = ScenarioContext.get("debtItems").toString.concat(",").concat(debtItem) }
+    if (firstItem) {
+      debtItems = debtItem
+    } else {
+      debtItems = ScenarioContext.get("debtItems").toString.concat(",").concat(debtItem)
+    }
 
     ScenarioContext.set(
       "debtItems",
@@ -163,10 +166,9 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     // Set scenario Context to be all debt items with payments.
     ScenarioContext.set(
       "debtItems",
-      getBodyAsString("debtCalcRequest")
-        .replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
+      getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
     )
-
+    //    ScenarioContext.set("debtItems",getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems")))
     val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String]).asScala
     var breathingSpaces = ""
 
@@ -177,6 +179,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
             .replaceAll("<REPLACE_debtRespiteFrom>", breathingSpace.get("debtRespiteFrom"))
             .replaceAll("<REPLACE_debtRespiteTo>", breathingSpace.get("debtRespiteTo"))
         )
+
       } else {
         breathingSpaces = breathingSpaces.concat(
           getBodyAsString("breathingSpace")
@@ -186,7 +189,6 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       }
 
       if (index + 1 < asMapTransposed.size) breathingSpaces = breathingSpaces.concat(",")
-
     }
 
     val jsonWithbreathingSpaces =
@@ -194,19 +196,49 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     ScenarioContext.set("debtItems", jsonWithbreathingSpaces)
   }
 
+  def addDebtBreathingSpace(dataTable: DataTable): Unit = {
+    //ScenarioContext.set("debtItems",getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems")))
+
+    val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String]).asScala
+    var breathingSpaces = ""
+
+    asMapTransposed.zipWithIndex.foreach { case (breathingSpace, index) =>
+      breathingSpaces = breathingSpaces.concat(
+        getBodyAsString("breathingSpace")
+          .replaceAll("<REPLACE_debtRespiteFrom>", breathingSpace.get("debtRespiteFrom"))
+          .replaceAll("<REPLACE_debtRespiteTo>", breathingSpace.get("debtRespiteTo"))
+      )
+
+      if (index + 1 < asMapTransposed.size) breathingSpaces = breathingSpaces.concat(",")
+    }
+    val jsonWithbreathingSpaces =
+      ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", breathingSpaces)
+    ScenarioContext.set("debtItems", jsonWithbreathingSpaces)
+    print("debt level breathing Space ::::::::::::::::::::::::::::::" + jsonWithbreathingSpaces)
+
+  }
+
   def noBreathingSpace(): Unit = {
-    // Set scenario Context to be all debt items with payments.
-    ScenarioContext.set(
-      "debtItems",
-      getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
-    )
+
+    // Set scenario Context to be debt items with no bs .
+    val jsonWithNoBS = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", "")
+    ScenarioContext.set("debtItems", jsonWithNoBS)
+    print("debt with no breathing space ::::::::::::::::::::::::::::::" + jsonWithNoBS)
+
     ScenarioContext.set(
       "debtItems",
       ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", "")
     )
+    val dkdkd = getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
+    println("dkdkd" + dkdkd)
   }
 
   def addCustomerPostCodes(dataTable: DataTable): Unit = {
+    ScenarioContext.set(
+      "debtItems",
+      getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
+    )
+
     val asMapTransposed   = dataTable.asMaps(classOf[String], classOf[String]).asScala
     var customerPostCodes = ""
 
@@ -226,11 +258,17 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     ScenarioContext.set("debtItems", jsonWithCustomerPostCodes)
   }
 
-  def noCustomerPostCodes(): Unit =
+  def noCustomerPostCodes(): Unit = {
+    ScenarioContext.set(
+      "debtItems",
+      getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
+    )
+
     ScenarioContext.set(
       "debtItems",
       ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_customerPostCodes>", "")
     )
+  }
 
   def createInterestTypeRequestBody(dataTable: DataTable): Unit = {
     val asmapTransposed           = dataTable.transpose().asMap(classOf[String], classOf[String])

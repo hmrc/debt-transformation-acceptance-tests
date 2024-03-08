@@ -6,6 +6,7 @@
           <REPLACE_dateCreated>
           <REPLACE_interestStartDate>
           "interestRequestedTo": "<REPLACE_interestRequestedTo>",
+          "breathingSpaces": [<REPLACE_breathingSpaces>],
           <REPLACE_periodEnd>
           "paymentHistory": [
           		 <REPLACE_payments>
