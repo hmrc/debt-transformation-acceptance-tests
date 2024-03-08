@@ -12,7 +12,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | -1             | 2021-03-01  | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -24,7 +24,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | \"\"           | 2021-03-01  | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -38,7 +38,7 @@ Feature: Debt Calculation Validation
 #      | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
 #      | 1.2            | 2021-03-01  | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
 #    And the debt item has no payment history
-#    And no breathing spaces have been applied to the customer
+#    And no breathing spaces have been applied to the debt item
 #    And no post codes have been provided for the customer
 #    When the debt item is sent to the ifs service
 #    Then the ifs service will respond with
@@ -50,7 +50,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | d           | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -62,7 +62,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         |             | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -74,7 +74,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-02-30  | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -86,7 +86,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-04-03  | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -98,7 +98,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-08  | 2021-03-08        |                     | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -110,7 +110,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-02-01  | 2021-02-01        | 2021-02-30          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -122,7 +122,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-08          | 99999     | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -134,7 +134,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-08          |           | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -146,7 +146,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-08          | 1525      | invalid  | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -158,7 +158,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01  | 2021-03-01        | 2021-03-08          | 1525      |          | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with
@@ -170,7 +170,7 @@ Feature: Debt Calculation Validation
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 1999-04-01  | 1999-03-05        | 2001-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with

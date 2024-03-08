@@ -285,7 +285,7 @@ class FCInterestForecastingSteps extends ScalaDsl with EN with Eventually with M
     addFCBreathingSpace(dataTable)
   }
 
-  Given("no breathing spaces have been applied to the debt item") { () =>
+  Given("no breathing spaces have been applied to the fc debt item") { () =>
     noFCBreathingSpace()
   }
 

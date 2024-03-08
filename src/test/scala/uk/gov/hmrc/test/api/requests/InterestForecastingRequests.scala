@@ -229,8 +229,6 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       "debtItems",
       ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", "")
     )
-    val dkdkd = getBodyAsString("debtCalcRequest").replaceAll("<REPLACE_debtItems>", ScenarioContext.get("debtItems"))
-    println("dkdkd" + dkdkd)
   }
 
   def addCustomerPostCodes(dataTable: DataTable): Unit = {

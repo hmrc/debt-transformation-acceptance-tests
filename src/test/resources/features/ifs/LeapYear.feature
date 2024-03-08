@@ -5,7 +5,7 @@ Feature: Leap years
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-01-01        | 2020-04-01          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -27,7 +27,7 @@ Feature: Leap years
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2020-05-02        | 2021-05-01          | 1525      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -46,7 +46,7 @@ Feature: Leap years
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2018-01-01        | 2021-04-01          | 1525      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -71,7 +71,7 @@ Feature: Leap years
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2020-05-03  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -96,7 +96,7 @@ Feature: Leap years
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2011-01-01  | 2011-01-01        | 2017-02-22          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of

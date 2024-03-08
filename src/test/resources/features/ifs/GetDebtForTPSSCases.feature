@@ -17,7 +17,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -35,7 +35,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01        | 2021-03-08          | 1520      | 1090     | false           |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -54,7 +54,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 500000        | 2021-03-04  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -74,7 +74,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 500000        | 2021-02-04  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -92,7 +92,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | paymentAmount | paymentDate |
       | 300000        | 2021-03-23  |
       | 200000        | 2021-04-05  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -108,7 +108,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | originalAmount | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-03-08          | 1520      | 1090     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -126,7 +126,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2021-03-04  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -148,7 +148,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | originalAmount | dateCreated | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-03-01  | 2021-03-08          | 1520      | 1090     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -171,7 +171,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01        | 2021-03-08          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -189,7 +189,7 @@ Feature: Debt Calculation For Interest & Non Interest Bearing cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2021-03-01        | 2021-03-08          | 2421      | 1150     | false           |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of

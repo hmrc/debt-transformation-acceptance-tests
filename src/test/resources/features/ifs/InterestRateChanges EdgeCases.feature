@@ -15,7 +15,7 @@ Feature: Interest Rate Changes - Edge cases
 
   Scenario: 300 Debt items - Interest rate changes from 3.0% to 3.25%
     Given 300 debt items where interest rate changes from 3.0 to 3.25
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt items is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -37,7 +37,7 @@ Feature: Interest Rate Changes - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2009-01-01        | 2010-01-01          | 1545      | 1090     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -81,7 +81,7 @@ Feature: Interest Rate Changes - Edge cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2020-04-07  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -104,7 +104,7 @@ Feature: Interest Rate Changes - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2020-03-31        | 2020-04-07          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -123,7 +123,7 @@ Feature: Interest Rate Changes - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2020-03-30        | 2020-04-06          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -141,7 +141,7 @@ Feature: Interest Rate Changes - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2020-03-29        | 2020-04-05          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -161,7 +161,7 @@ Feature: Interest Rate Changes - Edge cases
       | originalAmount | dateCreated | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 1999-04-01  | 1999-03-06        | 2000-03-06          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of

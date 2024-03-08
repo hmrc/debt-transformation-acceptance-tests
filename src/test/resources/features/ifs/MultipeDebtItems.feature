@@ -19,7 +19,7 @@ Feature: Multiple Debt Items
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -60,7 +60,7 @@ Feature: Multiple Debt Items
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-23  |
       | 100000        | 2019-03-05  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt items is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -87,7 +87,7 @@ Feature: Multiple Debt Items
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     | true            |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -113,7 +113,7 @@ Feature: Multiple Debt Items
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 1000000        | 2023-03-03        | 2022-02-02          | 1525      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -129,7 +129,7 @@ Feature: Multiple Debt Items
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 1000000        | 2022-02-02        | 2022-02-02          | 1525      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -150,7 +150,7 @@ Feature: Multiple Debt Items
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2021-01-01  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -267,7 +267,7 @@ Feature: Multiple Debt Items
       | debtItemChargeId | interestDueDailyAccrual | interestRate |
       | 123              | 0                       | 0.0          |
 
-  @wip45
+  @wip88
   Scenario: Multiple debts with multiple breathing Spaces  - payment whilst in an active Breathing Space period
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -275,6 +275,9 @@ Feature: Multiple Debt Items
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 250000        | 2022-06-03  |
+    And the debt item has breathing spaces applied
+      | debtRespiteFrom | debtRespiteTo |
+      | 2022-04-01      | 2023-06-17    |
     And a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
       | 100000         | 2022-05-31        | 2022-05-31          | 1525      | 1000     | true            |

@@ -12,7 +12,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     | 2020-12-20 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -38,7 +38,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     | 2021-12-21 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -56,7 +56,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     | 2021-05-20 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -80,7 +80,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2019-02-01        | 2019-07-06          | 1535      | 1000     | 2019-05-20 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -100,7 +100,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     | 2020-12-20 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -128,7 +128,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     | 2020-12-20 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -163,7 +163,7 @@ Feature: Suppression - Period End
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | periodEnd  |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     | 2020-12-20 |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |

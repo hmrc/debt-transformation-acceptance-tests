@@ -8,12 +8,12 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     Given a fc debt item
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | chargedInterest | debtId |
       | 300000         | 2018-12-16        | 2019-04-14          | Y                 | 2018-04-06 | 100             | 456    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -33,12 +33,12 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     Given a fc debt item
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 300000         | 2018-12-16        | 2019-04-14          | Y                 | 2018-04-06 | 456    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -58,7 +58,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -78,7 +78,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -99,7 +99,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -117,7 +117,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2018-07-16        | 2019-04-16          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -135,7 +135,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 500000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -156,7 +156,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 0             | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service will respond with Could not parse body due to requirement failed: Payment amount must not be zero
@@ -168,7 +168,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | -1000         | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service will respond with Could not parse body due to requirement failed: Payment amount must be positive
@@ -181,7 +181,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 555555        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service will respond with Could not parse body due to requirement failed: Total Payment amounts cannot be more than the original amount
@@ -194,7 +194,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |
@@ -207,7 +207,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2018-01-01        | 2020-04-01          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -229,7 +229,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2020-05-02        | 2021-05-01          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -249,7 +249,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2018-01-01        | 2021-04-01          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -275,7 +275,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2020-05-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -301,7 +301,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2011-01-01        | 2017-02-22          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -325,7 +325,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2017-12-01        | 2019-03-31          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -348,7 +348,7 @@ Feature: FC Debt Calculation End point testing
       | paymentAmount | paymentDate |
       | 100000        | 2020-02-01  |
       | 100000        | 2020-02-01  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -370,7 +370,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2018-03-15  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -391,7 +391,7 @@ Feature: FC Debt Calculation End point testing
       | paymentAmount | paymentDate |
       | 100000        | 2018-09-01  |
       | 100000        | 2018-09-01  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -420,7 +420,7 @@ Feature: FC Debt Calculation End point testing
       | paymentAmount | paymentDate |
       | 100000        | 2019-01-20  |
       | 100000        | 2019-03-10  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -455,7 +455,7 @@ Feature: FC Debt Calculation End point testing
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
       | 500000         | 2020-04-10        | 2020-03-31          | Y                 | 2018-04-06 | 123    |
     And the fc debt item has no payment history
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has no post codes
     When the debt item is sent to the fc ifs service
     Then the fc ifs service wilL return a total debts summary of
@@ -474,7 +474,7 @@ Feature: FC Debt Calculation End point testing
     And the debt item has fc payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the debt item
+    And no breathing spaces have been applied to the fc debt item
     And the fc customer has post codes
       | addressPostcode | postcodeDate |
       | TW3 4QQ         | 2019-07-06   |

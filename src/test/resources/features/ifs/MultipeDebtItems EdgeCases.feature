@@ -26,7 +26,7 @@ Feature: Multiple Debt Items - Edge Cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2018-12-16        | 2019-04-14          | 1520      | 1090     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -57,7 +57,7 @@ Feature: Multiple Debt Items - Edge Cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -90,7 +90,7 @@ Feature: Multiple Debt Items - Edge Cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -119,7 +119,7 @@ Feature: Multiple Debt Items - Edge Cases
 #    300 debts items is the max says Helen
   Scenario: 4. 300 debt items
     Given 300 debt items
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt items is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -144,7 +144,7 @@ Feature: Multiple Debt Items - Edge Cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -174,7 +174,7 @@ Feature: Multiple Debt Items - Edge Cases
       | paymentAmount | paymentDate |
       | 100000        | 2019-02-03  |
 
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
@@ -199,7 +199,7 @@ Feature: Multiple Debt Items - Edge Cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 1000          | 2019-02-03  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be greater than Original Amount
@@ -211,7 +211,7 @@ Feature: Multiple Debt Items - Edge Cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | -1000         | 2019-02-03  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be negative values
@@ -224,7 +224,7 @@ Feature: Multiple Debt Items - Edge Cases
       | paymentAmount | paymentDate |
       | 1000          | 2019-02-03  |
       | -1000         | 2019-03-03  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be negative values
@@ -236,7 +236,7 @@ Feature: Multiple Debt Items - Edge Cases
     And the debt item has payment history
       | paymentAmount | paymentDate |
       | 100000        | 2021-02-23  |
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of

@@ -5,7 +5,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -27,7 +27,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -62,7 +62,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -116,7 +116,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -184,7 +184,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-03-01        | 2021-03-08          | 1525      | 7006     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Invalid combination of mainTrans and subTrans. No rule found in the configured ones
@@ -194,7 +194,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -227,7 +227,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -280,7 +280,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain
@@ -325,7 +325,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the 1st debt summary will contain

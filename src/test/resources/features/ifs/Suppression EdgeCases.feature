@@ -12,7 +12,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2020-04-01        | 2020-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -40,7 +40,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2020-04-01        | 2020-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -69,7 +69,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2020-03-01        | 2020-04-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -98,7 +98,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2020-03-01        | 2020-04-30          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -129,7 +129,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -159,7 +159,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -190,7 +190,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -217,7 +217,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -244,7 +244,7 @@ Feature: Suppression - Edge cases
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1520      | 1090     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW2 4TW  | 2018-07-06   |

@@ -12,7 +12,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -41,7 +41,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW2 4TW  | 2018-07-06   |
@@ -71,7 +71,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -100,7 +100,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4TW  | 2018-07-06   |
@@ -128,7 +128,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QQ  | 2019-07-06   |
@@ -155,7 +155,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QR  | 2021-05-05   |
@@ -181,7 +181,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode | postCodeDate |
       | TW3 4QR  | 2021-05-04   |
@@ -209,7 +209,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode   | postCodeDate |
       | <postCode> | 2020-07-06   |
@@ -235,7 +235,7 @@ Feature: Suppression by Postcode
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
       | 500000         | 2021-02-01        | 2021-07-06          | 1535      | 1000     |
     And the debt item has no payment history
-    And no breathing spaces have been applied to the customer
+    And no breathing spaces have been applied to the debt item
     And the customer has post codes
       | postCode   | postCodeDate |
       | <postCode> | 2020-07-06   |
