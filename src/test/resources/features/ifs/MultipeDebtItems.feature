@@ -286,12 +286,12 @@ Feature: Multiple Debt Items
       | 10000         | 2022-07-20  |
     And the debt item has breathing spaces applied
       | debtRespiteFrom | debtRespiteTo |
-      | 2022-04-01      | 2023-06-17    |
+      | 2022-09-01      | 2023-06-17    |
     And no post codes have been provided for the customer
     When the debt item is sent to the ifs service
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal | interestOnlyIndicator |
-      | 463                  | 4890593        | 4840000             | false                 |
+      | 8                  | 4890593        | 4840000             | false                 |
     And the 1st debt summary will contain
       | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
       | true            | 241                  | 455                     | 4800546            |
