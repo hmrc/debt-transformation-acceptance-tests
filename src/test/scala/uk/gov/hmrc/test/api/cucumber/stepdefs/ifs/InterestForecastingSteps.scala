@@ -421,7 +421,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     //addBreathingSpace(dataTable)
   }
 
-  Given("no breathing spaces have been applied to the customer") { () =>
+  Given("no breathing spaces have been applied to the debt item") { () =>
     noBreathingSpace()
   }
 
