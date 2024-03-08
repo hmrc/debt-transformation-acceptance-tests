@@ -17,6 +17,7 @@ logs
 /.idea_modules
 eclipse
 .scala_dependencies
+.bsp
 
 # sbt files
 dist

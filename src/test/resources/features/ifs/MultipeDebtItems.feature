@@ -205,7 +205,7 @@ Feature: Multiple Debt Items
       | 2019-01-03 | 2019-02-03 | 31           | 0.0            | 0                       | 0                 | 400000               | true                 |
       | 2019-02-03 | 2019-04-14 | 71           | 3.25         | 35                      | 2528              | 400000               | false                 |
 
-  @wip4
+  @wip
   Scenario: 4. Interest Bearing. 2 debts 1 payment history both with breathing space.
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
@@ -230,22 +230,22 @@ Feature: Multiple Debt Items
     Then the ifs service wilL return a total debts summary of
       | combinedDailyAccrual | amountIntTotal |
       | 70                   | 807156         |
-#    And the 1st debt summary will contain
-#      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-#      | 168                  | 35                      | 404674             |
-#    And the 1st debt summary will have calculation windows
-#      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
-#      | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 8                       | 100436             |
-#      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 404238             |
-#    And the 2nd debt summary will contain
-#      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
-#      | 119                  | 44                      | 505297             |
-#    And the 2nd debt summary will have calculation windows
-#      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
-#      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
+    And the 1st debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 168                  | 35                      | 404674             |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 8                       | 100436             |
+      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 404238             |
+    And the 2nd debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 119                  | 44                      | 505297             |
+    And the 2nd debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
 
 
-
+@wip
   Scenario: Scenario 1 - Customer has 2 debts which are eligible for the Breathing Space protections.
   A part payment is received post BS period & a further Interest Charge is raised.
   IFS is called during BS period, after BS period for issue of an SOL and clerically following receipt of a payment.
@@ -267,7 +267,7 @@ Feature: Multiple Debt Items
       | debtItemChargeId | interestDueDailyAccrual | interestRate |
       | 123              | 0                       | 0.0          |
 
-  @wip88
+  @wip
   Scenario: Multiple debts with multiple breathing Spaces  - payment whilst in an active Breathing Space period
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -310,7 +310,7 @@ Feature: Multiple Debt Items
       | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
       | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
 
-  @wip44
+  @wip
   Scenario: 4. Customer in Breathing Space (Mental Health) & a further charge is created & becomes due after the BS start date.
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |

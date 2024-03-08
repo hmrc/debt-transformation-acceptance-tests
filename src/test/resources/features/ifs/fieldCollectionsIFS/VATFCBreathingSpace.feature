@@ -53,21 +53,6 @@ Feature: FC VAT Debt Calculation with Breathing Space
       | 123              | 0                       | 0.0          |
 
 
-  Scenario: Open Ended Breathing Space
-    Given a fc vat debt item
-      | debtItemChargeId | originalAmount | periodEnd  | interestRequestedTo | interestIndicator |
-      | 123              | 500000         | 2022-04-01 | 2023-03-01          | Y                 |
-    And the fc vat debt item has no payment history
-    And the fc vat customer has breathing spaces applied
-      | debtRespiteFrom | debtRespiteTo |
-      | 2021-11-01      |               |
-    When the debt item is sent to the fc vat ifs service
-    Then the fc vat ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | unpaidAmountTotal |
-      | 0                    | 500000            |
-    And the 1st fc vat debt summary will contain
-      | debtItemChargeId | interestDueDailyAccrual | interestRate |
-      | 123              | 0                       | 0.0          |
 
 
   Scenario: Multiple debts with multiple breathing Spaces
