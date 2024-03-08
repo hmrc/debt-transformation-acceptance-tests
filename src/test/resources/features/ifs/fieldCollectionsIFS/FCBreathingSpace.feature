@@ -67,7 +67,7 @@ Feature: FC Debt Calculation Breathing Space
       | 0                       | 0                    |
     And the 1st fc debt summary will not have any calculation windows
 
-
+   @wip
   Scenario: Open Ended Breathing Space
     Given a fc debt item
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |

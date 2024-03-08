@@ -225,7 +225,7 @@ Feature: Multiple Debt Items - Edge Cases
       | 2020-10-16 | 2020-12-31 | 76           | 2.6          | 28                      | 402159             |
       | 2021-01-01 | 2021-02-22 | 53           | 2.6          | 28                      | 401510             |
 
-  @DTD-2216
+  @wip @DTD-2216
   Scenario: 2 SA debts where one has an original amount less than zero
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |

@@ -8,9 +8,9 @@
           "paymentHistory": [
                		  <REPLACE_payments>
                ],
-               "breathingSpaces": [<REPLACE_breathingSpaces>
+               "breathingSpaces": [<REPLACE_breathingSpaces>]
 
-                 ]
+
 
 
   }

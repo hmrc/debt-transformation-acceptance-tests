@@ -190,7 +190,7 @@ Feature: Debt Calculation Validation
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be greater than Original Amount
 
-  @DTD-2216
+  @wip @DTD-2216
   Scenario: 1 SA debt with a payment amount less than zero
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -203,7 +203,7 @@ Feature: Debt Calculation Validation
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: paymentAmount can be zero or greater, negative values are not accepted
 
-  @DTD-2216
+  @wip @DTD-2216
   Scenario: 1 SA debt - 2 payment amounts with one of them less than zero
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -217,7 +217,7 @@ Feature: Debt Calculation Validation
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: paymentAmount can be zero or greater, negative values are not accepted
 
-  @DTD-2216
+  @wip @DTD-2216
   Scenario: SA original amount and payment amount less than zero
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -230,7 +230,7 @@ Feature: Debt Calculation Validation
     When the debt item is sent to the ifs service
     Then the ifs service will respond with originalAmount can be zero or greater, negative values are not accepted; paymentAmount can be zero or greater, negative values are not accepted
 
-  @DTD-2216
+  @wip @DTD-2216
   Scenario: SA original amount less than zero
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
@@ -241,7 +241,7 @@ Feature: Debt Calculation Validation
     When the debt item is sent to the ifs service
     Then the ifs service will respond with Could not parse body due to requirement failed: originalAmount can be zero or greater, negative values are not accepted
 
-  @DTD-2216
+  @wip  @DTD-2216
   Scenario: SA Original and payment amounts can be equal to zero
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |

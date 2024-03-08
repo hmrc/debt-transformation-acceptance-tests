@@ -11,6 +11,8 @@
 #2. 1 payment of 1 debt with interest
 #3. 2 payments of 1 debt with interest
 #4. 2 debts, 1 debt with a payment, the second debt with no payment
+
+
 Feature: Multiple Debt Items
   Scenario: 1. Non Interest Bearing. 1 Payment of 1 debt.
     Given a debt item
@@ -178,3 +180,120 @@ Feature: Multiple Debt Items
       | false           | 0                    | 0                       | 900000             |
     And the 1st debt summary will not have any calculation windows
 
+ @wip
+  Scenario: 9. Interest Bearing. 2 debts 1 payment history both with breathing space.
+    Given a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 100000        | 2019-02-04  |
+    And the debt item has breathing spaces applied
+      | debtRespiteFrom | debtRespiteTo |
+      | 2019-01-03      | 2019-02-03    |
+    And a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2018-12-16        | 2019-04-14          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 100000        | 2019-02-04  |
+    And the debt item has breathing spaces applied
+      | debtRespiteFrom | debtRespiteTo |
+      | 2019-01-03      | 2019-02-03    |
+    And no post codes have been provided for the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | amountIntTotal |
+      | 79                   | 909971         |
+    And the 1st debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 168                  | 35                      | 404674             |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 8                       | 100436             |
+      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 35                      | 404238             |
+    And the 2nd debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 119                  | 44                      | 505297             |
+    And the 2nd debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
+
+
+  @wip
+  Scenario: 10. Multiple debts with multiple breathing Spaces  - payment whilst in an active Breathing Space period
+    Given a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
+      | 5000000        | 2022-02-01        | 2022-05-31          | 1525      | 1000     |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 250000        | 2022-06-03  |
+    And the debt item has breathing spaces applied
+      | debtRespiteFrom | debtRespiteTo |
+      | 2022-04-01      | 2023-06-17    |
+    And a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 100000         | 2022-05-31        | 2022-05-31          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 10000         | 2022-07-20  |
+    And no breathing spaces have been applied to the customer
+    And no post codes have been provided for the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | amountIntTotal | amountOnIntDueTotal | interestOnlyIndicator |
+      | 463                  | 4890593        | 4840000             | false                 |
+    And the 1st debt summary will contain
+      | interestBearing | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | true            | 241                  | 455                     | 4800546            |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow | breathingSpaceApplied |
+      | 2022-02-01 | 2022-02-20 | 19           | 2.75         | 18                      | 250357             | false                 |
+      | 2022-02-21 | 2022-04-04 | 43           | 3.0          | 20                      | 250883             | false                 |
+      | 2022-04-05 | 2022-05-23 | 49           | 3.25         | 22                      | 251090             | false                 |
+      | 2022-05-24 | 2022-06-03 | 11           | 3.5          | 23                      | 250263             | false                 |
+      | 2022-05-24 | 2022-05-31 | 8            | 3.5          | 455                     | 4753643            | false                 |
+
+    And the 2nd debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 119                  | 44                      | 505297             |
+    And the 2nd debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2018-12-16 | 2019-04-14 | 119          | 3.25         | 44                      | 505297             |
+
+  @wip
+  Scenario: 11. Customer in Breathing Space (Mental Health) & a further charge is created & becomes due after the BS start date.
+    Given a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2022-02-01        | 2022-02-28          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 500000        | 2023-04-01  |
+
+    And a debt item
+      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans | interestBearing |
+      | 500000         | 2022-07-31        | 2023-03-31          | 1525      | 1000     | true            |
+    And the debt item has payment history
+      | paymentAmount | paymentDate |
+      | 100000        | 2023-06-17  |
+    And the debt item has breathing spaces applied
+      | debtRespiteFrom | debtRespiteTo |
+      | 2022-04-01      | 2023-06-17    |
+    And no post codes have been provided for the customer
+    When the debt item is sent to the ifs service
+    Then the ifs service wilL return a total debts summary of
+      | combinedDailyAccrual | amountIntTotal |
+      | 71                   | 436103         |
+    And the 1st debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 424                  | 0                       | 17358              |
+    And the 1st debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow |
+      | 2022-02-01 | 2022-02-20 | 19           | 2.75         | 37                      | 500715             |
+      | 2022-02-21 | 2023-04-01 | 405          | 3.0          | 41                      | 516643             |
+    And the 2nd debt summary will contain
+      | numberChargeableDays | interestDueDailyAccrual | totalAmountIntDuty |
+      | 119                  | 44                      | 505297             |
+    And the 2nd debt summary will have calculation windows
+      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | unpaidAmountWindow | breathingSpaceApplied |
+      | 2022-07-31 | 2022-08-22 | 22           | 3.75         | 10                      | 100226             | false                 |

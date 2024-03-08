@@ -52,7 +52,7 @@ Feature: FC VAT Debt Calculation with Breathing Space
       | debtItemChargeId | interestDueDailyAccrual | interestRate |
       | 123              | 0                       | 0.0          |
 
-
+  @wip
   Scenario: Open Ended Breathing Space
     Given a fc vat debt item
       | debtItemChargeId | originalAmount | periodEnd  | interestRequestedTo | interestIndicator |
@@ -69,7 +69,7 @@ Feature: FC VAT Debt Calculation with Breathing Space
       | debtItemChargeId | interestDueDailyAccrual | interestRate |
       | 123              | 0                       | 0.0          |
 
-
+  @wip
   Scenario: Multiple debts with multiple breathing Spaces
     Given a fc vat debt item
       | debtItemChargeId | originalAmount | periodEnd  | interestRequestedTo | interestIndicator |

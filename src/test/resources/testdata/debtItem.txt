@@ -9,6 +9,7 @@
           <REPLACE_periodEnd>
           "paymentHistory": [
           		 <REPLACE_payments>
-          ]
+          ],
+         "breathingSpaces": [<REPLACE_breathingSpaces>]
      }
 
