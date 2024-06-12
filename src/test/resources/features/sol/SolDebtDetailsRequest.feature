@@ -210,7 +210,7 @@ Feature: statement of liability Debt details
       | 15916039       | 2314                 |
     And the 1st sol debt summary will contain
       | debtId   | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt0011 | 1525      | TPSS Account Tax Assessment | 2916039              | 15916039           | 2314                 |
+      | debt0010 | 1525      | TPSS Account Tax Assessment | 2916039              | 15916039           | 2314                 |
     And the 1st sol debt summary will contain duties
       | dutyId   | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty0010 | 1000     | IT                  | 10000000         | 1780                 | true            | false                 |
