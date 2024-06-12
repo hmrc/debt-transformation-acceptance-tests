@@ -20,6 +20,7 @@
 #Debt 1 and Debt 2  No repayments
 #Debt 1 and Debt 2  No suppression
 #Debt 1 and Debt 2  No breathing space
+
 Feature: statement of liability Debt details
 
 
@@ -27,7 +28,6 @@ Feature: statement of liability Debt details
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
       | UI      | debt001 | 1525      | 1000     | 2021-08-10          | 2021-05-13       |
-
     And add debt item chargeIDs to the debt
       | dutyId |
       | duty01 |
@@ -35,12 +35,10 @@ Feature: statement of liability Debt details
     When a debt statement of liability is requested
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
-      | 913624         | 63                   |
-
+      | 907817         | 63                   |
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt001 | 1525      | TPSS Account Tax Assessment | 13624                | 913624             | 63                   |
-
+      | debt001 | 1525      | TPSS Account Tax Assessment | 7817                 | 907817             | 63                   |
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty01 | 1000     | IT                  | 500000           | 35                   | true            | false                 |
@@ -50,25 +48,22 @@ Feature: statement of liability Debt details
   Scenario: 2. Child benefit debt statement of liability, 2 duties, with payment history.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
-      | UI      | debt003 | 5330      | 7006     | 2021-08-10          |
+      | UI      | debt003 | 5330      | 7006     | 2023-08-10          |
     And add debt item chargeIDs to the debt
       | dutyId |
       | duty01 |
       | duty02 |
     When a debt statement of liability is requested
-
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
-      | 608629         | 14                   |
-
+      | 625127         | 35                   |
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt003 | 5330      | UI: ChB Debt        | 8629                 | 608629             | 14                   |
-
+      | debt003 | 5330      | UI: ChB Debt        | 25127                | 625127             | 35                   |
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription    | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty01 | 7006     | UI: Child Benefit Debt | 400000           | 0                    | false           | false                 |
-      | duty02 | 1000     | IT                     | 200000           | 14                   | true            | false                 |
+      | duty02 | 1000     | IT                     | 200000           | 35                   | true            | false                 |
 
   Scenario: 3. CO: Child Benefit Migrated Debt statement of liability, 1 duty, no payment history.
     Given debt details
@@ -78,15 +73,12 @@ Feature: statement of liability Debt details
       | dutyId |
       | duty04 |
     When a debt statement of liability is requested
-
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
       | 200000         | 0                    |
-
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
       | debt004 | 5350      | CO: ChB Migrated Debt | 0                    | 200000             | 0                    |
-
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty04 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
@@ -99,7 +91,6 @@ Feature: statement of liability Debt details
       | dutyId |
       | duty06 |
     When a debt statement of liability is requested
-
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
       | 200000         | 0                    |
@@ -107,7 +98,6 @@ Feature: statement of liability Debt details
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
       | debt005 | 5350      | CO: ChB Migrated Debt | 0                    | 200000             | 0                    |
-
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty06 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
@@ -117,7 +107,6 @@ Feature: statement of liability Debt details
     Given debt details
       | solType | debtId  | customerUniqueRef | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
       | UI      | Idle_01 | NEHA1234          | 1525      | 1000     | 2021-08-10          | 2021-05-13       |
-
     And add debt item chargeIDs to the debt
       | dutyId  |
       | Idle_01 |
@@ -125,32 +114,28 @@ Feature: statement of liability Debt details
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
       | 250            | 0                    |
-
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription              | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
       | Idle_01 | 1520      | TPSS Accounting For Tax Charge + | 0                    | 250                | 0                    |
-
     And the 1st sol debt summary will contain duties
       | dutyId  | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | Idle_01 | 1090     | Tax Interest        | 250              | 0                    | false           | false                 |
 
+
   Scenario: 5. Non interest bearing Main trans 1441 and sub trans 1150
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
-      | CO      | debt005 | 1441      | 1150     | 2021-08-10          |
+      | CO      | debt005 | 1441      | 1150     | 2023-08-10          |
     And add debt item chargeIDs to the debt
       | dutyId |
       | duty06 |
     When a debt statement of liability is requested
-
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
       | 200000         | 0                    |
-
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
       | debt005 | 5350      | CO: ChB Migrated Debt | 0                    | 200000             | 0                    |
-
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty06 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
@@ -163,15 +148,12 @@ Feature: statement of liability Debt details
       | dutyId |
       | duty06 |
     When a debt statement of liability is requested
-
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
       | 200000         | 0                    |
-
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
       | debt005 | 5350      | CO: ChB Migrated Debt | 0                    | 200000             | 0                    |
-
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty06 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
@@ -185,15 +167,12 @@ Feature: statement of liability Debt details
       | dutyId |
       | duty01 |
     When a debt statement of liability is requested
-
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
       | 9999999999     | 0                    |
-
     And the 1st sol debt summary will contain
       | debtId   | mainTrans | debtTypeDescription | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
       | debt0012 | 1520      | TPSS Penalty        | 0                    | 9999999999         | 0                    |
-
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty01 | 1090     | TGPEN               | 9999999999       | 0                    | false           | false                 |
@@ -209,10 +188,30 @@ Feature: statement of liability Debt details
     When a debt statement of liability is requested
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
-      | 10165951192    | 712328               |
+      | 10101841602    | 712328               |
     And the 1st sol debt summary will contain
       | debtId  | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt009 | 1525      | TPSS Account Tax Assessment | 165951193            | 10165951192        | 712328               |
+      | debt009 | 1525      | TPSS Account Tax Assessment | 101841603            | 10101841602        | 712328               |
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty01 | 1000     | IT                  | 9999999999       | 712328               | true            | false                 |
+
+  Scenario: 9. Interest bearing debts each with payments and breathing space
+    Given debt details
+      | solType | debtId   | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
+      | UI      | debt0010 | 1525      | 1000     | 2023-08-10          | 2024-05-30       |
+    And add debt item chargeIDs to the debt
+      | dutyId   |
+      | duty0010 |
+      | duty0011 |
+    When a debt statement of liability is requested
+    Then service returns debt statement of liability data
+      | amountIntTotal | combinedDailyAccrual |
+      | 15916039       | 2314                 |
+    And the 1st sol debt summary will contain
+      | debtId   | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
+      | debt0011 | 1525      | TPSS Account Tax Assessment | 2916039              | 15916039           | 2314                 |
+    And the 1st sol debt summary will contain duties
+      | dutyId   | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
+      | duty0010 | 1000     | IT                  | 10000000         | 1780                 | true            | false                 |
+      | duty0011 | 1000     | IT                  | 3000000          | 534                  | true            | false                 |
