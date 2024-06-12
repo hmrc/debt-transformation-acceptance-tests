@@ -209,8 +209,8 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       if (index + 1 < asMapTransposed.size) breathingSpaces = breathingSpaces.concat(",")
     }
     val jsonWithbreathingSpaces =
-      ScenarioContext.get("debtDetails").toString.replaceAll("<REPLACE_breathingSpaces>", breathingSpaces)
-    ScenarioContext.set("debtDetails", jsonWithbreathingSpaces)
+      ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", breathingSpaces)
+    ScenarioContext.set("debtItems", jsonWithbreathingSpaces)
     print("debt level breathing Space ::::::::::::::::::::::::::::::" + jsonWithbreathingSpaces)
 
   }
