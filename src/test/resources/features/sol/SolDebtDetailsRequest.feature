@@ -65,7 +65,7 @@ Feature: statement of liability Debt details
       | duty01 | 7006     | UI: Child Benefit Debt | 400000           | 0                    | false           | false                 |
       | duty02 | 1000     | IT                     | 200000           | 35                   | true            | false                 |
 
-  Scenario: 3. CO: Child Benefit Migrated Debt statement of liability, 1 duty, no payment history.
+  Scenario: 3. Non interest bearing with payment history and breathing space.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
       | CO      | debt004 | 5350      | 7012     | 2021-08-10          |
@@ -83,7 +83,7 @@ Feature: statement of liability Debt details
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty04 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
-  Scenario: 4. MainTrans and subTrans non interest bearing - IFS still calculates interest and it is zero
+  Scenario: 4. Non interest bearing with payment history and no breathing space.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
       | CO      | debt005 | 5350      | 7012     | 2021-08-10          |
@@ -122,7 +122,7 @@ Feature: statement of liability Debt details
       | Idle_01 | 1090     | Tax Interest        | 250              | 0                    | false           | false                 |
 
 
-  Scenario: 5. Non interest bearing Main trans 1441 and sub trans 1150
+  Scenario: 5. Non interest bearing with payment history and no breathing space.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
       | CO      | debt005 | 1441      | 1150     | 2023-08-10          |
@@ -140,7 +140,7 @@ Feature: statement of liability Debt details
       | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty06 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
-  Scenario: 6.  Non interest bearing Main trans 2421 and sub trans 1150
+  Scenario: 6.  Non interest bearing with payment history and no breathing space.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
       | CO      | debt005 | 2421      | 1150     | 2021-08-10          |
@@ -159,7 +159,7 @@ Feature: statement of liability Debt details
       | duty06 | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
 
-  Scenario: 7. non interest bearing - 9999999999 interest and it is zero
+  Scenario: 7. Large non interest bearing debt with breathing space and no payment history - 9999999999.
     Given debt details
       | solType | debtId   | mainTrans | subTrans | interestRequestedTo |
       | UI      | debt0012 | 1520      | 1090     | 2022-04-25          |
@@ -178,7 +178,7 @@ Feature: statement of liability Debt details
       | duty01 | 1090     | TGPEN               | 9999999999       | 0                    | false           | false                 |
 
 
-  Scenario: 8. Large interest bearing debt with no payment history - 9999999999.
+  Scenario: 8. Large interest bearing debt with breathing space and no payment history - 9999999999.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
       | UI      | debt009 | 1525      | 1000     | 2021-08-10          | 2021-05-13       |
