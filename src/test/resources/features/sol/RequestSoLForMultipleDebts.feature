@@ -30,7 +30,6 @@ Feature: statement of liability multiple debts
       | dutyId |
       | duty01 |
       | duty02 |
-
     When a debt statement of liability is requested
     Then service returns debt statement of liability data
       | amountIntTotal | combinedDailyAccrual |
@@ -38,7 +37,6 @@ Feature: statement of liability multiple debts
     And the 1st multiple statement of liability debt summary will contain duties
       | debtId  | mainTrans | debtTypeDescription         | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrualDebt | dutyId | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | debt001 | 1525      | TPSS Account Tax Assessment | 7817                 | 907817             | 63                       | duty01 | 1000     | IT                  | 500000           | 35                   | true            | false                 |
-
     And the statement of liability debt summary response
       | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrualDebt | dutyId | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | debt004 | 5350      | UI: ChB Migrated Debt | 0                    | 200000             | 0                        | duty04 | 7012     | UI: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |

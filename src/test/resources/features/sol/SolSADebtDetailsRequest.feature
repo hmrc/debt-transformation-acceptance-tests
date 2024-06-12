@@ -1,7 +1,7 @@
 Feature: Statement of liability Debt details for Self Assessment Debts
 
   @DTD-1959
-  Scenario: 1. SA debt statement of liability, 2 duties, no payment history.
+  Scenario: 1. SA debt statement of liability, 2 duties and multiple breathing space with no payment history.
     Given debt details
       | solType | debtId    | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
       | UI      | debtSA001 | 4920      | 1553     | 2021-08-10          | 2021-05-13       |
@@ -41,3 +41,24 @@ Feature: Statement of liability Debt details for Self Assessment Debts
     And the 1st sol debt summary will contain duties
       | dutyId | subTrans | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty01 | 1553     | 500000           | 0                    | false           | false                 |
+
+  @DTD-2166
+  Scenario: 1. SA debt - 2 duties Multiple breathing space and payment history.
+    Given debt details
+      | solType | debtId    | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
+      | UI      | debtSA003 | 4920      | 1553     | 2021-08-10          | 2021-05-13       |
+    And add debt item chargeIDs to the debt
+      | dutyId |
+      | duty01 |
+      | duty02 |
+    When a debt statement of liability is requested
+    Then service returns debt statement of liability data
+      | amountIntTotal | combinedDailyAccrual |
+      | 605264         | 41                   |
+    And the 1st sol debt summary will contain
+      | debtId    | mainTrans | debtTypeDescription       | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
+      | debtSA003 | 4920      | SA 1st Payment on Account | 5264                 | 605264             | 41                   |
+    And the 1st sol debt summary will contain duties
+      | dutyId | subTrans | dutyTypeDescription          | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
+      | duty01 | 1553     | SA 1st Payment on Account    | 350000           | 24                   | true            | false                 |
+      | duty02 | 1090     | SA Pship Late Filing Penalty | 250000           | 17                   | true            | false                 |

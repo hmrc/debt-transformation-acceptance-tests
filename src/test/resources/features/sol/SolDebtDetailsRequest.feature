@@ -196,7 +196,7 @@ Feature: statement of liability Debt details
       | dutyId | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | duty01 | 1000     | IT                  | 9999999999       | 712328               | true            | false                 |
 
-  Scenario: 9. Interest bearing debts each with payments and breathing space
+  Scenario: 9. Interest bearing debts - 2 duties each with payment history and breathing space
     Given debt details
       | solType | debtId   | mainTrans | subTrans | interestRequestedTo | solRequestedDate |
       | UI      | debt0010 | 1525      | 1000     | 2023-08-10          | 2024-05-30       |
