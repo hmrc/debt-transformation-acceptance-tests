@@ -334,8 +334,6 @@ Feature: Get Debt For all the SUPPORTED REGIMES
     Examples:
       | mainTrans | subTrans | interestOnlyIndicator |
       | 6010      | 1554     | true                  |
-      | 6010      | 1554     | true                  |
-      | 6010      | 1554     | true                  |
       | 4955      | 2090     | true                  |
       | 4965      | 2090     | true                  |
       | 4975      | 2090     | true                  |
@@ -366,6 +364,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 5073      | 1553     | false                 |
       | 6010      | 1555     | true                  |
 
+
   Scenario Outline: SA SSTTP Debts
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
@@ -379,6 +378,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | true            | 35                      | 500249             | <interestOnlyIndicator> |
     Examples:
       | mainTrans | subTrans | interestOnlyIndicator |
+
       | 4920      | 1553     | false                 |
       | 4930      | 1553     | false                 |
       | 4910      | 1553     | false                 |
@@ -484,6 +484,39 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4003      | 1047     | false                 |
       | 4003      | 1060     | false                 |
       | 4003      | 1100     | false                 |
+      | 4915      | 1005     | false                 |
+      | 4915      | 1005     | false                 |
+      | 4915      | 1007     | false                 |
+      | 4915      | 1008     | false                 |
+      | 4915      | 1009     | false                 |
+      | 4915      | 1011     | false                 |
+      | 4915      | 1012     | false                 |
+      | 4915      | 1015     | false                 |
+      | 4915      | 1042     | false                 |
+      | 4915      | 1044     | false                 |
+      | 4915      | 1047     | false                 |
+      | 4915      | 2195     | false                 |
+      | 4915      | 2200     | false                 |
+      | 4915      | 2205     | false                 |
+      | 4915      | 2210     | false                 |
+      | 4915      | 1060     | false                 |
+      | 4915      | 1096     | false                 |
+      | 4911      | 1005     | false                 |
+      | 4911      | 1007     | false                 |
+      | 4911      | 1008     | false                 |
+      | 4911      | 1009     | false                 |
+      | 4911      | 1011     | false                 |
+      | 4911      | 1012     | false                 |
+      | 4911      | 1015     | false                 |
+      | 4913      | 1005     | false                 |
+      | 4913      | 1005     | false                 |
+      | 4913      | 1007     | false                 |
+      | 4913      | 1008     | false                 |
+      | 4913      | 1009     | false                 |
+      | 4913      | 1011     | false                 |
+      | 4913      | 1012     | false                 |
+      | 4913      | 1015     | false                 |
+
 
   Scenario Outline: SA SSTTP Debts - Non Interest bearing
     Given a debt item
@@ -517,6 +550,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4026      | 2095     | true                  |
       | 4026      | 2096     | true                  |
       | 6010      | 1554     | true                  |
+      | 4941      | 2090     | true                  |
 
   Scenario: Simple assessment (SIA) SSTTP Debts - Non Interest bearing
     Given a debt item
