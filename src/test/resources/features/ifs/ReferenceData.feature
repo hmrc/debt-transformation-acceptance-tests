@@ -555,7 +555,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
   Scenario: Simple assessment (SIA) SSTTP Debts - Non Interest bearing
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
-      | 500000         | 2021-03-01        | 2021-03-08          | 4530      | 1000     |
+      | 500000         | 2021-03-01        | 2021-03-08          | 4530      | 3190     |
     And the debt item has no payment history
     And no breathing spaces have been applied to the debt item
     And no post codes have been provided for the customer
