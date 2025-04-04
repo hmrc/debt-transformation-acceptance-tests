@@ -37,3 +37,4 @@ qaResponse.txt
 qa_response_escaped.txt
 qa_token_response.txt
 
+!/project/project/*.sbt
