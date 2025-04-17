@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.utils
 
-import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionsApplied}
+import uk.gov.hmrc.test.api.models.SuppressionInformation
 
 object ScenarioContext {
   private var scenarioValues = Map.empty[String, Any]
@@ -27,20 +27,13 @@ object ScenarioContext {
 
   def setSuppression(key: String, value: List[SuppressionInformation]): Unit =
     suppression = suppression + (key -> value)
-
-  def getSuppression[T: Manifest](key: String): T                            =
-    suppression
-      .get(key)
-      .fold(throw new Exception(s"Key $key not found in scenario context"))(_.asInstanceOf[T])
   def get[T: Manifest](key: String): T                                       =
     scenarioValues
       .get(key)
       .fold(throw new Exception(s"Key $key not found in scenario context"))(_.asInstanceOf[T])
 
   def remove(key: String): Unit = scenarioValues = scenarioValues - key
-
   def reset(): Unit = {
     scenarioValues = Map.empty[String, Any]
-    suppression = Map.empty[String, List[SuppressionInformation]]
   }
 }

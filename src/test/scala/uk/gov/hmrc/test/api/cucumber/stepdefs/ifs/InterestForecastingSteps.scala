@@ -23,12 +23,10 @@ import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models._
-import uk.gov.hmrc.test.api.requests.InterestForecastingRequests.{getBodyAsString, _}
+import uk.gov.hmrc.test.api.requests.InterestForecastingRequests._
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
-
-//import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Matchers {
 
@@ -217,7 +215,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
     }
 
     locally {
-      val fieldName = "numberChargeableDays"
+      val fieldName = "numberOfChargeableDays"
       if (asMapTransposed.containsKey(fieldName)) {
         withClue(s"$fieldName: ") {
           responseBody.numberOfChargeableDays.toString shouldBe asMapTransposed.get(fieldName).toString

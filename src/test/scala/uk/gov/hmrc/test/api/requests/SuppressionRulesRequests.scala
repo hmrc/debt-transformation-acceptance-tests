@@ -281,10 +281,10 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
       val reason= supInfo("reason")
       val reasonDesc = supInfo("reasonDesc")
       val suppressionChargeDescription = supInfo("suppressionChargeDescription")
-      val mainTrans                    = supInfo.get("mainTrans")
-      val subTrans                     = supInfo.get("subTrans")
-      val postcode                     = supInfo.get("postcode")
-      val checkPeriodEnd               = supInfo.get("checkPeriodEnd").map(_.toBoolean)
+      val mainTrans                    = supInfo.get("mainTrans").filter(_.nonEmpty)
+      val subTrans                     = supInfo.get("subTrans").filter(_.nonEmpty)
+      val postcode                     = supInfo.get("postcode").filter(_.nonEmpty)
+      val checkPeriodEnd               = supInfo.get("checkPeriodEnd").filter(_.nonEmpty).map(_.toBoolean)
 
       val suppressionApplied = SuppressionInformation(
         dateFrom = dateFrom,

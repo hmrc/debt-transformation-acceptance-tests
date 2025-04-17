@@ -1,4 +1,4 @@
-@suppression @2790
+@suppression @DTD-2790
 Feature: Suppression - Edge cases
 
   Scenario: Suppression, interest rate change during suppression

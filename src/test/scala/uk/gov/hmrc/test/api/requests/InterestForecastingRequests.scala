@@ -127,10 +127,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
       debtItems = ScenarioContext.get("debtItems").toString.concat(",").concat(debtItem)
     }
 
-    ScenarioContext.set(
-      "debtItems",
-      debtItems
-    )
+    ScenarioContext.set("debtItems", debtItems)
     print("IFS debt-calculation request::::::::::::::::::" + debtItems)
   }
 
