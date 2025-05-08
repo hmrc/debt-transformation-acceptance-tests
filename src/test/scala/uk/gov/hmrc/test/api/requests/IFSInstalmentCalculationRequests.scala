@@ -60,12 +60,24 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
            |,"periodEnd": "${debtItemCharge.get("periodEnd")}"
            |""".stripMargin
       } else ""
+      val interestStartDate = if (debtItemCharge.containsKey("interestStartDate") ) {
+        if(debtItemCharge.get("interestStartDate").equals("DateInFuture")) {
+          s"""
+             |,"interestStartDate": "${LocalDate.now().plusDays(15)}"
+             |""".stripMargin
+        }else {
+          s"""
+             |,"interestStartDate": "${debtItemCharge.get("interestStartDate")}"
+             |""".stripMargin
+        }
+      } else ""
       debtItemCharges = debtItemCharges.concat(
         getBodyAsString("debtItemCharge")
           .replaceAll("<REPLACE_debtId>", debtItemCharge.get("debtId"))
           .replaceAll("<REPLACE_debtAmount>", debtItemCharge.get("debtAmount"))
           .replaceAll("<REPLACE_mainTrans>", debtItemCharge.get("mainTrans"))
           .replaceAll("<REPLACE_subTrans>", debtItemCharge.get("subTrans"))
+          .replaceAll("<REPLACE_interestStartDate>", interestStartDate)
           .replaceAll("<REPLACE_periodEnd>", periodEnd)
       )
 
