@@ -1,8 +1,8 @@
 Feature: Suppression Period ends after quote date
   Scenario: Instalment calculation has been requested where a postcode suppression period ends after the quote date
     Given suppression configuration data is created
-      | dateFrom            | dateTo            | reason            | reasonDesc | suppressionChargeDescription | subTrans |
-      | 2024-03-01          | 2024-03-20        | LEGISLATIVE       | COVID                 | SA-Suppression               | 1000     |
+      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | subTrans |
+      | 2024-03-01 | 2024-03-20 | LEGISLATIVE | COVID      | SA-Suppression               | 1000     |
     When suppression configuration is sent to ifs service
     And debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType |
@@ -20,8 +20,8 @@ Feature: Suppression Period ends after quote date
 
   Scenario: Instalment calculation has been requested where a period end suppression period ends after the quote date
     Given suppression configuration data is created
-      | dateFrom            | dateTo            | reason            | reasonDesc | suppressionChargeDescription | subTrans |
-      | 2024-03-01          | 2024-03-20        | LEGISLATIVE       | COVID                 | SA-Suppression               | 1000     |
+      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | subTrans |
+      | 2024-03-01 | 2024-03-20 | LEGISLATIVE | COVID      | SA-Suppression               | 1000     |
     When suppression configuration is sent to ifs service
     And debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType |
@@ -39,8 +39,8 @@ Feature: Suppression Period ends after quote date
 
   Scenario: Instalment calculation has been requested where a main trans suppression period ends after the quote date
     Given suppression configuration data is created
-      | dateFrom            | dateTo            | reason            | reasonDesc | suppressionChargeDescription | subTrans |
-      | 2024-03-01          | 2024-03-20        | LEGISLATIVE       | COVID                 | SA-Suppression               | 1000     |
+      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | subTrans |
+      | 2024-03-01 | 2024-03-20 | LEGISLATIVE | COVID      | SA-Suppression               | 1000     |
     When suppression configuration is sent to ifs service
     And debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType |
@@ -60,8 +60,8 @@ Feature: Suppression Period ends after quote date
 
   Scenario: Should calculate instalment where suppression period ends after the quote date
     Given suppression configuration data is created
-      | dateFrom            | dateTo            | reason            | reasonDesc | suppressionChargeDescription | subTrans |
-      | 2024-03-01          | 2024-03-20        | LEGISLATIVE       | COVID                 | SA-Suppression               | 1000     |
+      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | subTrans |
+      | 2024-03-01 | 2024-03-20 | LEGISLATIVE | COVID      | SA-Suppression               | 1000     |
     When suppression configuration is sent to ifs service
     And debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType        |
@@ -79,8 +79,8 @@ Feature: Suppression Period ends after quote date
 
   Scenario: Should calculate instalment where a period end suppression period ends after the quote date
     Given suppression configuration data is created
-      | dateFrom            | dateTo            | reason            | reasonDesc | suppressionChargeDescription | subTrans |
-      | 2024-03-01          | 2024-03-20        | LEGISLATIVE       | COVID                 | SA-Suppression               | 1000     |
+      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | subTrans |
+      | 2024-03-01 | 2024-03-20 | LEGISLATIVE | COVID      | SA-Suppression               | 1000     |
     When suppression configuration is sent to ifs service
     And debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType        |
@@ -98,8 +98,8 @@ Feature: Suppression Period ends after quote date
 
   Scenario: Should calculate instalment where a main trans suppression period ends after the quote date
     Given suppression configuration data is created
-      | dateFrom            | dateTo            | reason            | reasonDesc | suppressionChargeDescription | subTrans |
-      | 2024-03-01          | 2024-03-20        | LEGISLATIVE       | COVID                 | SA-Suppression               | 1000     |
+      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | subTrans |
+      | 2024-03-01 | 2024-03-20 | LEGISLATIVE | COVID      | SA-Suppression               | 1000     |
     When suppression configuration is sent to ifs service
     And debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteType        |
