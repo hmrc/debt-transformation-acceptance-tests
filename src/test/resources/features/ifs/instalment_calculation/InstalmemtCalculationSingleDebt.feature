@@ -1,5 +1,4 @@
 Feature: Instalment calculation for single debt - Input 2
-
   Scenario: Should calculate debts amount for 1 debt 1 duty (input 2)
     Given debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType        | quoteDate  | isQuoteDateNonInclusive |
@@ -7,8 +6,8 @@ Feature: Instalment calculation for single debt - Input 2
     And the instalment calculation has no postcodes
     And no initial payment for the debt item charge
     And the instalment calculation has debt item charges
-      | debtId | debtAmount | mainTrans | subTrans | interestStartDate |
-      | 1234   | 100000     | 1545      | 1000     | 2025-01-14        |
+      | debtId | debtAmount | mainTrans | subTrans |
+      | 1234   | 100000     | 1545      | 1000     |
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
@@ -59,7 +58,23 @@ Feature: Instalment calculation for single debt - Input 2
       | 5                | 2023-08-20 | 337592    | 1829                      |
 
 
-  Scenario: Calculate liability amount based on Interest start date
+  @DTD-3163
+  Scenario: interestStartDate is included but not in the Future, then quote date should be used
+    Given debt instalment calculation with details
+      | duration | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType        | quoteDate  | isQuoteDateNonInclusive |
+      | 24       | monthly          | 2020-03-14            | 0                    | 1           | instalmentAmount | 2020-03-13 | false                   |
+    And the instalment calculation has no postcodes
+    And no initial payment for the debt item charge
+    And the instalment calculation has debt item charges
+      | debtId | debtAmount | mainTrans | subTrans | interestStartDate |
+      | 1234   | 100000     | 1545      | 1000     | 2025-01-14        |
+    When the instalment calculation detail is sent to the ifs service
+    Then IFS response contains expected values
+      | instalmentNumber | dueDate    |  interestRate |
+      | 1                | 2020-03-14 |  3.25         |
+
+  @DTD-3163
+  Scenario: interestStartDate is included but in the Future, then interestStartDate should be used
     Given debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType        | quoteDate  | isQuoteDateNonInclusive |
       | 24       | monthly          | 2025-08-25            | 0                    | 1           | instalmentAmount | 2020-03-13 | false                   |

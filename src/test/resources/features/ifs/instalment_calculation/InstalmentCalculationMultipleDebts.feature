@@ -19,7 +19,8 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
       | 9                | 2020-10-14 | monthly          | 7               | 100       | 70000             | 0.0          | 17                          |
 
-  Scenario: Should calculate quote for multiple debts with interest bearing & non-interest bearing debts combined
+  @DTD-3163
+  Scenario: interestStartDate is included but in the Future, then interestStartDate should be used
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType | quoteDate  |
       | 10000                   | monthly          | 2025-03-30            | 5900                 | 1           | duration  | 2020-03-13 |
@@ -100,7 +101,8 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
       | 2                | 2020-08-01 | 6000      |
       | 7                | 2020-12-01 | 2187      |
 
-  Scenario: Multiple debt item charges - duration should not include initial payment (initial payment date before instalment date)
+  @DTD-3163
+  Scenario: interestStartDate is included but not in the Future, then quote date should be used
     Given debt instalment calculation with 129 details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
       | 6000                    | 2025-06-30            | monthly          | 1000                 | duration  | 2020-06-10 |
