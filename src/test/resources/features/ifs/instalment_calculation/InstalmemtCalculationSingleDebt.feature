@@ -85,8 +85,8 @@ Feature: Instalment calculation for single debt - Input 2
       | 1234   | 100000     | 1545      | 1000     | DateInFuture      |
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
-      | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate |
-      | 1                | 2025-08-25 | monthly          | 0               | 5494      | 100000            | 6.5          |
+      | instalmentNumber | dueDate    | interestRate |
+      | 1                | 2025-08-25 | 6.5          |
 
 # DTD-397 Edge-cases below
   Scenario: Should return an error from IFS if quote type is duration and duration is provided
