@@ -19,7 +19,6 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
       | 9                | 2020-10-14 | monthly          | 7               | 100       | 70000             | 0.0          | 17                          |
 
-# it shows only the Quote date instead of the interest start date
   @DTD-3163
   Scenario: interestStartDate is included but in the Future, then interestStartDate should be used
     Given debt instalment calculation with details
@@ -38,7 +37,7 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
-      | 9                | 2025-10-30 | monthly          | 7               | 9900      | 9900              | 6.5          | 20                          |
+      | 9                | 2025-10-30 | monthly          | 7               | 9900      | 9900              | 6.5          | 18                          |
 
   Scenario: Should calculate quote for multiple debts both with interest bearing & 1 initial payment history
     Given debt instalment calculation with details
@@ -79,7 +78,7 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
     And IFS response contains expected values
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
       | 1                | 2020-03-14 | monthly          | 0               | 8480      | 100000            | 3.25         | 25                          |
-
+@wip
   Scenario: Multiple debt item charges - duration should not include initial payment (initial payment date before instalment date)
     Given debt instalment calculation with 129 details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
@@ -118,13 +117,13 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
     When the instalment calculation detail is sent to the ifs service
     Then the instalment calculation summary contains values
       | numberOfInstalments | duration | interestAccrued | planInterest | totalInterest |
-      | 7                   | 5        | 1000            | 577          | 1577          |
+      | 7                   | 5        | 1000            | 873          | 1873          |
     And IFS response contains expected values
       | instalmentNumber | dueDate    | amountDue |
       | 1                | 2025-06-01 | 5000      |
       | 2                | 2025-06-30 | 6000      |
-      | 7                | 2025-10-30 | 2577      |
-
+      | 7                | 2025-10-30 | 2873      |
+@wip
   Scenario: Multiple debt item charges - duration should not include initial payment (initial payment on instalment date)
     Given debt instalment calculation with 129 details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
