@@ -80,7 +80,7 @@ Feature: Instalment calculation with combined instalments
       | 1                | 2021-08-01 | 999       |
       | 4                | 2021-11-01 | 1003      |
 
-  @wip
+
   Scenario: Final two instalments are merged when requested with initial payment
     Given debt instalment calculation with details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
@@ -103,7 +103,7 @@ Feature: Instalment calculation with combined instalments
       | 1                | 2021-07-01 | 1000      |
       | 2                | 2021-08-01 | 999       |
       | 4                | 2021-10-01 | 1320      |
-@wip
+
   Scenario: Multiple debt item charges final two instalments are merged when requested
     Given debt instalment calculation with details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
