@@ -101,7 +101,7 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
       | 2                | 2020-08-01 | 6000      |
       | 7                | 2020-12-01 | 2187      |
 
-  @DTD-3163 @wip8
+  @DTD-3163
   Scenario: interestStartDate is included but not in the Future, then quote date should be used
     Given debt instalment calculation with 129 details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
