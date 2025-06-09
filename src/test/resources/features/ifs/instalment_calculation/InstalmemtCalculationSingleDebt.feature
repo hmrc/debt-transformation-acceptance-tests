@@ -59,7 +59,7 @@ Feature: Instalment calculation for single debt - Input 2
 
 
   @DTD-3163
-  Scenario: interestStartDate is included but not in the Future, then quote date should be used
+  Scenario: InterestStartDate is included but not in the Future, then quote date should be used
     Given debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType        | quoteDate  | isQuoteDateNonInclusive |
       | 24       | monthly          | 2020-03-14            | 0                    | 1           | instalmentAmount | 2020-03-13 | false                   |
@@ -76,7 +76,7 @@ Feature: Instalment calculation for single debt - Input 2
       | 1                | 2020-03-13 | 3.25         |
 
   @DTD-3163
-  Scenario: interestStartDate is included but in the Future, then interestStartDate should be used
+  Scenario: InterestStartDate is included but in the Future, then interestStartDate should be used
     Given debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType        | quoteDate  | isQuoteDateNonInclusive |
       | 24       | monthly          | 2025-08-25            | 0                    | 1           | instalmentAmount | 2025-06-01 | false                   |
@@ -91,7 +91,7 @@ Feature: Instalment calculation for single debt - Input 2
       | 1                | 2025-08-25 | 6.5          |
 
   @DTD-3163
-  Scenario: With initial payment - interestStartDate is included but in the Future, then interestStartDate should be used
+  Scenario: With initial payment - InterestStartDate is included but in the Future, then interestStartDate should be used
     Given debt instalment calculation with details
       | duration | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType        | quoteDate  | isQuoteDateNonInclusive |
       | 24       | monthly          | 2025-06-10            | 0                    | 1           | instalmentAmount | 2025-06-01 | false                   |
