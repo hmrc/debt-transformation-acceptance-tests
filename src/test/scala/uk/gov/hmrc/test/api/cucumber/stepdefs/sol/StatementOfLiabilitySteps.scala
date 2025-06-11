@@ -113,11 +113,11 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     TestData.loadedFiles(variant)
 
   When("""a debt statement of liability is requested""") {
-    val request = ScenarioContext.get("debtDetails").toString
-
+    val request  = ScenarioContext.get("debtDetails").toString
+    println(s"SOL REQUEST ---------> $request")
     val response =
       StatementOfLiabilityRequests.getStatementOfLiability(request)
-    println(s"RESP --> ${response.body}")
+    println(s"SOL RESPONSE --> ${response.body}")
     ScenarioContext.set("response", response)
   }
 
