@@ -12,6 +12,7 @@ object Dependencies {
     Test,
     "com.vladsch.flexmark" % "flexmark-all"             % "0.35.10" % Test,
     "com.beachape"        %% "enumeratum-play-json"     % "1.6.1",
-    Test
+    Test,
+    "uk.gov.hmrc"         %% "api-test-runner"          % "0.10.0"  % Test
   )
 }
