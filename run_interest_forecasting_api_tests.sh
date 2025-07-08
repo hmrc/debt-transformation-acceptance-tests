@@ -20,4 +20,4 @@ if [[ "$status_code" -ne 200 ]] ; then
 fi
 sleep 2
 
-sbt -Dsecurity.assessment="false" -Denvironment="$environment" -Dcucumber.options="--tags '$tags'" clean 'testOnly uk.gov.hmrc.test.api.cucumber.runner.InterestForecastingApiTestRunner'
+sbt -Denvironment="$environment" -Dcucumber.options="--tags '$tags'" clean 'testOnly uk.gov.hmrc.test.api.cucumber.runner.InterestForecastingApiTestRunner'
