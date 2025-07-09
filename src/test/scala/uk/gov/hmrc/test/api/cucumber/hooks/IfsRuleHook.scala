@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.api.cucumber.hooks
 
 import com.typesafe.scalalogging.LazyLogging
 import cucumber.api.scala.ScalaDsl
-import org.scalatest.Matchers.{be, convertToAnyShouldWrapper}
+import org.scalatest.matchers.should.Matchers._
 import uk.gov.hmrc.test.api.requests.SuppressionRulesRequests
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 

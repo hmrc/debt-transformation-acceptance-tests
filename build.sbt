@@ -10,7 +10,7 @@ libraryDependencies ++= Seq(
   "org.playframework"          %% "play-ahc-ws-standalone"   % "3.0.0",
   "org.playframework"          %% "play-ws-standalone-json"  % "3.0.0",
   "org.playframework"          %% "play-ws-standalone-xml"   % "3.0.0" % Test,
-  "org.scalatest"              %% "scalatest"                % "3.0.8",
+  "org.scalatest"              %% "scalatest"                % "3.2.19",
   "io.cucumber"                %% "cucumber-scala"           % CucumberVersion,
   "io.cucumber"                 % "cucumber-junit"           % CucumberVersion,
   "io.cucumber"                 % "cucumber-picocontainer"   % CucumberVersion,

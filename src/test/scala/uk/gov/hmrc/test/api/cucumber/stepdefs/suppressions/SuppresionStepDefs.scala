@@ -18,10 +18,9 @@ package uk.gov.hmrc.test.api.cucumber.stepdefs.suppressions
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import io.cucumber.datatable.DataTable
-import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
+import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.requests.SuppressionRulesRequests._
-import uk.gov.hmrc.test.api.requests._
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
 class SuppresionStepDefs extends ScalaDsl with EN with Eventually with Matchers {
