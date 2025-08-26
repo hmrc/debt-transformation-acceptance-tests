@@ -33,7 +33,7 @@ class SuppresionStepDefs extends ScalaDsl with EN with Eventually with Matchers 
     val requestJson = ScenarioContext.get[String]("suppressionsJson")
     println(s"suppression data REQUEST ---------> $requestJson")
     val response    = updateSuppressionData(requestJson)
-    withClue(s"Incorrect status with body : ${response.body}\n\n"){
+    withClue(s"Incorrect status with body : ${response.body}\n\n") {
       response.status should be(200)
     }
 

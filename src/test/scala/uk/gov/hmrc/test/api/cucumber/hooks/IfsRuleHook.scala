@@ -28,7 +28,6 @@ class IfsRuleHook extends ScalaDsl with LazyLogging {
     println("before block starts running")
     ScenarioContext.reset()
 
-
     println("before block finished running")
   }
 

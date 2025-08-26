@@ -55,17 +55,17 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
     var debtItemCharges = ""
 
     asMapTransposed.zipWithIndex.foreach { case (debtItemCharge, index) =>
-      val periodEnd = if (debtItemCharge.containsKey("periodEnd")) {
+      val periodEnd         = if (debtItemCharge.containsKey("periodEnd")) {
         s"""
            |,"periodEnd": "${debtItemCharge.get("periodEnd")}"
            |""".stripMargin
       } else ""
-      val interestStartDate = if (debtItemCharge.containsKey("interestStartDate") ) {
-        if(debtItemCharge.get("interestStartDate").equals("DateInFuture")) {
+      val interestStartDate = if (debtItemCharge.containsKey("interestStartDate")) {
+        if (debtItemCharge.get("interestStartDate").equals("DateInFuture")) {
           s"""
              |,"interestStartDate": "${LocalDate.now().plusDays(15)}"
              |""".stripMargin
-        }else {
+        } else {
           s"""
              |,"interestStartDate": "${debtItemCharge.get("interestStartDate")}"
              |""".stripMargin

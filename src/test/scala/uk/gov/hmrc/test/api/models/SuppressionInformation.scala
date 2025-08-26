@@ -20,15 +20,15 @@ import play.api.libs.json.{Json, OFormat}
 
 case class SuppressionInformation(
   dateFrom: String,
-  dateTo:Option[String],
+  dateTo: Option[String],
   reason: String,
   reasonDesc: String,
-  suppressionChargeDescription:String,
+  suppressionChargeDescription: String,
   postcode: Option[String],
   mainTrans: Option[String],
   subTrans: Option[String],
   checkPeriodEnd: Option[Boolean]
-                                 )
+)
 object SuppressionInformation {
   implicit val format: OFormat[SuppressionInformation] = Json.format[SuppressionInformation]
 }

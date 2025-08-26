@@ -135,3 +135,49 @@ Feature: Statement of liability Debt details for Self Assessment Debts
     And the 1st sol debt summary will contain duties
       | subTrans | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | 1554     | 500000           | 0                    | false           | true                  |
+
+  @DTD-3523
+  Scenario Outline: 9. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt
+    Given debt details
+      | solType | debtId   | mainTrans   | subTrans   | interestRequestedTo |
+      | UI      | <debtId> | <mainTrans> | <subTrans> | 2021-08-10          |
+    When a debt statement of liability is requested
+    Then service returns debt statement of liability data
+      | amountIntTotal | combinedDailyAccrual |
+      | 504629         | 35                   |
+    And the 1st sol debt summary will contain
+      | debtId   | mainTrans   | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
+      | <debtId> | <mainTrans> | Penalty reform charge | 4629                 | 504629             | 35                   |
+    And the 1st sol debt summary will contain duties
+      | subTrans   | unpaidAmountDuty | combinedDailyAccrual | interestBearing   | interestOnlyIndicator   |
+      | <subTrans> | 500000           | 35                   | <interestBearing> | <interestOnlyIndicator> |
+    Examples:
+      | debtId     | mainTrans | subTrans | interestBearing | interestOnlyIndicator |
+      | debtSA0017 | 4027      | 1080     | true            | false                 |
+      | debtSA0018 | 4028      | 1085     | true            | false                 |
+      | debtSA0019 | 4029      | 1090     | true            | false                 |
+      | debtSA0020 | 4031      | 1095     | true            | false                 |
+      | debtSA0021 | 4032      | 1090     | true            | false                 |
+      | debtSA0022 | 4033      | 1095     | true            | false                 |
+
+  @DTD-3523
+  Scenario Outline: 10. SA customer statement of liability - Penalty Reform Charge - Non Interest bearing debt
+    Given debt details
+      | solType | debtId   | mainTrans   | subTrans   | interestRequestedTo |
+      | UI      | <debtId> | <mainTrans> | <subTrans> | 2021-08-10          |
+    When a debt statement of liability is requested
+    Then service returns debt statement of liability data
+      | amountIntTotal | combinedDailyAccrual |
+      | 500000         | 0                    |
+    And the 1st sol debt summary will contain
+      | debtId   | mainTrans   | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
+      | <debtId> | <mainTrans> | Penalty reform charge | 0                    | 500000             | 0                    |
+    And the 1st sol debt summary will contain duties
+      | subTrans   | unpaidAmountDuty | combinedDailyAccrual | interestBearing   | interestOnlyIndicator   |
+      | <subTrans> | 500000           | 0                    | <interestBearing> | <interestOnlyIndicator> |
+    Examples:
+      | debtId     | mainTrans | subTrans | interestBearing | interestOnlyIndicator |
+      | debtSA0023 | 6010      | 1611     | false           | true                  |
+      | debtSA0024 | 6010      | 2090     | false           | true                  |
+      | debtSA0025 | 6010      | 2095     | false           | true                  |
+      | debtSA0026 | 6010      | 2096     | false           | true                  |

@@ -39,19 +39,17 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   }
 
   When("a rule has been updated") { (dataTable: DataTable) =>
-    val asmapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
-    val responseGEtRules = getAllRules
-    val collection = Json.parse(responseGEtRules.body).as[GetRulesResponse]
+    val asmapTransposed        = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val responseGEtRules       = getAllRules
+    val collection             = Json.parse(responseGEtRules.body).as[GetRulesResponse]
     val newRules: List[String] = collection.rules.find(_.enabled) match {
       case Some(activeRules) =>
         val rules = activeRules.rules.filterNot(vl =>
           vl.contains(asmapTransposed.get("mainTrans")) && vl.contains(asmapTransposed.get("subTrans"))
         )
-        rules ++ List(s"IF mainTrans == '${asmapTransposed.get("mainTrans")}' AND subTrans == '${
-          asmapTransposed
-            .get("subTrans")
-        }' -> intRate = ${asmapTransposed.get("intRate")} AND interestOnlyDebt = false")
-      case _ => None.toList
+        rules ++ List(s"IF mainTrans == '${asmapTransposed.get("mainTrans")}' AND subTrans == '${asmapTransposed
+          .get("subTrans")}' -> intRate = ${asmapTransposed.get("intRate")} AND interestOnlyDebt = false")
+      case _                 => None.toList
     }
 
     postNewRulesTable(Json.toJson(CreateRuleRequest(newRules)).toString())
@@ -60,17 +58,17 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   Given("the current set of rules") { () =>
     val responseGEtRules = getAllRules
 
-    val collection = Json.parse(responseGEtRules.body).as[GetRulesResponse]
+    val collection        = Json.parse(responseGEtRules.body).as[GetRulesResponse]
     val existingProdRules = collection.rules.find(_.version == 1)
     existingProdRules match {
       case Some(rules) => postNewRulesTable(Json.toJson(CreateRuleRequest(rules.rules)).toString())
-      case _ => println("Error. No rules with version 1 found")
+      case _           => println("Error. No rules with version 1 found")
     }
   }
 
   Given("(.*) debt items") { (numberItems: Int) =>
     var debtItems: String = null
-    var n = 0
+    var n                 = 0
 
     while (n < numberItems) {
       val debtItem = getBodyAsString("debtItem")
@@ -96,7 +94,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   Given("(.*) debt items where interest rate changes from 3\\.0 to 3\\.25") { (numberItems: Int) =>
     var debtItems: String = null
-    var n = 0
+    var n                 = 0
 
     while (n < numberItems) {
       val debtItem = getBodyAsString("debtItem")
@@ -129,7 +127,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   }
 
   When("the debt item(s) is sent to the ifs service") { () =>
-    val request = ScenarioContext.get("debtItems").toString
+    val request  = ScenarioContext.get("debtItems").toString
     println(s"IFS REQUEST --> $request")
     val response = getDebtCalculation(request)
     println(s"IFS RESPONSE --> ${response.body}")
@@ -137,7 +135,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   }
 
   When("the debt interest type request is sent to the ifs service") { () =>
-    val request = ScenarioContext.get("debtInterestTypes").toString
+    val request  = ScenarioContext.get("debtInterestTypes").toString
     println(s"IFS REQUEST --> $request")
     val response = getDebtInterestTypeRequestBody(request)
     println(s"IFS Service RESPONSE --> ${response.body}")
@@ -146,7 +144,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   }
 
   Then("the ifs service wilL return a total debts summary of") { (dataTable: DataTable) =>
-    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
 
     val responseBody = Json.parse(response.body).as[DebtCalculationsSummary]
@@ -198,7 +196,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
   }
 
   Then("the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain") { (index: Int, dataTable: DataTable) =>
-    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
     response.status should be(200)
 
@@ -271,14 +269,14 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   Then("""the ifs service will respond with (.*)""") { (expectedMessage: String) =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
-    response.body should include(expectedMessage)
+    response.body   should include(expectedMessage)
     response.status should be(400)
   }
 
   Then("the ifs service will respond with") { (dataTable: DataTable) =>
-    val asMapTransposed = dataTable.transpose().asMap(classOf[String], classOf[String])
+    val asMapTransposed                = dataTable.transpose().asMap(classOf[String], classOf[String])
     val response: StandaloneWSResponse = ScenarioContext.get("response")
-    val errorResponse = Json.parse(response.body).as[Errors]
+    val errorResponse                  = Json.parse(response.body).as[Errors]
 
     locally {
       val fieldName = "statusCode"
@@ -312,7 +310,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
   Then("the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows") {
     (summaryIndex: Int, dataTable: DataTable) =>
-      val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
+      val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
       val response: StandaloneWSResponse = ScenarioContext.get("response")
 
       asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
@@ -432,10 +430,9 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
       }
   }
 
-
   Then("the ([0-9])(?:st|nd|rd|th) debt summary will have suppression applied calculation windows") {
     (summaryIndex: Int, dataTable: DataTable) =>
-      val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
+      val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
       val response: StandaloneWSResponse = ScenarioContext.get("response")
 
       asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
@@ -447,7 +444,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
         if (calculationWindows.isDefinedAt(index)) {
           calculationWindows(index).suppressionsApplied.getOrElse(List.empty).foreach { suppression =>
-
             locally {
               val fieldName = "dateFrom"
               if (window.containsKey(fieldName)) {
@@ -461,13 +457,10 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
               val fieldName = "dateTo"
               if (window.containsKey(fieldName)) {
                 withClue(s"$fieldName: ") {
-                  suppression.dateTo .toString shouldBe Some(window.get(fieldName)).toString
+                  suppression.dateTo.toString shouldBe Some(window.get(fieldName)).toString
                 }
               }
             }
-
-
-
 
             locally {
               val fieldName = "reasonDesc"
@@ -508,7 +501,6 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
         }
       }
   }
-
 
   Then("Ifs service returns response code (.*)") { (expectedCode: Int) =>
     val response: StandaloneWSResponse = ScenarioContext.get("response")
@@ -590,16 +582,16 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
       }
   }
 
-
   Then("the ([0-9])(?:st|nd|rd|th) debt applied suppression summary contains values as") {
     (summaryIndex: Int, dataTable: DataTable) =>
-      val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
+      val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String])
       val response: StandaloneWSResponse = ScenarioContext.get("response")
 
       asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
         val maybeSuppression = for {
-          debt <- Json.parse(response.body).as[DebtCalculationsSummary].debtCalculations.lift(summaryIndex - 1) // Safe index
-          windowData <- debt.calculationWindows.lift(index)
+          debt        <-
+            Json.parse(response.body).as[DebtCalculationsSummary].debtCalculations.lift(summaryIndex - 1) // Safe index
+          windowData  <- debt.calculationWindows.lift(index)
           suppression <- windowData.suppressionApplied
         } yield suppression
 
@@ -634,12 +626,11 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
 
           case None if window.containsKey("reason") && window.get("reason").toString.nonEmpty =>
             fail(s"Expected suppressionApplied for debt index $summaryIndex and window $index, but it was missing.")
-          case _ =>
+          case _                                                                              =>
 
         }
       }
   }
-
 
   def getCountOfCalculationWindows(summaryIndex: Int): Int = {
     val response: StandaloneWSResponse = ScenarioContext.get("response")

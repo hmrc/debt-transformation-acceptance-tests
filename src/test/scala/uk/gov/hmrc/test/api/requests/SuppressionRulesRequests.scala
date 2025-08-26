@@ -272,14 +272,14 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   }
 
   def addSuppressionCriteria(dataTable: DataTable): Unit = {
-    val rows= dataTable.asMaps[String,String](classOf[String], classOf[String]).asScala.map(_.asScala)
+    val rows            = dataTable.asMaps[String, String](classOf[String], classOf[String]).asScala.map(_.asScala)
     var suppressionInfo = List[SuppressionInformation]()
 
     rows.foreach { supInfo =>
-      val dateFrom  =supInfo("dateFrom")
-      val dateTo= supInfo.get("dateTo")
-      val reason= supInfo("reason")
-      val reasonDesc = supInfo("reasonDesc")
+      val dateFrom                     = supInfo("dateFrom")
+      val dateTo                       = supInfo.get("dateTo")
+      val reason                       = supInfo("reason")
+      val reasonDesc                   = supInfo("reasonDesc")
       val suppressionChargeDescription = supInfo("suppressionChargeDescription")
       val mainTrans                    = supInfo.get("mainTrans").filter(_.nonEmpty)
       val subTrans                     = supInfo.get("subTrans").filter(_.nonEmpty)
