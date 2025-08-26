@@ -378,7 +378,6 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | true            | 35                      | 500249             | <interestOnlyIndicator> |
     Examples:
       | mainTrans | subTrans | interestOnlyIndicator |
-
       | 4920      | 1553     | false                 |
       | 4930      | 1553     | false                 |
       | 4910      | 1553     | false                 |
@@ -516,7 +515,22 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4913      | 1011     | false                 |
       | 4913      | 1012     | false                 |
       | 4913      | 1015     | false                 |
-
+      | 4027      | 1080     | false                 |
+      | 4028      | 1085     | false                 |
+      | 4028      | 1090     | false                 |
+      | 4028      | 1095     | false                 |
+      | 4029      | 1085     | false                 |
+      | 4029      | 1090     | false                 |
+      | 4029      | 1095     | false                 |
+      | 4031      | 1085     | false                 |
+      | 4031      | 1090     | false                 |
+      | 4031      | 1095     | false                 |
+      | 4032      | 1085     | false                 |
+      | 4032      | 1090     | false                 |
+      | 4032      | 1095     | false                 |
+      | 4033      | 1085     | false                 |
+      | 4033      | 1090     | false                 |
+      | 4033      | 1095     | false                 |
 
   Scenario Outline: SA SSTTP Debts - Non Interest bearing
     Given a debt item
@@ -551,6 +565,10 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4026      | 2096     | true                  |
       | 6010      | 1554     | true                  |
       | 4941      | 2090     | true                  |
+      | 6010      | 1611     | true                  |
+      | 6010      | 2090     | true                  |
+      | 6010      | 2095     | true                  |
+      | 6010      | 2096     | true                  |
 
   Scenario: Simple assessment (SIA) SSTTP Debts - Non Interest bearing
     Given a debt item
