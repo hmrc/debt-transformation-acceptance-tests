@@ -275,7 +275,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4711      | 1174     | false                 |
       | 4786      | 1090     | false                 |
 
-  Scenario Outline: Interest Bearing SA charges
+  Scenario Outline: Interest Bearing SA into IFS and SoL AND NOT SSTTP
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
@@ -319,7 +319,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 5200      | 1553     | false                 |
       | 5210      | 1553     | false                 |
 
-  Scenario Outline: Non Interest Bearing SA Charges
+  Scenario Outline: Non Interest Bearing SA into IFS and SoL AND NOT SSTTP
     Given the current set of rules
     And a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
@@ -333,7 +333,6 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | false           | 0                       | 0                    | 0       | 500000           | 500000             | 0                    | 500000             | <interestOnlyIndicator> |
     Examples:
       | mainTrans | subTrans | interestOnlyIndicator |
-      | 6010      | 1554     | true                  |
       | 4955      | 2090     | true                  |
       | 4965      | 2090     | true                  |
       | 4975      | 2090     | true                  |
@@ -365,7 +364,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 6010      | 1555     | true                  |
 
 
-  Scenario Outline: SA SSTTP Debts
+  Scenario Outline: Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
@@ -484,15 +483,16 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4003      | 1060     | false                 |
       | 4003      | 1100     | false                 |
       | 4915      | 1005     | false                 |
-      | 4915      | 1005     | false                 |
       | 4915      | 1007     | false                 |
       | 4915      | 1008     | false                 |
       | 4915      | 1009     | false                 |
+      | 4915      | 1010     | false                 |
       | 4915      | 1011     | false                 |
       | 4915      | 1012     | false                 |
       | 4915      | 1015     | false                 |
       | 4915      | 1042     | false                 |
       | 4915      | 1044     | false                 |
+      | 4915      | 1046     | false                 |
       | 4915      | 1047     | false                 |
       | 4915      | 2195     | false                 |
       | 4915      | 2200     | false                 |
@@ -500,18 +500,20 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4915      | 2210     | false                 |
       | 4915      | 1060     | false                 |
       | 4915      | 1096     | false                 |
+      | 4915      | 1100     | false                 |
       | 4911      | 1005     | false                 |
       | 4911      | 1007     | false                 |
       | 4911      | 1008     | false                 |
       | 4911      | 1009     | false                 |
+      | 4911      | 1010     | false                 |
       | 4911      | 1011     | false                 |
       | 4911      | 1012     | false                 |
       | 4911      | 1015     | false                 |
       | 4913      | 1005     | false                 |
-      | 4913      | 1005     | false                 |
       | 4913      | 1007     | false                 |
       | 4913      | 1008     | false                 |
       | 4913      | 1009     | false                 |
+      | 4913      | 1010     | false                 |
       | 4913      | 1011     | false                 |
       | 4913      | 1012     | false                 |
       | 4913      | 1015     | false                 |
@@ -532,7 +534,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4033      | 1090     | false                 |
       | 4033      | 1095     | false                 |
 
-  Scenario Outline: SA SSTTP Debts - Non Interest bearing
+  Scenario Outline: Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led
     Given a debt item
       | originalAmount | interestStartDate | interestRequestedTo | mainTrans   | subTrans   |
       | 500000         | 2021-03-01        | 2021-03-08          | <mainTrans> | <subTrans> |
@@ -547,6 +549,7 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | mainTrans | subTrans | interestOnlyIndicator |
       | 5071      | 1553     | false                 |
       | 5073      | 1553     | false                 |
+      | 6010      | 1554     | true                  |
       | 6010      | 1560     | true                  |
       | 6010      | 1565     | true                  |
       | 6010      | 1570     | true                  |
@@ -563,7 +566,6 @@ Feature: Get Debt For all the SUPPORTED REGIMES
       | 4026      | 2090     | true                  |
       | 4026      | 2095     | true                  |
       | 4026      | 2096     | true                  |
-      | 6010      | 1554     | true                  |
       | 4941      | 2090     | true                  |
       | 6010      | 1611     | true                  |
       | 6010      | 2090     | true                  |
