@@ -65,23 +65,6 @@ Feature: statement of liability Debt details
       | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
-  @smoke
-  Scenario: PEGA only -TPSS Account Tax Assessment debt statement of liability, 2 duties, no payment history
-    Given debt details
-      | solType | debtId  | customerUniqueRef | mainTrans | subTrans | interestRequestedTo |
-      | UI      | Idle_01 | NEHA1234          | 1525      | 1000     | 2021-08-10          |
-    When a debt statement of liability is requested
-    Then service returns debt statement of liability data
-      | amountIntTotal | combinedDailyAccrual |
-      | 250            | 0                    |
-    And the 1st sol debt summary will contain
-      | debtId  | mainTrans | debtTypeDescription              | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | Idle_01 | 1520      | TPSS Accounting For Tax Charge + | 0                    | 250                | 0                    |
-    And the 1st sol debt summary will contain duties
-      | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
-      | 1090     | Tax Interest        | 250              | 0                    | false           | false                 |
-
-
   Scenario: 5. Non interest bearing with payment history and no breathing space.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |

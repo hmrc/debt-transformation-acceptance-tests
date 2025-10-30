@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 environment="local"
-tags="not @smoke and not @ignore"
+tags="not @ignore"
 if [ $# -gt 0 -a "$1" != "$environment" ];
 then
   environment="$1"
