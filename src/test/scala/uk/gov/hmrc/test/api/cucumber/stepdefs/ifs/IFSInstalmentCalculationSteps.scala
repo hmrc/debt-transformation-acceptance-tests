@@ -18,8 +18,8 @@ package uk.gov.hmrc.test.api.cucumber.stepdefs.ifs
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import io.cucumber.datatable.DataTable
-import org.scalatest.concurrent.Eventually
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.concurrent.Eventually
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
@@ -866,16 +866,6 @@ class IFSInstalmentCalculationSteps extends ScalaDsl with EN with Eventually wit
     response.status.shouldBe(200)
 
     map.zipWithIndex.foreach { case (expectedInstalment, _) =>
-      val dueDate: String = expectedInstalment match {
-        case instalment if instalment.toString.contains("dueDate") =>
-          instalment.get("dueDate").toString
-
-        case instalment if instalment.toString.contains("dueDays") =>
-          val addDays = instalment.get("dueDays").toString.toInt
-          LocalDate.now().plusDays(addDays).toString
-        case _                                                     => ""
-      }
-
       val responseIndex: Int = expectedInstalment.get("instalmentNumber").toString.toInt - 1
 
       if (map.toString.contains("expectedNumberOfInstalments")) {
@@ -887,8 +877,9 @@ class IFSInstalmentCalculationSteps extends ScalaDsl with EN with Eventually wit
       if (map.toString.contains("debtId")) {
         responseBody.instalments(responseIndex).debtId shouldBe expectedInstalment.get("debtId").toString
       }
-      if (expectedInstalment.toString.contains("dueDate") || expectedInstalment.toString.contains("dueDays")) {
-        responseBody.instalments(responseIndex).dueDate.toString shouldBe dueDate
+
+      if (map.toString.contains("dueDate")) {
+        responseBody.instalments(responseIndex).dueDate.toString shouldBe expectedInstalment.get("dueDate").toString
       }
 
       if (map.toString.contains("amountDue")) {
