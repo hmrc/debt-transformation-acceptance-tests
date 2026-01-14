@@ -19,7 +19,7 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
       | instalmentNumber | dueDate    | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
       | 9                | 2020-10-14 | monthly          | 7               | 100       | 70000             | 0.0          | 17                          |
 
-  @DTD-3163
+  @DTD-3163 @DTD-4201
   Scenario: InterestStartDate is included but in the Future, then interestStartDate should be used
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | numberOfDay | quoteType | quoteDate  |
@@ -36,8 +36,9 @@ Feature: Instalment calculation for multiple debts - Input 1 & 2
       # non-interest bearing debt
     When the instalment calculation detail is sent to the ifs service
     Then IFS response contains expected values
-      | instalmentNumber | dueDays | paymentFrequency | frequencyPassed | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
-      | 9                | 40      | monthly          | 7               | 9900      | 9900              | 6.5          | 18                          |
+      | instalmentNumber | amountDue | instalmentBalance | interestRate | expectedNumberOfInstalments |
+      | 8                | 10000     | 19900             | 3.25         | 18                          |
+      | 9                | 9900      | 9900              | 6.5          | 18                          |
 
   Scenario: Should calculate quote for multiple debts both with interest bearing & 1 initial payment history
     Given debt instalment calculation with details
