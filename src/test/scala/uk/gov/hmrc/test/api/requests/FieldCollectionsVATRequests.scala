@@ -32,8 +32,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
   def getDebtCalculation(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/fc-vat-debt-calculation"
     val headers     = Map(
@@ -53,8 +52,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
   private def dataForIFSApis(uri: String) = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/$uri"
     val headers     = Map(
@@ -82,7 +80,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
       .replaceAll("<REPLACE_interestRequestedTo>", asmapTransposed.get("interestRequestedTo"))
       .replaceAll("<REPLACE_periodEnd>", asmapTransposed.get("periodEnd"))
 
-    if (firstItem == true) { debtItems = fcVatDebtItem }
+    if (firstItem) { debtItems = fcVatDebtItem }
     else { debtItems = ScenarioContext.get("fcVatDebtItem").toString.concat(",").concat(fcVatDebtItem) }
 
     ScenarioContext.set(

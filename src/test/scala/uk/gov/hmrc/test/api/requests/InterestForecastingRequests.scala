@@ -18,8 +18,8 @@ package uk.gov.hmrc.test.api.requests
 
 import cucumber.api.scala.{EN, ScalaDsl}
 import io.cucumber.datatable.DataTable
-import org.scalatest.matchers.should.Matchers
 import org.scalatest.concurrent.Eventually
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
@@ -50,8 +50,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
   def getDebtInterestTypeRequestBody(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/debt-interest-type"
     val headers     = Map(
@@ -65,7 +64,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
-  def getAllRules =
+  def getAllRules: StandaloneWSResponse =
     WsClient.get(dataForIFSApis("rules")._1, headers = dataForIFSApis("rules")._2)
 
   def postNewRulesTable(json: String): StandaloneWSResponse =
@@ -74,8 +73,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
   private def dataForIFSApis(uri: String) = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/$uri"
     val headers     = Map(
@@ -214,7 +212,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
 
   def noBreathingSpace(): Unit = {
 
-    // Set scenario Context to be debt items with no bs .
+    // Set scenario Context to be debt items with no bs.
     val jsonWithNoBS = ScenarioContext.get("debtItems").toString.replaceAll("<REPLACE_breathingSpaces>", "")
     ScenarioContext.set("debtItems", jsonWithNoBS)
     print("debt with no breathing space ::::::::::::::::::::::::::::::" + jsonWithNoBS)
@@ -273,7 +271,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     val debtInterestType = getBodyAsString("debtInterestType")
       .replaceAll("<REPLACE_subTrans>", asmapTransposed.get("subTrans"))
       .replaceAll("<REPLACE_mainTrans>", asmapTransposed.get("mainTrans"))
-    if (firstItem == true) {
+    if (firstItem) {
       debtInterestTypes = debtInterestType
     } else {
       debtInterestTypes = ScenarioContext.get("debtInterestTypes").toString.concat(",").concat(debtInterestType)

@@ -35,8 +35,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def postSuppressionData(json: String, id: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-data"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
@@ -51,8 +50,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def deleteNewSuppressionData(): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
@@ -68,8 +66,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def deleteSuppressionData(): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/old"
     val headers     = Map(
@@ -85,8 +82,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def postSuppressionRules(json: String, rulesID: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-rule"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
     val headers     = Map(
@@ -100,8 +96,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def deleteSuppressionRules(): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-rule"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
     val headers     = Map(
@@ -116,8 +111,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def updateSuppressionData(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-data"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
@@ -132,8 +126,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
   def getSuppressionData(): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions"
     val headers     = Map(
@@ -200,7 +193,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
 
       if (asMapTransposed.toString.contains("suppressionId")) {
         id = suppression.get("suppressionId")
-      } else (id = "1")
+      } else id = "1"
 
       if (index + 1 < asMapTransposed.size) suppressions = suppressions.concat(",")
     }
