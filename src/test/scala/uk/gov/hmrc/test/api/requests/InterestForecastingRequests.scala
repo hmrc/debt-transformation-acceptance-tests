@@ -32,9 +32,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
   def getDebtCalculation(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
-    )
+      userType = getRandomAffinityGroup)
     val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -92,7 +90,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     var firstItem         = false
     var debtItems: String = null
     try ScenarioContext.get("debtItems")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     var periodEnd = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
@@ -266,7 +264,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     var debtInterestTypes: String = null
     try ScenarioContext.get("debtInterestTypes")
     catch {
-      case e: Exception => firstItem = true
+      case _: Exception => firstItem = true
     }
     val debtInterestType = getBodyAsString("debtInterestType")
       .replaceAll("<REPLACE_subTrans>", asmapTransposed.get("subTrans"))

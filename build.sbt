@@ -28,3 +28,9 @@ libraryDependencies ++= Seq(
   "org.scalameta"              %% "scalameta"                % "4.14.4",
   "com.github.scopt"           %% "scopt"                    % "4.1.0"
 )
+
+dependencyOverrides ++= Seq(
+  "junit" % "junit" % "4.13.2",
+  "ch.qos.logback" % "logback-core" % "1.5.25",
+  "com.fasterxml.jackson.core" % "jackson-core" % "2.21.0"
+)

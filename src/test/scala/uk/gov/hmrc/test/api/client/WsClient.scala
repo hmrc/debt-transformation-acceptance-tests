@@ -48,13 +48,13 @@ object WsClient extends LazyLogging {
     println("")
     logger.debug("*********** NEW REQUEST ***********")
     logger.debug(s"GET request URI: $uri")
-    if (!queryParameters.isEmpty) {
+    if (queryParameters.nonEmpty) {
       logger.debug(s"GET request query parameters: $queryParameters")
     }
-    if (!headers.isEmpty) {
+    if (headers.nonEmpty) {
       logger.debug(s"GET request headers: $headers")
     }
-    if (!cookies.isEmpty) {
+    if (cookies.nonEmpty) {
       logger.debug(s"GET request cookies: $cookies")
     }
 

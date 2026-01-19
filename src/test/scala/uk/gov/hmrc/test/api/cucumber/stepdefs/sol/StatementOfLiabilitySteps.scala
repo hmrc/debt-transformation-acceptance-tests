@@ -72,7 +72,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     } else { customerReferenceId = "customer-1" }
 
     try ScenarioContext.get("debtDetails")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     val debtDetailsTestfile = getBodyAsString("debtDetailsTestfile")
       .replaceAll("<REPLACE_solType>", asMapTransposed.get("solType"))
@@ -82,7 +82,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
       .replaceAll("<REPLACE_mainTrans>", asMapTransposed.get("mainTrans"))
       .replaceAll("<REPLACE_subTrans>", asMapTransposed.get("subTrans"))
 
-    if (firstItem == true) { debtDetails = debtDetailsTestfile }
+    if (firstItem) { debtDetails = debtDetailsTestfile }
     else { debtDetails = ScenarioContext.get("debtDetails").toString.concat(",").concat(debtDetailsTestfile) }
 
     ScenarioContext.set("debtDetails", debtDetails)
@@ -94,7 +94,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     var multipleDebtDetails: String = null
 
     try ScenarioContext.get("debtDetails")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     val SolMultipleDebts = getBodyAsString("SolMultipleDebts")
       .replaceAll("<REPLACE_solType>", asMapTransposed.get("solType"))
@@ -102,7 +102,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
       .replaceAll("REPLACE_ID", asMapTransposed.get("debtId2"))
       .replaceAll("REPLACE_interestRequestedTo", asMapTransposed.get("interestRequestedTo"))
 
-    if (firstItem == true) { multipleDebtDetails = SolMultipleDebts }
+    if (firstItem) { multipleDebtDetails = SolMultipleDebts }
     else { multipleDebtDetails = ScenarioContext.get("debtDetails").toString.concat(",").concat(SolMultipleDebts) }
 
     ScenarioContext.set("debtDetails", multipleDebtDetails)
@@ -261,7 +261,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
       val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String]).asScala
       val response: StandaloneWSResponse = ScenarioContext.get("response")
 
-      asMapTransposed.zipWithIndex.foreach { case (row, index) =>
+      asMapTransposed.zipWithIndex.foreach { case (row, _) =>
         val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse].debts(debtIndex - 1)
 
         locally {
@@ -336,7 +336,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
         dataTable.asMaps(classOf[String], classOf[String]).asScala
       val response: StandaloneWSResponse                        = ScenarioContext.get("response")
 
-      asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
+      asMapTransposed.zipWithIndex.foreach { case (duty, _) =>
         val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse].debts(debtIndex - 1)
 
         locally {

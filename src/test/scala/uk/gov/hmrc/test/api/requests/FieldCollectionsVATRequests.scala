@@ -46,7 +46,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
-  def getAllRules =
+  def getAllRules: StandaloneWSResponse =
     WsClient.get(dataForIFSApis("rules")._1, headers = dataForIFSApis("rules")._2)
 
   private def dataForIFSApis(uri: String) = {
@@ -71,7 +71,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
     var firstItem         = false
     var debtItems: String = null
     try ScenarioContext.get("fcVatDebtItem")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     val fcVatDebtItem = getBodyAsString("fcVatDebtItem")
       .replaceAll("<REPLACE_debtItemChargeId>", asmapTransposed.get("debtItemChargeId"))

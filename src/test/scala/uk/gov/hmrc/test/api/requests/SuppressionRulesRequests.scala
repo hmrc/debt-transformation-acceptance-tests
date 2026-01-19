@@ -32,7 +32,7 @@ import scala.jdk.CollectionConverters._
 
 object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Matchers with BaseRequests {
 
-  def postSuppressionData(json: String, id: String): StandaloneWSResponse = {
+  def postSuppressionData(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup
@@ -79,7 +79,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
     WsClient.delete(baseUri, headers = headers)
   }
 
-  def postSuppressionRules(json: String, rulesID: String): StandaloneWSResponse = {
+  def postSuppressionRules(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-rule"),
       userType = getRandomAffinityGroup
@@ -155,11 +155,11 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
       .replaceAll("<REPLACE_reason>", reason)
       .replaceAll("<REPLACE_description>", description)
       .replaceAll("<REPLACE_enabled>", "true")
-      .replaceAll("<REPLACE_fromDate>", from.toString())
-      .replaceAll("<REPLACE_toDate>", from.plusMonths(durationMonths).toString())
+      .replaceAll("<REPLACE_fromDate>", from.toString)
+      .replaceAll("<REPLACE_toDate>", from.plusMonths(durationMonths).toString)
 
     val request  = getSuppressionBodyAsString("suppressionsData").replaceAll("<REPLACE_suppressions>", suppressions)
-    val response = SuppressionRulesRequests.postSuppressionData(request, id)
+    val response = SuppressionRulesRequests.postSuppressionData(request)
     response.status should be(200)
   }
 
@@ -170,14 +170,14 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
 
     asMapTransposed.zipWithIndex.foreach { case (suppression, index) =>
       val parsedFromDate = suppression.get("fromDate").toString match {
-        case "yesterday"         => LocalDate.now().minusDays(1).toString()
-        case "2 months from now" => LocalDate.now().plusMonths(2).toString()
+        case "yesterday"         => LocalDate.now().minusDays(1).toString
+        case "2 months from now" => LocalDate.now().plusMonths(2).toString
         case other               => other
       }
 
       val parsedToDate = suppression.get("toDate").toString match {
         case "2 months from now" => LocalDate.now().plusMonths(2).toString
-        case "4 months from now" => LocalDate.now().plusMonths(4).toString()
+        case "4 months from now" => LocalDate.now().plusMonths(4).toString
         case other               => other
       }
       val code         = if (suppression.containsKey("code")) suppression.get("code") else "1"
@@ -200,7 +200,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
 
     val request  = getSuppressionBodyAsString("suppressionsData").replaceAll("<REPLACE_suppressions>", suppressions)
     println(s"SUPPRESSION DATA REQUEST --> $request")
-    val response = SuppressionRulesRequests.postSuppressionData(request, id)
+    val response = SuppressionRulesRequests.postSuppressionData(request)
     response.status should be(200)
   }
 
@@ -259,7 +259,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
 
     println(s"SUPPRESSION RULES REQUEST --> $request")
 
-    val response = SuppressionRulesRequests.postSuppressionRules(request, rulesID)
+    val response = SuppressionRulesRequests.postSuppressionRules(request)
     println(response.body)
     response.status should be(200)
   }

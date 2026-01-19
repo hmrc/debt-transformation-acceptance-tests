@@ -53,7 +53,7 @@ object FieldCollectionsRequests extends ScalaDsl with EN with Eventually with Ma
     var firstItem         = false
     var debtItems: String = null
     try ScenarioContext.get("fcDebtItem")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     var periodEnd = ""
     if (asmapTransposed.toString.contains("periodEnd")) {
@@ -93,7 +93,7 @@ object FieldCollectionsRequests extends ScalaDsl with EN with Eventually with Ma
     var firstItem         = false
     var debtItems: String = null
     try ScenarioContext.get("fcDebtItem")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     var periodEnd = ""
     if (asmapTransposed.toString.contains("periodEnd")) {

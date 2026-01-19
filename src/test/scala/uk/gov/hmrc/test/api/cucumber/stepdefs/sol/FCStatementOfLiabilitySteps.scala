@@ -75,7 +75,7 @@ class FCStatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with 
   }
 
   Then("the ([0-9]\\d*)(?:st|nd|rd|th) multiple fc statement of liability debt summary will contain duties") {
-    (debtIndex: Int, dataTable: DataTable) =>
+    (_: Int, dataTable: DataTable) =>
       val asMapTransposed                = dataTable.asMaps(classOf[String], classOf[String]).asScala
       val response: StandaloneWSResponse = ScenarioContext.get("response")
 
