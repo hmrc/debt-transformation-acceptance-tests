@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
   "org.playframework"          %% "play-json"                % "3.0.6",
   "org.playframework"          %% "play-ahc-ws-standalone"   % "3.0.10",
   "org.playframework"          %% "play-ws-standalone-json"  % "3.0.10",
-  "org.playframework"          %% "play-ws-standalone-xml"   % "3.0.10"  % Test,
+  "org.playframework"          %% "play-ws-standalone-xml"   % "3.0.10" % Test,
   "org.scalatest"              %% "scalatest"                % "3.2.19",
   "io.cucumber"                %% "cucumber-scala"           % CucumberVersion,
   "io.cucumber"                 % "cucumber-junit"           % CucumberVersion,
@@ -26,11 +26,8 @@ libraryDependencies ++= Seq(
   "com.beachape"               %% "enumeratum-play-json"     % "1.9.2",
   "uk.gov.hmrc"                %% "api-test-runner"          % "0.10.0" % Test,
   "org.scalameta"              %% "scalameta"                % "4.14.4",
-  "com.github.scopt"           %% "scopt"                    % "4.1.0"
-)
-
-dependencyOverrides ++= Seq(
-  "junit" % "junit" % "4.13.2",
-  "ch.qos.logback" % "logback-core" % "1.5.25",
-  "com.fasterxml.jackson.core" % "jackson-core" % "2.21.0"
+  "com.github.scopt"           %% "scopt"                    % "4.1.0",
+  "com.fasterxml.jackson.core"  % "jackson-core"             % "2.21.0",
+  "junit"                       % "junit"                    % "4.13.2",
+  "ch.qos.logback"              % "logback-core"             % "1.5.25"
 )
