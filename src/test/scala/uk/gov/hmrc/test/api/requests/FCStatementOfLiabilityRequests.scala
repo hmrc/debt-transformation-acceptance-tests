@@ -26,10 +26,9 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
 
-  val bearerToken = createBearerToken(
+  val bearerToken: String = createBearerToken(
     enrolments = Seq("read:statement-of-liability"),
-    userType = getRandomAffinityGroup,
-    utr = "123456789012"
+    userType = getRandomAffinityGroup
   )
 
   def getFCStatementOfLiability(json: String): StandaloneWSResponse = {
@@ -49,13 +48,13 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
 
     try ScenarioContext.get("debtDetails")
     catch {
-      case e: Exception => firstItem = true
+      case _: Exception => firstItem = true
     }
 
     val FCSolMultipleDebts = getBodyAsString("FCSolDebt")
       .replaceAll("REPLACE_customerUniqueRef", asMapTransposed.get("customerUniqueRef"))
       .replaceAll("REPLACE_solRequestedDate", asMapTransposed.get("solRequestedDate"))
-    if (firstItem == true) {
+    if (firstItem) {
       debtDetails = FCSolMultipleDebts
     } else {
       debtDetails = ScenarioContext.get("debtDetails").toString.concat(",").concat(FCSolMultipleDebts)

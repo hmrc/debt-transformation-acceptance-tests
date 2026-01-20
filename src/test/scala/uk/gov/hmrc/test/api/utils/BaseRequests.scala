@@ -28,7 +28,7 @@ trait BaseRequests extends RandomValues with BaseUris {
     enrolments: Seq[String] = Seq(),
     userType: String = "userType",
     utr: String = "123456789012"
-  ) = {
+  ): String = {
 
     def createLocalBearerToken(enrolments: Seq[String], userType: String, utr: String) = {
       val json =

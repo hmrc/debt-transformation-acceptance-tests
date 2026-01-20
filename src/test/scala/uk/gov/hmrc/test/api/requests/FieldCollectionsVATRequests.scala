@@ -32,8 +32,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
   def getDebtCalculation(json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/fc-vat-debt-calculation"
     val headers     = Map(
@@ -47,14 +46,13 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
-  def getAllRules =
+  def getAllRules: StandaloneWSResponse =
     WsClient.get(dataForIFSApis("rules")._1, headers = dataForIFSApis("rules")._2)
 
   private def dataForIFSApis(uri: String) = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup,
-      utr = "123456789012"
+      userType = getRandomAffinityGroup
     )
     val baseUri     = s"$interestForecostingApiUrl/$uri"
     val headers     = Map(
@@ -73,7 +71,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
     var firstItem         = false
     var debtItems: String = null
     try ScenarioContext.get("fcVatDebtItem")
-    catch { case e: Exception => firstItem = true }
+    catch { case _: Exception => firstItem = true }
 
     val fcVatDebtItem = getBodyAsString("fcVatDebtItem")
       .replaceAll("<REPLACE_debtItemChargeId>", asmapTransposed.get("debtItemChargeId"))
@@ -82,7 +80,7 @@ object FieldCollectionsVATRequests extends ScalaDsl with EN with Eventually with
       .replaceAll("<REPLACE_interestRequestedTo>", asmapTransposed.get("interestRequestedTo"))
       .replaceAll("<REPLACE_periodEnd>", asmapTransposed.get("periodEnd"))
 
-    if (firstItem == true) { debtItems = fcVatDebtItem }
+    if (firstItem) { debtItems = fcVatDebtItem }
     else { debtItems = ScenarioContext.get("fcVatDebtItem").toString.concat(",").concat(fcVatDebtItem) }
 
     ScenarioContext.set(
