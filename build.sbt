@@ -25,7 +25,7 @@ libraryDependencies ++= Seq(
   "org.julienrf"               %% "play-json-derived-codecs" % "11.0.0",
   "com.beachape"               %% "enumeratum-play-json"     % "1.9.2",
   "uk.gov.hmrc"                %% "api-test-runner"          % "0.10.0" % Test,
-  "org.scalameta"              %% "scalameta"                % "4.14.4",
+  "org.scalameta"              %% "scalameta"                % "4.14.5",
   "com.github.scopt"           %% "scopt"                    % "4.1.0",
   "com.fasterxml.jackson.core"  % "jackson-core"             % "2.21.0",
   "junit"                       % "junit"                    % "4.13.2",
