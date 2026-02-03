@@ -31,17 +31,17 @@ To run all debt transformation acceptance test run the below `.sh` script
 Available Endpoints
 
 ```
-/fc-sol
-/fc-debt-calculation
-fc-vat-debt-calculation
-/instalment-calculation
-/debt-calculation
-/debt-interest-type
-/sol
-/test-only/suppressions/overrides
-/test-only/suppressions/old
-/test-only/suppression-rules/old
-/test-only/suppressions
+statementOfLiabilityApiUrl/fc-sol
+interestForecostingApiUrl/fc-debt-calculation
+interestForecostingApiUrl/fc-vat-debt-calculation
+interestForecostingApiUrl/instalment-calculation
+interestForecostingApiUrl/debt-calculation
+interestForecostingApiUrl/debt-interest-type
+statementOfLiabilityApiUrl/sol
+interestForecostingApiUrl/test-only/suppressions/overrides
+interestForecostingApiUrl/test-only/suppressions/old
+interestForecostingApiUrl/test-only/suppression-rules/old
+interestForecostingApiUrl/test-only/suppressions
 ```
 
 The tests default to the `local` environment.  For a complete list of supported param values, see:
