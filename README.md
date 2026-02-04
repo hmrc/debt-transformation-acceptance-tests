@@ -12,6 +12,7 @@ Run the following commands to start services locally:
 
 You will also need a local mongodb replicaset which can be run in a docker container, to support the services' persistence.
 ```
+    Script located in Time-to-Pay repo
     ./start-mongodb-replicaset.sh
 ```
 
@@ -21,7 +22,7 @@ You will also need a local mongodb replicaset which can be run in a docker conta
 
 Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.
 
-Then execute the `./*.sh` script:
+Then execute the `./*.sh` scripts:
 
 To run all debt transformation acceptance test run the below `.sh` script
 
@@ -49,7 +50,7 @@ The tests default to the `local` environment.  For a complete list of supported 
 
 #### Running the tests against a test environment
 
-To run the tests against an environment set the corresponding `host` environment property as specified under
+Running the tests against the local environment set the corresponding `host` environment property as specified under
 `<env>.host.services` in the [application.conf](src/test/resources/application.conf).
 
 ### Scalafmt
