@@ -6,7 +6,7 @@ API test suite for the `Debt Transformation` using ScalaTest and [play-ws](https
 Prior to executing the tests ensure you have:
 - Installed [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/)
 - Installed [MongoDB](https://docs.mongodb.com/manual/installation/)
-- Installed/configured [service manager](https://github.com/hmrc/service-manager).
+- Installed/configured [service manager](https://github.com/hmrc/sm2).
 
 Run the following commands to start services locally:
 
@@ -21,7 +21,7 @@ You will also need a local mongodb replicaset which can be run in a docker conta
 
 Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.
 
-Then execute the `run_tests.sh` script:
+Then execute the `./*.sh` script:
 
 To run all debt transformation acceptance test run the below `.sh` script
 
