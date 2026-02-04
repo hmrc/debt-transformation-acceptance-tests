@@ -1,59 +1,69 @@
 # debt-transformation-acceptance-tests
+API test suite for the `Debt Transformation` using ScalaTest and [play-ws](https://github.com/playframework/play-ws) client.
 
-### Source code formatting
+## Running the tests
 
-We use [Scalafmt](https://scalameta.org/scalafmt/) to format our code base.
+Prior to executing the tests ensure you have:
+- Installed [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/)
+- Installed [MongoDB](https://docs.mongodb.com/manual/installation/)
+- Installed/configured [service manager](https://github.com/hmrc/sm2).
 
-In case of contribution and you are an IntelliJ user, you should install
-the [scalafmt plugin](https://plugins.jetbrains.com/plugin/8236-scalafmt), select Scalafmt as **Formatter** and flag the
-checkbox "**Reformat on file save**" (_Settings -> Editor -> Code Style -> Scala). You can format your code by using
-the _alt+shift+L_ or _option+command+L_ shortcut
+Run the following commands to start services locally:
 
-Format at project level under src/test
-
+You will also need a local mongodb replicaset which can be run in a docker container, to support the services' persistence.
 ```
-sbt test:scalafmt
-```
-
-Formatting is also taken care as part of pre-commit hooks by running
-
-```
-git commit
-```  
-
-To start Interest forescasting on a local branch, use the following command:
-````
-sbt run 9946 -Dapplication.router=testOnlyDoNotUseInAppConf.Routes
-````
-
-To run Interest forecasting api tests against localhost, use the following command:
-
-```
-AUTH_ENABLED=true sm --start DTD_ALL
+    Script located in Time-to-Pay repo
+    ./start-mongodb-replicaset.sh
 ```
 
 ```
-./run_interest_forecasting_api_tests.sh
+    sm2 --start DTD_ALL -r --wait 100
 ```
 
-To run statement of liability api tests against localhost, use the following command:
+Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.
+
+Then execute the `./*.sh` scripts:
+
+To run all debt transformation acceptance test run the below `.sh` script
+
+`run_interest_forecasting_api_tests.sh`
+`run_statement_of_liability_api_tests.sh`
+
+Available Endpoints
 
 ```
-sm --start DTD_ALL
+statementOfLiabilityApiUrl/fc-sol
+interestForecostingApiUrl/fc-debt-calculation
+interestForecostingApiUrl/fc-vat-debt-calculation
+interestForecostingApiUrl/instalment-calculation
+interestForecostingApiUrl/debt-calculation
+interestForecostingApiUrl/debt-interest-type
+statementOfLiabilityApiUrl/sol
+interestForecostingApiUrl/test-only/suppressions/overrides
+interestForecostingApiUrl/test-only/suppressions/old
+interestForecostingApiUrl/test-only/suppression-rules/old
+interestForecostingApiUrl/test-only/suppressions
 ```
 
-```
-run_statement_of_liability_api_tests.sh
-```
+The tests default to the `local` environment.  For a complete list of supported param values, see:
+- `src/test/resources/application.conf` for **environment**
 
-To run zap tests for any of the services, download from https://www.zaproxy.org/download/, extract and execute the
-following in the root of the extracted folder:
+#### Running the tests against a test environment
 
-```
-./zap.sh -daemon -config api.disablekey=true -port 11000
-```
+Running the tests against the local environment set the corresponding `host` environment property as specified under
+`<env>.host.services` in the [application.conf](src/test/resources/application.conf).
 
-and run
+### Scalafmt
+This repository uses [Scalafmt](https://scalameta.org/scalafmt/), a code formatter for Scala. The formatting rules configured for this repository are defined within [.scalafmt.conf](.scalafmt.conf).
 
-```
-./run_{service_name}_api_zap_tests.sh
+To apply formatting to this repository using the configured rules in [.scalafmt.conf](.scalafmt.conf) execute:
+
+ ```
+ sbt scalafmtAll scalafmtSbt
+ ```
+
+To check files have been formatted as expected execute:
+
+ ```
+ sbt scalafmtCheckAll scalafmtSbtCheck
+ ```
