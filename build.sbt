@@ -1,6 +1,6 @@
 name := "debt-transformation-acceptance-tests"
 version := "0.1"
-scalaVersion := "2.13.12"
+scalaVersion := "2.13.18"
 
 lazy val root       = (project in file(".")).settings(Test / testOptions := Seq.empty)
 val CucumberVersion = "4.7.1"
@@ -23,11 +23,11 @@ libraryDependencies ++= Seq(
   "com.google.zxing"            % "javase"                   % "3.5.4",
   "commons-io"                  % "commons-io"               % "2.21.0",
   "org.julienrf"               %% "play-json-derived-codecs" % "11.0.0",
-  "com.beachape"               %% "enumeratum-play-json"     % "1.9.2",
+  "com.beachape"               %% "enumeratum-play-json"     % "1.9.6",
   "uk.gov.hmrc"                %% "api-test-runner"          % "0.10.0" % Test,
-  "org.scalameta"              %% "scalameta"                % "4.14.5",
+  "org.scalameta"              %% "scalameta"                % "4.15.2",
   "com.github.scopt"           %% "scopt"                    % "4.1.0",
-  "com.fasterxml.jackson.core"  % "jackson-core"             % "2.21.0",
+  "com.fasterxml.jackson.core"  % "jackson-core"             % "2.21.1",
   "junit"                       % "junit"                    % "4.13.2",
-  "ch.qos.logback"              % "logback-core"             % "1.5.25"
+  "ch.qos.logback"              % "logback-core"             % "1.5.32"
 )
