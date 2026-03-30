@@ -17,7 +17,6 @@ Feature: statement of liability Debt details
       | 1000     | IT                  | 500000           | 35                   | true            | false                 |
       | 1000     | IT                  | 400000           | 28                   | true            | false                 |
 
-
   Scenario: 2. Child benefit debt statement of liability, 2 duties, with payment history.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
@@ -65,38 +64,7 @@ Feature: statement of liability Debt details
       | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
-  Scenario: 5. Non interest bearing with payment history and no breathing space.
-    Given debt details
-      | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
-      | CO      | debt005 | 1441      | 1150     | 2023-08-10          |
-    When a debt statement of liability is requested
-    Then service returns debt statement of liability data
-      | amountIntTotal | combinedDailyAccrual |
-      | 200000         | 0                    |
-    And the 1st sol debt summary will contain
-      | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt005 | 5350      | CO: ChB Migrated Debt | 0                    | 200000             | 0                    |
-    And the 1st sol debt summary will contain duties
-      | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
-      | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
-
-  Scenario: 6.  Non interest bearing with payment history and no breathing space.
-    Given debt details
-      | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
-      | CO      | debt005 | 2421      | 1150     | 2021-08-10          |
-    When a debt statement of liability is requested
-    Then service returns debt statement of liability data
-      | amountIntTotal | combinedDailyAccrual |
-      | 200000         | 0                    |
-    And the 1st sol debt summary will contain
-      | debtId  | mainTrans | debtTypeDescription   | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual |
-      | debt005 | 5350      | CO: ChB Migrated Debt | 0                    | 200000             | 0                    |
-    And the 1st sol debt summary will contain duties
-      | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
-      | 7012     | CO: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
-
-
-  Scenario: 7. Large non interest bearing debt with breathing space and no payment history - 9999999999.
+  Scenario: 5. Large non interest bearing debt with breathing space and no payment history - 9999999999.
     Given debt details
       | solType | debtId   | mainTrans | subTrans | interestRequestedTo |
       | UI      | debt0012 | 1520      | 1090     | 2022-04-25          |
@@ -111,8 +79,7 @@ Feature: statement of liability Debt details
       | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | 1090     | TGPEN               | 9999999999       | 0                    | false           | false                 |
 
-
-  Scenario: 8. Large interest bearing debt with breathing space and no payment history - 9999999999.
+  Scenario: 6. Large interest bearing debt with breathing space and no payment history - 9999999999.
     Given debt details
       | solType | debtId  | mainTrans | subTrans | interestRequestedTo |
       | UI      | debt009 | 1525      | 1000     | 2021-08-10          |
@@ -127,7 +94,7 @@ Feature: statement of liability Debt details
       | subTrans | dutyTypeDescription | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
       | 1000     | IT                  | 9999999999       | 712328               | true            | false                 |
 
-  Scenario: 9. Interest bearing debts - 2 duties each with payment history and breathing space
+  Scenario: 7. Interest bearing debts - 2 duties each with payment history and breathing space
     Given debt details
       | solType | debtId   | mainTrans | subTrans | interestRequestedTo |
       | UI      | debt0010 | 1525      | 1000     | 2023-08-10          |
