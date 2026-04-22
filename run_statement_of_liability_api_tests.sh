@@ -12,19 +12,19 @@ then
   scalaTestTags="\"uk.gov.hmrc.tags.WIP uk.gov.hmrc.tags.IGNORE\""
 fi
 
-echo "*** running on $environment for cucumber tags '$cucumberTags' ***"
-
 scala_exit=0
 cucumber_exit=0
 scala_test_report_dir="target/scalatest-reports"
 
 printf "\n\n\n\n*****************STARTING SCALATEST TESTS*****************\n\n"
 printf "NOTE: ScalaTest test report is available in $scala_test_report_dir\n\n"
+echo "*** running on $environment for scala tags '$scalaTestTags' ***"
 sbt -Denvironment="$environment" clean \
   "testOnly uk.gov.hmrc.test.api.scalatest.specs.* -- -l $scalaTestTags -u $scala_test_report_dir" \
   || scala_exit=$?
 
 printf "\n\n\n\n*****************STARTING CUCUMBER TESTS*****************\n\n"
+echo "*** running on $environment for cucumber tags '$cucumberTags' ***"
 sbt -Denvironment="$environment" \
   -Dcucumber.options="--tags '$cucumberTags'" \
   'testOnly uk.gov.hmrc.test.api.cucumber.runner.StatementOfLiabilityApiTestRunner' \
