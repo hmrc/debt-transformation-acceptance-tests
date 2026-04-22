@@ -25,7 +25,7 @@ class SampleFeatureSpec extends AnyFlatSpec with Matchers {
 
   "This ScalaTest" should "add two numbers correctly" in {
     val result = 2 + 3
-    result should be(6)
+    result should be(5)
   }
 
 }
