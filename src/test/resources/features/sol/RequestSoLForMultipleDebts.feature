@@ -37,7 +37,7 @@ Feature: statement of liability multiple debts
       | debt004 | 5350      | UI: ChB Migrated Debt | 0                    | 200000             | 0                        |
     And the 2nd customer statement of liability contains duty values as
       | subTrans | dutyTypeDescription             | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
-      | 7012     | UI: Child Benefit Migrted Debt | 200000           | 0                    | false           | false                 |
+      | 7012     | UI: Child Benefit Migrated Debt | 200000           | 0                    | false           | false                 |
 
 
   @DTD-2940
