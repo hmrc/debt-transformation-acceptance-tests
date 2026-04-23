@@ -67,7 +67,23 @@ Feature: Statement of liability Debt details for Self Assessment Debts
       | 1011     | 500000           | 35                   | true            | false                 |
 
   @DTD-2940
-  Scenario: 5. Statement of liability for customer with parentMainTrans   - Single SA Non Interest bearing debt
+  Scenario: 5. Statement of liability for customer with ETMP parentMainTrans   - Single Non Interest bearing debt
+    Given debt details
+      | solType | debtId     | mainTrans | subTrans | parentMainTrans | interestRequestedTo |
+      | UI      | debtSA0014 | 6010      | 1554     | 33              | 2021-08-10          |
+    When a debt statement of liability is requested
+    Then service returns debt statement of liability data
+      | amountIntTotal | combinedDailyAccrual |
+      | 500000         | 0                    |
+    And the 1st sol debt summary will contain
+      | debtId     | mainTrans | debtTypeDescription      | interestDueDebtTotal | totalAmountIntDebt | combinedDailyAccrual | parentMainTrans |
+      | debtSA0014 | 6010      | SA Late Payment Interest | 0                    | 500000             | 0                    | 33              |
+    And the 1st sol debt summary will contain duties
+      | subTrans | unpaidAmountDuty | combinedDailyAccrual | interestBearing | interestOnlyIndicator |
+      | 1554     | 500000           | 0                    | false           | true                  |
+
+  @DTD-2940
+  Scenario: 6. Statement of liability for customer with parentMainTrans   - Single SA Non Interest bearing debt
     Given debt details
       | solType | debtId     | mainTrans | subTrans | parentMainTrans | interestRequestedTo |
       | UI      | debtSA0015 | 6010      | 1554     | 25              | 2021-08-10          |
