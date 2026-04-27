@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.api.scalatest.specs
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.tags.IGNORE
+import uk.gov.hmrc.test.api.scalatest.tags.{IGNORE, WIP}
 
 //Added for DTD_4428: This SampleSpec test can be removed once the real scala test in specs folder
 class SampleSpec extends AnyFlatSpec with Matchers {
@@ -30,6 +30,12 @@ class SampleSpec extends AnyFlatSpec with Matchers {
 
   "This ScalaTest" should "shouldn be ignored" taggedAs(IGNORE) in {
     println("TEST 2: If this is shown, the ignore tag isn't working properly & this test has failed")
+    val result = 12512 + 3
+    result shouldBe 5
+  }
+
+  "This ScalaTest" should "shouldn be ignored as it's work in progress" taggedAs(WIP) in {
+    println("TEST 2: If this is shown, the WIP tag isn't working properly & this test has failed")
     val result = 12512 + 3
     result shouldBe 5
   }
