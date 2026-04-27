@@ -33,6 +33,7 @@ sbt -Denvironment="$environment" clean \
 
 printf "\n\n\n\n*****************STARTING CUCUMBER TESTS*****************\n\n"
 echo "*** running on $environment for cucumber tags '$cucumberTags' ***"
+echo "scala test forced failure"
 sbt -Denvironment="$environment" \
   -Dcucumber.options="--tags '$cucumberTags'" \
   'testOnly uk.gov.hmrc.test.api.cucumber.runner.InterestForecastingApiTestRunner' \

@@ -24,7 +24,7 @@ import uk.gov.hmrc.test.api.scalatest.tags.IGNORE
 class SampleSpec extends AnyFlatSpec with Matchers {
 
   "This ScalaTest" should "add two numbers correctly" in {
-    val result = 2 + 2
+    val result = 2 + 3
     result shouldBe 5
   }
 
