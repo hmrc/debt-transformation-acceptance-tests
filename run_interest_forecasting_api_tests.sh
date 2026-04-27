@@ -24,7 +24,6 @@ scala_exit=0
 cucumber_exit=0
 scala_test_report_dir="target/scalatest-reports"
 
-printf "\n\n\nThis is a passing run for both suites"
 
 printf "\n\n\n\n*****************STARTING SCALATEST TESTS*****************\n\n"
 printf "NOTE: ScalaTest test report is available in $scala_test_report_dir\n\n"
