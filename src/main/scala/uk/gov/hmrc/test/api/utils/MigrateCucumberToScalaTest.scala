@@ -25,11 +25,11 @@ object MigrateCucumberToScalaTest {
   // Config (adjust per repo)
   // ---------------------------------------------------------------------------
 
-  private val featuresRoot   = s"src/test/resources/features"
-  private val specsRoot      = "src/test/scala/uk/gov/hmrc/test/api/scalatest/specs"
+  private val featuresRoot = s"src/test/resources/features"
+  private val specsRoot    = "src/test/scala/uk/gov/hmrc/test/api/scalatest/specs"
 
-  private val tagsOut        = "src/test/scala/uk/gov/hmrc/test/api/scalatest/tags"
-  private val runnerOut      = "src/test/scala/uk/gov/hmrc/test/api/scalatest/runner"
+  private val tagsOut   = "src/test/scala/uk/gov/hmrc/test/api/scalatest/tags"
+  private val runnerOut = "src/test/scala/uk/gov/hmrc/test/api/scalatest/runner"
 
   private val cucumberRunnerRoot =
     "src/test/scala/uk/gov/hmrc/test/api/cucumber/runner"
@@ -74,8 +74,10 @@ object MigrateCucumberToScalaTest {
       Array(
         requestsRoot,
         buildersRoot,
-        "--models-root", modelsRoot,
-        "--context-root", contextRoot,
+        "--models-root",
+        modelsRoot,
+        "--context-root",
+        contextRoot,
         "--recurse"
       )
     )
@@ -85,9 +87,12 @@ object MigrateCucumberToScalaTest {
       Array(
         stepdefsRoot,
         helpersRoot,
-        "--builders-root", buildersRoot,
-        "--models-root", modelsRoot,
-        "--context-root", contextRoot,
+        "--builders-root",
+        buildersRoot,
+        "--models-root",
+        modelsRoot,
+        "--context-root",
+        contextRoot,
         "--recurse"
       )
     )
@@ -109,9 +114,12 @@ object MigrateCucumberToScalaTest {
       Array(
         featuresRoot,
         specsRoot,
-        "--helpers-root", helpersRoot,
-        "--context-root", contextRoot,
-        "--builders-root", buildersRoot,
+        "--helpers-root",
+        helpersRoot,
+        "--context-root",
+        contextRoot,
+        "--builders-root",
+        buildersRoot,
         "--recurse"
       )
     )
@@ -122,7 +130,8 @@ object MigrateCucumberToScalaTest {
         specsRoot,
         tagsOut,
         runnerOut,
-        "--cucumber-runner-root", cucumberRunnerRoot,
+        "--cucumber-runner-root",
+        cucumberRunnerRoot,
         "--recurse"
       )
     )

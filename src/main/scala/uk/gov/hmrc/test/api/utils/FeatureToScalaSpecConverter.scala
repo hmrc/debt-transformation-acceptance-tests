@@ -640,6 +640,14 @@ object FeatureToScalaSpecConverter {
   private def nonContextParams(method: HelperMethod): Seq[(String, String)] =
     method.params.filterNot { case (_, tpe) => tpe.trim.endsWith("Context") || tpe.trim.contains("Context") }
 
+  private def contextParam(method: HelperMethod): Option[(String, String)] =
+    method.params.find { case (_, tpe) =>
+      tpe.trim.endsWith("Context") || tpe.trim.contains("Context")
+    }
+
+  private def sameContextType(helperContextType: String, specContextName: String): Boolean =
+    simpleTypeName(helperContextType) == simpleTypeName(specContextName)
+
   private def builderInputForParam(tpe: String, discovered: Discovered): Option[(BuilderInput, Boolean)] = {
     val seq = seqInner(tpe)
     val raw = seq.getOrElse(tpe.trim)
@@ -669,41 +677,56 @@ object FeatureToScalaSpecConverter {
     method: HelperMethod,
     discovered: Discovered,
     imports: scala.collection.mutable.Set[String],
-    indent: String
+    indent: String,
+    specContextName: String
   ): String = {
-    val params = nonContextParams(method)
-    if (params.isEmpty) {
-      s"${indent}${method.methodName}(context)"
-    } else if (params.size == 1) {
-      val (_, tpe) = params.head
-      builderInputForParam(tpe, discovered) match {
-        case Some((input, isSeq)) if step.table.nonEmpty && isSeq =>
-          imports += s"${input.pkg}.${input.builderName}"
-          val instances = step.table.map(row => emitInputInstance(input, row, indent + "    ")).mkString(s",\n")
-          s"${indent}${method.methodName}(\n${indent}  context,\n${indent}  Seq(\n$instances\n${indent}  )\n$indent)"
+    val mismatchedContext: Option[String] =
+      contextParam(method)
+        .map(_._2)
+        .filterNot(helperContextType => sameContextType(helperContextType, specContextName))
 
-        case Some((input, isSeq)) if step.table.nonEmpty && !isSeq =>
-          imports += s"${input.pkg}.${input.builderName}"
-          val row = step.table.head
-          s"${indent}${method.methodName}(\n${indent}  context,\n${indent}  ${emitInputInstance(input, row, indent + "  ")}\n$indent)"
+    if (mismatchedContext.isDefined) {
+      val helperContextType = mismatchedContext.get
 
-        case Some((input, isSeq)) if step.table.isEmpty =>
-          imports += s"${input.pkg}.${input.builderName}"
-          val shape =
-            if (isSeq)
-              s"Seq(${input.builderName}.${input.inputName}(/* TODO */))"
-            else
-              s"${input.builderName}.${input.inputName}(/* TODO */)"
-          s"${indent}// TODO: Provide typed input for this helper.\n${indent}// ${method.methodName}(context, $shape)"
-
-        case None if step.table.nonEmpty =>
-          s"${indent}// TODO: Step table was parsed, but the helper parameter type '$tpe' could not be matched to a generated builder input.\n${indent}// Validate the helper signature and call ${method.methodName}(context, ...)"
-
-        case None =>
-          s"${indent}// TODO: Helper '${method.methodName}' requires parameter type '$tpe'. Add the appropriate typed value.\n${indent}// ${method.methodName}(context, /* TODO */)"
-      }
+      s"${indent}// TODO: Helper '${method.methodName}' expects context '${simpleTypeName(helperContextType)}' but this spec uses '$specContextName'." + "\n" +
+        s"${indent}// Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context." + "\n" +
+        s"${indent}// ${method.methodName}(context)"
     } else {
-      s"${indent}// TODO: Helper '${method.methodName}' has multiple non-context parameters: ${params.map { case (n, t) => s"$n: $t" }.mkString(", ")}.\n${indent}// ${method.methodName}(context, /* TODO */)"
+      val params = nonContextParams(method)
+
+      if (params.isEmpty) {
+        s"${indent}${method.methodName}(context)"
+      } else if (params.size == 1) {
+        val (_, tpe) = params.head
+        builderInputForParam(tpe, discovered) match {
+          case Some((input, isSeq)) if step.table.nonEmpty && isSeq =>
+            imports += s"${input.pkg}.${input.builderName}"
+            val instances = step.table.map(row => emitInputInstance(input, row, indent + "    ")).mkString(s",\n")
+            s"${indent}${method.methodName}(\n${indent}  context,\n${indent}  Seq(\n$instances\n${indent}  )\n$indent)"
+
+          case Some((input, isSeq)) if step.table.nonEmpty && !isSeq =>
+            imports += s"${input.pkg}.${input.builderName}"
+            val row = step.table.head
+            s"${indent}${method.methodName}(\n${indent}  context,\n${indent}  ${emitInputInstance(input, row, indent + "  ")}\n$indent)"
+
+          case Some((input, isSeq)) if step.table.isEmpty =>
+            imports += s"${input.pkg}.${input.builderName}"
+            val shape =
+              if (isSeq)
+                s"Seq(${input.builderName}.${input.inputName}(/* TODO */))"
+              else
+                s"${input.builderName}.${input.inputName}(/* TODO */)"
+            s"${indent}// TODO: Provide typed input for this helper.\n${indent}// ${method.methodName}(context, $shape)"
+
+          case None if step.table.nonEmpty =>
+            s"${indent}// TODO: Step table was parsed, but the helper parameter type '$tpe' could not be matched to a generated builder input.\n${indent}// Validate the helper signature and call ${method.methodName}(context, ...)"
+
+          case None =>
+            s"${indent}// TODO: Helper '${method.methodName}' requires parameter type '$tpe'. Add the appropriate typed value.\n${indent}// ${method.methodName}(context, /* TODO */)"
+        }
+      } else {
+        s"${indent}// TODO: Helper '${method.methodName}' has multiple non-context parameters: ${params.map { case (n, t) => s"$n: $t" }.mkString(", ")}.\n${indent}// ${method.methodName}(context, /* TODO */)"
+      }
     }
   }
 
@@ -744,7 +767,7 @@ object FeatureToScalaSpecConverter {
         scenarioBlocks.append(s"      ${step.keyword}(\"${escape(step.text)}\")\n")
         methodForStep(step, helpers) match {
           case Some(method) =>
-            scenarioBlocks.append(emitHelperCall(step, method, discovered, imports, "      ")).append("\n")
+            scenarioBlocks.append(emitHelperCall(step, method, discovered, imports, "      ", contextName)).append("\n")
           case None =>
             scenarioBlocks.append(s"      // TODO: No matching helper method found for this step. Validate and call the correct helper.\n")
             if (step.table.nonEmpty) scenarioBlocks.append(s"      // TODO: This step had a feature table; convert the values into typed builder/model inputs.\n")

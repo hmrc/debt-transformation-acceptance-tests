@@ -23,24 +23,24 @@ import scala.util.Using
 import scala.util.matching.Regex
 
 /**
- * Converts legacy Cucumber step definitions into typed ScalaTest helper traits.
- *
- * Opinionated defaults:
- *   - generated helper files contain no Cucumber/DataTable imports or parameters
- *   - generated helper files contain no List[Map[String, String]] parameters
- *   - generated builder inputs are preferred over raw model case classes
- *   - existing model case classes are used when they match table fields cleanly
- *   - existing context fields are used where return types match
- *   - package names are derived from output paths
- *   - with --recurse, sub-packages under stepdefs_root are mirrored under helpers_root
- *
- * Usage:
- *   StepDefToScalaFunctionConverter <stepdefs_root> <helpers_root>
- *     --builders-root <builders_root>
- *     --models-root <models_root>
- *     --context-root <context_root>
- *     [--recurse]
- */
+  * Converts legacy Cucumber step definitions into typed ScalaTest helper traits.
+  *
+  * Opinionated defaults:
+  *   - generated helper files contain no Cucumber/DataTable imports or parameters
+  *   - generated helper files contain no List[Map[String, String]] parameters
+  *   - generated builder inputs are preferred over raw model case classes
+  *   - existing model case classes are used when they match table fields cleanly
+  *   - existing context fields are used where return types match
+  *   - package names are derived from output paths
+  *   - with --recurse, sub-packages under stepdefs_root are mirrored under helpers_root
+  *
+  * Usage:
+  *   StepDefToScalaFunctionConverter <stepdefs_root> <helpers_root>
+  *     --builders-root <builders_root>
+  *     --models-root <models_root>
+  *     --context-root <context_root>
+  *     [--recurse]
+  */
 object StepDefToScalaFunctionConverter {
 
   // ---------------------------------------------------------------------------
@@ -115,13 +115,13 @@ object StepDefToScalaFunctionConverter {
   // ---------------------------------------------------------------------------
 
   private case class Config(
-                             stepdefsRoot: File,
-                             helpersRoot: File,
-                             buildersRoot: File,
-                             modelsRoot: File,
-                             contextRoot: File,
-                             recurse: Boolean
-                           )
+    stepdefsRoot: File,
+    helpersRoot: File,
+    buildersRoot: File,
+    modelsRoot: File,
+    contextRoot: File,
+    recurse: Boolean
+  )
 
   private case class LambdaParam(name: String, tpe: String)
 
@@ -129,9 +129,9 @@ object StepDefToScalaFunctionConverter {
 
   private case class FieldDef(name: String, tpe: String, defaultValue: Option[String] = None) {
     def normalizedName: String = normalize(name)
-    def simpleType: String = simpleTypeName(tpe)
-    def isSeq: Boolean = tpe.trim.startsWith("Seq[") || tpe.trim.startsWith("List[")
-    def isOption: Boolean = tpe.trim.startsWith("Option[")
+    def simpleType: String     = simpleTypeName(tpe)
+    def isSeq: Boolean         = tpe.trim.startsWith("Seq[") || tpe.trim.startsWith("List[")
+    def isOption: Boolean      = tpe.trim.startsWith("Option[")
   }
 
   private case class ModelClass(name: String, pkg: String, fields: Seq[FieldDef]) {
@@ -143,17 +143,17 @@ object StepDefToScalaFunctionConverter {
   }
 
   private case class BuilderInput(
-                                   builderObject: String,
-                                   builderPackage: String,
-                                   inputClass: String,
-                                   fields: Seq[FieldDef],
-                                   toModelMethod: Option[String],
-                                   toModelSeqMethod: Option[String],
-                                   modelType: Option[String]
-                                 ) {
-    def builderFqcn: String = s"$builderPackage.$builderObject"
-    def inputType: String = s"$builderObject.$inputClass"
-    def inputBaseName: String = inputClass.stripSuffix("Input")
+    builderObject: String,
+    builderPackage: String,
+    inputClass: String,
+    fields: Seq[FieldDef],
+    toModelMethod: Option[String],
+    toModelSeqMethod: Option[String],
+    modelType: Option[String]
+  ) {
+    def builderFqcn: String             = s"$builderPackage.$builderObject"
+    def inputType: String               = s"$builderObject.$inputClass"
+    def inputBaseName: String           = inputClass.stripSuffix("Input")
     def modelSimpleName: Option[String] = modelType.map(simpleTypeName)
   }
 
@@ -164,12 +164,12 @@ object StepDefToScalaFunctionConverter {
 
   private case class BuilderCandidate(input: BuilderInput) extends TypedCandidate {
     override def fieldNames: Set[String] = input.fields.map(_.normalizedName).toSet
-    override def displayName: String = s"${input.builderObject}.${input.inputClass}"
+    override def displayName: String     = s"${input.builderObject}.${input.inputClass}"
   }
 
   private case class ExistingModelCandidate(model: ModelClass) extends TypedCandidate {
     override def fieldNames: Set[String] = model.fields.map(_.normalizedName).toSet
-    override def displayName: String = model.name
+    override def displayName: String     = model.name
   }
 
   private case class ChosenContext(context: ContextInfo, matchedByStem: Boolean)
@@ -187,55 +187,56 @@ object StepDefToScalaFunctionConverter {
   }
 
   private def listScalaFiles(dir: File, recurse: Boolean): Seq[File] = {
-    val children = Option(dir.listFiles()).getOrElse(Array.empty)
+    val children      = Option(dir.listFiles()).getOrElse(Array.empty)
     val (dirs, files) = children.partition(_.isDirectory)
-    val here = files.filter(f => f.isFile && f.getName.endsWith(".scala")).toSeq
+    val here          = files.filter(f => f.isFile && f.getName.endsWith(".scala")).toSeq
     if (recurse) here ++ dirs.flatMap(d => listScalaFiles(d, recurse = true)) else here
   }
 
   private def basePkgFromPath(root: File, fallback: String): String = {
-    val abs = root.getCanonicalPath.replace('\\', '/')
+    val abs    = root.getCanonicalPath.replace('\\', '/')
     val marker = "/src/test/scala/"
-    val idx = abs.indexOf(marker)
+    val idx    = abs.indexOf(marker)
 
     if (idx < 0) fallback
     else {
       val tail = abs.substring(idx + marker.length)
-      val pkg = tail.split('/').filter(_.nonEmpty).map(normalisePackageSegment).mkString(".")
+      val pkg  = tail.split('/').filter(_.nonEmpty).map(normalisePackageSegment).mkString(".")
       if (pkg.nonEmpty) pkg else fallback
     }
   }
 
   private def normalisePackageSegment(seg: String): String = {
     val cleaned = seg.replaceAll("[^A-Za-z0-9_]", "")
-    val safe = cleaned.replaceAll("^[^A-Za-z_]+", "")
+    val safe    = cleaned.replaceAll("^[^A-Za-z_]+", "")
     if (safe.nonEmpty) safe else "pkg"
   }
 
   private def relativeParentDir(inputRoot: File, inputFile: File): String = {
-    val root = inputRoot.getCanonicalFile.toPath
+    val root   = inputRoot.getCanonicalFile.toPath
     val parent = inputFile.getParentFile.getCanonicalFile.toPath
-    val rel = root.relativize(parent).toString.replace('\\', '/')
+    val rel    = root.relativize(parent).toString.replace('\\', '/')
     if (rel == ".") "" else rel
   }
 
   private def actualOutputDir(inputRoot: File, inputFile: File, outputRoot: File): File = {
     val rel = relativeParentDir(inputRoot, inputFile)
-    if (rel.isEmpty) outputRoot else new File(outputRoot, rel.split('/').map(normalisePackageSegment).mkString(File.separator))
+    if (rel.isEmpty) outputRoot
+    else new File(outputRoot, rel.split('/').map(normalisePackageSegment).mkString(File.separator))
   }
 
   private def splitTopLevelArgs(s: String): Seq[String] = {
     val out = mutable.ListBuffer.empty[String]
     val cur = new StringBuilder
 
-    var paren = 0
-    var bracket = 0
-    var brace = 0
-    var inString = false
+    var paren          = 0
+    var bracket        = 0
+    var brace          = 0
+    var inString       = false
     var inTripleString = false
-    var i = 0
+    var i              = 0
 
-    while (i < s.length) {
+    while (i < s.length)
       if (!inString && i + 2 < s.length && s.substring(i, i + 3) == "\"\"\"") {
         inTripleString = !inTripleString
         cur.append("\"\"\"")
@@ -248,28 +249,28 @@ object StepDefToScalaFunctionConverter {
           cur.append(ch)
         } else if (!inString && !inTripleString) {
           ch match {
-            case '(' =>
+            case '('                                             =>
               paren += 1
               cur.append(ch)
-            case ')' =>
+            case ')'                                             =>
               paren -= 1
               cur.append(ch)
-            case '[' =>
+            case '['                                             =>
               bracket += 1
               cur.append(ch)
-            case ']' =>
+            case ']'                                             =>
               bracket -= 1
               cur.append(ch)
-            case '{' =>
+            case '{'                                             =>
               brace += 1
               cur.append(ch)
-            case '}' =>
+            case '}'                                             =>
               brace -= 1
               cur.append(ch)
             case ',' if paren == 0 && bracket == 0 && brace == 0 =>
               out += cur.toString.trim
               cur.clear()
-            case _ =>
+            case _                                               =>
               cur.append(ch)
           }
         } else {
@@ -278,7 +279,6 @@ object StepDefToScalaFunctionConverter {
 
         i += 1
       }
-    }
 
     if (cur.nonEmpty) out += cur.toString.trim
     out.toSeq.filter(_.nonEmpty)
@@ -298,12 +298,12 @@ object StepDefToScalaFunctionConverter {
   private def findMatchingBrace(src: String, openIndex: Int): Int = {
     if (openIndex < 0 || openIndex >= src.length || src.charAt(openIndex) != '{') return -1
 
-    var i = openIndex + 1
-    var depth = 1
-    var inString = false
+    var i              = openIndex + 1
+    var depth          = 1
+    var inString       = false
     var inTripleString = false
 
-    while (i < src.length) {
+    while (i < src.length)
       if (!inString && i + 2 < src.length && src.substring(i, i + 3) == "\"\"\"") {
         inTripleString = !inTripleString
         i += 3
@@ -317,20 +317,19 @@ object StepDefToScalaFunctionConverter {
           case '}' =>
             depth -= 1
             if (depth == 0) return i
-          case _ =>
+          case _   =>
         }
         i += 1
       } else {
         i += 1
       }
-    }
 
     -1
   }
 
   private def extractStepBlocks(src: String): Seq[StepBlock] =
     headerPattern.findAllMatchIn(src).toSeq.flatMap { m =>
-      val openBrace = src.indexOf('{', m.start)
+      val openBrace  = src.indexOf('{', m.start)
       val closeBrace = findMatchingBrace(src, openBrace)
 
       if (closeBrace < 0) None
@@ -343,7 +342,7 @@ object StepDefToScalaFunctionConverter {
   private def stripLambdaPrefix(body: String): String =
     paramArrowRegex.replaceFirstIn(body.trim, "").trim
 
-  private def parseLambdaParams(raw: String): Seq[LambdaParam] = {
+  private def parseLambdaParams(raw: String): Seq[LambdaParam] =
     if (raw.trim.isEmpty) Seq.empty
     else {
       raw.split(",").toSeq.flatMap { part =>
@@ -352,7 +351,6 @@ object StepDefToScalaFunctionConverter {
         else None
       }
     }
-  }
 
   private def isDataTableType(tpe: String): Boolean =
     tpe.toLowerCase.contains("datatable")
@@ -364,7 +362,7 @@ object StepDefToScalaFunctionConverter {
     singleRowTableRe.findFirstIn(body).nonEmpty
 
   private def extractLegacyTableKeys(body: String): Set[String] = {
-    val fromGet = tableGetRe.findAllMatchIn(body).map(_.group(1)).filter(isUsefulKey)
+    val fromGet     = tableGetRe.findAllMatchIn(body).map(_.group(1)).filter(isUsefulKey)
     val fromReplace = replacePlaceholderRe.findAllMatchIn(body).map(_.group(1)).filter(isUsefulKey)
     (fromGet ++ fromReplace).map(k => normalize(k)).toSet
   }
@@ -391,7 +389,7 @@ object StepDefToScalaFunctionConverter {
 
   private def classStemFromSource(src: String, fileName: String): String = {
     val fileStem = fileName.stripSuffix(".scala")
-    val rawName = classOrObjectNameRe.findFirstMatchIn(src).map(_.group(1)).getOrElse(fileStem)
+    val rawName  = classOrObjectNameRe.findFirstMatchIn(src).map(_.group(1)).getOrElse(fileStem)
 
     val stem = rawName
       .stripSuffix("StepDefinitions")
@@ -415,10 +413,10 @@ object StepDefToScalaFunctionConverter {
 
   private def stepTextToMethodName(stepText: String): String = {
     val cleaned = stripRegexFragmentsForNaming(stepText)
-    val words = if (cleaned.isEmpty) Array("step") else cleaned.split("\\s+").filter(_.nonEmpty)
-    val lower = words.map(_.toLowerCase)
-    val head = lower.headOption.getOrElse("step")
-    val tail = lower.drop(1).map(w => w.head.toUpper + w.tail).mkString
+    val words   = if (cleaned.isEmpty) Array("step") else cleaned.split("\\s+").filter(_.nonEmpty)
+    val lower   = words.map(_.toLowerCase)
+    val head    = lower.headOption.getOrElse("step")
+    val tail    = lower.drop(1).map(w => w.head.toUpper + w.tail).mkString
     head + tail
   }
 
@@ -427,20 +425,24 @@ object StepDefToScalaFunctionConverter {
 
     n match {
       case "Int" | "Long" | "Double" | "Float" | "Boolean" | "String" => n
-      case other if other.endsWith(".Int")     => "Int"
-      case other if other.endsWith(".Long")    => "Long"
-      case other if other.endsWith(".Double")  => "Double"
-      case other if other.endsWith(".Float")   => "Float"
-      case other if other.endsWith(".Boolean") => "Boolean"
-      case other if other.endsWith(".String")  => "String"
-      case _                                   => "String"
+      case other if other.endsWith(".Int")                            => "Int"
+      case other if other.endsWith(".Long")                           => "Long"
+      case other if other.endsWith(".Double")                         => "Double"
+      case other if other.endsWith(".Float")                          => "Float"
+      case other if other.endsWith(".Boolean")                        => "Boolean"
+      case other if other.endsWith(".String")                         => "String"
+      case _                                                          => "String"
     }
   }
 
   private def countCaptureGroups(pattern: String): Int =
     """(?<!\\)\((?!\?:)""".r.findAllMatchIn(pattern).length
 
-  private def buildCapturedParams(stepText: String, groupCount: Int, lambdaParams: Seq[LambdaParam]): Seq[(String, String)] = {
+  private def buildCapturedParams(
+    stepText: String,
+    groupCount: Int,
+    lambdaParams: Seq[LambdaParam]
+  ): Seq[(String, String)] = {
     val nonTableParams = lambdaParams.filterNot(p => isDataTableType(p.tpe))
 
     if (nonTableParams.nonEmpty) nonTableParams.map(p => p.name -> scalaTypeForGeneratedParam(p.tpe))
@@ -514,22 +516,32 @@ object StepDefToScalaFunctionConverter {
     if (!root.exists() || !root.isDirectory) return Seq.empty
 
     listScalaFiles(root, recurse = true).flatMap { f =>
-      val src = readFile(f)
-      val pkg = packageRe.findFirstMatchIn(src).map(_.group(1).trim).getOrElse(basePkgFromPath(f.getParentFile, ""))
+      val src              = readFile(f)
+      val pkg              = packageRe.findFirstMatchIn(src).map(_.group(1).trim).getOrElse(basePkgFromPath(f.getParentFile, ""))
       val builderObjectOpt = builderObjectRe.findFirstMatchIn(src).map(_.group(1))
 
       builderObjectOpt.toSeq.flatMap { builderObject =>
-        val inputClasses = inputCaseClassRe.findAllMatchIn(src).map { m =>
-          m.group(1) -> parseFields(m.group(2))
-        }.toSeq.distinct
+        val inputClasses = inputCaseClassRe
+          .findAllMatchIn(src)
+          .map { m =>
+            m.group(1) -> parseFields(m.group(2))
+          }
+          .toSeq
+          .distinct
 
-        val toModelByInput = toModelRe.findAllMatchIn(src).map { m =>
-          m.group(2) -> (m.group(1), simpleTypeName(m.group(3)))
-        }.toMap
+        val toModelByInput = toModelRe
+          .findAllMatchIn(src)
+          .map { m =>
+            m.group(2) -> (m.group(1), simpleTypeName(m.group(3)))
+          }
+          .toMap
 
-        val toModelSeqByInput = toModelSeqRe.findAllMatchIn(src).map { m =>
-          m.group(2) -> (m.group(1), simpleTypeName(m.group(3)))
-        }.toMap
+        val toModelSeqByInput = toModelSeqRe
+          .findAllMatchIn(src)
+          .map { m =>
+            m.group(2) -> (m.group(1), simpleTypeName(m.group(3)))
+          }
+          .toMap
 
         inputClasses.map { case (inputClass, fields) =>
           val modelFromOne = toModelByInput.get(inputClass).map(_._2)
@@ -553,18 +565,17 @@ object StepDefToScalaFunctionConverter {
   // Matching
   // ---------------------------------------------------------------------------
 
-  private def fieldOverlapScore(tableKeys: Set[String], candidateFields: Set[String]): Double = {
+  private def fieldOverlapScore(tableKeys: Set[String], candidateFields: Set[String]): Double =
     if (tableKeys.isEmpty || candidateFields.isEmpty) 0.0
     else {
-      val matched = tableKeys.intersect(candidateFields).size.toDouble
+      val matched   = tableKeys.intersect(candidateFields).size.toDouble
       val precision = matched / tableKeys.size.toDouble
-      val recall = matched / candidateFields.size.toDouble
+      val recall    = matched / candidateFields.size.toDouble
       Math.max(precision, recall) * 0.8 + Math.min(precision, recall) * 0.2
     }
-  }
 
   private def textScore(stepText: String, names: Seq[String]): Double = {
-    val stepNorm = normalize(stepText)
+    val stepNorm   = normalize(stepText)
     val stepTokens = tokens(stepText)
 
     val scores = names.filter(_.nonEmpty).map { n =>
@@ -589,7 +600,10 @@ object StepDefToScalaFunctionConverter {
 
   private def builderCandidateScore(stepText: String, tableKeys: Set[String], input: BuilderInput): Double = {
     val f = fieldOverlapScore(tableKeys, input.fields.map(_.normalizedName).toSet)
-    val t = textScore(stepText, Seq(input.inputClass.stripSuffix("Input"), input.builderObject.stripSuffix("Builder")) ++ input.modelType.toSeq)
+    val t = textScore(
+      stepText,
+      Seq(input.inputClass.stripSuffix("Input"), input.builderObject.stripSuffix("Builder")) ++ input.modelType.toSeq
+    )
 
     // Prefer builder inputs over raw models with a small boost.
     (f * 0.75) + (t * 0.25) + 0.05
@@ -602,13 +616,13 @@ object StepDefToScalaFunctionConverter {
   }
 
   private def bestTypedCandidate(
-                                  stepText: String,
-                                  tableKeys: Set[String],
-                                  builders: Seq[BuilderInput],
-                                  models: Seq[ModelClass]
-                                ): Option[TypedCandidate] = {
+    stepText: String,
+    tableKeys: Set[String],
+    builders: Seq[BuilderInput],
+    models: Seq[ModelClass]
+  ): Option[TypedCandidate] = {
     val builderScores = builders.map(b => BuilderCandidate(b) -> builderCandidateScore(stepText, tableKeys, b))
-    val modelScores = models.map(m => ExistingModelCandidate(m) -> modelCandidateScore(stepText, tableKeys, m))
+    val modelScores   = models.map(m => ExistingModelCandidate(m) -> modelCandidateScore(stepText, tableKeys, m))
 
     val scored = (builderScores ++ modelScores).sortBy(-_._2)
 
@@ -621,9 +635,9 @@ object StepDefToScalaFunctionConverter {
     val targetName = s"${stem}Context"
 
     contexts.find(_.name == targetName).map(c => ChosenContext(c, matchedByStem = true)).orElse {
-      val outPkg = basePkgFromPath(outDir, "")
+      val outPkg             = basePkgFromPath(outDir, "")
       val expectedContextPkg = outPkg.replace(".steps.helpers", ".steps.context")
-      val samePackage = contexts.filter(c => c.pkg == expectedContextPkg)
+      val samePackage        = contexts.filter(c => c.pkg == expectedContextPkg)
 
       samePackage.headOption
         .map(c => ChosenContext(c, matchedByStem = false))
@@ -631,18 +645,24 @@ object StepDefToScalaFunctionConverter {
     }
   }
 
-  private def contextFieldForReturnType(context: ContextInfo, returnType: String, preferSeq: Boolean): Option[FieldDef] = {
+  private def contextFieldForReturnType(
+    context: ContextInfo,
+    returnType: String,
+    preferSeq: Boolean
+  ): Option[FieldDef] = {
     val simple = simpleTypeName(returnType)
 
-    context.fields.find { f =>
-      f.simpleType == simple && (!preferSeq || f.isSeq)
-    }.orElse {
-      context.fields.find(_.simpleType == simple)
-    }
+    context.fields
+      .find { f =>
+        f.simpleType == simple && (!preferSeq || f.isSeq)
+      }
+      .orElse {
+        context.fields.find(_.simpleType == simple)
+      }
   }
 
   private def contextFieldNameForModel(modelType: String): String = {
-    val base = simpleTypeName(modelType).replaceAll("Request$", "").replaceAll("Response$", "")
+    val base  = simpleTypeName(modelType).replaceAll("Request$", "").replaceAll("Response$", "")
     val field = base.headOption.map(_.toLower).getOrElse('x').toString + base.drop(1)
     if (field.endsWith("Charge")) field + "s" else field
   }
@@ -659,40 +679,43 @@ object StepDefToScalaFunctionConverter {
   // Method-body emitters
   // ---------------------------------------------------------------------------
 
-  private def emitSendRequestBody(body: String): Option[(String, String)] = {
+  private def emitSendRequestBody(body: String): Option[(String, String)] =
     responseCaptureRe.findFirstMatchIn(body).map { m =>
       val requestObject = m.group(1)
-      val method = m.group(2)
-      val args = m.group(3).trim
+      val method        = m.group(2)
+      val args          = m.group(3).trim
 
       val finalArgs =
-        if (args.isEmpty) "context.reqJson"
-        else if (args.contains("reqJson") || args.contains("json")) "context.reqJson"
-        else "context.reqJson"
+        if (args.isEmpty) "context.request"
+        else if (args.contains("request") || args.contains("json")) "context.request"
+        else "context.request"
 
       val emitted =
         s"""    val response = $requestObject.$method($finalArgs)
            |
            |    context.status = response.status
-           |    context.respBody = response.body
+           |    context.responseBody = response.body
            |    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
            |""".stripMargin
 
       requestObject -> emitted
     }
-  }
 
-  private def emitBuilderBackedBody(input: BuilderInput, isSingleRow: Boolean, context: ContextInfo): (String, Boolean) = {
+  private def emitBuilderBackedBody(
+    input: BuilderInput,
+    isSingleRow: Boolean,
+    context: ContextInfo
+  ): (String, Boolean) =
     input.modelType match {
       case Some(modelType) if isLikelyRequestModel(modelType) && isSingleRow && input.toModelMethod.nonEmpty =>
         val body =
           s"""    val req = ${input.builderObject}.${input.toModelMethod.get}(input, context)
-             |    context.reqJson = Json.stringify(Json.toJson(req))
+             |    context.request = Json.stringify(Json.toJson(req))
              |""".stripMargin
 
         body -> true
 
-      case Some(modelType) if !isSingleRow && input.toModelSeqMethod.nonEmpty =>
+      case Some(modelType) if !isSingleRow && input.toModelSeqMethod.nonEmpty                                =>
         val field = contextFieldForReturnType(context, modelType, preferSeq = true)
           .map(_.name)
           .getOrElse(contextFieldNameForModel(modelType))
@@ -703,7 +726,7 @@ object StepDefToScalaFunctionConverter {
 
         body -> false
 
-      case Some(modelType) if isSingleRow && input.toModelMethod.nonEmpty =>
+      case Some(modelType) if isSingleRow && input.toModelMethod.nonEmpty                                    =>
         val field = contextFieldForReturnType(context, modelType, preferSeq = false)
           .map(_.name)
           .getOrElse(contextFieldNameForModel(modelType))
@@ -714,7 +737,7 @@ object StepDefToScalaFunctionConverter {
 
         body -> false
 
-      case _ =>
+      case _                                                                                                 =>
         val paramName = if (isSingleRow) "input" else "inputs"
 
         val body =
@@ -724,12 +747,11 @@ object StepDefToScalaFunctionConverter {
 
         body -> false
     }
-  }
 
-  private def emitModelBackedBody(model: ModelClass, isSingleRow: Boolean, context: ContextInfo): (String, Boolean) = {
+  private def emitModelBackedBody(model: ModelClass, isSingleRow: Boolean, context: ContextInfo): (String, Boolean) =
     if (canJsonSerialize(model.name) && isSingleRow) {
       val body =
-        s"""    context.reqJson = Json.stringify(Json.toJson(input))
+        s"""    context.request = Json.stringify(Json.toJson(input))
            |""".stripMargin
 
       body -> true
@@ -754,11 +776,9 @@ object StepDefToScalaFunctionConverter {
 
       body -> false
     }
-  }
 
   private def bodyPreview(body: String, maxLines: Int = 4): Seq[String] =
-    body
-      .linesIterator
+    body.linesIterator
       .map(_.trim)
       .filter(_.nonEmpty)
       .filterNot(_.startsWith("//"))
@@ -777,14 +797,14 @@ object StepDefToScalaFunctionConverter {
   // ---------------------------------------------------------------------------
 
   private def convertOneFile(
-                              inputRoot: File,
-                              inputFile: File,
-                              outputRoot: File,
-                              builders: Seq[BuilderInput],
-                              models: Seq[ModelClass],
-                              contexts: Seq[ContextInfo]
-                            ): Unit = {
-    val src = readFile(inputFile)
+    inputRoot: File,
+    inputFile: File,
+    outputRoot: File,
+    builders: Seq[BuilderInput],
+    models: Seq[ModelClass],
+    contexts: Seq[ContextInfo]
+  ): Unit = {
+    val src        = readFile(inputFile)
     val stepBlocks = extractStepBlocks(src)
 
     if (stepBlocks.isEmpty) {
@@ -792,11 +812,11 @@ object StepDefToScalaFunctionConverter {
       return
     }
 
-    val stem = classStemFromSource(src, inputFile.getName)
+    val stem        = classStemFromSource(src, inputFile.getName)
     val helperTrait = s"${stem}StepHelpers"
-    val outDir = actualOutputDir(inputRoot, inputFile, outputRoot)
-    val pkg = basePkgFromPath(outDir, "uk.gov.hmrc.test.api.scalatest.steps.helpers")
-    val outFile = new File(outDir, helperTrait + ".scala")
+    val outDir      = actualOutputDir(inputRoot, inputFile, outputRoot)
+    val pkg         = basePkgFromPath(outDir, "uk.gov.hmrc.test.api.scalatest.steps.helpers")
+    val outFile     = new File(outDir, helperTrait + ".scala")
 
     val chosenContext: ChosenContext =
       chooseContext(stem, outDir, contexts).getOrElse {
@@ -811,30 +831,30 @@ object StepDefToScalaFunctionConverter {
     val contextType = chosenContext.context.name
 
     val usedBuilderObjects = mutable.LinkedHashSet.empty[String]
-    val usedModelImports = mutable.LinkedHashSet.empty[String]
+    val usedModelImports   = mutable.LinkedHashSet.empty[String]
     val usedRequestObjects = mutable.LinkedHashSet.empty[String]
-    val methodNamesSeen = mutable.Map.empty[String, Int]
-    val renderedMethods = new StringBuilder
-    var needsJsonImport = false
+    val methodNamesSeen    = mutable.Map.empty[String, Int]
+    val renderedMethods    = new StringBuilder
+    var needsJsonImport    = false
 
     stepBlocks.foreach { step =>
-      val stepText = step.rawStepText.trim
-      val body = stripLambdaPrefix(step.body)
+      val stepText     = step.rawStepText.trim
+      val body         = stripLambdaPrefix(step.body)
       val lambdaParams = lambdaParamsInBody(step.body).map(parseLambdaParams).getOrElse(Seq.empty)
 
-      val hasTable = hasLegacyTable(body, lambdaParams)
-      val isSingleRow = isSingleRowLegacyTable(body)
-      val tableKeys = extractLegacyTableKeys(body)
-      val groupCount = countCaptureGroups(stepText)
+      val hasTable       = hasLegacyTable(body, lambdaParams)
+      val isSingleRow    = isSingleRowLegacyTable(body)
+      val tableKeys      = extractLegacyTableKeys(body)
+      val groupCount     = countCaptureGroups(stepText)
       val capturedParams = buildCapturedParams(stepText, groupCount, lambdaParams)
 
       val baseMethodName = stepTextToMethodName(stepText)
-      val occurrence = methodNamesSeen.getOrElse(baseMethodName, 0)
+      val occurrence     = methodNamesSeen.getOrElse(baseMethodName, 0)
       methodNamesSeen(baseMethodName) = occurrence + 1
 
       val methodName =
         if (occurrence == 0) baseMethodName
-        else s"${baseMethodName}${occurrence + 1}"
+        else s"$baseMethodName${occurrence + 1}"
 
       val candidate =
         if (hasTable) bestTypedCandidate(stepText, tableKeys, builders, models)
@@ -891,7 +911,9 @@ object StepDefToScalaFunctionConverter {
             case None =>
               val hints = Seq(
                 if (scenarioContextRefRe.findFirstIn(body).nonEmpty) Some("legacy ScenarioContext usage") else None,
-                if (jsonParseRe.findFirstIn(body).nonEmpty || responseStatusRe.findFirstIn(body).nonEmpty) Some("response assertion") else None,
+                if (jsonParseRe.findFirstIn(body).nonEmpty || responseStatusRe.findFirstIn(body).nonEmpty)
+                  Some("response assertion")
+                else None,
                 requestObjectRefRe.findFirstMatchIn(body).map(m => s"request object reference: ${m.group(1)}")
               ).flatten
 
@@ -960,16 +982,16 @@ object StepDefToScalaFunctionConverter {
     }
 
     val stepdefsRoot = new File(args(0))
-    val helpersRoot = new File(args(1))
+    val helpersRoot  = new File(args(1))
 
     var buildersRoot: Option[File] = None
-    var modelsRoot: Option[File] = None
-    var contextRoot: Option[File] = None
-    var recurse = false
+    var modelsRoot: Option[File]   = None
+    var contextRoot: Option[File]  = None
+    var recurse                    = false
 
     var i = 2
 
-    while (i < args.length) {
+    while (i < args.length)
       args(i) match {
         case "--builders-root" if i + 1 < args.length =>
           buildersRoot = Some(new File(args(i + 1)))
@@ -991,7 +1013,6 @@ object StepDefToScalaFunctionConverter {
           println(s"ERROR: unknown or incomplete argument: $other")
           System.exit(1)
       }
-    }
 
     if (buildersRoot.isEmpty) {
       println("ERROR: --builders-root is required")
@@ -1037,7 +1058,7 @@ object StepDefToScalaFunctionConverter {
     if (!cfg.helpersRoot.exists()) cfg.helpersRoot.mkdirs()
 
     val builders = discoverBuilders(cfg.buildersRoot)
-    val models = discoverModels(cfg.modelsRoot)
+    val models   = discoverModels(cfg.modelsRoot)
     val contexts = discoverContexts(cfg.contextRoot)
 
     println(s"• Discovered ${builders.size} generated builder input(s) from ${cfg.buildersRoot.getPath}")

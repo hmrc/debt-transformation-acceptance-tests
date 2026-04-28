@@ -349,11 +349,10 @@ object RequestsToBuildersConverter {
            |
            |// Minimal per-scenario context; extend fields as migration progresses.
            |final case class ${stem}Context(
-           |  var reqJson: String = "",
-           |  var respBody: String = "",
+           |  var request: String = "",
+           |  var responseBody: String = "",
            |  var status: Int = 0,
            |  var headers: Map[String, String] = Map.empty,
-           |  var notes: Map[String, String] = Map.empty
            |)
            |""".stripMargin
       writeFile(out, content)

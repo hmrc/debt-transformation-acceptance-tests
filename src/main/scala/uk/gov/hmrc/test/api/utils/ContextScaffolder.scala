@@ -164,13 +164,11 @@ object ContextScaffolder {
   private def defaultContextSource(pkg: String, className: String): String =
     s"""package $pkg
        |
-       |// Per-scenario context shared by generated ScalaTest helpers/builders.
        |final case class $className(
-       |  var reqJson: String = "",
-       |  var respBody: String = "",
+       |  var request: String = "",
+       |  var responseBody: String = "",
        |  var status: Int = 0,
        |  var headers: Map[String, String] = Map.empty,
-       |  var notes: Map[String, String] = Map.empty
        |)
        |""".stripMargin
 
@@ -178,11 +176,10 @@ object ContextScaffolder {
     val src = readFile(contextFile)
 
     val defaults = Seq(
-      "reqJson"  -> "var reqJson: String = \"\"",
-      "respBody" -> "var respBody: String = \"\"",
+      "request"      -> "var request: String = \"\"",
+      "responseBody" -> "var responseBody: String = \"\"",
       "status"   -> "var status: Int = 0",
       "headers"  -> "var headers: Map[String, String] = Map.empty",
-      "notes"    -> "var notes: Map[String, String] = Map.empty"
     )
 
     val missing = defaults.collect {
