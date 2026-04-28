@@ -1,0 +1,290 @@
+package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
+
+import org.scalatest.GivenWhenThen
+import org.scalatest.featurespec.FixtureAnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCInterestForecastingStepHelpers
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
+import uk.gov.hmrc.test.api.scalatest.tags._
+
+class InstalmentCalculationCombinedInstalmentsFeatureSpec
+  extends FixtureAnyFeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with FCInterestForecastingStepHelpers
+    with IFSInstalmentCalculationStepHelpers
+    with InterestForecastingStepHelpers {
+
+  override type FixtureParam = FCStatementOfLiabilityContext
+
+  override def withFixture(test: OneArgTest) = {
+    val context = FCStatementOfLiabilityContext()
+    try test(context)
+    finally ()
+  }
+
+  Feature("Instalment calculation with combined instalments") {
+
+    Scenario("Final two instalments are merged when requested") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("no initial payment for the debt item charge")
+      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // noInitialPaymentForTheDebtItemCharge(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+    Scenario("Final two instalments are not merged when when request to merge is false") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("no initial payment for the debt item charge")
+      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // noInitialPaymentForTheDebtItemCharge(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+    Scenario("Final two instalments of non interest bearing debts are not merged when when request to merge is false") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("no initial payment for the debt item charge")
+      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // noInitialPaymentForTheDebtItemCharge(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+    Scenario("Final two instalments of non interest bearing debts are merged when when requested") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("no initial payment for the debt item charge")
+      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // noInitialPaymentForTheDebtItemCharge(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+    Scenario("Final two instalments are merged when requested with initial payment") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("debt plan details with initial payment")
+      // TODO: Helper 'debtPlanDetailsWithInitialPayment' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtPlanDetailsWithInitialPayment(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+    Scenario("Multiple debt item charges final two instalments are merged when requested") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("debt plan details with initial payment")
+      // TODO: Helper 'debtPlanDetailsWithInitialPayment' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtPlanDetailsWithInitialPayment(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+    Scenario("Last 2 instalments are only combined where final instalment amount is lower than previous") { context =>
+      Given("debt instalment calculation with details")
+      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // debtInstalmentCalculationWithDetails(context)
+
+      And("the instalment calculation has no postcodes")
+      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasNoPostcodes(context)
+
+      And("no initial payment for the debt item charge")
+      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // noInitialPaymentForTheDebtItemCharge(context)
+
+      And("the instalment calculation has debt item charges")
+      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationHasDebtItemCharges(context)
+
+      When("the instalment calculation is sent to the ifs service with query parameters")
+      // TODO: Helper 'theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context)
+
+      Then("the instalment calculation summary contains values")
+      // TODO: Helper 'theInstalmentCalculationSummaryContainsValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // theInstalmentCalculationSummaryContainsValues(context)
+
+      And("IFS response contains expected values")
+      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+      // ifsResponseContainsExpectedValues(context)
+
+    }
+  }
+}
