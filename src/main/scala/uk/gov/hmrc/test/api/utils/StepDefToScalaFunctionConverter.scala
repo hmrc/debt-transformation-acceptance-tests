@@ -758,7 +758,7 @@ object StepDefToScalaFunctionConverter {
 
   private def bodyPreview(body: String, maxLines: Int = 4): Seq[String] =
     body
-      .lines
+      .linesIterator
       .map(_.trim)
       .filter(_.nonEmpty)
       .filterNot(_.startsWith("//"))
