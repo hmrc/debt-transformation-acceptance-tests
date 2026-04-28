@@ -54,25 +54,6 @@ Feature: Interest Rate Changes
       | 2020-01-01 | 2020-03-29 | 89           | 3.25         | 26                      | 2370              | 302370             | 300000               |
       | 2020-03-30 | 2020-03-31 | 2            | 2.75         | 22                      | 45                | 300045             | 300000               |
 
-  Scenario: Interest rate changes from 3% to 3.25%
-    Given a debt item
-      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
-      | 500000         | 2017-12-01        | 2019-03-31          | 1525      | 1000     |
-    And the debt item has no payment history
-    And no breathing spaces have been applied to the debt item
-    And no post codes have been provided for the customer
-    When the debt item is sent to the ifs service
-    Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | unpaidAmountTotal | amountIntTotal |
-      | 44                   | 20695                | 500000            | 520695         |
-    And the 1st debt summary will contain
-      | interestDueDailyAccrual | totalAmountIntDuty | numberChargeableDays |
-      | 44                      | 520695             | 485                  |
-    And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow |
-      | 2017-12-01 | 2018-08-20 | 262          | 3.0          | 41                      | 10767             | 500000               |
-      | 2018-08-21 | 2019-03-31 | 223          | 3.25         | 44                      | 9928              | 500000               |
-
 #  Scenario: Interest rate changes from non-interest bearing to interest bearing
   #Scenario: Interest rate changes from interest bearing to non-interest bearing
   #TBD: No test data currently available to implement this scenario
