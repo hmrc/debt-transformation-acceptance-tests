@@ -327,6 +327,18 @@ object StepDefToScalaFunctionConverter {
     -1
   }
 
+  private def makeAbstractUnitMethodsConcrete(src: String): String = {
+    val abstractUnitMethodRe =
+      """(?m)^(\s*def\s+[A-Za-z_][A-Za-z0-9_]*\s*\([^)]*\)\s*:\s*Unit)\s*$""".r
+
+    abstractUnitMethodRe.replaceAllIn(src, m =>
+      s"""${m.group(1)} = {
+         |    // TODO: Generated concrete stub to avoid abstract helper trait member.
+         |    // Implement this helper manually.
+         |  }""".stripMargin
+    )
+  }
+
   private def extractStepBlocks(src: String): Seq[StepBlock] =
     headerPattern.findAllMatchIn(src).toSeq.flatMap { m =>
       val openBrace  = src.indexOf('{', m.start)
@@ -964,7 +976,7 @@ object StepDefToScalaFunctionConverter {
     content ++= renderedMethods.toString
     content ++= "}\n"
 
-    writeFile(outFile, content.toString)
+    writeFile(outFile, makeAbstractUnitMethodsConcrete(content.toString))
     println(s"✓ Generated ${outFile.getPath} with ${stepBlocks.size} method(s)")
   }
 
