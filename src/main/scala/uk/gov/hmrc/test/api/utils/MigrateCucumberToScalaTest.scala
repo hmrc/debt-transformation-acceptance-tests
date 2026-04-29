@@ -170,9 +170,6 @@ object MigrateCucumberToScalaTest {
       Array(
         specsRoot,
         tagsOut,
-        runnerOut,
-        "--cucumber-runner-root",
-        cucumberRunnerRoot,
         "--recurse"
       )
     )
