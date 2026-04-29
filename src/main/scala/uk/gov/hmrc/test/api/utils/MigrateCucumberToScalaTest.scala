@@ -25,6 +25,49 @@ object MigrateCucumberToScalaTest {
   // Config (adjust per repo)
   // ---------------------------------------------------------------------------
 
+//   1) Requests → Builders
+//  sbt "runMain uk.gov.hmrc.test.api.utils.RequestsToBuildersConverter \
+//    src/test/scala/uk/gov/hmrc/test/api/requests \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/builders \
+//    --models-root src/test/scala/uk/gov/hmrc/test/api/models \
+//  --context-root src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/context \
+//  --recurse"
+//   2) StepDefs → StepHelpers
+//  sbt "runMain uk.gov.hmrc.test.api.utils.StepDefToScalaFunctionConverter \
+//    src/test/scala/uk/gov/hmrc/test/api/cucumber/stepdefs \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/helpers \
+//    --builders-root src/test/scala/uk/gov/hmrc/test/api/scalatest/builders \
+//  --models-root src/test/scala/uk/gov/hmrc/test/api/models \
+//  --context-root src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/context \
+//  --recurse"
+//   3) Context Scaffolder (WITH DEFAULT CONTEXT)
+//
+//   Use this when helpers can’t confidently match a context
+//  sbt "runMain uk.gov.hmrc.test.api.utils.ContextScaffolder \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/builders \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/helpers \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/context \
+//    --default-context FCStatementOfLiabilityContext \
+//  --recurse"
+//
+//   Change FCStatementOfLiabilityContext to whatever makes sense per repo.
+//
+//     4) Feature → ScalaTest Specs
+//    sbt "runMain uk.gov.hmrc.test.api.utils.FeatureToScalaSpecConverter \
+//    src/test/resources/features \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/specs \
+//    --helpers-root src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/helpers \
+//  --context-root src/test/scala/uk/gov/hmrc/test/api/scalatest/steps/context \
+//  --builders-root src/test/scala/uk/gov/hmrc/test/api/scalatest/builders \
+//  --recurse"
+//   5) Tags + Runner Generator
+//    sbt "runMain uk.gov.hmrc.test.api.utils.TagsRunnerGenerator \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/specs \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/tags \
+//    src/test/scala/uk/gov/hmrc/test/api/scalatest/runner \
+//    --cucumber-runner-root src/test/scala/uk/gov/hmrc/test/api/cucumber/runner \
+//  --recurse"
+
   private val featuresRoot = s"src/test/resources/features"
   private val specsRoot    = "src/test/scala/uk/gov/hmrc/test/api/scalatest/specs"
 

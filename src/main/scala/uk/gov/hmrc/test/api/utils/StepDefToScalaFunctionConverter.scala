@@ -687,6 +687,72 @@ object StepDefToScalaFunctionConverter {
   private def canJsonSerialize(tpe: String): Boolean =
     isLikelyRequestModel(tpe)
 
+
+  private def isAssertionStep(step: StepBlock): Boolean = {
+    val text = step.rawStepText.toLowerCase
+    val keywordLooksAssertive = step.keyword.equalsIgnoreCase("Then")
+
+    val textLooksAssertive = Seq(
+      "will contain",
+      "should contain",
+      "contains",
+      "will return",
+      "returns",
+      "return a",
+      "respond with",
+      "responds with",
+      "response",
+      "service returns",
+      "will have",
+      "will not have",
+      "should be",
+      "is returned",
+      "are returned"
+    ).exists(text.contains)
+
+    keywordLooksAssertive || textLooksAssertive
+  }
+
+  private def bestAssertionTypedCandidate(
+    stepText: String,
+    tableKeys: Set[String],
+    builders: Seq[BuilderInput],
+    models: Seq[ModelClass]
+  ): Option[TypedCandidate] = {
+    val modelScores = models.map(m => ExistingModelCandidate(m) -> modelCandidateScore(stepText, tableKeys, m))
+      .sortBy(-_._2)
+
+    modelScores.headOption match {
+      case Some((candidate, score)) if score >= 0.28 => Some(candidate)
+      case _                                         => bestTypedCandidate(stepText, tableKeys, builders, models)
+    }
+  }
+
+  private def emitAssertionTodoBody(
+    expectedType: String,
+    isSingleRow: Boolean,
+    originalBody: String
+  ): (String, Boolean) = {
+    val paramName = if (isSingleRow) "input" else "inputs"
+    val shape     = if (isSingleRow) expectedType else s"Seq[$expectedType]"
+    val preview   = bodyPreview(originalBody)
+
+    val previewBlock =
+      if (preview.nonEmpty) preview.map(l => s"    // ${escapeComment(l)}").mkString("\n") + "\n"
+      else ""
+
+    val body =
+      s"""$previewBlock    // TODO: Assertion step. Do not store expected $shape in context.
+         |    // Compare '$paramName' against the actual parsed response from context.responseBody.
+         |    // Suggested approach:
+         |    //   context.status shouldBe 200
+         |    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+         |    //   // Assert the relevant element/field against $paramName.
+         |""".stripMargin
+
+    body -> false
+  }
+
   // ---------------------------------------------------------------------------
   // Method-body emitters
   // ---------------------------------------------------------------------------
@@ -714,11 +780,16 @@ object StepDefToScalaFunctionConverter {
     }
 
   private def emitBuilderBackedBody(
+    step: StepBlock,
+    originalBody: String,
     input: BuilderInput,
     isSingleRow: Boolean,
     context: ContextInfo
   ): (String, Boolean) =
-    input.modelType match {
+    if (isAssertionStep(step)) {
+      val expectedType = input.modelType.getOrElse(input.inputType)
+      emitAssertionTodoBody(expectedType, isSingleRow, originalBody)
+    } else input.modelType match {
       case Some(modelType) if isLikelyRequestModel(modelType) && isSingleRow && input.toModelMethod.nonEmpty =>
         val body =
           s"""    val req = ${input.builderObject}.${input.toModelMethod.get}(input, context)
@@ -760,8 +831,16 @@ object StepDefToScalaFunctionConverter {
         body -> false
     }
 
-  private def emitModelBackedBody(model: ModelClass, isSingleRow: Boolean, context: ContextInfo): (String, Boolean) =
-    if (canJsonSerialize(model.name) && isSingleRow) {
+  private def emitModelBackedBody(
+    step: StepBlock,
+    originalBody: String,
+    model: ModelClass,
+    isSingleRow: Boolean,
+    context: ContextInfo
+  ): (String, Boolean) =
+    if (isAssertionStep(step)) {
+      emitAssertionTodoBody(model.name, isSingleRow, originalBody)
+    } else if (canJsonSerialize(model.name) && isSingleRow) {
       val body =
         s"""    context.request = Json.stringify(Json.toJson(input))
            |""".stripMargin
@@ -869,7 +948,8 @@ object StepDefToScalaFunctionConverter {
         else s"$baseMethodName${occurrence + 1}"
 
       val candidate =
-        if (hasTable) bestTypedCandidate(stepText, tableKeys, builders, models)
+        if (hasTable && isAssertionStep(step)) bestAssertionTypedCandidate(stepText, tableKeys, builders, models)
+        else if (hasTable) bestTypedCandidate(stepText, tableKeys, builders, models)
         else None
 
       val typedDataParams = candidate.toSeq.map {
@@ -890,12 +970,12 @@ object StepDefToScalaFunctionConverter {
         if (hasTable) {
           candidate match {
             case Some(BuilderCandidate(builderInput)) =>
-              val (emitted, json) = emitBuilderBackedBody(builderInput, isSingleRow, chosenContext.context)
+              val (emitted, json) = emitBuilderBackedBody(step, body, builderInput, isSingleRow, chosenContext.context)
               if (json) needsJsonImport = true
               emitted
 
             case Some(ExistingModelCandidate(model)) =>
-              val (emitted, json) = emitModelBackedBody(model, isSingleRow, chosenContext.context)
+              val (emitted, json) = emitModelBackedBody(step, body, model, isSingleRow, chosenContext.context)
               if (json) needsJsonImport = true
               emitted
 
@@ -910,9 +990,15 @@ object StepDefToScalaFunctionConverter {
                 if (tableKeys.nonEmpty) s"    // Inferred legacy table keys: ${tableKeys.toSeq.sorted.mkString(", ")}\n"
                 else ""
 
-              s"""$previewBlock$keysLine    // TODO: No matching generated builder input or existing model was found.
-                 |    // Add a typed parameter and wire it into context or request JSON.
-                 |""".stripMargin
+              if (isAssertionStep(step)) {
+                s"""$previewBlock$keysLine    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+                   |    // Add a typed expected-response parameter and compare it against context.responseBody.
+                   |""".stripMargin
+              } else {
+                s"""$previewBlock$keysLine    // TODO: No matching generated builder input or existing model was found.
+                   |    // Add a typed parameter and wire it into context or request JSON.
+                   |""".stripMargin
+              }
           }
         } else {
           emitSendRequestBody(body) match {

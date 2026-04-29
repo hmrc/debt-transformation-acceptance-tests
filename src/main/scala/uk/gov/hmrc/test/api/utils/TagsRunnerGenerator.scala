@@ -37,7 +37,6 @@ object TagsRunnerGenerator {
 
   private case class CucumberRunnerInfo(file: File, className: String, featureSubPaths: Seq[String])
 
-  private val scenarioCallRe: Regex = """(?s)\bScenario\s*\((.*?)\)""".r
   private val lineCommentRe: Regex  = """(?m)//.*$""".r
   private val blockCommentRe: Regex = """(?s)/\*.*?\*/""".r
   private val tripleStrRe: Regex    = """(?s)\"\"\".*?\"\"\"""".r
@@ -79,18 +78,152 @@ object TagsRunnerGenerator {
   }
 
   private def normalizeTag(raw: String): String = {
-    val cleaned = raw.replaceAll("[^A-Za-z0-9_]", "_")
-    val prefixed = if (cleaned.headOption.exists(_.isDigit)) s"T_$cleaned" else cleaned
-    if (prefixed.forall(_.isLetter)) prefixed.head.toUpper + prefixed.tail.toLowerCase
-    else prefixed.toUpperCase
+    val cleaned0 = raw.trim
+      .replaceAll("[^A-Za-z0-9_]", "_")
+      .replaceAll("_+", "_")
+      .stripPrefix("_")
+      .stripSuffix("_")
+
+    val cleaned = if (cleaned0.headOption.exists(_.isDigit)) s"T_$cleaned0" else cleaned0
+
+    cleaned.toUpperCase match {
+      case "WIP" => "WIP"
+      case dtd if dtd.matches("DTD_[0-9]+") => dtd
+      case upper if upper.matches("[A-Z]+_[0-9]+") => upper
+      case _ if cleaned.forall(_.isLetter) && cleaned.nonEmpty =>
+        cleaned.head.toUpper + cleaned.tail.toLowerCase
+      case _ => cleaned.toUpperCase
+    }
   }
 
   private def looksLikeNonTag(id: String): Boolean = {
     val lower = id.toLowerCase
     Set(
       "context", "none", "some", "true", "false", "feature", "scenario",
-      "given", "when", "then", "and", "ignore", "pending"
+      "given", "when", "then", "and", "but", "ignore", "pending", "step"
     ).contains(lower)
+  }
+
+  private def splitTopLevelArgs(s: String): Seq[String] = {
+    val out = scala.collection.mutable.ListBuffer.empty[String]
+    val cur = new StringBuilder
+
+    var paren = 0
+    var bracket = 0
+    var brace = 0
+    var inString = false
+    var inTripleString = false
+    var escaped = false
+    var i = 0
+
+    while (i < s.length) {
+      if (!inString && i + 2 < s.length && s.substring(i, i + 3) == "\"\"\"") {
+        inTripleString = !inTripleString
+        cur.append("\"\"\"")
+        i += 3
+      } else {
+        val ch = s.charAt(i)
+
+        if (!inTripleString && inString) {
+          cur.append(ch)
+          if (escaped) escaped = false
+          else if (ch == '\\') escaped = true
+          else if (ch == '"') inString = false
+          i += 1
+        } else if (!inTripleString && ch == '"') {
+          inString = true
+          cur.append(ch)
+          i += 1
+        } else if (!inString && !inTripleString) {
+          ch match {
+            case '(' => paren += 1; cur.append(ch)
+            case ')' => paren -= 1; cur.append(ch)
+            case '[' => bracket += 1; cur.append(ch)
+            case ']' => bracket -= 1; cur.append(ch)
+            case '{' => brace += 1; cur.append(ch)
+            case '}' => brace -= 1; cur.append(ch)
+            case ',' if paren == 0 && bracket == 0 && brace == 0 =>
+              out += cur.toString.trim
+              cur.clear()
+            case _ => cur.append(ch)
+          }
+          i += 1
+        } else {
+          cur.append(ch)
+          i += 1
+        }
+      }
+    }
+
+    if (cur.nonEmpty) out += cur.toString.trim
+    out.toSeq.filter(_.nonEmpty)
+  }
+
+  private def scenarioArgumentBlocks(src: String): Seq[String] = {
+    val out = scala.collection.mutable.ListBuffer.empty[String]
+    var i = 0
+
+    while (i < src.length) {
+      val idx = src.indexOf("Scenario", i)
+
+      if (idx < 0) i = src.length
+      else {
+        val beforeOk = idx == 0 || !src.charAt(idx - 1).isLetterOrDigit
+        val afterKeyword = idx + "Scenario".length
+        val afterOk = afterKeyword >= src.length || !src.charAt(afterKeyword).isLetterOrDigit
+
+        if (!beforeOk || !afterOk) {
+          i = afterKeyword
+        } else {
+          var open = afterKeyword
+          while (open < src.length && src.charAt(open).isWhitespace) open += 1
+
+          if (open >= src.length || src.charAt(open) != '(') {
+            i = afterKeyword
+          } else {
+            var j = open + 1
+            var depth = 1
+            var inString = false
+            var inTripleString = false
+            var escaped = false
+
+            while (j < src.length && depth > 0) {
+              if (!inString && j + 2 < src.length && src.substring(j, j + 3) == "\"\"\"") {
+                inTripleString = !inTripleString
+                j += 3
+              } else {
+                val ch = src.charAt(j)
+
+                if (!inTripleString && inString) {
+                  if (escaped) escaped = false
+                  else if (ch == '\\') escaped = true
+                  else if (ch == '"') inString = false
+                } else if (!inTripleString && ch == '"') {
+                  inString = true
+                } else if (!inString && !inTripleString) {
+                  ch match {
+                    case '(' => depth += 1
+                    case ')' => depth -= 1
+                    case _   =>
+                  }
+                }
+
+                j += 1
+              }
+            }
+
+            if (depth == 0) {
+              out += src.substring(open + 1, j - 1)
+              i = j
+            } else {
+              i = open + 1
+            }
+          }
+        }
+      }
+    }
+
+    out.toSeq
   }
 
   private def tagsFromSpecFile(f: File): Set[String] = {
@@ -99,14 +232,15 @@ object TagsRunnerGenerator {
     val src2 = blockCommentRe.replaceAllIn(src1, "")
     val tags = scala.collection.mutable.Set.empty[String]
 
-    scenarioCallRe.findAllMatchIn(src2).foreach { m =>
-      val inside = m.group(1)
-      val withoutStrings = singleStrRe.replaceAllIn(tripleStrRe.replaceAllIn(inside, ""), "")
-      val parts = withoutStrings.split(",").map(_.trim).drop(1)
+    scenarioArgumentBlocks(src2).foreach { inside =>
+      val parts = splitTopLevelArgs(inside).drop(1)
+
       parts.foreach { p =>
-        tagTokenRe.findAllMatchIn(p).foreach { mm =>
+        val withoutStrings = singleStrRe.replaceAllIn(tripleStrRe.replaceAllIn(p, ""), "")
+        tagTokenRe.findAllMatchIn(withoutStrings).foreach { mm =>
           val token = mm.group(1)
-          if (!looksLikeNonTag(token)) tags += normalizeTag(token)
+          val normalized = normalizeTag(token)
+          if (normalized.nonEmpty && !looksLikeNonTag(normalized)) tags += normalized
         }
       }
     }
