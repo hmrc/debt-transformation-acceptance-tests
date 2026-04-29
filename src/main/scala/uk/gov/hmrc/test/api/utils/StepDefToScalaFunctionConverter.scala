@@ -754,7 +754,7 @@ object StepDefToScalaFunctionConverter {
       else ""
 
     val body =
-      s"""$previewBlock    // TODO: Assertion step. Do not store expected $shape in context.
+      s"""$previewBlock    // TODO: Assertion step. Check models and builders to use to compare against.
          |    // Compare '$paramName' against the actual parsed response from context.responseBody.
          |    // Suggested approach:
          |    //   context.status shouldBe 200
