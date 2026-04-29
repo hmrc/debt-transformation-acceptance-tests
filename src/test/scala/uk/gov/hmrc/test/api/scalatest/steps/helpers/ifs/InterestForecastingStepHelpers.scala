@@ -1,10 +1,9 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
-import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import org.scalatest.matchers.should.Matchers
-
+import uk.gov.hmrc.test.api.models.SuppressionApplied
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.SuppressionRulesBuilder
+import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 trait InterestForecastingStepHelpers { this: Matchers =>
 
@@ -96,8 +95,8 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // locally {
     // val fieldName = "combinedDailyAccrual"
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain$
@@ -107,8 +106,8 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // val responseBody: DebtCalculation =
     // Json.parse(response.body).as[DebtCalculationsSummary].debtCalculations(index - 1)
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ifs service will respond with (.*)$
@@ -127,8 +126,8 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // locally {
     // val fieldName = "statusCode"
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows$
@@ -138,8 +137,8 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // val responseBody =
     // Json
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will have suppression applied calculation windows$
@@ -149,8 +148,8 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // val calculationWindows = Json
     // .parse(response.body)
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^Ifs service returns response code (.*)$
@@ -215,14 +214,22 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // val responseBody: DebtInterestType = Json.parse(response.body).as[DebtInterestTypeResponse].debts(index - 1)
     // locally {
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt applied suppression summary contains values as$
-  def theDebtAppliedSuppressionSummaryContainsValuesAs(context: InterestForecastingContext, summaryIndex: Int, inputs: Seq[SuppressionRulesBuilder.SuppressionsInput]): Unit = {
-    // TODO: Wire inputs into context or request JSON using SuppressionRulesBuilder.
-    // Suggested type: SuppressionRulesBuilder.SuppressionsInput
+  def theDebtAppliedSuppressionSummaryContainsValuesAs(context: InterestForecastingContext, summaryIndex: Int, inputs: Seq[SuppressionApplied]): Unit = {
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
+    // val maybeSuppression = for {
+    // debt        <-
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
   }
 
 }

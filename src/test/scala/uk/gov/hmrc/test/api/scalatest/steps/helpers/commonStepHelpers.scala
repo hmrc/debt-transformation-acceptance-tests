@@ -1,8 +1,8 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.builders.SuppressionRulesBuilder
+import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 
 // TODO: Validate that FCStatementOfLiabilityContext is the correct context for helpers migrated from commonSteps.scala.
 trait commonStepHelpers { this: Matchers =>

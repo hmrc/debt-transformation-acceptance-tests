@@ -219,7 +219,13 @@ object FeatureToScalaSpecConverter {
   private def normalizeTag(raw: String): String = {
     val step1 = raw.replaceAll("[^A-Za-z0-9_]", "_")
     val step2 = if (step1.headOption.exists(_.isDigit)) "T_" + step1 else step1
-    if (step2.forall(_.isLetter)) step2.head.toUpper + step2.tail.toLowerCase else step2.toUpperCase
+
+    step2.toUpperCase match {
+      case "WIP" => "WIP"
+      case dtd if dtd.matches("DTD_[0-9]+") => dtd
+      case _ if step2.forall(_.isLetter) => step2.head.toUpper + step2.tail.toLowerCase
+      case _ => step2.toUpperCase
+    }
   }
 
   private def escape(s: String): String =

@@ -2,6 +2,7 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.DebtCalculationsSummary
+import uk.gov.hmrc.test.api.models.sol.FCSolCalculation
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
@@ -58,13 +59,31 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^service returns fc debt statement of liability data$
   def serviceReturnsFcDebtStatementOfLiabilityData(context: FCStatementOfLiabilityContext, input: DebtCalculationsSummary): Unit = {
-//    context.debtCalculationsSummary = input
+    // val response: StandaloneWSResponse = FCStatementOfLiabilityContext.get("response")
+    // response.status should be(200)
+    // val responseBody = Json.parse(response.body).as[FCSolCalculationSummaryResponse]
+    // responseBody.amountIntTotal.toString       shouldBe asMapTransposed.get("amountIntTotal").toString
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'input' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against input.
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple fc statement of liability debt summary will contain duties$
-//  def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context: FCStatementOfLiabilityContext, _: Int, inputs: Seq[FCSolCalculation]): Unit = {
-//    context.fCSolCalculation = inputs
-//  }
+  def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context: FCStatementOfLiabilityContext, summaryIndex: Int, inputs: Seq[FCSolCalculation]): Unit = {
+    // val response: StandaloneWSResponse = FCStatementOfLiabilityContext.get("response")
+    // asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
+    // val responseBody = Json.parse(response.body).as[FCSolCalculationSummaryResponse].debts(index)
+    // responseBody.debtId                        shouldBe duty.get("debtId").toString
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
+  }
 
   // ^the fc sol service will respond with (.*)$
   def theFcSolServiceWillRespondWith(context: FCStatementOfLiabilityContext, expectedMessage: String): Unit = {

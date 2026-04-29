@@ -1,9 +1,8 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
-import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import org.scalatest.matchers.should.Matchers
-
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
+import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 // TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCVATInterestForecastingSteps.scala.
 trait FCVATInterestForecastingStepHelpers { this: Matchers =>
@@ -44,8 +43,8 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
     // val responseBody = Json.parse(response.body).as[FCVATDebtCalculationsSummary]
     // responseBody.dateOfCalculation.toString shouldBe toDaysDate
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc vat debt summary will contain$
@@ -55,8 +54,8 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
     // val responseBody =
     // Json
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the fc vat customer has breathing spaces applied$

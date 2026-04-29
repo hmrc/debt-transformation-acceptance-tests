@@ -6,9 +6,8 @@ import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
-import uk.gov.hmrc.test.api.scalatest.tags._
 
- class FCSolrequestFeatureSpec
+class FCSolrequestFeatureSpec
   extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
@@ -68,7 +67,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: _: Int, inputs: Seq[FCSolCalculation].
+      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
@@ -115,7 +114,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: _: Int, inputs: Seq[FCSolCalculation].
+      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
@@ -156,7 +155,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: _: Int, inputs: Seq[FCSolCalculation].
+      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
@@ -197,7 +196,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: _: Int, inputs: Seq[FCSolCalculation].
+      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
@@ -306,7 +305,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: _: Int, inputs: Seq[FCSolCalculation].
+      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
@@ -337,7 +336,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: _: Int, inputs: Seq[FCSolCalculation].
+      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }

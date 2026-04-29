@@ -4,9 +4,7 @@ import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
-import uk.gov.hmrc.test.api.utils.BaseRequests
-import uk.gov.hmrc.test.api.utils.RandomValues
-import uk.gov.hmrc.test.api.utils.TestData
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
 
 object InterestForecastingBuilder extends BaseRequests with RandomValues {
 

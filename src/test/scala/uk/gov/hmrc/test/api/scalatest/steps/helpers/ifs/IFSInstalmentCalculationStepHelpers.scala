@@ -1,10 +1,9 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
-import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import org.scalatest.matchers.should.Matchers
-
+import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
 import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder
-import uk.gov.hmrc.test.api.models.InstalmentResponse
+import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 
 trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
 
@@ -86,9 +85,17 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs returns payment frequency summary$
-  def ifsReturnsPaymentFrequencySummary(context: IFSInstalmentCalculationContext, input: IFSInstalmentCalculationBuilder.InitialPaymentInput): Unit = {
-    // TODO: Wire input into context or request JSON using IFSInstalmentCalculationBuilder.
-    // Suggested type: IFSInstalmentCalculationBuilder.InitialPaymentInput
+  def ifsReturnsPaymentFrequencySummary(context: IFSInstalmentCalculationContext, input: InstalmentCalculationSummaryResponse): Unit = {
+    // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("paymentPlan")
+    // response.status should be(200)
+    // val paymentPlanSummary = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
+    // paymentPlanSummary.numberOfInstalments.toString shouldBe (asMapTransposed
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'input' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against input.
   }
 
   // ^ifs service returns an interest bearing payment instalment plan$
@@ -225,13 +232,22 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
     // response.status.shouldBe(200)
     // locally {
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^IFS response contains expected values$
   def ifsResponseContainsExpectedValues(context: IFSInstalmentCalculationContext, inputs: Seq[InstalmentResponse]): Unit = {
-//    context.instalment = inputs
+    // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
+    // val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
+    // response.status.shouldBe(200)
+    // map.zipWithIndex.foreach { case (expectedInstalment, _) =>
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
   }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$

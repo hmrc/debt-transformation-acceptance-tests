@@ -1,11 +1,8 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
-import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import org.scalatest.matchers.should.Matchers
-
-import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
+import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, FieldCollectionsBuilder, InterestForecastingBuilder}
+import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 // TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCInterestForecastingSteps.scala.
 trait FCInterestForecastingStepHelpers { this: Matchers =>
@@ -53,20 +50,36 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     // locally {
     // val fieldName = "combinedDailyAccrual"
     // Inferred legacy table keys: response
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc debt summary will contain$
   def theFcDebtSummaryWillContain(context: InterestForecastingContext, index: Int, input: FCStatementOfLiabilityBuilder.FCDebtsInput): Unit = {
-    // TODO: Wire input into context or request JSON using FCStatementOfLiabilityBuilder.
-    // Suggested type: FCStatementOfLiabilityBuilder.FCDebtsInput
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // response.status should be(200)
+    // val responseBody: FCDebtCalculation =
+    // Json.parse(response.body).as[FCDebtCalculationsSummary].debtCalculations(index - 1)
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'input' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against input.
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have calculation windows$
   def theFcDebtSummaryWillHaveCalculationWindows(context: InterestForecastingContext, summaryIndex: Int, inputs: Seq[FCStatementOfLiabilityBuilder.FCDebtsInput]): Unit = {
-    // TODO: Wire inputs into context or request JSON using FCStatementOfLiabilityBuilder.
-    // Suggested type: FCStatementOfLiabilityBuilder.FCDebtsInput
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // asMapTransposed.zipWithIndex.foreach { case (window, index) =>
+    // val responseBody =
+    // Json
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
   }
 
   // ^the fc customer has breathing spaces applied$

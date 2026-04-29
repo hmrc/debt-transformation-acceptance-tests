@@ -1,13 +1,10 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
-import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import org.scalatest.matchers.should.Matchers
-
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder
-import uk.gov.hmrc.test.api.models.sol.SolCalculation
-import uk.gov.hmrc.test.api.models.sol.SolDuty
+import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolDuty}
 import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
+import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder, StatementOfLiabilityBuilder}
+import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
@@ -78,18 +75,44 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^service returns debt statement of liability data$
   def serviceReturnsDebtStatementOfLiabilityData(context: StatementOfLiabilityContext, input: StatementOfLiabilityBuilder.DutyIdsInput): Unit = {
-    // TODO: Wire input into context or request JSON using StatementOfLiabilityBuilder.
-    // Suggested type: StatementOfLiabilityBuilder.DutyIdsInput
+    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
+    // response.status should be(200)
+    // val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse]
+    // locally {
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'input' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against input.
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) sol debt summary will contain$
   def theSolDebtSummaryWillContain(context: StatementOfLiabilityContext, index: Int, input: SolCalculation): Unit = {
-    context.solCalculation = input
+    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
+    // response.status should be(200)
+    // val debt: SolCalculation = Json.parse(response.body).as[SolCalculationSummaryResponse].debts(index - 1)
+    // debt.debtId                        shouldBe asMapTransposed.get("debtId").toString
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'input' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against input.
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) sol debt summary will contain duties$
   def theSolDebtSummaryWillContainDuties(context: StatementOfLiabilityContext, debtIndex: Int, inputs: Seq[SolDuty]): Unit = {
-    context.solDuty = inputs
+    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
+    // asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
+    // val responseBody = Json
+    // .parse(response.body)
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
   }
 
   // ^the {int}(st|nd|rd|th) customer statement of liability contains duty values as$
@@ -106,7 +129,16 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple statement of liability duties summary will contain$
   def theMultipleStatementOfLiabilityDutiesSummaryWillContain(context: StatementOfLiabilityContext, debtIndex: Int, inputs: Seq[SolDuty]): Unit = {
-    context.solDuty = inputs
+    // val asMapTransposed: Iterable[util.Map[Nothing, Nothing]] =
+    // val response: StandaloneWSResponse                        = StatementOfLiabilityContext.get("response")
+    // asMapTransposed.zipWithIndex.foreach { case (duty, _) =>
+    // val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse].debts(debtIndex - 1)
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
   }
 
   // ^the sol service will respond with (.*)$
