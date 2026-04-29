@@ -457,7 +457,19 @@ object StepDefToScalaFunctionConverter {
   ): Seq[(String, String)] = {
     val nonTableParams = lambdaParams.filterNot(p => isDataTableType(p.tpe))
 
-    if (nonTableParams.nonEmpty) nonTableParams.map(p => p.name -> scalaTypeForGeneratedParam(p.tpe))
+    if (nonTableParams.nonEmpty) {
+      nonTableParams.zipWithIndex.map { case (p, idx) =>
+        val safeName =
+          if (p.name == "_" || p.name.trim.isEmpty) {
+            val lower = stepText.toLowerCase
+            if (lower.contains("duty")) "dutyIndex"
+            else if (lower.contains("debt summary")) "summaryIndex"
+            else s"index${idx + 1}"
+          } else p.name
+
+        safeName -> scalaTypeForGeneratedParam(p.tpe)
+      }
+    }
     else if (groupCount <= 0) Seq.empty
     else {
       val lower = stepText.toLowerCase
