@@ -3,12 +3,9 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.models.SuppressionInformation
-import uk.gov.hmrc.test.api.models.SuppressionRequest
+import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
-import uk.gov.hmrc.test.api.utils.BaseRequests
-import uk.gov.hmrc.test.api.utils.RandomValues
-import uk.gov.hmrc.test.api.utils.TestData
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object SuppressionRulesBuilder extends BaseRequests with RandomValues {
 
@@ -74,7 +71,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
   // Legacy DataTable code is inference-only and is not emitted.
   // -----------------------------------------------------------------------
   final case class SuppressionCriteriaInput(
-    checkPeriodEnd: Option[String] = None,
+    checkPeriodEnd: Option[Boolean] = None,
     dateInFuture: Option[String] = None,
     dateTo: Option[String] = None,
     mainTrans: Option[String] = None,

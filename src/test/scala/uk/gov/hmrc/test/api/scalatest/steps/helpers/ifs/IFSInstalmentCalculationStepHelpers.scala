@@ -231,7 +231,7 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
 
   // ^IFS response contains expected values$
   def ifsResponseContainsExpectedValues(context: IFSInstalmentCalculationContext, inputs: Seq[InstalmentResponse]): Unit = {
-    context.instalment = inputs
+//    context.instalment = inputs
   }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$

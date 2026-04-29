@@ -3,6 +3,7 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.bearerToken
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.utils.BaseRequests
 import uk.gov.hmrc.test.api.utils.RandomValues

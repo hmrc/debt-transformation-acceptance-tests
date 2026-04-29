@@ -81,7 +81,7 @@ class SupressionByPostCodeFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression not applied to customers previous postcode", Wip, DTD_400) { context =>
+    Scenario("Suppression not applied to customers previous postcode", WIP, DTD_400) { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.

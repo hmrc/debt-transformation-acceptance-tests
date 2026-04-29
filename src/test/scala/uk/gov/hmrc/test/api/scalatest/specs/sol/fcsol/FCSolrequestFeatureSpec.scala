@@ -8,7 +8,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 import uk.gov.hmrc.test.api.scalatest.tags._
 
-abstract class FCSolrequestFeatureSpec
+ class FCSolrequestFeatureSpec
   extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
