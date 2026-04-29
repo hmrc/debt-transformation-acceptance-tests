@@ -61,11 +61,9 @@ object MigrateCucumberToScalaTest {
 //  --builders-root src/test/scala/uk/gov/hmrc/test/api/scalatest/builders \
 //  --recurse"
 //   5) Tags + Runner Generator
-//    sbt "runMain uk.gov.hmrc.test.api.utils.TagsRunnerGenerator \
+//    sbt "runMain uk.gov.hmrc.test.api.utils.TagsObjectGenerator \
 //    src/test/scala/uk/gov/hmrc/test/api/scalatest/specs \
 //    src/test/scala/uk/gov/hmrc/test/api/scalatest/tags \
-//    src/test/scala/uk/gov/hmrc/test/api/scalatest/runner \
-//    --cucumber-runner-root src/test/scala/uk/gov/hmrc/test/api/cucumber/runner \
 //  --recurse"
 
   private val featuresRoot = s"src/test/resources/features"
@@ -168,7 +166,7 @@ object MigrateCucumberToScalaTest {
     )
 
     println("5) Generating ScalaTest Tags and Cucumber-mirrored Runners")
-    TagsRunnerGenerator.main(
+    TagsObjectGenerator.main(
       Array(
         specsRoot,
         tagsOut,
