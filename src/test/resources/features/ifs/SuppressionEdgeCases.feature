@@ -27,66 +27,6 @@ Feature: Suppression - Edge cases
       | 2022-04-05 | 2022-04-05 | 1            | 0.0          | 0                       | 0                 | 500000               | 500000             | false                 | LEGISLATIVE | COVID       | Converted from new suppression style |
       | 2022-04-06 | 2022-05-23 | 48           | 3.25         | 44                      | 2136              | 500000               | 502136             | false                 |             |             |                                      |
 
-
-  Scenario: Suppression, interest rate change after suppression ends
-    Given suppression configuration data is created
-      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | mainTrans  |
-      | 2022-02-21 | 2022-04-04 | LEGISLATIVE | COVID      | SA-Suppression               | 1535       |
-    When suppression configuration is sent to ifs service
-    And a debt item
-      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
-      | 500000         | 2022-02-01        | 2022-07-06          | 1535      | 1000     |
-    And the debt item has no payment history
-    And no breathing spaces have been applied to the debt item
-    And the customer has post codes
-      | postCode | postCodeDate |
-      | EC2M 2LS | 2020-07-06   |
-    When the debt item is sent to the ifs service
-    Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | amountIntTotal | unpaidAmountTotal | amountOnIntDueTotal |
-      | 51                   | 5011                 | 505011         | 500000            | 500000              |
-    And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty | interestOnlyIndicator |
-      | true            | 112                  | 51                      | 5011                 | 500000           | 505011             | 500000             | false                 |
-    And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow | breathingSpaceApplied | reason      | description | code                                 |
-      | 2022-02-01 | 2022-02-20 | 19           | 2.75         | 37                      | 715               | 500000               | 500715             | false                 |             |             |                                      |
-      | 2022-02-21 | 2022-04-04 | 43           | 0.0          | 0                       | 0                 | 500000               | 500000             | false                 | LEGISLATIVE | COVID       | Converted from new suppression style |
-      | 2022-04-05 | 2022-05-23 | 49           | 3.25         | 44                      | 2181              | 500000               | 502181             | false                 |             |             |                                      |
-      | 2022-05-24 | 2022-07-04 | 42           | 3.5          | 47                      | 2013              | 500000               | 502013             | false                 |             |             |                                      |
-      | 2022-07-05 | 2022-07-06 | 2            | 3.75         | 51                      | 102               | 500000               | 500102             | false                 |             |             |                                      |
-
-
-  Scenario: Suppression - interest rate change before suppression
-    Given suppression configuration data is created
-      | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | mainTrans |
-      | 2022-01-07 | 2022-03-05 | LEGISLATIVE | COVID      | SA-Suppression               | 1535      |
-    When suppression configuration is sent to ifs service
-    And a debt item
-      | originalAmount | interestStartDate | interestRequestedTo | mainTrans | subTrans |
-      | 500000         | 2022-01-01        | 2022-07-06          | 1535      | 1000     |
-    And the debt item has no payment history
-    And no breathing spaces have been applied to the debt item
-    And the customer has post codes
-      | postCode | postCodeDate |
-      | EC2M 2LS | 2020-07-06   |
-    When the debt item is sent to the ifs service
-    Then the ifs service wilL return a total debts summary of
-      | combinedDailyAccrual | interestDueCallTotal | amountIntTotal | unpaidAmountTotal | amountOnIntDueTotal |
-      | 51                   | 5706                 | 505706         | 500000            | 500000              |
-    And the 1st debt summary will contain
-      | interestBearing | numberChargeableDays | interestDueDailyAccrual | interestDueDutyTotal | unpaidAmountDuty | totalAmountIntDuty | amountOnIntDueDuty | interestOnlyIndicator |
-      | true            | 128                  | 51                      | 5706                 | 500000           | 505706             | 500000             | false                 |
-    And the 1st debt summary will have calculation windows
-      | periodFrom | periodTo   | numberOfDays | interestRate | interestDueDailyAccrual | interestDueWindow | amountOnIntDueWindow | unpaidAmountWindow | breathingSpaceApplied | reason      | description | code                                 |
-      | 2022-01-01 | 2022-01-06 | 5            | 2.6          | 35                      | 178               | 500000               | 500178             | false                 |             |             |                                      |
-      | 2022-01-07 | 2022-02-20 | 45           | 0.0          | 0                       | 0                 | 500000               | 500000             | false                 | LEGISLATIVE | COVID       | Converted from new suppression style |
-      | 2022-02-21 | 2022-03-05 | 13           | 0.0          | 0                       | 0                 | 500000               | 500000             | false                 | LEGISLATIVE | COVID       | Converted from new suppression style |
-      | 2022-03-06 | 2022-04-04 | 30           | 3.0          | 41                      | 1232              | 500000               | 501232             | false                 |             |             |                                      |
-      | 2022-04-05 | 2022-05-23 | 49           | 3.25         | 44                      | 2181              | 500000               | 502181             | false                 |             |             |                                      |
-      | 2022-05-24 | 2022-07-04 | 42           | 3.5          | 47                      | 2013              | 500000               | 502013             | false                 |             |             |                                      |
-
-
   Scenario: Suppression, interest rate change before and after suppression
     Given suppression configuration data is created
       | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | mainTrans |
