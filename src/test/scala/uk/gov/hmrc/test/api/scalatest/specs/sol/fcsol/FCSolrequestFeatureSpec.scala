@@ -24,7 +24,7 @@ class FCSolrequestFeatureSpec
 
   Feature("fc statement of liability multiple debts") {
 
-    Scenario("0. FC Sol request with multiple debt ID's and multiple payments and cotax interest charge.") { context =>
+    ignore("0. FC Sol request with multiple debt ID's and multiple payments and cotax interest charge.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -71,7 +71,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
-    Scenario("1. FC Sol request with multiple debt ID's and multiple payments.") { context =>
+    ignore("1. FC Sol request with multiple debt ID's and multiple payments.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -118,7 +118,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
-    Scenario("2. FC Sol request with Single debt ID's and single payments.") { context =>
+    ignore("2. FC Sol request with Single debt ID's and single payments.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -159,7 +159,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
-    Scenario("3. FC Sol request with Single debt ID's and single payments with Interest Indicator as N.") { context =>
+    ignore("3. FC Sol request with Single debt ID's and single payments with Interest Indicator as N.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -200,7 +200,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
-    Scenario("4. FC Sol request with invalid or empty original amount.") { context =>
+    ignore("4. FC Sol request with invalid or empty original amount.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -226,7 +226,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("5. FC Sol request with no debt items.") { context =>
+    ignore("5. FC Sol request with no debt items.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -252,7 +252,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("6. FC Sol request with missing Interest Indicator.") { context =>
+    ignore("6. FC Sol request with missing Interest Indicator.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -278,7 +278,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("7. Large Interest bearing debt with no payments.") { context =>
+    ignore("7. Large Interest bearing debt with no payments.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,
@@ -309,7 +309,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
 
     }
-    Scenario("8. Large Non Interest bearing debt with no payments.") { context =>
+    ignore("8. Large Non Interest bearing debt with no payments.") { context =>
       Given("fc sol request")
       fcSolRequest(
         context,

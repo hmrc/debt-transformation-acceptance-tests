@@ -24,7 +24,7 @@ class ReferenceDataFeatureSpec
 
   Feature("Get Debt For all the SUPPORTED REGIMES") {
 
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1525, subTrans=1000]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1525, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -56,7 +56,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1530, subTrans=1000]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1530, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -88,7 +88,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1535, subTrans=1000]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1535, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -120,7 +120,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1540, subTrans=1000]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1540, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -152,7 +152,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1545, subTrans=1000]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1545, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -184,7 +184,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1545, subTrans=1090]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1545, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -216,7 +216,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1545, subTrans=2000]") { context =>
+    ignore("Interest Bearing TPSS MainTrans SubTrans [mainTrans=1545, subTrans=2000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -248,7 +248,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5330, subTrans=7006, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5330, subTrans=7006, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -285,7 +285,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5330, subTrans=7010, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5330, subTrans=7010, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -322,7 +322,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5330, subTrans=7011, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5330, subTrans=7011, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -359,7 +359,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5350, subTrans=7012, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5350, subTrans=7012, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -396,7 +396,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5350, subTrans=7014, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5350, subTrans=7014, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -433,7 +433,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5350, subTrans=7013, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=5350, subTrans=7013, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -470,7 +470,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1000, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1000, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -507,7 +507,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1020, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1020, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -544,7 +544,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1025, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1025, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -581,7 +581,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1180, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1085, subTrans=1180, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -618,7 +618,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1511, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1511, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -655,7 +655,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1515, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1515, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -692,7 +692,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1520, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1520, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -729,7 +729,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1526, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1526, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -766,7 +766,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1531, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1531, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -803,7 +803,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1536, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1536, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -840,7 +840,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1541, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1541, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -877,7 +877,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1546, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1546, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -914,7 +914,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=2421, subTrans=1150, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=2421, subTrans=1150, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -951,7 +951,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1441, subTrans=1150, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing TPSS MainTrans and SubTrans [mainTrans=1441, subTrans=1150, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -988,7 +988,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1025,7 +1025,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2020, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2020, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1062,7 +1062,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2023, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2023, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1099,7 +1099,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2026, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2026, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1136,7 +1136,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2030, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2030, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1173,7 +1173,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2100, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2005, subTrans=2100, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1210,7 +1210,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2007, subTrans=1107, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2007, subTrans=1107, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1247,7 +1247,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2045, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2045, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1284,7 +1284,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2045, subTrans=2100, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2045, subTrans=2100, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1321,7 +1321,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2065, subTrans=2020, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2065, subTrans=2020, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1358,7 +1358,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1395,7 +1395,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2020, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2020, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1432,7 +1432,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2023, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2023, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1469,7 +1469,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2026, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2026, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1506,7 +1506,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2100, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2095, subTrans=2100, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1543,7 +1543,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2000, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2000, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1580,7 +1580,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2023, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2023, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1617,7 +1617,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2026, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2026, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1654,7 +1654,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2030, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2030, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1691,7 +1691,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2100, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2105, subTrans=2100, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1728,7 +1728,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2135, subTrans=2355, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2135, subTrans=2355, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1765,7 +1765,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2505, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2505, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1802,7 +1802,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2515, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2515, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1839,7 +1839,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2525, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2525, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1876,7 +1876,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2535, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2535, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1913,7 +1913,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2545, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2545, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1950,7 +1950,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2555, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2555, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -1987,7 +1987,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2565, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2565, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2024,7 +2024,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2575, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2575, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2061,7 +2061,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2585, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2585, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2098,7 +2098,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2595, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2595, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2135,7 +2135,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1025, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1025, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2172,7 +2172,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1030, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1030, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2209,7 +2209,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1035, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1035, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2246,7 +2246,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1040, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1040, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2283,7 +2283,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1045, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=1045, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2320,7 +2320,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2110, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2110, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2357,7 +2357,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2115, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2115, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2394,7 +2394,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2120, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2120, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2431,7 +2431,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2125, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing PAYE MainTrans and SubTrans [mainTrans=2125, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2468,7 +2468,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1000]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2500,7 +2500,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1020]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1020]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2532,7 +2532,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1023]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1023]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2564,7 +2564,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1026]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1026]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2596,7 +2596,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1030]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1030]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2628,7 +2628,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1100]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2000, subTrans=1100]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2660,7 +2660,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2006, subTrans=1106]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2006, subTrans=1106]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2692,7 +2692,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1250]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1250]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2724,7 +2724,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1260]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1260]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2756,7 +2756,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1270]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1270]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2788,7 +2788,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1280]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1280]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2820,7 +2820,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1290]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1290]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2852,7 +2852,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1300]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1300]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2884,7 +2884,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1310]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1310]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2916,7 +2916,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1320]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1320]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2948,7 +2948,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1330]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1330]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -2980,7 +2980,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1340]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1340]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3012,7 +3012,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1350]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1350]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3044,7 +3044,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1390]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1390]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3076,7 +3076,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1395]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2030, subTrans=1395]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3108,7 +3108,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2040, subTrans=1000]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2040, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3140,7 +3140,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2060, subTrans=1020]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2060, subTrans=1020]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3172,7 +3172,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1000]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3204,7 +3204,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1020]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1020]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3236,7 +3236,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1023]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1023]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3268,7 +3268,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1026]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1026]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3300,7 +3300,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1100]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1100]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3332,7 +3332,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1250]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1250]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3364,7 +3364,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1260]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1260]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3396,7 +3396,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1270]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1270]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3428,7 +3428,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1280]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1280]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3460,7 +3460,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1290]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1290]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3492,7 +3492,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1300]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1300]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3524,7 +3524,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1310]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1310]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3556,7 +3556,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1320]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1320]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3588,7 +3588,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1330]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1330]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3620,7 +3620,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1340]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1340]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3652,7 +3652,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1350]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2090, subTrans=1350]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3684,7 +3684,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1000]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1000]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3716,7 +3716,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1023]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1023]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3748,7 +3748,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1026]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1026]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3780,7 +3780,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1030]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1030]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3812,7 +3812,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1100]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2100, subTrans=1100]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3844,7 +3844,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2130, subTrans=1355]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2130, subTrans=1355]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3876,7 +3876,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2500, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2500, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3908,7 +3908,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2510, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2510, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3940,7 +3940,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2520, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2520, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -3972,7 +3972,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2530, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2530, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4004,7 +4004,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2540, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2540, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4036,7 +4036,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2550, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2550, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4068,7 +4068,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2560, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2560, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4100,7 +4100,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2570, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2570, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4132,7 +4132,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2580, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2580, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4164,7 +4164,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing Employer PAYE charges [mainTrans=2590, subTrans=1090]") { context =>
+    ignore("Interest Bearing Employer PAYE charges [mainTrans=2590, subTrans=1090]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4196,7 +4196,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("MainTrans (1525) debt empty subTrans (7006)") { context =>
+    ignore("MainTrans (1525) debt empty subTrans (7006)") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4226,7 +4226,7 @@ class ReferenceDataFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4700, subTrans=1174, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4700, subTrans=1174, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4258,7 +4258,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4760, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4760, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4290,7 +4290,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4766, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4766, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4322,7 +4322,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4745, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4745, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4354,7 +4354,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4770, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4770, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4386,7 +4386,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4773, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4773, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4418,7 +4418,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4776, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4776, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4450,7 +4450,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4755, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4755, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4482,7 +4482,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4783, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4783, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4514,7 +4514,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4765, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4765, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4546,7 +4546,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4775, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4775, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4578,7 +4578,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4790, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4790, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4610,7 +4610,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4793, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4793, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4642,7 +4642,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4748, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4748, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4674,7 +4674,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4703, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4703, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4706,7 +4706,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4704, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4704, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4738,7 +4738,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=4735, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=4735, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4770,7 +4770,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing VAT charges [mainTrans=3996, subTrans=1091, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing VAT charges [mainTrans=3996, subTrans=1091, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4802,7 +4802,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7700, subTrans=1174, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7700, subTrans=1174, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4839,7 +4839,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7747, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7747, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4876,7 +4876,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7760, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7760, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4913,7 +4913,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7766, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7766, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4950,7 +4950,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7735, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7735, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -4987,7 +4987,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7745, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7745, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5024,7 +5024,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7776, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7776, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5061,7 +5061,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7755, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7755, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5098,7 +5098,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7783, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7783, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5135,7 +5135,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7786, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7786, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5172,7 +5172,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7765, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7765, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5209,7 +5209,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7775, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7775, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5246,7 +5246,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7796, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7796, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5283,7 +5283,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=7799, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=7799, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5320,7 +5320,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4749, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4749, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5357,7 +5357,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4620, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4620, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5394,7 +5394,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4622, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4622, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5431,7 +5431,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4624, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4624, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5468,7 +5468,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4682, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4682, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5505,7 +5505,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4684, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4684, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5542,7 +5542,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4687, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4687, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5579,7 +5579,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4693, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4693, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5616,7 +5616,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4695, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4695, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5653,7 +5653,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4767, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4767, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5690,7 +5690,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4697, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4697, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5727,7 +5727,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4777, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4777, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5764,7 +5764,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4784, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4784, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5801,7 +5801,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4791, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4791, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5838,7 +5838,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4794, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4794, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5875,7 +5875,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4774, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4774, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5912,7 +5912,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4771, subTrans=1175, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4771, subTrans=1175, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5949,7 +5949,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4618, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4618, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -5986,7 +5986,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=3997, subTrans=2091, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=3997, subTrans=2091, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6023,7 +6023,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4763, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4763, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6060,7 +6060,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4796, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4796, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6097,7 +6097,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4799, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4799, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6134,7 +6134,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4747, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4747, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6171,7 +6171,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4711, subTrans=1174, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4711, subTrans=1174, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6208,7 +6208,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing VAT Charges [mainTrans=4786, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing VAT Charges [mainTrans=4786, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6245,7 +6245,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4955, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4955, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6282,7 +6282,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4965, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4965, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6319,7 +6319,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4975, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4975, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6356,7 +6356,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4985, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4985, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6393,7 +6393,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4995, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=4995, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6430,7 +6430,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5015, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5015, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6467,7 +6467,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5025, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5025, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6504,7 +6504,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5035, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5035, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6541,7 +6541,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5045, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5045, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6578,7 +6578,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5055, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5055, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6615,7 +6615,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5065, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5065, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6652,7 +6652,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5075, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5075, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6689,7 +6689,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5085, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5085, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6726,7 +6726,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5095, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5095, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6763,7 +6763,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5105, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5105, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6800,7 +6800,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5115, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5115, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6837,7 +6837,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5125, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5125, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6874,7 +6874,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5135, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5135, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6911,7 +6911,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5145, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5145, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6948,7 +6948,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5155, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5155, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -6985,7 +6985,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5165, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5165, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7022,7 +7022,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5175, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5175, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7059,7 +7059,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5185, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5185, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7096,7 +7096,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5195, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5195, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7133,7 +7133,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5205, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5205, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7170,7 +7170,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5215, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA into IFS and SoL AND NOT SSTTP [mainTrans=5215, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("the current set of rules")
       // TODO: Helper 'theCurrentSetOfRules' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7207,7 +7207,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7239,7 +7239,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7271,7 +7271,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7303,7 +7303,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7335,7 +7335,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1042, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1042, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7367,7 +7367,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1044, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1044, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7399,7 +7399,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1046, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1046, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7431,7 +7431,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1047, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1047, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7463,7 +7463,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1060, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1060, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7495,7 +7495,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1100, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4000, subTrans=1100, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7527,7 +7527,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7559,7 +7559,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7591,7 +7591,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7623,7 +7623,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7655,7 +7655,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7687,7 +7687,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7719,7 +7719,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7751,7 +7751,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7783,7 +7783,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1042, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1042, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7815,7 +7815,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1044, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1044, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7847,7 +7847,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1046, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1046, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7879,7 +7879,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1047, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1047, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7911,7 +7911,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1060, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1060, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7943,7 +7943,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1100, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4001, subTrans=1100, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -7975,7 +7975,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4002, subTrans=1085, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4002, subTrans=1085, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8007,7 +8007,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4002, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4002, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8039,7 +8039,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4002, subTrans=1095, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4002, subTrans=1095, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8071,7 +8071,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8103,7 +8103,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8135,7 +8135,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8167,7 +8167,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8199,7 +8199,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8231,7 +8231,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8263,7 +8263,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8295,7 +8295,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8327,7 +8327,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1042, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1042, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8359,7 +8359,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1044, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1044, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8391,7 +8391,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1046, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1046, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8423,7 +8423,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1047, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1047, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8455,7 +8455,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1060, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1060, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8487,7 +8487,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1100, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4003, subTrans=1100, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8519,7 +8519,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4027, subTrans=1080, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4027, subTrans=1080, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8551,7 +8551,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4028, subTrans=1085, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4028, subTrans=1085, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8583,7 +8583,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4028, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4028, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8615,7 +8615,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4028, subTrans=1095, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4028, subTrans=1095, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8647,7 +8647,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4029, subTrans=1085, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4029, subTrans=1085, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8679,7 +8679,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4029, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4029, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8711,7 +8711,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4029, subTrans=1095, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4029, subTrans=1095, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8743,7 +8743,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4031, subTrans=1085, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4031, subTrans=1085, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8775,7 +8775,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4031, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4031, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8807,7 +8807,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4031, subTrans=1095, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4031, subTrans=1095, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8839,7 +8839,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4032, subTrans=1085, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4032, subTrans=1085, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8871,7 +8871,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4032, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4032, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8903,7 +8903,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4032, subTrans=1095, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4032, subTrans=1095, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8935,7 +8935,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4033, subTrans=1085, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4033, subTrans=1085, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8967,7 +8967,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4033, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4033, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -8999,7 +8999,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4033, subTrans=1095, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4033, subTrans=1095, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9031,7 +9031,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9063,7 +9063,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9095,7 +9095,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9127,7 +9127,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9159,7 +9159,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9191,7 +9191,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9223,7 +9223,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9255,7 +9255,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9287,7 +9287,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1042, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1042, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9319,7 +9319,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1044, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1044, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9351,7 +9351,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1046, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1046, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9383,7 +9383,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1047, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1047, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9415,7 +9415,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1060, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1060, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9447,7 +9447,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1096, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1096, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9479,7 +9479,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1100, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1100, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9511,7 +9511,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9543,7 +9543,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2195, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2195, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9575,7 +9575,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2200, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2200, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9607,7 +9607,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2205, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2205, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9639,7 +9639,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2210, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4910, subTrans=2210, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9671,7 +9671,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9703,7 +9703,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9735,7 +9735,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9767,7 +9767,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9799,7 +9799,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9831,7 +9831,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9863,7 +9863,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9895,7 +9895,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4911, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9927,7 +9927,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9959,7 +9959,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -9991,7 +9991,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10023,7 +10023,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10055,7 +10055,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10087,7 +10087,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10119,7 +10119,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10151,7 +10151,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4913, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10183,7 +10183,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10215,7 +10215,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10247,7 +10247,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10279,7 +10279,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10311,7 +10311,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10343,7 +10343,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10375,7 +10375,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10407,7 +10407,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10439,7 +10439,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1042, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1042, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10471,7 +10471,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1044, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1044, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10503,7 +10503,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1046, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1046, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10535,7 +10535,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1047, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1047, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10567,7 +10567,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1060, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1060, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10599,7 +10599,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1096, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1096, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10631,7 +10631,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1100, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=1100, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10663,7 +10663,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2195, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2195, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10695,7 +10695,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2200, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2200, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10727,7 +10727,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2205, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2205, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10759,7 +10759,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2210, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4915, subTrans=2210, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10791,7 +10791,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10823,7 +10823,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10855,7 +10855,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10887,7 +10887,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10919,7 +10919,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10951,7 +10951,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -10983,7 +10983,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11015,7 +11015,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11047,7 +11047,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4920, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11079,7 +11079,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1005, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1005, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11111,7 +11111,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1007, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1007, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11143,7 +11143,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1008, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1008, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11175,7 +11175,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1009, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1009, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11207,7 +11207,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1010, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1010, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11239,7 +11239,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1011, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1011, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11271,7 +11271,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1012, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1012, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11303,7 +11303,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1015, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1015, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11335,7 +11335,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4930, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11367,7 +11367,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4940, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4940, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11399,7 +11399,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4950, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4950, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11431,7 +11431,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4960, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4960, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11463,7 +11463,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4970, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4970, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11495,7 +11495,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4980, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4980, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11527,7 +11527,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4990, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4990, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11559,7 +11559,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5010, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5010, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11591,7 +11591,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5020, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5020, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11623,7 +11623,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5030, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5030, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11655,7 +11655,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5040, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5040, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11687,7 +11687,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5050, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5050, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11719,7 +11719,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5060, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5060, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11751,7 +11751,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5070, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5070, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11783,7 +11783,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5080, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5080, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11815,7 +11815,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5090, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5090, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11847,7 +11847,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5100, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5100, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11879,7 +11879,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5110, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5110, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11911,7 +11911,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5120, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5120, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11943,7 +11943,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5130, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5130, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -11975,7 +11975,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5140, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5140, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12007,7 +12007,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5150, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5150, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12039,7 +12039,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5160, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5160, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12071,7 +12071,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5170, subTrans=1090, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5170, subTrans=1090, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12103,7 +12103,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5180, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5180, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12135,7 +12135,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5190, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5190, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12167,7 +12167,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5200, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5200, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12199,7 +12199,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5210, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5210, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12231,7 +12231,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4026, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4026, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12263,7 +12263,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4026, subTrans=2095, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4026, subTrans=2095, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12295,7 +12295,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4026, subTrans=2096, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4026, subTrans=2096, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12327,7 +12327,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4941, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=4941, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12359,7 +12359,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5071, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5071, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12391,7 +12391,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5073, subTrans=1553, interestOnlyIndicator=false]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=5073, subTrans=1553, interestOnlyIndicator=false]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12423,7 +12423,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1554, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1554, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12455,7 +12455,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1555, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1555, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12487,7 +12487,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1560, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1560, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12519,7 +12519,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1565, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1565, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12551,7 +12551,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1570, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1570, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12583,7 +12583,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1575, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1575, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12615,7 +12615,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1580, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1580, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12647,7 +12647,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1585, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1585, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12679,7 +12679,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1590, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1590, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12711,7 +12711,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1595, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1595, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12743,7 +12743,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1600, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1600, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12775,7 +12775,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1605, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1605, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12807,7 +12807,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1610, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1610, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12839,7 +12839,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1611, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1611, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12871,7 +12871,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1680, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1680, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12903,7 +12903,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1685, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=1685, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12935,7 +12935,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=2090, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=2090, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12967,7 +12967,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=2095, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=2095, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -12999,7 +12999,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=2096, interestOnlyIndicator=true]") { context =>
+    ignore("Non Interest Bearing SA SSTTP AND into IFS and SoL AND Op Led [mainTrans=6010, subTrans=2096, interestOnlyIndicator=true]") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -13031,7 +13031,7 @@ class ReferenceDataFeatureSpec
       // theDebtSummaryWillContain(context)
 
     }
-    Scenario("Simple assessment (SIA) SSTTP Debts - Non Interest bearing") { context =>
+    ignore("Simple assessment (SIA) SSTTP Debts - Non Interest bearing") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.

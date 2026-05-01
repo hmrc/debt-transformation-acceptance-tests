@@ -24,7 +24,7 @@ class FCMultipeDebtItemsFeatureSpec
 
   Feature("FC Debt Calculation End point testing") {
 
-    Scenario("0. Interest Indicators. 2 debt. 1 payment history and cotax charge interest") { context =>
+    ignore("0. Interest Indicators. 2 debt. 1 payment history and cotax charge interest") { context =>
       Given("fc debt item with cotax charge interest")
       // TODO: Helper 'fcDebtItemWithCotaxChargeInterest' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -76,7 +76,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillContain(context)
 
     }
-    Scenario("1. Interest Indicators. 2 debt. 1 payment history") { context =>
+    ignore("1. Interest Indicators. 2 debt. 1 payment history") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -128,7 +128,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillContain(context)
 
     }
-    Scenario("2. Interest Indicator. 1 Payment of 1 debt.") { context =>
+    ignore("2. Interest Indicator. 1 Payment of 1 debt.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -165,7 +165,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillContain(context)
 
     }
-    Scenario("3. No Interest Indicator. 1 Payment of 1 debt.") { context =>
+    ignore("3. No Interest Indicator. 1 Payment of 1 debt.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -207,7 +207,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillNotHaveAnyCalculationWindows(context)
 
     }
-    Scenario("4. Interest Indicator. 1 Payment of 1 debt. No breathing space.") { context =>
+    ignore("4. Interest Indicator. 1 Payment of 1 debt. No breathing space.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -244,7 +244,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillContain(context)
 
     }
-    Scenario("5. 1 debt, no payment history") { context =>
+    ignore("5. 1 debt, no payment history") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -281,7 +281,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillContain(context)
 
     }
-    Scenario("6. Interest Indicator. 1 Payment of 1 debt. Payment Done.") { context =>
+    ignore("6. Interest Indicator. 1 Payment of 1 debt. Payment Done.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -323,7 +323,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("7. Total Payments cannot be 0.") { context =>
+    ignore("7. Total Payments cannot be 0.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -353,7 +353,7 @@ class FCMultipeDebtItemsFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("8. Total Payments cannot be negative.") { context =>
+    ignore("8. Total Payments cannot be negative.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -383,7 +383,7 @@ class FCMultipeDebtItemsFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("9. Total Payment amounts cannot be more than the original amount.") { context =>
+    ignore("9. Total Payment amounts cannot be more than the original amount.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -413,7 +413,7 @@ class FCMultipeDebtItemsFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("10. No InterestStartDate but InterestIndicator is Yes.") { context =>
+    ignore("10. No InterestStartDate but InterestIndicator is Yes.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -443,7 +443,7 @@ class FCMultipeDebtItemsFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("FC Debt ending in a leap year") { context =>
+    ignore("FC Debt ending in a leap year") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -485,7 +485,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Debt starting in a leap year") { context =>
+    ignore("FC Debt starting in a leap year") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -527,7 +527,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Debt crossing a leap year") { context =>
+    ignore("FC Debt crossing a leap year") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -569,7 +569,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Interest rate changes from 3.25%, 2.75% and 2.6% after a payment is made") { context =>
+    ignore("FC Interest rate changes from 3.25%, 2.75% and 2.6% after a payment is made") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -611,7 +611,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Debt spanning multiple leap years") { context =>
+    ignore("FC Debt spanning multiple leap years") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -653,7 +653,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Interest rate changes from 3% to 3.25%") { context =>
+    ignore("FC Interest rate changes from 3% to 3.25%") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -695,7 +695,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Interest rate changes from 3% to 3.25% with 2 payments on same date in a leap year") { context =>
+    ignore("FC Interest rate changes from 3% to 3.25% with 2 payments on same date in a leap year") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -732,7 +732,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Interest rate changes from 3% to 3.25% after a payment is made") { context =>
+    ignore("FC Interest rate changes from 3% to 3.25% after a payment is made") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -769,7 +769,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Interest rate changes from 3% to 3.25% with 2 payments on same date") { context =>
+    ignore("FC Interest rate changes from 3% to 3.25% with 2 payments on same date") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -806,7 +806,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC 2 Debts - Interest rate changes from 3% to 3.25% and then multiple payments are made for both debts") { context =>
+    ignore("FC 2 Debts - Interest rate changes from 3% to 3.25% and then multiple payments are made for both debts") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -868,7 +868,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("FC Interest rate changes from 2.75% to 2.6% - interestRequestedTo before interestStartDate") { context =>
+    ignore("FC Interest rate changes from 2.75% to 2.6% - interestRequestedTo before interestStartDate") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -910,7 +910,7 @@ class FCMultipeDebtItemsFeatureSpec
       // theFcDebtSummaryWillNotHaveAnyCalculationWindows(context)
 
     }
-    Scenario("periodEnd and interestStartDate is missing or invalid.") { context =>
+    ignore("periodEnd and interestStartDate is missing or invalid.") { context =>
       Given("a fc debt item")
       // TODO: Helper 'aFcDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.

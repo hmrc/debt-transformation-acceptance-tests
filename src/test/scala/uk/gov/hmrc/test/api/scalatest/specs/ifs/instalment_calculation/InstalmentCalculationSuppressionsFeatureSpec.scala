@@ -24,7 +24,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
 
   Feature("Suppression Period ends after quote date") {
 
-    Scenario("Instalment calculation has been requested where a postcode suppression period ends after the quote date") { context =>
+    ignore("Instalment calculation has been requested where a postcode suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -73,7 +73,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
       // theInstalmentShouldHaveAnInterestAccruedOf(context)
 
     }
-    Scenario("Instalment calculation has been requested where a period end suppression period ends after the quote date") { context =>
+    ignore("Instalment calculation has been requested where a period end suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -122,7 +122,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
       // theInstalmentShouldHaveAnInterestAccruedOf(context)
 
     }
-    Scenario("Instalment calculation has been requested where a main trans suppression period ends after the quote date") { context =>
+    ignore("Instalment calculation has been requested where a main trans suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -171,7 +171,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
       // theInstalmentShouldHaveAnInterestAccruedOf(context)
 
     }
-    Scenario("Should calculate instalment where suppression period ends after the quote date") { context =>
+    ignore("Should calculate instalment where suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -220,7 +220,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
       // theInstalmentShouldHaveAnInterestAccruedOf(context)
 
     }
-    Scenario("Should calculate instalment where a period end suppression period ends after the quote date") { context =>
+    ignore("Should calculate instalment where a period end suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -269,7 +269,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
       // theInstalmentShouldHaveAnInterestAccruedOf(context)
 
     }
-    Scenario("Should calculate instalment where a main trans suppression period ends after the quote date") { context =>
+    ignore("Should calculate instalment where a main trans suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.

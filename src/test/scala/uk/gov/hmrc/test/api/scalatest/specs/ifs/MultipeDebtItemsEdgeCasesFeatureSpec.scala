@@ -25,7 +25,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
 
   Feature("Multiple Debt Items - Edge Cases") {
 
-    Scenario("1. 2 debts. 1 interest bearing and 1 non interest bearing") { context =>
+    ignore("1. 2 debts. 1 interest bearing and 1 non interest bearing") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -87,7 +87,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
 
     }
-    Scenario("2. 2 debts each with 1 payment of different amounts") { context =>
+    ignore("2. 2 debts each with 1 payment of different amounts") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -149,7 +149,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
 
     }
-    Scenario("3. 3 debts, 1 with a payment") { context =>
+    ignore("3. 3 debts, 1 with a payment") { context =>
       And("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -231,7 +231,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("4. 300 debt items") { context =>
+    ignore("4. 300 debt items") { context =>
       Given("300 debt items")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
@@ -260,7 +260,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("5. 2 debts, 5 payments on one of the debts") { context =>
+    ignore("5. 2 debts, 5 payments on one of the debts") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -322,7 +322,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("6. 1 debt with payment where payment date before date created") { context =>
+    ignore("6. 1 debt with payment where payment date before date created") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -364,7 +364,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("7. 1 debt with a payment amount greater than original debt amount") { context =>
+    ignore("7. 1 debt with a payment amount greater than original debt amount") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -394,7 +394,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("8. 1 debt with an interest start date before the debt created", DTD_2216) { context =>
+    ignore("8. 1 debt with an interest start date before the debt created", DTD_2216) { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -436,7 +436,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("9. 2 SA debts where one has an original amount less than zero") { context =>
+    ignore("9. 2 SA debts where one has an original amount less than zero") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.

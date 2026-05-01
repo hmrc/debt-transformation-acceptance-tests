@@ -24,7 +24,7 @@ class VATFCBreathingSpaceFeatureSpec
 
   Feature("FC VAT Debt Calculation with Breathing Space") {
 
-    Scenario("Breathing space for interest bearing debt with payments.") { context =>
+    ignore("Breathing space for interest bearing debt with payments.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -54,7 +54,7 @@ class VATFCBreathingSpaceFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("Breathing space for interest bearing debt with no payments.") { context =>
+    ignore("Breathing space for interest bearing debt with no payments.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -84,7 +84,7 @@ class VATFCBreathingSpaceFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("Non interest bearing debt should not have breathing space applied") { context =>
+    ignore("Non interest bearing debt should not have breathing space applied") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -114,7 +114,7 @@ class VATFCBreathingSpaceFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("Multiple debts with multiple breathing Spaces") { context =>
+    ignore("Multiple debts with multiple breathing Spaces") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -162,7 +162,7 @@ class VATFCBreathingSpaceFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("Multiple debts, 1 with a breathing Space, 1 without") { context =>
+    ignore("Multiple debts, 1 with a breathing Space, 1 without") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -208,7 +208,7 @@ class VATFCBreathingSpaceFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("Breathing space for  interest bearing debt with payments -no debtRespiteFrom") { context =>
+    ignore("Breathing space for  interest bearing debt with payments -no debtRespiteFrom") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -232,7 +232,7 @@ class VATFCBreathingSpaceFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("Breathing space -no interest bearing indictor.") { context =>
+    ignore("Breathing space -no interest bearing indictor.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.

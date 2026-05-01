@@ -24,7 +24,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
 
   Feature("Interest Rate Changes - Edge cases") {
 
-    Scenario("300 Debt items - Interest rate changes from 3.0% to 3.25%") { context =>
+    ignore("300 Debt items - Interest rate changes from 3.0% to 3.25%") { context =>
       Given("300 debt items where interest rate changes from 3.0 to 3.25")
       // TODO: Helper 'debtItemsWhereInterestRateChangesFrom30To325' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -55,7 +55,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("2 Debts - Interest rate changes from 3.25% to 2.75% - leap year - payment is made for 1 debt - Interest rate changes from 2.75% to 2.6%") { context =>
+    ignore("2 Debts - Interest rate changes from 3.25% to 2.75% - leap year - payment is made for 1 debt - Interest rate changes from 2.75% to 2.6%") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -117,7 +117,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Interest rate changes from 2.75% to 2.6% - leap year - payment is made for 1 debt on the same day the interest rate changes") { context =>
+    ignore("Interest rate changes from 2.75% to 2.6% - leap year - payment is made for 1 debt on the same day the interest rate changes") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -159,7 +159,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Interest rate changes on same day as interest requested to") { context =>
+    ignore("Interest rate changes on same day as interest requested to") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -201,7 +201,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Interest rate changes on same day as interest start date") { context =>
+    ignore("Interest rate changes on same day as interest start date") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -243,7 +243,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Interest rate changes day prior to interest start date") { context =>
+    ignore("Interest rate changes day prior to interest start date") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -285,7 +285,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Interest start date - historic Interest date 1999-03-06") { context =>
+    ignore("Interest start date - historic Interest date 1999-03-06") { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.

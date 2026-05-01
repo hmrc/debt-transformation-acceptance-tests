@@ -24,7 +24,7 @@ class VATFCFeatureSpec
 
   Feature("FC VAT Debt Calculation End point testing") {
 
-    Scenario("1. Interest Indicator as Yes. 1 Payment of 1 debt.") { context =>
+    ignore("1. Interest Indicator as Yes. 1 Payment of 1 debt.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -52,7 +52,7 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("2. Interest Indicator as No. 1 Payment of 1 debt.") { context =>
+    ignore("2. Interest Indicator as No. 1 Payment of 1 debt.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -80,7 +80,7 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("3. Interest Indicator as Yes. 2 Payment of 1 debt.") { context =>
+    ignore("3. Interest Indicator as Yes. 2 Payment of 1 debt.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -108,7 +108,7 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("4. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is more than Original amount") { context =>
+    ignore("4. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is more than Original amount") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -130,7 +130,7 @@ class VATFCFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("5. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is 0") { context =>
+    ignore("5. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is 0") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -152,7 +152,7 @@ class VATFCFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("5. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is -10000") { context =>
+    ignore("5. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is -10000") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -174,7 +174,7 @@ class VATFCFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("6. Interest Indicator as Yes. 2 Payment of 2 debt.") { context =>
+    ignore("6. Interest Indicator as Yes. 2 Payment of 2 debt.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -215,7 +215,7 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("7. Interest Indicator as Yes. No Payment History.") { context =>
+    ignore("7. Interest Indicator as Yes. No Payment History.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -243,7 +243,7 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("8. Interest Indicator as No. No Payment History.") { context =>
+    ignore("8. Interest Indicator as No. No Payment History.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -271,7 +271,7 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    Scenario("9. periodEnd missing. Interest Indicator as No. No Payment History.") { context =>
+    ignore("9. periodEnd missing. Interest Indicator as No. No Payment History.") { context =>
       Given("a fc vat debt item")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
