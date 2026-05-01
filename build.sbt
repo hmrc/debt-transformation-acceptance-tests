@@ -13,7 +13,6 @@ libraryDependencies ++= Seq(
   "io.cucumber"                 % "cucumber-junit"           % CucumberVersion,
   "io.cucumber"                 % "cucumber-picocontainer"   % CucumberVersion,
   "com.novocode"                % "junit-interface"          % "0.11",
-  "com.typesafe.scala-logging" %% "scala-logging"            % "3.9.6",
   "commons-io"                  % "commons-io"               % "2.22.0",
   "com.beachape"               %% "enumeratum-play-json"     % "1.9.7",
   "uk.gov.hmrc"                %% "api-test-runner"          % "0.10.0" % Test,
