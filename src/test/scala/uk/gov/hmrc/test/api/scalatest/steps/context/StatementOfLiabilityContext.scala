@@ -21,5 +21,5 @@ final case class StatementOfLiabilityContext(
   var request: String = "",
   var responseBody: String = "",
   var status: Int = 0,
-  var headers: Map[String, String] = Map.empty,
+  var headers: Map[String, String] = Map.empty
 )

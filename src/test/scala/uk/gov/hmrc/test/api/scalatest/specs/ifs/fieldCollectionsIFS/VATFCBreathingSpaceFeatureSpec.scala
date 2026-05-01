@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 
 class VATFCBreathingSpaceFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
@@ -244,7 +244,9 @@ class VATFCBreathingSpaceFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // theDebtItemIsSentToTheFcIfsService(context)
 
-      Then("the fc vat ifs service will respond with Field at path /debtItems(0)/breathingSpaces(0)/debtRespiteFrom missing or invalid")
+      Then(
+        "the fc vat ifs service will respond with Field at path /debtItems(0)/breathingSpaces(0)/debtRespiteFrom missing or invalid"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }

@@ -192,20 +192,19 @@ object FieldCollectionsBuilder extends BaseRequests with RandomValues {
 
   def getDebtCalculation(context: FieldCollectionsContext, json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/fc-debt-calculation"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("IFS debt-calculation baseUri ************************" + baseUri)
-        print("IFS debt-calculation request json********************" + Json.parse(json))
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/fc-debt-calculation"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("IFS debt-calculation baseUri ************************" + baseUri)
+    print("IFS debt-calculation request json********************" + Json.parse(json))
 
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
 }

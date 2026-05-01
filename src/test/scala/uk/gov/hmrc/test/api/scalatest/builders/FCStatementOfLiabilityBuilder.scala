@@ -142,13 +142,12 @@ object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
   def getFCStatementOfLiability(context: FCStatementOfLiabilityContext, json: String): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/fc-sol"
-        val headers = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
 }

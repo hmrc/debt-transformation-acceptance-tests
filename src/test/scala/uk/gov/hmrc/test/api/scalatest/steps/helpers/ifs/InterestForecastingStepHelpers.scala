@@ -37,7 +37,10 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^a rule has been updated$
-  def aRuleHasBeenUpdated(context: InterestForecastingContext, input: InterestForecastingBuilder.InterestTypeRequestBodyInput): Unit = {
+  def aRuleHasBeenUpdated(
+    context: InterestForecastingContext,
+    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
+  ): Unit = {
     // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
   }
@@ -73,7 +76,10 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the debt item has payment history$
-  def theDebtItemHasPaymentHistory(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]): Unit = {
+  def theDebtItemHasPaymentHistory(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
   }
@@ -158,7 +164,10 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will have suppression applied calculation windows$
-  def theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(context: InterestForecastingContext, summaryIndex: Int): Unit = {
+  def theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(
+    context: InterestForecastingContext,
+    summaryIndex: Int
+  ): Unit = {
     // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
     // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
     // val calculationWindows = Json
@@ -187,7 +196,10 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the debt item has breathing spaces applied$
-  def theDebtItemHasBreathingSpacesApplied(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]): Unit = {
+  def theDebtItemHasBreathingSpacesApplied(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
   }
@@ -199,7 +211,10 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the customer has post codes$
-  def theCustomerHasPostCodes(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]): Unit = {
+  def theCustomerHasPostCodes(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.CustomerPostCodesInput
   }
@@ -235,7 +250,11 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt applied suppression summary contains values as$
-  def theDebtAppliedSuppressionSummaryContainsValuesAs(context: InterestForecastingContext, summaryIndex: Int, inputs: Seq[SuppressionApplied]): Unit = {
+  def theDebtAppliedSuppressionSummaryContainsValuesAs(
+    context: InterestForecastingContext,
+    summaryIndex: Int,
+    inputs: Seq[SuppressionApplied]
+  ): Unit = {
     // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
     // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
     // val maybeSuppression = for {

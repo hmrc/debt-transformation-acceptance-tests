@@ -110,20 +110,19 @@ object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
 
   def getDebtCalculation(context: FieldCollectionsVATContext, json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/fc-vat-debt-calculation"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("IFS FC VAT debt-calculation baseUri ************************" + baseUri)
-        print("IFS FC VAT debt-calculation request json********************" + Json.parse(json))
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/fc-vat-debt-calculation"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("IFS FC VAT debt-calculation baseUri ************************" + baseUri)
+    print("IFS FC VAT debt-calculation request json********************" + Json.parse(json))
 
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
 }

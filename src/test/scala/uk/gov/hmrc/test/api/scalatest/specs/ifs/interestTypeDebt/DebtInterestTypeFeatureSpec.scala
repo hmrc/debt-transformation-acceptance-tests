@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 
 class DebtInterestTypeFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers

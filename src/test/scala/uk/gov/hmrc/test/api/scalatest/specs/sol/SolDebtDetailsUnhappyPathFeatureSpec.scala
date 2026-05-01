@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 
 class SolDebtDetailsUnhappyPathFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCStatementOfLiabilityStepHelpers
@@ -55,7 +55,9 @@ class SolDebtDetailsUnhappyPathFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // theSolResponseCodeShouldBeInt(context)
 
-      And("the sol service will respond with {reason:Could not parse body due to requirement failed: Debts which are mandatory, are missing,message:Invalid Json}")
+      And(
+        "the sol service will respond with {reason:Could not parse body due to requirement failed: Debts which are mandatory, are missing,message:Invalid Json}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }

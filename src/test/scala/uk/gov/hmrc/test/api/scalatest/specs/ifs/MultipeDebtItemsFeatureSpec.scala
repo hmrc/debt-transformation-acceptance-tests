@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 
 class MultipeDebtItemsFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
@@ -354,7 +354,9 @@ class MultipeDebtItemsFeatureSpec
       // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
 
     }
-    ignore("1 debt, non interest bearing, interest requested to date is before the interest start date, no dates are required") { context =>
+    ignore(
+      "1 debt, non interest bearing, interest requested to date is before the interest start date, no dates are required"
+    ) { context =>
       Given("a debt item")
       // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.

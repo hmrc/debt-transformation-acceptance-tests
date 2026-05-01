@@ -30,9 +30,8 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 object InterestForecastingRequests extends ScalaDsl with EN with Eventually with Matchers with BaseRequests {
 
   def getDebtCalculation(json: String): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-      enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup)
+    val bearerToken =
+      createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
     val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -266,7 +265,7 @@ object InterestForecastingRequests extends ScalaDsl with EN with Eventually with
     catch {
       case _: Exception => firstItem = true
     }
-    val debtInterestType = getBodyAsString("debtInterestType")
+    val debtInterestType          = getBodyAsString("debtInterestType")
       .replaceAll("<REPLACE_subTrans>", asmapTransposed.get("subTrans"))
       .replaceAll("<REPLACE_mainTrans>", asmapTransposed.get("mainTrans"))
     if (firstItem) {

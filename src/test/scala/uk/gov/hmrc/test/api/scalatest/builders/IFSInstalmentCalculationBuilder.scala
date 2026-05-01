@@ -150,41 +150,43 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
 
   def getInstalmentCalculation(context: IFSInstalmentCalculationContext, json: String): StandaloneWSResponse = {
     val bearerToken =
-          createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
-        val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
+      createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
+    val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
 
-        val headers = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("instalment-calculation baseUri ********************" + baseUri)
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("instalment-calculation baseUri ********************" + baseUri)
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
-
-  def getInstalmentCalculationWithQueryParams(context: IFSInstalmentCalculationContext, json: String, combineLastInstalments: String): StandaloneWSResponse = {
+  def getInstalmentCalculationWithQueryParams(
+    context: IFSInstalmentCalculationContext,
+    json: String,
+    combineLastInstalments: String
+  ): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
 
-        val headers = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
 
-        val queryParameters = Map(
-          "combineLastInstalments" -> s"$combineLastInstalments"
-        )
+    val queryParameters = Map(
+      "combineLastInstalments" -> s"$combineLastInstalments"
+    )
 
-        println(s"query string parameters ******************** --> $queryParameters")
-        println(s"instalment-calculation baseUri ******************** --> $baseUri")
+    println(s"query string parameters ******************** --> $queryParameters")
+    println(s"instalment-calculation baseUri ******************** --> $baseUri")
 
-        WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, Json.parse(json))
+    WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, Json.parse(json))
   }
-
 
 }

@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 
 class InstalmentCalculationSingleDutyFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
@@ -136,36 +136,37 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // ifsServiceReturns2WeeklyFrequencyInstalmentCalculationPlan(context)
 
     }
-    ignore("Payment plan calculation instalment - 4Weekly payment frequency with end of month instalment start Date") { context =>
-      Given("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+    ignore("Payment plan calculation instalment - 4Weekly payment frequency with end of month instalment start Date") {
+      context =>
+        Given("debt instalment calculation with details")
+        // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // debtInstalmentCalculationWithDetails(context)
 
-      And("the instalment calculation has no postcodes")
-      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasNoPostcodes(context)
+        And("the instalment calculation has no postcodes")
+        // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationHasNoPostcodes(context)
 
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
+        And("no initial payment for the debt item charge")
+        // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // noInitialPaymentForTheDebtItemCharge(context)
 
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
+        And("the instalment calculation has debt item charges")
+        // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationHasDebtItemCharges(context)
 
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+        When("the instalment calculation detail is sent to the ifs service")
+        // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
-      Then("ifs service returns 4-Weekly frequency instalment calculation plan")
-      // TODO: Helper 'ifsServiceReturns4WeeklyFrequencyInstalmentCalculationPlan' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // ifsServiceReturns4WeeklyFrequencyInstalmentCalculationPlan(context)
+        Then("ifs service returns 4-Weekly frequency instalment calculation plan")
+        // TODO: Helper 'ifsServiceReturns4WeeklyFrequencyInstalmentCalculationPlan' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // ifsServiceReturns4WeeklyFrequencyInstalmentCalculationPlan(context)
 
     }
     ignore("Payment plan calculation instalment - Monthly payment frequency type") { context =>
@@ -200,39 +201,42 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // ifsServiceReturnsMonthlyPaymentFrequencyInstalmentCalculationPlan(context)
 
     }
-    ignore("Payment plan calculation instalment - Quarterly payment frequency with end of Leap year instalment Date") { context =>
-      Given("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+    ignore("Payment plan calculation instalment - Quarterly payment frequency with end of Leap year instalment Date") {
+      context =>
+        Given("debt instalment calculation with details")
+        // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // debtInstalmentCalculationWithDetails(context)
 
-      And("the instalment calculation has no postcodes")
-      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasNoPostcodes(context)
+        And("the instalment calculation has no postcodes")
+        // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationHasNoPostcodes(context)
 
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
+        And("no initial payment for the debt item charge")
+        // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // noInitialPaymentForTheDebtItemCharge(context)
 
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
+        And("the instalment calculation has debt item charges")
+        // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationHasDebtItemCharges(context)
 
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+        When("the instalment calculation detail is sent to the ifs service")
+        // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
-      And("ifs service returns Quarterly payment frequency instalment calculation plan")
-      // TODO: Helper 'ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan(context)
+        And("ifs service returns Quarterly payment frequency instalment calculation plan")
+        // TODO: Helper 'ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan(context)
 
     }
-    ignore("Payment plan calculation instalment - 6Monthly payment frequency instalment Date starts in non leap year to Leap year") { context =>
+    ignore(
+      "Payment plan calculation instalment - 6Monthly payment frequency instalment Date starts in non leap year to Leap year"
+    ) { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -465,7 +469,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // ifsServiceReturnsResponseCode(context)
 
-      And("Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /initialPaymentAmount missing or invalid}")
+      And(
+        "Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /initialPaymentAmount missing or invalid}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -500,7 +506,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // ifsServiceReturnsResponseCode(context)
 
-      And("Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /initialPaymentDate missing or invalid}")
+      And(
+        "Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /initialPaymentDate missing or invalid}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -535,7 +543,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // ifsServiceReturnsResponseCode(context)
 
-      And("Ifs service returns error message {statusCode:400,reason:Invalid Initial Payment Date,message:The Initial Payment Date should be on or after quoteDate}")
+      And(
+        "Ifs service returns error message {statusCode:400,reason:Invalid Initial Payment Date,message:The Initial Payment Date should be on or after quoteDate}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -634,7 +644,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // ifsServiceReturnsResponseCode(context)
 
-      And("Ifs service returns error message {statusCode:400,reason:Invalid Initial Payment Date,message:The Initial Payment Date should be on or before Instalment Payment Date}")
+      And(
+        "Ifs service returns error message {statusCode:400,reason:Invalid Initial Payment Date,message:The Initial Payment Date should be on or before Instalment Payment Date}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -669,7 +681,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // ifsServiceReturnsResponseCode(context)
 
-      And("Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /instalmentPaymentDate missing or invalid}")
+      And(
+        "Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /instalmentPaymentDate missing or invalid}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -704,7 +718,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // ifsServiceReturnsResponseCode(context)
 
-      And("Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /quoteDate missing or invalid}")
+      And(
+        "Ifs service returns error message {statusCode:400,reason:Invalid JSON error from IFS,message:Field at path /quoteDate missing or invalid}"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }

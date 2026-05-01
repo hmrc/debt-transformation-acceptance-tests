@@ -148,9 +148,9 @@ object IFSInstalmentCalculationRequests extends ScalaDsl with EN with Eventually
   }
 
   def debtPlanDetailsWithInitialPaymentDatePlus129Request(dataTable: DataTable): Unit = {
-    val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
-    var firstItem           = false
-    var paymentPlan: String = null
+    val asmapTransposed       = dataTable.transpose().asMap(classOf[String], classOf[String])
+    var firstItem             = false
+    var paymentPlan: String   = null
     try ScenarioContext.get("paymentPlan")
     catch {
       case _: Exception => firstItem = true

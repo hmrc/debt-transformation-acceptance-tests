@@ -69,13 +69,19 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^debt details$
-  def debtDetails(context: StatementOfLiabilityContext, input: InterestForecastingBuilder.InterestTypeRequestBodyInput): Unit = {
+  def debtDetails(
+    context: StatementOfLiabilityContext,
+    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
+  ): Unit = {
     // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
   }
 
   // ^statement of liability multiple debt requests$
-  def statementOfLiabilityMultipleDebtRequests(context: StatementOfLiabilityContext, input: StatementOfLiabilityBuilder.DutyIdsInput): Unit = {
+  def statementOfLiabilityMultipleDebtRequests(
+    context: StatementOfLiabilityContext,
+    input: StatementOfLiabilityBuilder.DutyIdsInput
+  ): Unit = {
     // TODO: Wire input into context or request JSON using StatementOfLiabilityBuilder.
     // Suggested type: StatementOfLiabilityBuilder.DutyIdsInput
   }
@@ -90,7 +96,10 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^service returns debt statement of liability data$
-  def serviceReturnsDebtStatementOfLiabilityData(context: StatementOfLiabilityContext, input: StatementOfLiabilityBuilder.DutyIdsInput): Unit = {
+  def serviceReturnsDebtStatementOfLiabilityData(
+    context: StatementOfLiabilityContext,
+    input: StatementOfLiabilityBuilder.DutyIdsInput
+  ): Unit = {
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
     // response.status should be(200)
     // val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse]
@@ -118,7 +127,11 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) sol debt summary will contain duties$
-  def theSolDebtSummaryWillContainDuties(context: StatementOfLiabilityContext, debtIndex: Int, inputs: Seq[SolDuty]): Unit = {
+  def theSolDebtSummaryWillContainDuties(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    inputs: Seq[SolDuty]
+  ): Unit = {
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
     // asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
     // val responseBody = Json
@@ -144,7 +157,11 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple statement of liability duties summary will contain$
-  def theMultipleStatementOfLiabilityDutiesSummaryWillContain(context: StatementOfLiabilityContext, debtIndex: Int, inputs: Seq[SolDuty]): Unit = {
+  def theMultipleStatementOfLiabilityDutiesSummaryWillContain(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    inputs: Seq[SolDuty]
+  ): Unit = {
     // val asMapTransposed: Iterable[util.Map[Nothing, Nothing]] =
     // val response: StandaloneWSResponse                        = StatementOfLiabilityContext.get("response")
     // asMapTransposed.zipWithIndex.foreach { case (duty, _) =>

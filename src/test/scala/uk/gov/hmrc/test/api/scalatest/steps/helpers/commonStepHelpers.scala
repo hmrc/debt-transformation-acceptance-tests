@@ -31,7 +31,10 @@ trait commonStepHelpers { this: Matchers =>
   }
 
   // ^suppression rules have been created$
-  def suppressionRulesHaveBeenCreated(context: FCStatementOfLiabilityContext, inputs: Seq[SuppressionRulesBuilder.SuppressionsInput]): Unit = {
+  def suppressionRulesHaveBeenCreated(
+    context: FCStatementOfLiabilityContext,
+    inputs: Seq[SuppressionRulesBuilder.SuppressionsInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using SuppressionRulesBuilder.
     // Suggested type: SuppressionRulesBuilder.SuppressionsInput
   }

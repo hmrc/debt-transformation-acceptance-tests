@@ -24,7 +24,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingSt
 import uk.gov.hmrc.test.api.scalatest.tags._
 
 class SupressionFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers

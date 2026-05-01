@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 
 class VATFCFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
@@ -124,26 +124,29 @@ class VATFCFeatureSpec
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
     }
-    ignore("4. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is more than Original amount") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+    ignore("4. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is more than Original amount") {
+      context =>
+        Given("a fc vat debt item")
+        // TODO: No matching helper method found for this step. Validate and call the correct helper.
+        // TODO: This step had a feature table; convert the values into typed builder/model inputs.
 
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
+        And("the fc vat debt item has payment history")
+        // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theDebtItemHasPaymentHistory(context)
 
-      And("no breathing spaces have been applied to the fc vat customer")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+        And("no breathing spaces have been applied to the fc vat customer")
+        // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
+        When("the debt item is sent to the fc vat ifs service")
+        // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theDebtItemIsSentToTheFcIfsService(context)
 
-      Then("the fc vat ifs service will respond with Could not parse body due to requirement failed: Total Payment amounts cannot be more than the original amount")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+        Then(
+          "the fc vat ifs service will respond with Could not parse body due to requirement failed: Total Payment amounts cannot be more than the original amount"
+        )
+        // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
     ignore("5. Interest Indicator as Yes. 1 Payment of 1 debt. Payment amount is 0") { context =>
@@ -164,7 +167,9 @@ class VATFCFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // theDebtItemIsSentToTheFcIfsService(context)
 
-      Then("the fc vat ifs service will respond with Could not parse body due to requirement failed: Payment amount must not be zero")
+      Then(
+        "the fc vat ifs service will respond with Could not parse body due to requirement failed: Payment amount must not be zero"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -186,7 +191,9 @@ class VATFCFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // theDebtItemIsSentToTheFcIfsService(context)
 
-      Then("the fc vat ifs service will respond with Could not parse body due to requirement failed: Payment amount must be positive")
+      Then(
+        "the fc vat ifs service will respond with Could not parse body due to requirement failed: Payment amount must be positive"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }

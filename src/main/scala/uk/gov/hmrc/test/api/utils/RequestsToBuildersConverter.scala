@@ -21,8 +21,7 @@ import scala.io.Source
 import scala.util.Using
 import scala.util.matching.Regex
 
-/**
-  * Typed-first converter for legacy request objects.
+/** Typed-first converter for legacy request objects.
   *
   * Goals:
   *   - Generate ScalaTest builder objects from legacy request classes.
@@ -31,11 +30,8 @@ import scala.util.matching.Regex
   *   - Prefer existing model case classes where constructor calls are detectable.
   *   - Preserve safe HTTP client methods that return StandaloneWSResponse.
   *
-  * Usage:
-  *   RequestsToBuildersConverter <requests_root> <builders_root>
-  *     --models-root <models_root>
-  *     --context-root <context_root>
-  *     [--recurse]
+  * Usage: RequestsToBuildersConverter <requests_root> <builders_root> --models-root <models_root> --context-root
+  * <context_root> [--recurse]
   */
 object RequestsToBuildersConverter {
 
@@ -125,10 +121,10 @@ object RequestsToBuildersConverter {
   }
 
   private def basePkgFromPath(root: File): String = {
-    val abs = root.getCanonicalPath.replace('\\', '/')
+    val abs    = root.getCanonicalPath.replace('\\', '/')
     val marker = "/src/test/scala/"
-    val idx = abs.indexOf(marker)
-    val tail = if (idx >= 0) abs.substring(idx + marker.length) else abs
+    val idx    = abs.indexOf(marker)
+    val tail   = if (idx >= 0) abs.substring(idx + marker.length) else abs
     tail.split('/').filter(_.nonEmpty).mkString(".")
   }
 
@@ -141,7 +137,7 @@ object RequestsToBuildersConverter {
 
   private def toPascal(s: String): String = {
     val cleaned = s.replaceAll("[^A-Za-z0-9]+", " ").trim
-    val parts =
+    val parts   =
       if (cleaned.isEmpty) Seq.empty
       else cleaned.split("\\s+").toSeq.flatMap(_.split("(?<=[a-z0-9])(?=[A-Z])")).filter(_.nonEmpty)
 
@@ -173,13 +169,13 @@ object RequestsToBuildersConverter {
   }
 
   private def splitTopLevelArgs(s: String): Seq[String] = {
-    val out = scala.collection.mutable.ListBuffer.empty[String]
-    val cur = new StringBuilder
-    var paren = 0
-    var bracket = 0
-    var brace = 0
+    val out      = scala.collection.mutable.ListBuffer.empty[String]
+    val cur      = new StringBuilder
+    var paren    = 0
+    var bracket  = 0
+    var brace    = 0
     var inString = false
-    var i = 0
+    var i        = 0
 
     while (i < s.length) {
       val ch = s.charAt(i)
@@ -188,16 +184,16 @@ object RequestsToBuildersConverter {
         cur.append(ch)
       } else if (!inString) {
         ch match {
-          case '(' => paren += 1; cur.append(ch)
-          case ')' => paren -= 1; cur.append(ch)
-          case '[' => bracket += 1; cur.append(ch)
-          case ']' => bracket -= 1; cur.append(ch)
-          case '{' => brace += 1; cur.append(ch)
-          case '}' => brace -= 1; cur.append(ch)
+          case '('                                             => paren += 1; cur.append(ch)
+          case ')'                                             => paren -= 1; cur.append(ch)
+          case '['                                             => bracket += 1; cur.append(ch)
+          case ']'                                             => bracket -= 1; cur.append(ch)
+          case '{'                                             => brace += 1; cur.append(ch)
+          case '}'                                             => brace -= 1; cur.append(ch)
           case ',' if paren == 0 && bracket == 0 && brace == 0 =>
             out += cur.toString.trim
             cur.clear()
-          case _ => cur.append(ch)
+          case _                                               => cur.append(ch)
         }
       } else cur.append(ch)
       i += 1
@@ -208,8 +204,8 @@ object RequestsToBuildersConverter {
   }
 
   private def findMatchingBrace(src: String, openIndex: Int): Int = {
-    var i = openIndex + 1
-    var depth = 1
+    var i        = openIndex + 1
+    var depth    = 1
     var inString = false
     while (i < src.length) {
       val ch = src.charAt(i)
@@ -220,7 +216,7 @@ object RequestsToBuildersConverter {
           case '}' =>
             depth -= 1
             if (depth == 0) return i
-          case _ =>
+          case _   =>
         }
       }
       i += 1
@@ -239,8 +235,8 @@ object RequestsToBuildersConverter {
 
   private def sliceParenBlock(src: String, openIdx: Int): Option[(Int, Int)] = {
     if (openIdx < 0 || openIdx >= src.length || src.charAt(openIdx) != '(') return None
-    var i = openIdx + 1
-    var depth = 1
+    var i        = openIdx + 1
+    var depth    = 1
     var inString = false
     while (i < src.length) {
       val ch = src.charAt(i)
@@ -251,7 +247,7 @@ object RequestsToBuildersConverter {
           case ')' =>
             depth -= 1
             if (depth == 0) return Some((openIdx, i))
-          case _ =>
+          case _   =>
         }
       }
       i += 1
@@ -276,8 +272,8 @@ object RequestsToBuildersConverter {
       val ranges = matches.flatMap { m =>
         sliceMethodBody(src, m.start).map { case (_, close) => m.start -> (close + 1) }
       }
-      val sb = new StringBuilder
-      var last = 0
+      val sb     = new StringBuilder
+      var last   = 0
       ranges.sortBy(_._1).foreach { case (start, end) =>
         if (start >= last) {
           sb.append(src.substring(last, start))
@@ -296,32 +292,34 @@ object RequestsToBuildersConverter {
   private def parseModelDefs(modelsRoot: File): Map[String, Seq[ModelDef]] = {
     if (!modelsRoot.exists() || !modelsRoot.isDirectory) return Map.empty
 
-    listScalaFiles(modelsRoot, recurse = true).flatMap { f =>
-      val src = readFile(f)
-      val pkg = packageRe.findFirstMatchIn(src).map(_.group(1).trim).getOrElse("")
+    listScalaFiles(modelsRoot, recurse = true)
+      .flatMap { f =>
+        val src = readFile(f)
+        val pkg = packageRe.findFirstMatchIn(src).map(_.group(1).trim).getOrElse("")
 
-      caseClassRe.findAllMatchIn(src).flatMap { m =>
-        val name = m.group(1)
-        val rawParams = m.group(2)
+        caseClassRe.findAllMatchIn(src).flatMap { m =>
+          val name      = m.group(1)
+          val rawParams = m.group(2)
 
-        val fields = splitTopLevelArgs(rawParams).flatMap { p =>
-          val noComment = p.replaceAll("""//.*$""", "").trim
-          val parts = noComment.split(":", 2).map(_.trim)
-          if (parts.length != 2) None
-          else {
-            val fieldName = parts(0).stripPrefix("val ").stripPrefix("var ").trim
-            val rhs = parts(1)
-            val eqSplit = rhs.split("=", 2).map(_.trim)
-            val tpe = normalizeType(eqSplit(0))
-            val defaultOpt = if (eqSplit.length == 2) Some(eqSplit(1)) else None
-            if (fieldName.matches("[A-Za-z_][A-Za-z0-9_]*")) Some(ModelField(fieldName, tpe, defaultOpt))
-            else None
+          val fields = splitTopLevelArgs(rawParams).flatMap { p =>
+            val noComment = p.replaceAll("""//.*$""", "").trim
+            val parts     = noComment.split(":", 2).map(_.trim)
+            if (parts.length != 2) None
+            else {
+              val fieldName  = parts(0).stripPrefix("val ").stripPrefix("var ").trim
+              val rhs        = parts(1)
+              val eqSplit    = rhs.split("=", 2).map(_.trim)
+              val tpe        = normalizeType(eqSplit(0))
+              val defaultOpt = if (eqSplit.length == 2) Some(eqSplit(1)) else None
+              if (fieldName.matches("[A-Za-z_][A-Za-z0-9_]*")) Some(ModelField(fieldName, tpe, defaultOpt))
+              else None
+            }
           }
-        }
 
-        Some(ModelDef(name, pkg, fields))
+          Some(ModelDef(name, pkg, fields))
+        }
       }
-    }.groupBy(_.name)
+      .groupBy(_.name)
   }
 
   private def importForType(typeName: String, modelDefsByName: Map[String, Seq[ModelDef]]): Option[String] =
@@ -334,16 +332,17 @@ object RequestsToBuildersConverter {
   private def findContextFile(contextRoot: File, stem: String): Option[File] = {
     def loop(d: File): Option[File] = {
       val kids = Option(d.listFiles()).getOrElse(Array.empty)
-      kids.find(f => f.isFile && f.getName == s"${stem}Context.scala")
+      kids
+        .find(f => f.isFile && f.getName == s"${stem}Context.scala")
         .orElse(kids.filter(_.isDirectory).to(LazyList).flatMap(loop).headOption)
     }
     if (!contextRoot.exists()) None else loop(contextRoot)
   }
 
-  private def ensureContextExists(contextRoot: File, contextPkg: String, stem: String): File = {
+  private def ensureContextExists(contextRoot: File, contextPkg: String, stem: String): File =
     findContextFile(contextRoot, stem).getOrElse {
       if (!contextRoot.exists()) contextRoot.mkdirs()
-      val out = new File(contextRoot, s"${stem}Context.scala")
+      val out     = new File(contextRoot, s"${stem}Context.scala")
       val content =
         s"""package $contextPkg
            |
@@ -358,19 +357,18 @@ object RequestsToBuildersConverter {
       writeFile(out, content)
       out
     }
-  }
 
   private def baseDefault(tpe: String): String = normalizeType(tpe) match {
-    case "String"     => "\"\""
-    case "Int"        => "0"
-    case "Long"       => "0L"
-    case "Boolean"    => "false"
-    case "Double"     => "0.0"
-    case "BigDecimal" => "BigDecimal(0)"
-    case "LocalDate"  => "java.time.LocalDate.now()"
+    case "String"                           => "\"\""
+    case "Int"                              => "0"
+    case "Long"                             => "0L"
+    case "Boolean"                          => "false"
+    case "Double"                           => "0.0"
+    case "BigDecimal"                       => "BigDecimal(0)"
+    case "LocalDate"                        => "java.time.LocalDate.now()"
     case other if other.startsWith("Seq[")  => s"Seq.empty[${other.stripPrefix("Seq[").stripSuffix("]")}]"
     case other if other.startsWith("List[") => s"List.empty[${other.stripPrefix("List[").stripSuffix("]")}]"
-    case other          => s"null.asInstanceOf[$other]"
+    case other                              => s"null.asInstanceOf[$other]"
   }
 
   private def contextTypeAndDefault(tpeRaw: String, exact: Boolean): (String, String) = {
@@ -386,28 +384,35 @@ object RequestsToBuildersConverter {
     }
   }
 
-  private def upsertContextFields(contextRoot: File, contextPkg: String, stem: String, fields: Iterable[ContextField]): Unit = {
+  private def upsertContextFields(
+    contextRoot: File,
+    contextPkg: String,
+    stem: String,
+    fields: Iterable[ContextField]
+  ): Unit = {
     val contextFile = ensureContextExists(contextRoot, contextPkg, stem)
-    val src = readFile(contextFile)
-    val ccRe = ("""(?s)\bfinal\s+case\s+class\s+""" + Regex.quote(stem) + """Context\s*\((.*?)\)\s*""").r
-    val mOpt = ccRe.findFirstMatchIn(src)
+    val src         = readFile(contextFile)
+    val ccRe        = ("""(?s)\bfinal\s+case\s+class\s+""" + Regex.quote(stem) + """Context\s*\((.*?)\)\s*""").r
+    val mOpt        = ccRe.findFirstMatchIn(src)
     if (mOpt.isEmpty) return
 
-    val params = mOpt.get.group(1)
-    val existing = """\bvar\s+([A-Za-z_][A-Za-z0-9_]*)\s*:""".r.findAllMatchIn(params).map(_.group(1)).toSet
+    val params    = mOpt.get.group(1)
+    val existing  = """\bvar\s+([A-Za-z_][A-Za-z0-9_]*)\s*:""".r.findAllMatchIn(params).map(_.group(1)).toSet
     val additions = fields.toSeq.distinctBy(_.name).filterNot(f => existing.contains(f.name))
 
     if (additions.isEmpty) return
 
-    val additionText = additions.map { f =>
-      val (tpe, dflt) = contextTypeAndDefault(f.tpe, f.exact)
-      s"  var ${f.name}: $tpe = $dflt"
-    }.mkString(",\n")
+    val additionText = additions
+      .map { f =>
+        val (tpe, dflt) = contextTypeAndDefault(f.tpe, f.exact)
+        s"  var ${f.name}: $tpe = $dflt"
+      }
+      .mkString(",\n")
 
     val paramsTrimmed = params.replaceFirst("""\s+$""", "")
-    val join = if (paramsTrimmed.trim.isEmpty) "" else if (paramsTrimmed.trim.endsWith(",")) "\n" else ",\n"
-    val newParams = paramsTrimmed + join + additionText
-    val updated = src.substring(0, mOpt.get.start(1)) + newParams + src.substring(mOpt.get.end(1))
+    val join          = if (paramsTrimmed.trim.isEmpty) "" else if (paramsTrimmed.trim.endsWith(",")) "\n" else ",\n"
+    val newParams     = paramsTrimmed + join + additionText
+    val updated       = src.substring(0, mOpt.get.start(1)) + newParams + src.substring(mOpt.get.end(1))
     writeFile(contextFile, updated)
   }
 
@@ -426,10 +431,45 @@ object RequestsToBuildersConverter {
 
   private def isValidScalaIdentifier(name: String): Boolean = {
     val reserved = Set(
-      "abstract", "case", "catch", "class", "def", "do", "else", "extends", "false", "final",
-      "finally", "for", "forSome", "if", "implicit", "import", "lazy", "match", "new", "null",
-      "object", "override", "package", "private", "protected", "return", "sealed", "super",
-      "this", "throw", "trait", "try", "true", "type", "val", "var", "while", "with", "yield"
+      "abstract",
+      "case",
+      "catch",
+      "class",
+      "def",
+      "do",
+      "else",
+      "extends",
+      "false",
+      "final",
+      "finally",
+      "for",
+      "forSome",
+      "if",
+      "implicit",
+      "import",
+      "lazy",
+      "match",
+      "new",
+      "null",
+      "object",
+      "override",
+      "package",
+      "private",
+      "protected",
+      "return",
+      "sealed",
+      "super",
+      "this",
+      "throw",
+      "trait",
+      "try",
+      "true",
+      "type",
+      "val",
+      "var",
+      "while",
+      "with",
+      "yield"
     )
     name.matches("[A-Za-z_][A-Za-z0-9_]*") && !reserved.contains(name)
   }
@@ -437,15 +477,15 @@ object RequestsToBuildersConverter {
   private def shouldIgnoreRawKey(raw: String): Boolean = {
     val t = raw.trim
     t.isEmpty ||
-      t == "-" ||
-      t.contains(" ") ||
-      t.contains("<") ||
-      t.contains(">") ||
-      t.contains("/") ||
-      t.contains("\\") ||
-      t.contains(":") ||
-      t.contains(",") ||
-      t.contains(".")
+    t == "-" ||
+    t.contains(" ") ||
+    t.contains("<") ||
+    t.contains(">") ||
+    t.contains("/") ||
+    t.contains("\\") ||
+    t.contains(":") ||
+    t.contains(",") ||
+    t.contains(".")
   }
 
   private def extractKeysFromDataTableBody(body: String): Seq[KeyInfo] = {
@@ -469,7 +509,7 @@ object RequestsToBuildersConverter {
       body.contains("replaceAll") ||
       body.contains("ScenarioContext")
 
-  private def extractConstructorCalls(body: String, knownModels: Set[String]): Seq[ConstructorCall] = {
+  private def extractConstructorCalls(body: String, knownModels: Set[String]): Seq[ConstructorCall] =
     constructorStartRe.findAllMatchIn(body).toSeq.flatMap { m =>
       val modelName = m.group(1)
       if (!knownModels.contains(modelName)) None
@@ -480,7 +520,6 @@ object RequestsToBuildersConverter {
         }
       }
     }
-  }
 
   private def previewLines(body: String, maxLines: Int = 8): Seq[String] =
     body.linesIterator
@@ -521,15 +560,15 @@ object RequestsToBuildersConverter {
     localArgs: Seq[String]
   ): RenderedExpr = {
     val inputFields = keys.map(_.name).toSet
-    val fieldName = field.name
-    val targetType = normalizeType(field.tpe)
-    val fieldInput = toCamel(fieldName)
+    val fieldName   = field.name
+    val targetType  = normalizeType(field.tpe)
+    val fieldInput  = toCamel(fieldName)
 
     if (inputFields.contains(fieldInput)) {
       val raw = s"in.$fieldInput"
       optionInner(targetType) match {
         case Some(inner) => RenderedExpr(raw, risky = false)
-        case None =>
+        case None        =>
           val expr =
             targetType match {
               case "String"     => s"$raw.getOrElse(\"\")"
@@ -538,15 +577,20 @@ object RequestsToBuildersConverter {
               case "Boolean"    => s"$raw.getOrElse(false)"
               case "Double"     => s"$raw.map(_.toDouble).getOrElse(0.0)"
               case "BigDecimal" => s"$raw.getOrElse(BigDecimal(0))"
-              case _            => field.defaultOpt.getOrElse(s"/* TODO: supply $fieldName: $targetType */ null.asInstanceOf[$targetType]")
+              case _            =>
+                field.defaultOpt.getOrElse(s"/* TODO: supply $fieldName: $targetType */ null.asInstanceOf[$targetType]")
             }
-          RenderedExpr(expr, risky = expr.contains("TODO"), if (expr.contains("TODO")) Some(s"Unable to safely infer $fieldName") else None)
+          RenderedExpr(
+            expr,
+            risky = expr.contains("TODO"),
+            if (expr.contains("TODO")) Some(s"Unable to safely infer $fieldName") else None
+          )
       }
     } else {
       field.defaultOpt match {
-        case Some(default) => RenderedExpr(default, risky = false)
+        case Some(default)                            => RenderedExpr(default, risky = false)
         case None if optionInner(targetType).nonEmpty => RenderedExpr("None", risky = false)
-        case None =>
+        case None                                     =>
           RenderedExpr(
             s"/* TODO: supply $fieldName: $targetType */ ${baseDefault(targetType)}",
             risky = true,
@@ -564,7 +608,7 @@ object RequestsToBuildersConverter {
   ): (String, Set[String]) = {
     if (constructors.isEmpty) return "" -> Set.empty
 
-    val sb = new StringBuilder
+    val sb      = new StringBuilder
     val imports = scala.collection.mutable.Set.empty[String]
 
     constructors.distinctBy(_.modelName).foreach { ctor =>
@@ -574,13 +618,13 @@ object RequestsToBuildersConverter {
 
           val rendered: Seq[(ModelField, RenderedExpr, String)] =
             model.fields.map { field =>
-              val r = renderArgExpr(field, inputClassName, keys, ctor.args)
+              val r    = renderArgExpr(field, inputClassName, keys, ctor.args)
               val line = s"      ${field.name} = ${r.expr}"
               (field, r, line)
             }
 
           val methodName = "to" + model.name
-          val hasRisky = rendered.exists { case (_, renderedExpr, _) =>
+          val hasRisky   = rendered.exists { case (_, renderedExpr, _) =>
             renderedExpr.risky
           }
 
@@ -632,7 +676,7 @@ object RequestsToBuildersConverter {
 
   private def extractClientMethods(src: String): Seq[ClientMethod] =
     clientMethodHeaderRe.findAllMatchIn(src).toSeq.flatMap { m =>
-      val name = m.group(1)
+      val name   = m.group(1)
       val params = m.group(2).trim
       sliceMethodBody(src, m.start).flatMap { case (from, to) =>
         val body = src.substring(from, to)
@@ -655,19 +699,25 @@ object RequestsToBuildersConverter {
   private def rewriteScenarioContext(body: String, contextName: String): (String, Seq[ContextField]) = {
     val fields = scala.collection.mutable.ListBuffer.empty[ContextField]
 
-    val afterSet = scenarioContextSetRe.replaceAllIn(body, m => {
-      val key = m.group(1)
-      val expr = m.group(2).trim
-      val field = toCamel(key)
-      fields += ContextField(field, inferTypeFromExpr(expr))
-      s"$contextName.$field = $expr"
-    })
+    val afterSet = scenarioContextSetRe.replaceAllIn(
+      body,
+      m => {
+        val key   = m.group(1)
+        val expr  = m.group(2).trim
+        val field = toCamel(key)
+        fields += ContextField(field, inferTypeFromExpr(expr))
+        s"$contextName.$field = $expr"
+      }
+    )
 
-    val afterGet = scenarioContextGetRe.replaceAllIn(afterSet, m => {
-      val key = m.group(1)
-      val field = toCamel(key)
-      s"$contextName.$field"
-    })
+    val afterGet = scenarioContextGetRe.replaceAllIn(
+      afterSet,
+      m => {
+        val key   = m.group(1)
+        val field = toCamel(key)
+        s"$contextName.$field"
+      }
+    )
 
     afterGet -> fields.toSeq
   }
@@ -682,19 +732,21 @@ object RequestsToBuildersConverter {
 
     val contextType = s"${stem}Context"
     val contextName = "context"
-    val allFields = scala.collection.mutable.ListBuffer.empty[ContextField]
+    val allFields   = scala.collection.mutable.ListBuffer.empty[ContextField]
 
-    val code = methods.map { m =>
-      val originalParams = m.params.split(",").toSeq.map(_.trim).filter(_.nonEmpty)
-      val finalParams = (s"$contextName: $contextType" +: originalParams).mkString(", ")
-      val (rewrittenBody, fields) = rewriteScenarioContext(m.body, contextName)
-      allFields ++= fields
+    val code = methods
+      .map { m =>
+        val originalParams          = m.params.split(",").toSeq.map(_.trim).filter(_.nonEmpty)
+        val finalParams             = (s"$contextName: $contextType" +: originalParams).mkString(", ")
+        val (rewrittenBody, fields) = rewriteScenarioContext(m.body, contextName)
+        allFields ++= fields
 
-      s"""  def ${m.name}($finalParams): StandaloneWSResponse = {
+        s"""  def ${m.name}($finalParams): StandaloneWSResponse = {
          |${indent(rewrittenBody.trim, 4)}
          |  }
          |""".stripMargin
-    }.mkString("\n\n")
+      }
+      .mkString("\n\n")
 
     (
       s"""  // -----------------------------------------------------------------------
@@ -713,29 +765,32 @@ object RequestsToBuildersConverter {
   // ---------------------------------------------------------------------------
 
   private def extractSafeTopLevelVals(src: String): Seq[String] = {
-    val body = objectBody(src).getOrElse("")
+    val body           = objectBody(src).getOrElse("")
     val withoutMethods = removeMethodBodies(body)
 
-    withoutMethods.linesIterator.flatMap { line =>
-      val trimmed = line.trim
-      valAssignRe.findFirstMatchIn(trimmed).flatMap { m =>
-        val expr = m.group(3).trim
+    withoutMethods.linesIterator
+      .flatMap { line =>
+        val trimmed = line.trim
+        valAssignRe.findFirstMatchIn(trimmed).flatMap { m =>
+          val expr = m.group(3).trim
 
-        val unsafe =
-          expr.contains("dataTable") ||
-            expr.contains("DataTable") ||
-            expr.contains("asMap") ||
-            expr.contains("asMaps") ||
-            expr.contains("asScala") ||
-            expr.contains("ScenarioContext") ||
-            expr.contains("getBodyAsString") ||
-            expr.endsWith("(") ||
-            expr == "Map(" ||
-            expr.contains("WsClient.")
+          val unsafe =
+            expr.contains("dataTable") ||
+              expr.contains("DataTable") ||
+              expr.contains("asMap") ||
+              expr.contains("asMaps") ||
+              expr.contains("asScala") ||
+              expr.contains("ScenarioContext") ||
+              expr.contains("getBodyAsString") ||
+              expr.endsWith("(") ||
+              expr == "Map(" ||
+              expr.contains("WsClient.")
 
-        if (unsafe) None else Some(trimmed)
+          if (unsafe) None else Some(trimmed)
+        }
       }
-    }.toSeq.distinct
+      .toSeq
+      .distinct
   }
 
   private def indent(s: String, spaces: Int): String = {
@@ -754,8 +809,11 @@ object RequestsToBuildersConverter {
     contextPkg: String,
     modelDefsByName: Map[String, Seq[ModelDef]]
   ): Unit = {
-    val src = readFile(f)
-    val stem = objectNameRe.findFirstMatchIn(src).map(m => stripRequestsSuffix(m.group(1))).getOrElse(f.getName.stripSuffix(".scala"))
+    val src         = readFile(f)
+    val stem        = objectNameRe
+      .findFirstMatchIn(src)
+      .map(m => stripRequestsSuffix(m.group(1)))
+      .getOrElse(f.getName.stripSuffix(".scala"))
     val builderName = stem + "Builder"
     val contextName = stem + "Context"
 
@@ -779,7 +837,7 @@ object RequestsToBuildersConverter {
 
     sb.append(s"package $builderPkg\n\n")
 
-    val body = new StringBuilder
+    val body          = new StringBuilder
     val contextFields = scala.collection.mutable.ListBuffer.empty[ContextField]
 
     val safeTopLevelVals = extractSafeTopLevelVals(src)
@@ -794,10 +852,10 @@ object RequestsToBuildersConverter {
     dtMethods.foreach { mh =>
       val methName = mh.group(1)
       sliceMethodBody(src, mh.start).foreach { case (from, to) =>
-        val methodBody = src.substring(from, to)
-        val keys = extractKeysFromDataTableBody(methodBody)
-        val (inputClassName, inputCode) = emitInputCaseClass(methName, keys)
-        val constructors = extractConstructorCalls(methodBody, knownModelNames)
+        val methodBody                    = src.substring(from, to)
+        val keys                          = extractKeysFromDataTableBody(methodBody)
+        val (inputClassName, inputCode)   = emitInputCaseClass(methName, keys)
+        val constructors                  = extractConstructorCalls(methodBody, knownModelNames)
         val (modelBuilders, modelImports) = emitModelBuilderMethods(inputClassName, keys, constructors, modelDefsByName)
         imports ++= modelImports
 
@@ -829,7 +887,7 @@ object RequestsToBuildersConverter {
       )
     }
 
-    val clientMethods = extractClientMethods(src)
+    val clientMethods                     = extractClientMethods(src)
     val (clientCode, clientContextFields) = emitClientMethods(clientMethods, stem, cfg.contextRoot, contextPkg)
     contextFields ++= clientContextFields
     body.append(clientCode)
@@ -894,12 +952,12 @@ object RequestsToBuildersConverter {
     val requestsRoot = new File(args(0))
     val buildersRoot = new File(args(1))
 
-    var modelsRoot: Option[File] = None
+    var modelsRoot: Option[File]  = None
     var contextRoot: Option[File] = None
-    var recurse = false
+    var recurse                   = false
 
     var i = 2
-    while (i < args.length) {
+    while (i < args.length)
       args(i) match {
         case "--models-root" if i + 1 < args.length =>
           modelsRoot = Some(new File(args(i + 1)))
@@ -917,7 +975,6 @@ object RequestsToBuildersConverter {
           println(s"ERROR: Unknown or incomplete argument: $other")
           System.exit(2)
       }
-    }
 
     if (!requestsRoot.exists() || !requestsRoot.isDirectory) {
       println(s"ERROR: requests root not found or not a directory: ${requestsRoot.getPath}")
@@ -950,8 +1007,8 @@ object RequestsToBuildersConverter {
     if (!cfg.buildersRoot.exists()) cfg.buildersRoot.mkdirs()
     if (!cfg.contextRoot.exists()) cfg.contextRoot.mkdirs()
 
-    val builderPkg = basePkgFromPath(cfg.buildersRoot)
-    val contextPkg = basePkgFromPath(cfg.contextRoot)
+    val builderPkg      = basePkgFromPath(cfg.buildersRoot)
+    val contextPkg      = basePkgFromPath(cfg.contextRoot)
     val modelDefsByName = parseModelDefs(cfg.modelsRoot)
 
     val files = listScalaFiles(cfg.requestsRoot, cfg.recurse)

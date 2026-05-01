@@ -26,7 +26,10 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^fc sol request$
-  def fcSolRequest(context: FCStatementOfLiabilityContext, inputs: Seq[FCStatementOfLiabilityBuilder.FcSolRequestInput]): Unit = {
+  def fcSolRequest(
+    context: FCStatementOfLiabilityContext,
+    inputs: Seq[FCStatementOfLiabilityBuilder.FcSolRequestInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using FCStatementOfLiabilityBuilder.
     // Suggested type: FCStatementOfLiabilityBuilder.FcSolRequestInput
   }
@@ -53,7 +56,10 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^the debt item has fc sol payment history$
-  def theDebtItemHasFcSolPaymentHistory(context: FCStatementOfLiabilityContext, inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]): Unit = {
+  def theDebtItemHasFcSolPaymentHistory(
+    context: FCStatementOfLiabilityContext,
+    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
   }
@@ -74,7 +80,10 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^service returns fc debt statement of liability data$
-  def serviceReturnsFcDebtStatementOfLiabilityData(context: FCStatementOfLiabilityContext, input: DebtCalculationsSummary): Unit = {
+  def serviceReturnsFcDebtStatementOfLiabilityData(
+    context: FCStatementOfLiabilityContext,
+    input: DebtCalculationsSummary
+  ): Unit = {
     // val response: StandaloneWSResponse = FCStatementOfLiabilityContext.get("response")
     // response.status should be(200)
     // val responseBody = Json.parse(response.body).as[FCSolCalculationSummaryResponse]
@@ -88,7 +97,11 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple fc statement of liability debt summary will contain duties$
-  def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context: FCStatementOfLiabilityContext, summaryIndex: Int, inputs: Seq[FCSolCalculation]): Unit = {
+  def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+    context: FCStatementOfLiabilityContext,
+    summaryIndex: Int,
+    inputs: Seq[FCSolCalculation]
+  ): Unit = {
     // val response: StandaloneWSResponse = FCStatementOfLiabilityContext.get("response")
     // asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
     // val responseBody = Json.parse(response.body).as[FCSolCalculationSummaryResponse].debts(index)

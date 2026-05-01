@@ -45,7 +45,7 @@ object FieldCollectionsRequests extends ScalaDsl with EN with Eventually with Ma
 
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-  def getBodyAsString(variant: String): String =
+  def getBodyAsString(variant: String): String               =
     TestData.loadedFiles(variant)
 
   def createInterestFocastingRequestBodyFC(dataTable: DataTable): Unit = {

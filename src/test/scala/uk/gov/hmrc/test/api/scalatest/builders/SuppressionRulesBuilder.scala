@@ -96,7 +96,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
   )
 
   // Best-effort typed model builder from legacy constructor usage.
-  def toSuppressionInformation(in: SuppressionCriteriaInput): SuppressionInformation = {
+  def toSuppressionInformation(in: SuppressionCriteriaInput): SuppressionInformation =
     // TODO: review inferred defaults below before relying on this method.
     SuppressionInformation(
       dateFrom = /* TODO: supply dateFrom: String */ "",
@@ -109,18 +109,16 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       subTrans = in.subTrans,
       checkPeriodEnd = in.checkPeriodEnd
     )
-  }
 
   def toSuppressionInformationSeq(inputs: Seq[SuppressionCriteriaInput]): Seq[SuppressionInformation] =
     inputs.map(toSuppressionInformation)
 
   // Best-effort typed model builder from legacy constructor usage.
-  def toSuppressionRequest(in: SuppressionCriteriaInput): SuppressionRequest = {
+  def toSuppressionRequest(in: SuppressionCriteriaInput): SuppressionRequest =
     // TODO: review inferred defaults below before relying on this method.
     SuppressionRequest(
       suppressions = /* TODO: supply suppressions: Seq[SuppressionInformation] */ Seq.empty[SuppressionInformation]
     )
-  }
 
   def toSuppressionRequestSeq(inputs: Seq[SuppressionCriteriaInput]): Seq[SuppressionRequest] =
     inputs.map(toSuppressionRequest)
@@ -131,117 +129,110 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
 
   def postSuppressionData(context: SuppressionRulesContext, json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:suppression-data"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("url ************************" + baseUri)
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+      enrolments = Seq("read:suppression-data"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("url ************************" + baseUri)
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
   def deleteNewSuppressionData(context: SuppressionRulesContext): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print(s"Suppression bearer token ************************  $bearerToken")
-        print(s"url ************************  $baseUri")
-        WsClient.delete(baseUri, headers = headers)
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print(s"Suppression bearer token ************************  $bearerToken")
+    print(s"url ************************  $baseUri")
+    WsClient.delete(baseUri, headers = headers)
   }
-
 
   def deleteSuppressionData(context: SuppressionRulesContext): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/old"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print(s"Suppression bearer token ************************  $bearerToken")
-        print(s"url ************************  $baseUri")
-        WsClient.delete(baseUri, headers = headers)
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/old"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print(s"Suppression bearer token ************************  $bearerToken")
+    print(s"url ************************  $baseUri")
+    WsClient.delete(baseUri, headers = headers)
   }
-
 
   def postSuppressionRules(context: SuppressionRulesContext, json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:suppression-rule"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("url ************************" + baseUri)
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+      enrolments = Seq("read:suppression-rule"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("url ************************" + baseUri)
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
   def deleteSuppressionRules(context: SuppressionRulesContext): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:suppression-rule"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("url ************************" + baseUri)
-        WsClient.delete(baseUri, headers = headers)
+      enrolments = Seq("read:suppression-rule"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("url ************************" + baseUri)
+    WsClient.delete(baseUri, headers = headers)
   }
-
 
   def updateSuppressionData(context: SuppressionRulesContext, json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:suppression-data"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("url ************************" + baseUri)
-        WsClient.put(baseUri, headers = headers, Json.parse(json))
+      enrolments = Seq("read:suppression-data"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("url ************************" + baseUri)
+    WsClient.put(baseUri, headers = headers, Json.parse(json))
   }
-
 
   def getSuppressionData(context: SuppressionRulesContext): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print(s"Suppression bearer token ************************  $bearerToken")
-        print(s"url ************************  $baseUri")
-        WsClient.get(baseUri, headers = headers)
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print(s"Suppression bearer token ************************  $bearerToken")
+    print(s"url ************************  $baseUri")
+    WsClient.get(baseUri, headers = headers)
   }
-
 
 }

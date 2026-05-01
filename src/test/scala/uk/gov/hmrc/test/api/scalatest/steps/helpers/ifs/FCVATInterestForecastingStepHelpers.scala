@@ -31,7 +31,10 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc vat debt item has payment history$
-  def theFcVatDebtItemHasPaymentHistory(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]): Unit = {
+  def theFcVatDebtItemHasPaymentHistory(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
   }
@@ -75,7 +78,10 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc vat customer has breathing spaces applied$
-  def theFcVatCustomerHasBreathingSpacesApplied(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]): Unit = {
+  def theFcVatCustomerHasBreathingSpacesApplied(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
   }

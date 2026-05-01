@@ -57,30 +57,27 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
   def getStatementOfLiability(context: StatementOfLiabilityContext, json: String): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
-        val headers = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
 
-        println(s"request headers :::::::::::::::::::  ${headers.toString()}")
+    println(s"request headers :::::::::::::::::::  ${headers.toString()}")
 
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
   def getStatementLiabilityHelloWorld(context: StatementOfLiabilityContext, endpoint: String): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-          enrolments = Seq("read:statement-of-liability"),
-          userType = getRandomAffinityGroup)
-        val baseUri     = s"$statementOfLiabilityApiUrl$endpoint"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        WsClient.get(baseUri, headers = headers)
+    val bearerToken =
+      createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
+    val baseUri     = s"$statementOfLiabilityApiUrl$endpoint"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.get(baseUri, headers = headers)
   }
-
 
 }

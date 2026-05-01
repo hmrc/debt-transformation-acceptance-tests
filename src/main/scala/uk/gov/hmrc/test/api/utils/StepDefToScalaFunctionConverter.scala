@@ -22,8 +22,7 @@ import scala.io.Source
 import scala.util.Using
 import scala.util.matching.Regex
 
-/**
-  * Converts legacy Cucumber step definitions into typed ScalaTest helper traits.
+/** Converts legacy Cucumber step definitions into typed ScalaTest helper traits.
   *
   * Opinionated defaults:
   *   - generated helper files contain no Cucumber/DataTable imports or parameters
@@ -34,12 +33,8 @@ import scala.util.matching.Regex
   *   - package names are derived from output paths
   *   - with --recurse, sub-packages under stepdefs_root are mirrored under helpers_root
   *
-  * Usage:
-  *   StepDefToScalaFunctionConverter <stepdefs_root> <helpers_root>
-  *     --builders-root <builders_root>
-  *     --models-root <models_root>
-  *     --context-root <context_root>
-  *     [--recurse]
+  * Usage: StepDefToScalaFunctionConverter <stepdefs_root> <helpers_root> --builders-root <builders_root> --models-root
+  * <models_root> --context-root <context_root> [--recurse]
   */
 object StepDefToScalaFunctionConverter {
 
@@ -331,8 +326,9 @@ object StepDefToScalaFunctionConverter {
     val abstractUnitMethodRe =
       """(?m)^(\s*def\s+[A-Za-z_][A-Za-z0-9_]*\s*\([^)]*\)\s*:\s*Unit)\s*$""".r
 
-    abstractUnitMethodRe.replaceAllIn(src, m =>
-      s"""${m.group(1)} = {
+    abstractUnitMethodRe.replaceAllIn(
+      src,
+      m => s"""${m.group(1)} = {
          |    // TODO: Generated concrete stub to avoid abstract helper trait member.
          |    // Implement this helper manually.
          |  }""".stripMargin
@@ -469,8 +465,7 @@ object StepDefToScalaFunctionConverter {
 
         safeName -> scalaTypeForGeneratedParam(p.tpe)
       }
-    }
-    else if (groupCount <= 0) Seq.empty
+    } else if (groupCount <= 0) Seq.empty
     else {
       val lower = stepText.toLowerCase
 
@@ -699,9 +694,8 @@ object StepDefToScalaFunctionConverter {
   private def canJsonSerialize(tpe: String): Boolean =
     isLikelyRequestModel(tpe)
 
-
   private def isAssertionStep(step: StepBlock): Boolean = {
-    val text = step.rawStepText.toLowerCase
+    val text                  = step.rawStepText.toLowerCase
     val keywordLooksAssertive = step.keyword.equalsIgnoreCase("Then")
 
     val textLooksAssertive = Seq(
@@ -731,7 +725,8 @@ object StepDefToScalaFunctionConverter {
     builders: Seq[BuilderInput],
     models: Seq[ModelClass]
   ): Option[TypedCandidate] = {
-    val modelScores = models.map(m => ExistingModelCandidate(m) -> modelCandidateScore(stepText, tableKeys, m))
+    val modelScores = models
+      .map(m => ExistingModelCandidate(m) -> modelCandidateScore(stepText, tableKeys, m))
       .sortBy(-_._2)
 
     modelScores.headOption match {
@@ -801,47 +796,48 @@ object StepDefToScalaFunctionConverter {
     if (isAssertionStep(step)) {
       val expectedType = input.modelType.getOrElse(input.inputType)
       emitAssertionTodoBody(expectedType, isSingleRow, originalBody)
-    } else input.modelType match {
-      case Some(modelType) if isLikelyRequestModel(modelType) && isSingleRow && input.toModelMethod.nonEmpty =>
-        val body =
-          s"""    val req = ${input.builderObject}.${input.toModelMethod.get}(input, context)
+    } else
+      input.modelType match {
+        case Some(modelType) if isLikelyRequestModel(modelType) && isSingleRow && input.toModelMethod.nonEmpty =>
+          val body =
+            s"""    val req = ${input.builderObject}.${input.toModelMethod.get}(input, context)
              |    context.request = Json.stringify(Json.toJson(req))
              |""".stripMargin
 
-        body -> true
+          body -> true
 
-      case Some(modelType) if !isSingleRow && input.toModelSeqMethod.nonEmpty                                =>
-        val field = contextFieldForReturnType(context, modelType, preferSeq = true)
-          .map(_.name)
-          .getOrElse(contextFieldNameForModel(modelType))
+        case Some(modelType) if !isSingleRow && input.toModelSeqMethod.nonEmpty =>
+          val field = contextFieldForReturnType(context, modelType, preferSeq = true)
+            .map(_.name)
+            .getOrElse(contextFieldNameForModel(modelType))
 
-        val body =
-          s"""    context.$field = ${input.builderObject}.${input.toModelSeqMethod.get}(inputs, context)
+          val body =
+            s"""    context.$field = ${input.builderObject}.${input.toModelSeqMethod.get}(inputs, context)
              |""".stripMargin
 
-        body -> false
+          body -> false
 
-      case Some(modelType) if isSingleRow && input.toModelMethod.nonEmpty                                    =>
-        val field = contextFieldForReturnType(context, modelType, preferSeq = false)
-          .map(_.name)
-          .getOrElse(contextFieldNameForModel(modelType))
+        case Some(modelType) if isSingleRow && input.toModelMethod.nonEmpty =>
+          val field = contextFieldForReturnType(context, modelType, preferSeq = false)
+            .map(_.name)
+            .getOrElse(contextFieldNameForModel(modelType))
 
-        val body =
-          s"""    context.$field = ${input.builderObject}.${input.toModelMethod.get}(input, context)
+          val body =
+            s"""    context.$field = ${input.builderObject}.${input.toModelMethod.get}(input, context)
              |""".stripMargin
 
-        body -> false
+          body -> false
 
-      case _                                                                                                 =>
-        val paramName = if (isSingleRow) "input" else "inputs"
+        case _ =>
+          val paramName = if (isSingleRow) "input" else "inputs"
 
-        val body =
-          s"""    // TODO: Wire $paramName into context or request JSON using ${input.builderObject}.
+          val body =
+            s"""    // TODO: Wire $paramName into context or request JSON using ${input.builderObject}.
              |    // Suggested type: ${input.builderObject}.${input.inputClass}
              |""".stripMargin
 
-        body -> false
-    }
+          body -> false
+      }
 
   private def emitModelBackedBody(
     step: StepBlock,
