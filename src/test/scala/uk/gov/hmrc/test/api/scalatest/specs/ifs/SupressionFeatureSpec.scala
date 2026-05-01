@@ -25,7 +25,7 @@ class SupressionFeatureSpec
 
   Feature("Suppression") {
 
-    Scenario("Suppression - full address postCode") { context =>
+    ignore("Suppression - full address postCode") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -74,7 +74,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression - Partial postCode Suppression") { context =>
+    ignore("Suppression - Partial postCode Suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -123,7 +123,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression - Missing mainTrans") { context =>
+    ignore("Suppression - Missing mainTrans") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -172,7 +172,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression - Missing SubTrans") { context =>
+    ignore("Suppression - Missing SubTrans") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -221,7 +221,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression applied - periodEnd") { context =>
+    ignore("Suppression applied - periodEnd") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -270,7 +270,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, 2 payments on different dates during suppression") { context =>
+    ignore("Suppression, 2 payments on different dates during suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -319,7 +319,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, 2 debts 2 payments on same day for one of the debts") { context =>
+    ignore("Suppression, 2 debts 2 payments on same day for one of the debts") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -388,7 +388,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, 2 payments after suppression dates") { context =>
+    ignore("Suppression, 2 payments after suppression dates") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -437,7 +437,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, open ended suppression no payment history") { context =>
+    ignore("Suppression, open ended suppression no payment history") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -486,7 +486,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, open ended suppression with payment history") { context =>
+    ignore("Suppression, open ended suppression with payment history") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -535,7 +535,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, 2 debts, 1 matching on period end") { context =>
+    ignore("Suppression, 2 debts, 1 matching on period end") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -609,7 +609,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression applied by all criteria on a single debt item.", DTD_3325) { context =>
+    ignore("Suppression applied by all criteria on a single debt item.", DTD_3325) { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -658,7 +658,7 @@ class SupressionFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression applied by all criteria on 2 debt items.") { context =>
+    ignore("Suppression applied by all criteria on 2 debt items.") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.

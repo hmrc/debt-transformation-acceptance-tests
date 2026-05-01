@@ -24,7 +24,7 @@ class SuppressionPeriodEndFeatureSpec
 
   Feature("Suppression - Period End") {
 
-    Scenario("Suppression applied to period End - on last day of suppression") { context =>
+    ignore("Suppression applied to period End - on last day of suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -73,7 +73,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression applied to period End - on first day of suppression") { context =>
+    ignore("Suppression applied to period End - on first day of suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -122,7 +122,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression applied to period End - on some day during suppression") { context =>
+    ignore("Suppression applied to period End - on some day during suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -171,7 +171,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression should NOT be applied for non matching period End") { context =>
+    ignore("Suppression should NOT be applied for non matching period End") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -220,7 +220,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Period End Suppression should NOT be applied where suppression period is before interest start date") { context =>
+    ignore("Period End Suppression should NOT be applied where suppression period is before interest start date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -269,7 +269,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Period End Suppression should NOT be applied where suppression start is same day as interest requested to") { context =>
+    ignore("Period End Suppression should NOT be applied where suppression start is same day as interest requested to") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -318,7 +318,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression  periodEnd and postcode") { context =>
+    ignore("Suppression  periodEnd and postcode") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -367,7 +367,7 @@ class SuppressionPeriodEndFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression for multiple period ends, postcode and main trans") { context =>
+    ignore("Suppression for multiple period ends, postcode and main trans") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.

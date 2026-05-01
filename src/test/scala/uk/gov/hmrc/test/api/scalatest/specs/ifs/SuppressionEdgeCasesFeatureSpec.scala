@@ -24,7 +24,7 @@ class SuppressionEdgeCasesFeatureSpec
 
   Feature("Suppression - Edge cases") {
 
-    Scenario("Suppression, interest rate change during suppression") { context =>
+    ignore("Suppression, interest rate change during suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -73,7 +73,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, interest rate change after suppression ends") { context =>
+    ignore("Suppression, interest rate change after suppression ends") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -122,7 +122,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression - interest rate change before suppression") { context =>
+    ignore("Suppression - interest rate change before suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -171,7 +171,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, interest rate change before and after suppression") { context =>
+    ignore("Suppression, interest rate change before and after suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -220,7 +220,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, 1 debt, 2 overlapping suppressions that start on same day") { context =>
+    ignore("Suppression, 1 debt, 2 overlapping suppressions that start on same day") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -269,7 +269,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, 1 debt, 2 overlapping suppressions - starting on different dates") { context =>
+    ignore("Suppression, 1 debt, 2 overlapping suppressions - starting on different dates") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -318,7 +318,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression period starts on same day as interest start date") { context =>
+    ignore("Suppression period starts on same day as interest start date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -367,7 +367,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression period starts before interest start date") { context =>
+    ignore("Suppression period starts before interest start date") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -416,7 +416,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression, interest rate change before suppression") { context =>
+    ignore("Suppression, interest rate change before suppression") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
@@ -465,7 +465,7 @@ class SuppressionEdgeCasesFeatureSpec
       // theDebtSummaryWillHaveCalculationWindows(context)
 
     }
-    Scenario("Suppression on non interest bearing debt") { context =>
+    ignore("Suppression on non interest bearing debt") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.

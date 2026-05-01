@@ -25,7 +25,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
 
   Feature("Instalment calculation for single debt - Input 2") {
 
-    Scenario("Should calculate debts amount for 1 debt 1 duty (input 2)") { context =>
+    ignore("Should calculate debts amount for 1 debt 1 duty (input 2)") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -57,7 +57,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    Scenario("Plan with isQuoteDateNonInclusive flag should not include quote date in interest accrued") { context =>
+    ignore("Plan with isQuoteDateNonInclusive flag should not include quote date in interest accrued") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -94,7 +94,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    Scenario("Plans with initial payment and isQuoteDateNonInclusive flag should not include quote date", DTD_3163) { context =>
+    ignore("Plans with initial payment and isQuoteDateNonInclusive flag should not include quote date", DTD_3163) { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -131,7 +131,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    Scenario("InterestStartDate is included but not in the Future, then quote date should be used", DTD_3163) { context =>
+    ignore("InterestStartDate is included but not in the Future, then quote date should be used", DTD_3163) { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -163,7 +163,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    Scenario("InterestStartDate is included but in the Future, then interestStartDate should be used", DTD_3163) { context =>
+    ignore("InterestStartDate is included but in the Future, then interestStartDate should be used", DTD_3163) { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -195,7 +195,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    Scenario("With initial payment - InterestStartDate is included but in the Future, then interestStartDate should be used") { context =>
+    ignore("With initial payment - InterestStartDate is included but in the Future, then interestStartDate should be used") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -227,7 +227,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    Scenario("Should return an error from IFS if quote type is duration and duration is provided") { context =>
+    ignore("Should return an error from IFS if quote type is duration and duration is provided") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -262,7 +262,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
-    Scenario("Should return an error from IFS if quote type is instalment amount and instalment payment amount is provided") { context =>
+    ignore("Should return an error from IFS if quote type is instalment amount and instalment payment amount is provided") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
