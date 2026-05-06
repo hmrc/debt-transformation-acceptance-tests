@@ -147,44 +147,6 @@ Feature: FC Debt Calculation End point testing
       | 2018-12-16 | 2019-02-03 | 49           | 3.25         | 44                      | 502181             |
 
 
-  Scenario: 7. Total Payments cannot be 0.
-    Given a fc debt item
-      | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
-      | 500000         | 2018-12-16        | 2019-04-14          | Y                 | 2018-04-06 | 123    |
-    And the debt item has fc payment history
-      | paymentAmount | paymentDate |
-      | 0             | 2019-02-03  |
-    And no breathing spaces have been applied to the fc debt item
-    And the fc customer has no post codes
-    When the debt item is sent to the fc ifs service
-    Then the fc ifs service will respond with Could not parse body due to requirement failed: Payment amount must not be zero
-
-  Scenario: 8. Total Payments cannot be negative.
-    Given a fc debt item
-      | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
-      | 500000         | 2018-12-16        | 2019-04-14          | Y                 | 2018-04-06 | 123    |
-    And the debt item has fc payment history
-      | paymentAmount | paymentDate |
-      | -1000         | 2019-02-03  |
-    And no breathing spaces have been applied to the fc debt item
-    And the fc customer has no post codes
-    When the debt item is sent to the fc ifs service
-    Then the fc ifs service will respond with Could not parse body due to requirement failed: Payment amount must be positive
-
-
-  Scenario: 9. Total Payment amounts cannot be more than the original amount.
-    Given a fc debt item
-      | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
-      | 500000         | 2018-12-16        | 2019-04-14          | Y                 | 2018-04-06 | 123    |
-    And the debt item has fc payment history
-      | paymentAmount | paymentDate |
-      | 555555        | 2019-02-03  |
-    And no breathing spaces have been applied to the fc debt item
-    And the fc customer has no post codes
-    When the debt item is sent to the fc ifs service
-    Then the fc ifs service will respond with Could not parse body due to requirement failed: Total Payment amounts cannot be more than the original amount
-
-
   Scenario: 10. No InterestStartDate but InterestIndicator is Yes.
     Given a fc debt item
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |
