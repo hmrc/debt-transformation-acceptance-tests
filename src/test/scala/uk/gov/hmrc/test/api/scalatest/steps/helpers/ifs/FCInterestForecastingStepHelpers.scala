@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
@@ -22,7 +38,10 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the debt item has fc payment history$
-  def theDebtItemHasFcPaymentHistory(context: InterestForecastingContext, inputs: Seq[FieldCollectionsBuilder.FCPaymentHistoryInput]): Unit = {
+  def theDebtItemHasFcPaymentHistory(
+    context: InterestForecastingContext,
+    inputs: Seq[FieldCollectionsBuilder.FCPaymentHistoryInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using FieldCollectionsBuilder.
     // Suggested type: FieldCollectionsBuilder.FCPaymentHistoryInput
   }
@@ -55,7 +74,11 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc debt summary will contain$
-  def theFcDebtSummaryWillContain(context: InterestForecastingContext, index: Int, input: FCStatementOfLiabilityBuilder.FCDebtsInput): Unit = {
+  def theFcDebtSummaryWillContain(
+    context: InterestForecastingContext,
+    index: Int,
+    input: FCStatementOfLiabilityBuilder.FCDebtsInput
+  ): Unit = {
     // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
     // response.status should be(200)
     // val responseBody: FCDebtCalculation =
@@ -69,7 +92,11 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have calculation windows$
-  def theFcDebtSummaryWillHaveCalculationWindows(context: InterestForecastingContext, summaryIndex: Int, inputs: Seq[FCStatementOfLiabilityBuilder.FCDebtsInput]): Unit = {
+  def theFcDebtSummaryWillHaveCalculationWindows(
+    context: InterestForecastingContext,
+    summaryIndex: Int,
+    inputs: Seq[FCStatementOfLiabilityBuilder.FCDebtsInput]
+  ): Unit = {
     // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
     // asMapTransposed.zipWithIndex.foreach { case (window, index) =>
     // val responseBody =
@@ -83,7 +110,10 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc customer has breathing spaces applied$
-  def theFcCustomerHasBreathingSpacesApplied(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]): Unit = {
+  def theFcCustomerHasBreathingSpacesApplied(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
   }
@@ -95,7 +125,10 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc customer has post codes$
-  def theFcCustomerHasPostCodes(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]): Unit = {
+  def theFcCustomerHasPostCodes(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.CustomerPostCodesInput
   }
@@ -129,7 +162,11 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have ([0-9]) calculation windows$
-  def theFcDebtSummaryWillHaveCalculationWindows2(context: InterestForecastingContext, summaryIndex: Int, numberOfWindows: Int): Unit = {
+  def theFcDebtSummaryWillHaveCalculationWindows2(
+    context: InterestForecastingContext,
+    summaryIndex: Int,
+    numberOfWindows: Int
+  ): Unit = {
     // getFCCountOfCalculationWindows(summaryIndex) shouldBe numberOfWindows
     // TODO: Implement typed helper for this step.
   }

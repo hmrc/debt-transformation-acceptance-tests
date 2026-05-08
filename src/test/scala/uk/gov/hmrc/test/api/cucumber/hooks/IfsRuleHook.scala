@@ -16,13 +16,15 @@
 
 package uk.gov.hmrc.test.api.cucumber.hooks
 
-import com.typesafe.scalalogging.LazyLogging
 import cucumber.api.scala.ScalaDsl
 import org.scalatest.matchers.should.Matchers._
+import org.slf4j.LoggerFactory
 import uk.gov.hmrc.test.api.requests.SuppressionRulesRequests
 import uk.gov.hmrc.test.api.utils.ScenarioContext
 
-class IfsRuleHook extends ScalaDsl with LazyLogging {
+class IfsRuleHook extends ScalaDsl {
+
+  lazy val logger = LoggerFactory.getLogger(getClass)
 
   Before() { _ =>
     println("before block starts running")

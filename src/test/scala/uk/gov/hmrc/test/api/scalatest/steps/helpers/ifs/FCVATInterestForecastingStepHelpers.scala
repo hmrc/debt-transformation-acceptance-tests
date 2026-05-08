@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
@@ -15,7 +31,10 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc vat debt item has payment history$
-  def theFcVatDebtItemHasPaymentHistory(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]): Unit = {
+  def theFcVatDebtItemHasPaymentHistory(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
   }
@@ -59,7 +78,10 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc vat customer has breathing spaces applied$
-  def theFcVatCustomerHasBreathingSpacesApplied(context: InterestForecastingContext, inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]): Unit = {
+  def theFcVatCustomerHasBreathingSpacesApplied(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
   }

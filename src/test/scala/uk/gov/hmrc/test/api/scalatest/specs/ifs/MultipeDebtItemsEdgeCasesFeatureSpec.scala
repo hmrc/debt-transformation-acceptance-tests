@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
 import org.scalatest.GivenWhenThen
@@ -8,7 +24,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingSt
 import uk.gov.hmrc.test.api.scalatest.tags._
 
 class MultipeDebtItemsEdgeCasesFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
@@ -390,7 +406,9 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // theDebtItemIsSentToTheIfsService(context)
 
-      Then("the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be greater than Original Amount")
+      Then(
+        "the ifs service will respond with Could not parse body due to requirement failed: Amount paid in payments cannot be greater than Original Amount"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }
@@ -472,7 +490,9 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
       // theDebtItemIsSentToTheIfsService(context)
 
-      Then("the ifs service will respond with Could not parse body due to requirement failed: originalAmount can be zero or greater, negative values are not accepted")
+      Then(
+        "the ifs service will respond with Could not parse body due to requirement failed: originalAmount can be zero or greater, negative values are not accepted"
+      )
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
 
     }

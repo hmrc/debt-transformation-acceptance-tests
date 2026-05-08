@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
@@ -29,7 +45,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^the instalment calculation has postcode (.*) with postcode date a year in the past$
-  def theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context: IFSInstalmentCalculationContext, postCode: String): Unit = {
+  def theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(
+    context: IFSInstalmentCalculationContext,
+    postCode: String
+  ): Unit = {
     // addPostCodeToInstalmentCalculation(postCode, LocalDate.now().minusYears(1).toString)
     // TODO: Implement typed helper for this step.
   }
@@ -41,7 +60,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^debt plan details with initial payment$
-  def debtPlanDetailsWithInitialPayment(context: IFSInstalmentCalculationContext, inputs: Seq[IFSInstalmentCalculationBuilder.InitialPaymentInput]): Unit = {
+  def debtPlanDetailsWithInitialPayment(
+    context: IFSInstalmentCalculationContext,
+    inputs: Seq[IFSInstalmentCalculationBuilder.InitialPaymentInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using IFSInstalmentCalculationBuilder.
     // Suggested type: IFSInstalmentCalculationBuilder.InitialPaymentInput
   }
@@ -53,7 +75,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^the instalment calculation detail(s) is sent to the ifs service$
-  def theInstalmentCalculationDetailIsSentToTheIfsService(context: IFSInstalmentCalculationContext, p1: String): Unit = {
+  def theInstalmentCalculationDetailIsSentToTheIfsService(
+    context: IFSInstalmentCalculationContext,
+    p1: String
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage
     // val request  = IFSInstalmentCalculationContext.get("paymentPlan").toString
     // println(s"IFS REQUST --> $request")
@@ -63,19 +88,27 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^the instalment calculation is sent to the ifs service with query parameters$
-  def theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context: IFSInstalmentCalculationContext, input: IFSInstalmentCalculationBuilder.DebtItemChargesToInstalmentCalculationInput): Unit = {
+  def theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(
+    context: IFSInstalmentCalculationContext,
+    input: IFSInstalmentCalculationBuilder.DebtItemChargesToInstalmentCalculationInput
+  ): Unit = {
     // TODO: Wire input into context or request JSON using IFSInstalmentCalculationBuilder.
     // Suggested type: IFSInstalmentCalculationBuilder.DebtItemChargesToInstalmentCalculationInput
   }
 
   // ^add initial payment for the debt item charge$
-  def addInitialPaymentForTheDebtItemCharge(context: IFSInstalmentCalculationContext, inputs: Seq[IFSInstalmentCalculationBuilder.InitialPaymentInput]): Unit = {
+  def addInitialPaymentForTheDebtItemCharge(
+    context: IFSInstalmentCalculationContext,
+    inputs: Seq[IFSInstalmentCalculationBuilder.InitialPaymentInput]
+  ): Unit = {
     // TODO: Wire inputs into context or request JSON using IFSInstalmentCalculationBuilder.
     // Suggested type: IFSInstalmentCalculationBuilder.InitialPaymentInput
   }
 
   // ^ifs service returns weekly payment frequency instalment calculation plan$
-  def ifsServiceReturnsWeeklyPaymentFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsWeeklyPaymentFrequencyInstalmentCalculationPlan(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -85,7 +118,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs returns payment frequency summary$
-  def ifsReturnsPaymentFrequencySummary(context: IFSInstalmentCalculationContext, input: InstalmentCalculationSummaryResponse): Unit = {
+  def ifsReturnsPaymentFrequencySummary(
+    context: IFSInstalmentCalculationContext,
+    input: InstalmentCalculationSummaryResponse
+  ): Unit = {
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("paymentPlan")
     // response.status should be(200)
     // val paymentPlanSummary = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
@@ -119,7 +155,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns single payment frequency instalment calculation plan$
-  def ifsServiceReturnsSinglePaymentFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsSinglePaymentFrequencyInstalmentCalculationPlan(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -139,7 +177,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns monthly payment frequency instalment plan with (.*) instalments$
-  def ifsServiceReturnsMonthlyPaymentFrequencyInstalmentPlanWithInstalments(context: IFSInstalmentCalculationContext, noOfInstalments: Int): Unit = {
+  def ifsServiceReturnsMonthlyPaymentFrequencyInstalmentPlanWithInstalments(
+    context: IFSInstalmentCalculationContext,
+    noOfInstalments: Int
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -157,7 +198,11 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) instalment should have an interest accrued of (.*)$
-  def theInstalmentShouldHaveAnInterestAccruedOf(context: IFSInstalmentCalculationContext, index: Int, interestAccrued: Int): Unit = {
+  def theInstalmentShouldHaveAnInterestAccruedOf(
+    context: IFSInstalmentCalculationContext,
+    index: Int,
+    interestAccrued: Int
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
@@ -166,7 +211,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns monthly payment frequency instalment calculation plan$
-  def ifsServiceReturnsMonthlyPaymentFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsMonthlyPaymentFrequencyInstalmentCalculationPlan(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -186,7 +233,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns Quarterly payment frequency instalment calculation plan$
-  def ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -196,7 +245,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns 6Monthly payment frequency instalment calculation plan$
-  def ifsServiceReturns6monthlyPaymentFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturns6monthlyPaymentFrequencyInstalmentCalculationPlan(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -206,7 +257,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns Annually payment frequency instalment calculation plan$
-  def ifsServiceReturnsAnnuallyPaymentFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsAnnuallyPaymentFrequencyInstalmentCalculationPlan(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -216,7 +269,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns monthly instalment calculation plan with initial payment$
-  def ifsServiceReturnsMonthlyInstalmentCalculationPlanWithInitialPayment(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsMonthlyInstalmentCalculationPlanWithInitialPayment(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200
@@ -237,7 +292,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^IFS response contains expected values$
-  def ifsResponseContainsExpectedValues(context: IFSInstalmentCalculationContext, inputs: Seq[InstalmentResponse]): Unit = {
+  def ifsResponseContainsExpectedValues(
+    context: IFSInstalmentCalculationContext,
+    inputs: Seq[InstalmentResponse]
+  ): Unit = {
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
     // response.status.shouldBe(200)
@@ -251,7 +309,9 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$
-  def ifsServiceReturnsWeeklyFrequencyInstalmentCalculationPlanWithInitialPayment(context: IFSInstalmentCalculationContext): Unit = {
+  def ifsServiceReturnsWeeklyFrequencyInstalmentCalculationPlanWithInitialPayment(
+    context: IFSInstalmentCalculationContext
+  ): Unit = {
     // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
     // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
     // response.status shouldBe 200

@@ -16,15 +16,16 @@
 
 package uk.gov.hmrc.test.api.utils
 
-import com.typesafe.scalalogging.LazyLogging
-
 import java.io.File
 import org.apache.commons.io.FileUtils
+import org.slf4j.LoggerFactory
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 import scala.io.Source
 
-object TestData extends LazyLogging {
+object TestData {
+
+  lazy val logger = LoggerFactory.getLogger(getClass)
 
   private lazy val files: Seq[File] = FileUtils
     .listFiles(new File("src/test/resources/testdata"), Array("txt"), false)

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.builders
 
 import play.api.libs.json.Json
@@ -170,38 +186,35 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
   // -----------------------------------------------------------------------
 
   def getDebtCalculation(context: InterestForecastingContext, json: String): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup)
-        val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("IFS debt-calculation baseUri ************************" + baseUri)
-        print("IFS debt-calculation request json********************" + Json.parse(json))
+    val bearerToken =
+      createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
+    val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("IFS debt-calculation baseUri ************************" + baseUri)
+    print("IFS debt-calculation request json********************" + Json.parse(json))
 
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
   def getDebtInterestTypeRequestBody(context: InterestForecastingContext, json: String): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
-          enrolments = Seq("read:interest-forecasting"),
-          userType = getRandomAffinityGroup
-        )
-        val baseUri     = s"$interestForecostingApiUrl/debt-interest-type"
-        val headers     = Map(
-          "Authorization" -> s"Bearer $bearerToken",
-          "Content-Type"  -> "application/json",
-          "Accept"        -> "application/vnd.hmrc.1.0+json"
-        )
-        print("IFS debt-interest type baseUri ************************" + baseUri)
-        print("IFS debt-interest Type json********************" + Json.parse(json))
+      enrolments = Seq("read:interest-forecasting"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/debt-interest-type"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("IFS debt-interest type baseUri ************************" + baseUri)
+    print("IFS debt-interest Type json********************" + Json.parse(json))
 
-        WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-
 
 }

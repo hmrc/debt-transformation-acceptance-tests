@@ -26,9 +26,8 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
 
-  val bearerToken: String = createBearerToken(
-    enrolments = Seq("read:statement-of-liability"),
-    userType = getRandomAffinityGroup)
+  val bearerToken: String =
+    createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
 
   def getStatementOfLiability(json: String): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
@@ -43,11 +42,10 @@ object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
-  //Used by hello world only
+  // Used by hello world only
   def getStatementLiabilityHelloWorld(endpoint: String): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-      enrolments = Seq("read:statement-of-liability"),
-      userType = getRandomAffinityGroup)
+    val bearerToken =
+      createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
     val baseUri     = s"$statementOfLiabilityApiUrl$endpoint"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",

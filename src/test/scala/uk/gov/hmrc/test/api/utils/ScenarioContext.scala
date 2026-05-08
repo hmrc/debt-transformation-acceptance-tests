@@ -22,7 +22,7 @@ object ScenarioContext {
   private var scenarioValues = Map.empty[String, Any]
   private var suppression    = Map.empty[String, List[SuppressionInformation]]
 
-  def set(key: String, value: Any): Unit                                     =
+  def set(key: String, value: Any): Unit =
     scenarioValues = scenarioValues + (key -> value)
 
   def setSuppression(key: String, value: List[SuppressionInformation]): Unit =

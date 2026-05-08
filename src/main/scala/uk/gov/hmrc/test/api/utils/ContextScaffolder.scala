@@ -21,22 +21,19 @@ import scala.io.Source
 import scala.util.Using
 import scala.util.matching.Regex
 
-/**
- * Builder-aligned context tidier and helper-context normaliser.
- *
- * Usage:
- *   ContextScaffolder <builders_root> <helpers_root> <context_root>
- *     [--recurse]
- *     [--default-context <ContextNameOrFqcn>]
- *
- * Behaviour:
- *   1. Ensures every *Builder.scala has a matching *Context.scala.
- *   2. Mirrors builder subpackages under the context root.
- *   3. Does not create contexts from helpers.
- *   4. Updates helper imports/context types to the matching builder context where possible.
- *   5. If no builder-context match is found and --default-context is supplied, uses that context
- *      and adds a validation comment above the helper trait.
- */
+/** Builder-aligned context tidier and helper-context normaliser.
+  *
+  * Usage: ContextScaffolder <builders_root> <helpers_root> <context_root> [--recurse] [--default-context
+  * <ContextNameOrFqcn>]
+  *
+  * Behaviour:
+  *   1. Ensures every *Builder.scala has a matching *Context.scala.
+  *   2. Mirrors builder subpackages under the context root.
+  *   3. Does not create contexts from helpers.
+  *   4. Updates helper imports/context types to the matching builder context where possible.
+  *   5. If no builder-context match is found and --default-context is supplied, uses that context and adds a validation
+  *      comment above the helper trait.
+  */
 object ContextScaffolder {
 
   private final case class Config(
@@ -147,11 +144,15 @@ object ContextScaffolder {
       .orElse(longestPrefixMatch(helper, contexts))
       .orElse {
         val helperTokens = tokenise(helper.stem).toSet
-        val scored = contexts.map { c =>
-          val contextTokens = tokenise(c.stem).toSet
-          val score = if (contextTokens.isEmpty) 0.0 else (helperTokens intersect contextTokens).size.toDouble / contextTokens.size
-          c -> score
-        }.sortBy(-_._2)
+        val scored       = contexts
+          .map { c =>
+            val contextTokens = tokenise(c.stem).toSet
+            val score         =
+              if (contextTokens.isEmpty) 0.0
+              else (helperTokens intersect contextTokens).size.toDouble / contextTokens.size
+            c -> score
+          }
+          .sortBy(-_._2)
 
         scored.headOption.collect { case (c, score) if score >= 0.6 => c }
       }
@@ -178,8 +179,8 @@ object ContextScaffolder {
     val defaults = Seq(
       "request"      -> "var request: String = \"\"",
       "responseBody" -> "var responseBody: String = \"\"",
-      "status"   -> "var status: Int = 0",
-      "headers"  -> "var headers: Map[String, String] = Map.empty",
+      "status"       -> "var status: Int = 0",
+      "headers"      -> "var headers: Map[String, String] = Map.empty"
     )
 
     val missing = defaults.collect {
@@ -191,10 +192,10 @@ object ContextScaffolder {
     val classParamsRe: Regex = """(?s)(final\s+case\s+class\s+[A-Za-z0-9_]+\s*\()(.*?)(\)\s*)""".r
     classParamsRe.findFirstMatchIn(src) match {
       case Some(m) =>
-        val existingRaw = m.group(2).replaceFirst("\\s+$", "")
-        val join = if (existingRaw.trim.isEmpty) "" else if (existingRaw.trim.endsWith(",")) "\n" else ",\n"
+        val existingRaw   = m.group(2).replaceFirst("\\s+$", "")
+        val join          = if (existingRaw.trim.isEmpty) "" else if (existingRaw.trim.endsWith(",")) "\n" else ",\n"
         val updatedParams = existingRaw + join + missing.mkString(",\n")
-        val updated = src.substring(0, m.start(2)) + updatedParams + src.substring(m.end(2))
+        val updated       = src.substring(0, m.start(2)) + updatedParams + src.substring(m.end(2))
         writeFile(contextFile, updated)
         println(s"• Tidied default fields in ${contextFile.getPath}")
 
@@ -205,7 +206,7 @@ object ContextScaffolder {
 
   private def ensureContextsFromBuilders(cfg: Config): Seq[ContextRef] = {
     val contextBasePkg = basePkgFromPath(cfg.contextRoot)
-    val builders = listScalaFiles(cfg.buildersRoot, cfg.recurse)
+    val builders       = listScalaFiles(cfg.buildersRoot, cfg.recurse)
       .filter(f => f.getName.endsWith("Builder.scala"))
 
     builders.map { builderFile =>
@@ -244,22 +245,22 @@ object ContextScaffolder {
   // Helper patching
   // ---------------------------------------------------------------------------
 
-  private val packageRe: Regex = """(?m)^\s*package\s+([^\n]+)\s*$""".r
-  private val contextImportRe: Regex =
+  private val packageRe: Regex        = """(?m)^\s*package\s+([^\n]+)\s*$""".r
+  private val contextImportRe: Regex  =
     """(?m)^\s*import\s+uk\.gov\.hmrc\.test\.api\.[^\n]*?\.steps\.context(?:\.[A-Za-z0-9_]+)*\.[A-Za-z0-9_]+Context\s*$""".r
   private val anyContextTypeRe: Regex = """\b[A-Za-z0-9_]+Context\b""".r
-  private val traitRe: Regex = """(?m)^\s*trait\s+[A-Za-z0-9_]+\b""".r
-  private val classRe: Regex = """(?m)^\s*(?:final\s+)?class\s+[A-Za-z0-9_]+\b""".r
+  private val traitRe: Regex          = """(?m)^\s*trait\s+[A-Za-z0-9_]+\b""".r
+  private val classRe: Regex          = """(?m)^\s*(?:final\s+)?class\s+[A-Za-z0-9_]+\b""".r
 
   private def importInsertIndex(src: String): Int =
     packageRe.findFirstMatchIn(src).map(_.end).getOrElse(0)
 
   private def defaultContextRef(raw: String, contextRoot: File, recurse: Boolean): Option[ContextRef] = {
-    val existing = discoverExistingContexts(contextRoot, recurse)
+    val existing       = discoverExistingContexts(contextRoot, recurse)
     val contextBasePkg = basePkgFromPath(contextRoot)
 
-    val trimmed = raw.trim.stripSuffix(".scala")
-    val simple  = trimmed.split('.').last.stripSuffix("Context")
+    val trimmed     = raw.trim.stripSuffix(".scala")
+    val simple      = trimmed.split('.').last.stripSuffix("Context")
     val wantedClass = s"${simple}Context"
 
     if (trimmed.contains(".")) {
@@ -276,7 +277,9 @@ object ContextScaffolder {
     s"// TODO: Validate context choice. No matching builder context was found for this helper, so it defaults to $contextName. Check this is the correct context for the migrated ScalaTest scenario."
 
   private def hasValidationComment(src: String, contextName: String): Boolean =
-    src.contains(validationComment(contextName)) || src.contains("TODO: Validate context choice. No matching builder context was found")
+    src.contains(validationComment(contextName)) || src.contains(
+      "TODO: Validate context choice. No matching builder context was found"
+    )
 
   private def addValidationComment(src: String, contextName: String): String = {
     if (hasValidationComment(src, contextName)) return src
@@ -293,10 +296,13 @@ object ContextScaffolder {
 
     val withoutOldContextImports = contextImportRe.replaceAllIn(src, "")
 
-    val insertAt = importInsertIndex(withoutOldContextImports)
+    val insertAt   = importInsertIndex(withoutOldContextImports)
     val withImport =
       if (withoutOldContextImports.contains(importLine)) withoutOldContextImports
-      else withoutOldContextImports.substring(0, insertAt) + "\n" + importLine + withoutOldContextImports.substring(insertAt)
+      else
+        withoutOldContextImports.substring(0, insertAt) + "\n" + importLine + withoutOldContextImports.substring(
+          insertAt
+        )
 
     val withContextType = anyContextTypeRe.replaceAllIn(withImport, simpleContext)
 
@@ -311,7 +317,7 @@ object ContextScaffolder {
       .filter(f => f.getName.endsWith("StepHelpers.scala") || f.getName.endsWith("StepHelper.scala"))
 
     helpers.foreach { helperFile =>
-      val helper = HelperRef(helperStem(helperFile), helperFile, relativeParent(cfg.helpersRoot, helperFile))
+      val helper  = HelperRef(helperStem(helperFile), helperFile, relativeParent(cfg.helpersRoot, helperFile))
       val matched = packageAwareMatch(helper, contexts)
       val chosen  = matched.orElse(defaultRef)
 
@@ -328,7 +334,9 @@ object ContextScaffolder {
           }
 
         case None =>
-          println(s"⚠️ No context match for helper ${helperFile.getPath}. Supply --default-context <ContextName> to patch it.")
+          println(
+            s"⚠️ No context match for helper ${helperFile.getPath}. Supply --default-context <ContextName> to patch it."
+          )
       }
     }
   }
@@ -349,11 +357,11 @@ object ContextScaffolder {
     val helpersRoot  = new File(args(1))
     val contextRoot  = new File(args(2))
 
-    var recurse = false
+    var recurse                        = false
     var defaultContext: Option[String] = None
 
     var i = 3
-    while (i < args.length) {
+    while (i < args.length)
       args(i) match {
         case "--recurse" =>
           recurse = true
@@ -367,7 +375,6 @@ object ContextScaffolder {
           println(s"ERROR: Unknown or incomplete argument: $other")
           System.exit(1)
       }
-    }
 
     Seq(
       "builders" -> buildersRoot,
@@ -387,7 +394,7 @@ object ContextScaffolder {
     val cfg = parseArgs(args)
 
     val builderContexts = ensureContextsFromBuilders(cfg)
-    val allContexts = (builderContexts ++ discoverExistingContexts(cfg.contextRoot, cfg.recurse))
+    val allContexts     = (builderContexts ++ discoverExistingContexts(cfg.contextRoot, cfg.recurse))
       .groupBy(_.fqcn)
       .values
       .map(_.head)

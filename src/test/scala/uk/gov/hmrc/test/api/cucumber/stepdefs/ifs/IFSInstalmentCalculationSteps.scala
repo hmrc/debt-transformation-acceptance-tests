@@ -32,9 +32,9 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 class IFSInstalmentCalculationSteps extends ScalaDsl with EN with Eventually with Matchers {
 
-  var quoteDateString       = "2022-03-13"
-  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-  val quoteDate: LocalDate = LocalDate.parse(quoteDateString, formatter)
+  var quoteDateString                  = "2022-03-13"
+  val formatter: DateTimeFormatter     = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+  val quoteDate: LocalDate             = LocalDate.parse(quoteDateString, formatter)
   val instalmentPaymentDate: LocalDate = quoteDate.plusDays(1)
 
   Given("debt instalment calculation with details") { (dataTable: DataTable) =>

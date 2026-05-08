@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
@@ -53,13 +69,19 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^debt details$
-  def debtDetails(context: StatementOfLiabilityContext, input: InterestForecastingBuilder.InterestTypeRequestBodyInput): Unit = {
+  def debtDetails(
+    context: StatementOfLiabilityContext,
+    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
+  ): Unit = {
     // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
     // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
   }
 
   // ^statement of liability multiple debt requests$
-  def statementOfLiabilityMultipleDebtRequests(context: StatementOfLiabilityContext, input: StatementOfLiabilityBuilder.DutyIdsInput): Unit = {
+  def statementOfLiabilityMultipleDebtRequests(
+    context: StatementOfLiabilityContext,
+    input: StatementOfLiabilityBuilder.DutyIdsInput
+  ): Unit = {
     // TODO: Wire input into context or request JSON using StatementOfLiabilityBuilder.
     // Suggested type: StatementOfLiabilityBuilder.DutyIdsInput
   }
@@ -74,7 +96,10 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^service returns debt statement of liability data$
-  def serviceReturnsDebtStatementOfLiabilityData(context: StatementOfLiabilityContext, input: StatementOfLiabilityBuilder.DutyIdsInput): Unit = {
+  def serviceReturnsDebtStatementOfLiabilityData(
+    context: StatementOfLiabilityContext,
+    input: StatementOfLiabilityBuilder.DutyIdsInput
+  ): Unit = {
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
     // response.status should be(200)
     // val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse]
@@ -102,7 +127,11 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) sol debt summary will contain duties$
-  def theSolDebtSummaryWillContainDuties(context: StatementOfLiabilityContext, debtIndex: Int, inputs: Seq[SolDuty]): Unit = {
+  def theSolDebtSummaryWillContainDuties(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    inputs: Seq[SolDuty]
+  ): Unit = {
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
     // asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
     // val responseBody = Json
@@ -128,7 +157,11 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple statement of liability duties summary will contain$
-  def theMultipleStatementOfLiabilityDutiesSummaryWillContain(context: StatementOfLiabilityContext, debtIndex: Int, inputs: Seq[SolDuty]): Unit = {
+  def theMultipleStatementOfLiabilityDutiesSummaryWillContain(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    inputs: Seq[SolDuty]
+  ): Unit = {
     // val asMapTransposed: Iterable[util.Map[Nothing, Nothing]] =
     // val response: StandaloneWSResponse                        = StatementOfLiabilityContext.get("response")
     // asMapTransposed.zipWithIndex.foreach { case (duty, _) =>

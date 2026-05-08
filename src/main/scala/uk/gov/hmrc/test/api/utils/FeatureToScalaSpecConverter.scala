@@ -21,6 +21,8 @@ import scala.io.Source
 import scala.util.Using
 import scala.util.matching.Regex
 
+// format: off
+
 /**
   * Converts .feature files into ScalaTest FeatureSpecs.
   *
@@ -871,3 +873,5 @@ object FeatureToScalaSpecConverter {
     println("Done.")
   }
 }
+
+// format: on

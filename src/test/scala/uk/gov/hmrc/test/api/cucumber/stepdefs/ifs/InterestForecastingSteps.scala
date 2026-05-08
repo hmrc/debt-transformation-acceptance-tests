@@ -48,7 +48,7 @@ class InterestForecastingSteps extends ScalaDsl with EN with Eventually with Mat
           vl.contains(asmapTransposed.get("mainTrans")) && vl.contains(asmapTransposed.get("subTrans"))
         )
         rules ++ List(s"IF mainTrans == '${asmapTransposed.get("mainTrans")}' AND subTrans == '${asmapTransposed
-          .get("subTrans")}' -> intRate = ${asmapTransposed.get("intRate")} AND interestOnlyDebt = false")
+            .get("subTrans")}' -> intRate = ${asmapTransposed.get("intRate")} AND interestOnlyDebt = false")
       case _                 => None.toList
     }
 

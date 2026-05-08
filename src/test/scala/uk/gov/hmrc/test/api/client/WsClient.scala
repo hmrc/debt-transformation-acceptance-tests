@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.test.api.client
 
-import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.util.ByteString
+import org.slf4j.LoggerFactory
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws._
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
@@ -27,7 +27,9 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-object WsClient extends LazyLogging {
+object WsClient {
+  lazy val logger = LoggerFactory.getLogger(getClass)
+
   val timeout: FiniteDuration = 60 seconds
 
   implicit val bodyWrites: BodyWritable[JsValue] =

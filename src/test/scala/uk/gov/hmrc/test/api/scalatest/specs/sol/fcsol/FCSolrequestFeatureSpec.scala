@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.hmrc.test.api.scalatest.specs.sol.fcsol
 
 import org.scalatest.GivenWhenThen
@@ -8,7 +24,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContex
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 
 class FCSolrequestFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCStatementOfLiabilityStepHelpers
@@ -29,7 +45,7 @@ class FCSolrequestFeatureSpec
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -44,13 +60,13 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       theDebtItemHasFcSolPaymentHistory(
         context,
         Seq(
-InterestForecastingBuilder.PaymentHistoryInput(
+          InterestForecastingBuilder.PaymentHistoryInput(
             debtItems = None,
             paymentAmount = Some(BigDecimal("300")),
             paymentDate = Some("2021-04-06"),
             payments = None
           ),
-InterestForecastingBuilder.PaymentHistoryInput(
+          InterestForecastingBuilder.PaymentHistoryInput(
             debtItems = None,
             paymentAmount = Some(BigDecimal("100")),
             paymentDate = Some("2021-05-06"),
@@ -76,7 +92,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -91,13 +107,13 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       theDebtItemHasFcSolPaymentHistory(
         context,
         Seq(
-InterestForecastingBuilder.PaymentHistoryInput(
+          InterestForecastingBuilder.PaymentHistoryInput(
             debtItems = None,
             paymentAmount = Some(BigDecimal("300")),
             paymentDate = Some("2021-04-06"),
             payments = None
           ),
-InterestForecastingBuilder.PaymentHistoryInput(
+          InterestForecastingBuilder.PaymentHistoryInput(
             debtItems = None,
             paymentAmount = Some(BigDecimal("100")),
             paymentDate = Some("2021-05-06"),
@@ -123,7 +139,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -138,7 +154,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       theDebtItemHasFcSolPaymentHistory(
         context,
         Seq(
-InterestForecastingBuilder.PaymentHistoryInput(
+          InterestForecastingBuilder.PaymentHistoryInput(
             debtItems = None,
             paymentAmount = Some(BigDecimal("300")),
             paymentDate = Some("2021-04-06"),
@@ -164,7 +180,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -179,7 +195,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       theDebtItemHasFcSolPaymentHistory(
         context,
         Seq(
-InterestForecastingBuilder.PaymentHistoryInput(
+          InterestForecastingBuilder.PaymentHistoryInput(
             debtItems = None,
             paymentAmount = Some(BigDecimal("300")),
             paymentDate = Some("2021-04-06"),
@@ -205,7 +221,7 @@ InterestForecastingBuilder.PaymentHistoryInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -231,7 +247,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -257,7 +273,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-05-13")
@@ -283,7 +299,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-08-01")
@@ -314,7 +330,7 @@ FCStatementOfLiabilityBuilder.FcSolRequestInput(
       fcSolRequest(
         context,
         Seq(
-FCStatementOfLiabilityBuilder.FcSolRequestInput(
+          FCStatementOfLiabilityBuilder.FcSolRequestInput(
             customerUniqueRef = Some("NEHA1234"),
             debtDetails = None,
             solRequestedDate = Some("2021-08-01")

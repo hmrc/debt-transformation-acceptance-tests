@@ -93,7 +93,7 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
     print("url ************************" + baseUri)
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
-  def deleteSuppressionRules(): StandaloneWSResponse = {
+  def deleteSuppressionRules(): StandaloneWSResponse           = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-rule"),
       userType = getRandomAffinityGroup
