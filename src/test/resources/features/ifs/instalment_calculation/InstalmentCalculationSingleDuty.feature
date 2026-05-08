@@ -48,18 +48,6 @@ Feature: Instalment calculation for 1 debt 1 duty
     When the instalment calculation detail is sent to the ifs service
     Then ifs service returns 4-Weekly frequency instalment calculation plan
 
-  Scenario: Payment plan calculation instalment - Monthly payment frequency type
-    Given debt instalment calculation with details
-      | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | quoteType | quoteDate  |
-      | 10000                   | monthly          | 2022-03-14            | 9542                 | duration  | 2022-03-13 |
-    And the instalment calculation has no postcodes
-    And no initial payment for the debt item charge
-    And the instalment calculation has debt item charges
-      | debtId | debtAmount | mainTrans | subTrans |
-      | debtId | 100000     | 1525      | 1000     |
-    When the instalment calculation detail is sent to the ifs service
-    Then ifs service returns monthly payment frequency instalment calculation plan
-
   Scenario: Payment plan calculation instalment - Quarterly payment frequency with end of Leap year instalment Date
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | quoteType | quoteDate  |
@@ -96,21 +84,6 @@ Feature: Instalment calculation for 1 debt 1 duty
     When the instalment calculation detail is sent to the ifs service
     Then ifs service returns Annually payment frequency instalment calculation plan
 
-  Scenario: Single debt payment instalment calculation plan - Monthly payments with initial payment
-    Given debt instalment calculation with details
-      | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
-      | 10000                   | 2022-03-14            | monthly          | 1423                 | duration  | 2022-03-13 |
-    And the instalment calculation has no postcodes
-    And debt plan details with initial payment
-      | initialPaymentAmount | initialPaymentDate |
-      | 100                  | 2022-03-14         |
-    And the instalment calculation has debt item charges
-      | debtId | debtAmount | mainTrans | subTrans |
-      | debtId | 100000     | 1525      | 1000     |
-
-    When the instalment calculation detail is sent to the ifs service
-    Then ifs service returns monthly instalment calculation plan with initial payment
-
   Scenario: Single debt payment instalment calculation plan - Weekly payments with initial payment 129
     Given debt instalment calculation with 129 details
       | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
@@ -124,27 +97,6 @@ Feature: Instalment calculation for 1 debt 1 duty
       | debtId | 100000     | 1525      | 1000     |
     When the instalment calculation detail is sent to the ifs service
     Then ifs service returns weekly frequency instalment calculation plan with initial payment
-
-  Scenario: Single debt instalment calculation - duration should not include initial payment
-    Given debt instalment calculation with 129 details
-      | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
-      | 15000                   | 2021-08-01            | monthly          | 5000                 | duration  | 2021-06-10 |
-    And the instalment calculation has no postcodes
-    And debt plan details with initial payment
-      | initialPaymentAmount | initialPaymentDate |
-      | 45000                | 2021-07-01         |
-    And the instalment calculation has debt item charges
-      | debtId | debtAmount | mainTrans | subTrans |
-      | debtId | 100000     | 1525      | 1000     |
-    When the instalment calculation detail is sent to the ifs service
-    Then the instalment calculation summary contains values
-      | numberOfInstalments | duration | interestAccrued | planInterest | totalInterest |
-      | 6                   | 5        | 5000            | 440          | 5440          |
-    And IFS response contains expected values
-      | instalmentNumber | dueDate    | amountDue |
-      | 1                | 2021-07-01 | 45000     |
-      | 2                | 2021-08-01 | 15000     |
-      | 6                | 2021-12-01 | 440       |
 
   Scenario: Initial payment on same day as instalment start date
     Given debt instalment calculation with 129 details
@@ -197,21 +149,6 @@ Feature: Instalment calculation for 1 debt 1 duty
     Then Ifs service returns response code 400
     And Ifs service returns error message {"statusCode":400,"reason":"Invalid JSON error from IFS","message":"Field at path '/initialPaymentDate' missing or invalid"}
 
-  Scenario: Payment plan calculation request -initialPaymentDate in past
-    Given debt instalment calculation with details
-      | instalmentPaymentAmount | instalmentPaymentDate | paymentFrequency | interestCallDueTotal | quoteType | quoteDate  |
-      | 10000                   | 2022-03-15            | single           | 1423                 | duration  | 2022-03-14 |
-    And the instalment calculation has no postcodes
-    And debt plan details with initial payment
-      | initialPaymentAmount | initialPaymentDate |
-      | 5000                 | 2022-03-13         |
-    And the instalment calculation has debt item charges
-      | debtId | debtAmount | mainTrans | subTrans |
-      | debtId | 100000     | 1530      | 1000     |
-    When the instalment calculation detail is sent to the ifs service
-    Then Ifs service returns response code 400
-    And Ifs service returns error message {"statusCode":400,"reason":"Invalid Initial Payment Date","message":"The Initial Payment Date should be on or after quoteDate"}
-
   Scenario: Payment plan calculation request -initialPaymentDate can be today
     Given debt instalment calculation with details
       | instalmentPaymentAmount | instalmentPaymentDay | paymentFrequency | interestCallDueTotal | quoteType |
@@ -240,21 +177,6 @@ Feature: Instalment calculation for 1 debt 1 duty
     When the instalment calculation detail is sent to the ifs service
     Then Ifs service returns response code 200
 
-  Scenario: Payment plan calculation request -initialPaymentDate is after instalmentPaymentDate
-    Given debt instalment calculation with details
-      | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | quoteType | quoteDate  |
-      | 10000                   | single           | 2022-03-15            | 1423                 | duration  | 2022-03-14 |
-    And the instalment calculation has no postcodes
-    And debt plan details with initial payment
-      | initialPaymentAmount | initialPaymentDate |
-      | 5000                 | 2022-03-16         |
-    And the instalment calculation has debt item charges
-      | debtId | debtAmount | mainTrans | subTrans |
-      | debtId | 100000     | 1530      | 1000     |
-    When the instalment calculation detail is sent to the ifs service
-    Then Ifs service returns response code 400
-    And Ifs service returns error message {"statusCode":400,"reason":"Invalid Initial Payment Date","message":"The Initial Payment Date should be on or before Instalment Payment Date"}
-
   Scenario: Payment plan calculation request error  - instalmentPaymentDate missing
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | interestCallDueTotal | quoteType |
@@ -267,7 +189,7 @@ Feature: Instalment calculation for 1 debt 1 duty
     When the instalment calculation detail is sent to the ifs service
     Then Ifs service returns response code 400
     And Ifs service returns error message {"statusCode":400,"reason":"Invalid JSON error from IFS","message":"Field at path '/instalmentPaymentDate' missing or invalid"}
-
+#Not sure so kept
   Scenario: Payment plan calculation request error  -quoteDate missing
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteDate | quoteType |

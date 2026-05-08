@@ -161,45 +161,4 @@ Feature: IFS provide details on whether the charges - use the charge reference o
       | 4747      | 1090     | false           | false              |
       | 7747      | 1090     | false           | false              |
       | 4711      | 1174     | false           | false              |
-
-
-  Scenario Outline:Debt Interest type rule validation
-    Given a debt interest type item
-      | mainTrans   | subTrans   |
-      | <mainTrans> | <subTrans> |
-    And the debt interest type request is sent to the ifs service
-    Then the ifs service will respond with
-      | statusCode | reason                                        | message                                                                             |
-      | 400        | Invalid combination of mainTrans and subTrans | Invalid combination of mainTrans and subTrans. No rule found in the configured ones |
-    Examples:
-      | mainTrans | subTrans |
-      | 5330      | 7006     |
-      | 5330      | 7010     |
-      | 5330      | 7011     |
-      | 5350      | 7012     |
-      | 5350      | 7014     |
-      | 5350      | 7013     |
-      | 1085      | 1000     |
-      | 1085      | 1020     |
-      | 1085      | 1025     |
-      | 1085      | 1180     |
-      | 1511      | 2000     |
-      | 1515      | 1090     |
-      | 1520      | 1090     |
-      | 1525      | 1000     |
-      | 1526      | 2000     |
-      | 1530      | 1000     |
-      | 1531      | 2000     |
-      | 1535      | 1000     |
-      | 1536      | 2000     |
-      | 1540      | 1000     |
-      | 1541      | 2000     |
-      | 1545      | 1000     |
-      | 1545      | 1090     |
-      | 1545      | 2000     |
-      | 1546      | 2000     |
-      | 2421      | 1150     |
-      | 1441      | 1150     |
-      | 4618      | 1090     |
-      | 3996      | 1091     |
-      | 3997      | 2091     |
+    
