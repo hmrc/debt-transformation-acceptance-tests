@@ -189,7 +189,7 @@ Feature: Instalment calculation for 1 debt 1 duty
     When the instalment calculation detail is sent to the ifs service
     Then Ifs service returns response code 400
     And Ifs service returns error message {"statusCode":400,"reason":"Invalid JSON error from IFS","message":"Field at path '/instalmentPaymentDate' missing or invalid"}
-#Not sure so kept
+
   Scenario: Payment plan calculation request error  -quoteDate missing
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDay | interestCallDueTotal | quoteDate | quoteType |
