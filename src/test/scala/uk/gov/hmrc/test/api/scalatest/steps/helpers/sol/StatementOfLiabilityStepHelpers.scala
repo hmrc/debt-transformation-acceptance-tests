@@ -17,7 +17,9 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolDuty}
+import play.api.libs.json.JsValue
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolCalculationSummaryResponse, SolDuty, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder, StatementOfLiabilityBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
@@ -25,22 +27,22 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^a request is made to get response from sol hello world endpoint$
-  def aRequestIsMadeToGetResponseFromSolHelloWorldEndpoint(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
-
-    context.status = response.status
-    context.responseBody = response.body
-    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
-  }
-
-  // ^a request is made to an invalid sol endpoint$
-  def aRequestIsMadeToAnInvalidSolEndpoint(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
-
-    context.status = response.status
-    context.responseBody = response.body
-    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
-  }
+//  def aRequestIsMadeToGetResponseFromSolHelloWorldEndpoint(context: StatementOfLiabilityContext): Unit = {
+//    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
+//
+//    context.status = response.status
+//    context.responseBody = response.body
+//    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
+//  }
+//
+//  // ^a request is made to an invalid sol endpoint$
+//  def aRequestIsMadeToAnInvalidSolEndpoint(context: StatementOfLiabilityContext): Unit = {
+//    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
+//
+//    context.status = response.status
+//    context.responseBody = response.body
+//    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
+//  }
 
   // ^the sol hello world response body should be (.*)$
   def theSolHelloWorldResponseBodyShouldBe(context: StatementOfLiabilityContext, p1: String): Unit = {
@@ -80,25 +82,25 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   // ^statement of liability multiple debt requests$
   def statementOfLiabilityMultipleDebtRequests(
     context: StatementOfLiabilityContext,
-    input: StatementOfLiabilityBuilder.DutyIdsInput
-  ): Unit = {
-    // TODO: Wire input into context or request JSON using StatementOfLiabilityBuilder.
-    // Suggested type: StatementOfLiabilityBuilder.DutyIdsInput
-  }
+    request: SolMultipleDebtsRequest
+  ): Unit =
+    context.request = Some(request)
+
 
   // ^a debt statement of liability is requested$
   def aDebtStatementOfLiabilityIsRequested(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementOfLiability(context.request)
+    val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.request)
 
+    val jsonResponseBody = response.body[JsValue]
     context.status = response.status
-    context.responseBody = response.body
+    context.responseBody = Some(jsonResponseBody.as[SolCalculationSummaryResponse])
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
   // ^service returns debt statement of liability data$
   def serviceReturnsDebtStatementOfLiabilityData(
     context: StatementOfLiabilityContext,
-    input: StatementOfLiabilityBuilder.DutyIdsInput
+    expectedResponse: SolCalculationSummaryResponse
   ): Unit = {
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
     // response.status should be(200)
@@ -110,6 +112,14 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     //   context.status shouldBe 200
     //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
     //   // Assert the relevant element/field against input.
+
+    val actualResponseBody = context.responseBody
+
+    context.status     shouldBe 200
+    println(s"actualResponseBody : " + actualResponseBody)
+    println(s"expectedResponse : " + Some(expectedResponse))
+
+    actualResponseBody shouldBe Some(expectedResponse)
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) sol debt summary will contain$
