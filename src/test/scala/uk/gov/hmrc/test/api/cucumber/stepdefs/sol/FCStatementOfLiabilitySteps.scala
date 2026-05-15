@@ -57,7 +57,7 @@ class FCStatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with 
 
   When("""a debt fc statement of liability is requested""") {
     val request = ScenarioContext.get("debtDetails").toString
-
+    println(s"request ********* --> ${request}")
     val response =
       FCStatementOfLiabilityRequests.getFCStatementOfLiability(request)
     println(s"RESP --> ${response.body}")

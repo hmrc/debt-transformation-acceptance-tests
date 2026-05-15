@@ -14,16 +14,25 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.api.scalatest.steps.context
+package uk.gov.hmrc.test.api.models.sol
 
-import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
-import uk.gov.hmrc.test.api.models.SuppressionRequest
+import play.api.libs.json.{Json, OFormat}
 
-// Minimal per-scenario context; extend fields as migration progresses.
-final case class SuppressionRulesContext(
-  var ifsRequest: Option[SuppressionRequest] = None,
-  var solRequest: Option[SolDebtsRequest] = None,
-  var solResponseBody: Option[SolCalculationSummaryResponse] = None,
-  var status: Int = 0,
-  var headers: Map[String, String] = Map.empty
+final case class Debt(
+  debtId: String,
+  interestRequestedTo: String
 )
+
+object Debt {
+  implicit val formatDebt: OFormat[Debt] = Json.format[Debt]
+}
+
+final case class SolDebtsRequest(
+  solType: String,
+  customerUniqueRef: String,
+  debts: List[Debt]
+)
+
+object SolDebtsRequest {
+  implicit val format: OFormat[SolDebtsRequest] = Json.format[SolDebtsRequest]
+}

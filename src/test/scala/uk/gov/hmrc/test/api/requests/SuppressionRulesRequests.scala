@@ -299,6 +299,8 @@ object SuppressionRulesRequests extends ScalaDsl with EN with Eventually with Ma
       )
 
       suppressionInfo ::= suppressionApplied
+      println(s"suppressionApplied request json body ************************ $suppressionApplied")
+
     }
 
     val suppressionRequest     = SuppressionRequest(suppressions = suppressionInfo)

@@ -22,6 +22,7 @@ import org.scalatest.Tag
 
 object DTD_1874 extends Tag("DTD_1874")
 object DTD_1959 extends Tag("DTD_1959")
+object DTD_3003 extends Tag("DTD_3003")
 object DTD_2140 extends Tag("DTD_2140")
 object DTD_2166 extends Tag("DTD_2166")
 object DTD_2167 extends Tag("DTD_2167")

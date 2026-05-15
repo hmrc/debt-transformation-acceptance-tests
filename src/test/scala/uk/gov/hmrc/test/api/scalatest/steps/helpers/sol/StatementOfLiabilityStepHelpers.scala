@@ -17,169 +17,207 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolDuty}
-import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
-import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder, StatementOfLiabilityBuilder}
+import play.api.libs.json.JsValue
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
+import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
-  // ^a request is made to get response from sol hello world endpoint$
-  def aRequestIsMadeToGetResponseFromSolHelloWorldEndpoint(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
-
-    context.status = response.status
-    context.responseBody = response.body
-    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
-  }
-
-  // ^a request is made to an invalid sol endpoint$
-  def aRequestIsMadeToAnInvalidSolEndpoint(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
-
-    context.status = response.status
-    context.responseBody = response.body
-    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
-  }
-
-  // ^the sol hello world response body should be (.*)$
-  def theSolHelloWorldResponseBodyShouldBe(context: StatementOfLiabilityContext, p1: String): Unit = {
-    // Migration hint: legacy StatementOfLiabilityContext usage, response assertion
-    // message: String =>
-    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
-    // val responseBody                   = Json.parse(response.body).as[HelloWorld]
-    // responseBody.message should be(message)
-    // TODO: Implement typed helper for this step.
-  }
-
- //  ^the sol response code should be {int}$
-  def theSolResponseCodeShouldBeInt(context: StatementOfLiabilityContext): Unit = {
-    // int
-    // TODO: Implement typed helper for this step.
-  }
-
- //  ^a request to sol with no debt items provided$
-  def aRequestToSolWithNoDebtItemsProvided(context: StatementOfLiabilityContext): Unit = {
-    // Migration hint: legacy StatementOfLiabilityContext usage
-    // StatementOfLiabilityContext.set(
-    // "debtDetails",
-    // "{" + "\"solType\":\"UI\"," +
-    // "\"customerUniqueRef\":\"XZ0000100351724\"," +
-    // TODO: Implement typed helper for this step.
-  }
-
- //  ^debt details$
-  def debtDetails(
-    context: StatementOfLiabilityContext,
-    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
-  ): Unit = {
-    // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
+  def theSolServiceRespondWith(statusCode: Int, message: String, context: StatementOfLiabilityContext): Unit = {
+    context.status       shouldBe statusCode
+    context.errorMessage shouldBe Some(message)
   }
 
   // ^statement of liability multiple debt requests$
   def statementOfLiabilityMultipleDebtRequests(
     context: StatementOfLiabilityContext,
-    input: StatementOfLiabilityBuilder.DutyIdsInput
+    request: SolDebtsRequest
   ): Unit = {
-    // TODO: Wire input into context or request JSON using StatementOfLiabilityBuilder.
-    // Suggested type: StatementOfLiabilityBuilder.DutyIdsInput
+
+    println("SolDebtsRequest : " + request)
+    context.request = Some(request)
   }
 
   // ^a debt statement of liability is requested$
   def aDebtStatementOfLiabilityIsRequested(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementOfLiability(context.request)
-
+    val response         = StatementOfLiabilityBuilder.getStatementOfLiability(context.request)
+    val jsonResponseBody = response.body[JsValue]
     context.status = response.status
-    context.responseBody = response.body
+    context.responseBody = Some(jsonResponseBody.as[SolCalculationSummaryResponse])
+    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
+  }
+
+  def statementOfLiabilityIsRequestedWithoutDebt(context: StatementOfLiabilityContext): Unit = {
+    val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.request)
+    context.status = response.status
+    context.errorMessage = Some(response.body)
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
   // ^service returns debt statement of liability data$
   def serviceReturnsDebtStatementOfLiabilityData(
     context: StatementOfLiabilityContext,
-    input: StatementOfLiabilityBuilder.DutyIdsInput
+    expectedResponse: SolCalculationSummaryResponse
   ): Unit = {
-    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
-    // response.status should be(200)
-    // val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse]
-    // locally {
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'input' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against input.
+    val actual = context.responseBody
+    println(s"actualResponseBody : " + actual)
+    println(s"expectedResponse : " + Some(expectedResponse))
+
+    context.status shouldBe 200
+
+    actual match {
+      case Some(actual) =>
+        withClue("amountIntTotal: ") {
+          actual.amountIntTotal shouldBe expectedResponse.amountIntTotal
+        }
+        withClue("combinedDailyAccrual: ") {
+          actual.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+        }
+        withClue("debts list length: ") {
+          actual.debts.length shouldBe expectedResponse.debts.length
+        }
+
+        // Verify each SolCalculation in debts list
+        actual.debts.zip(expectedResponse.debts).zipWithIndex.foreach { case ((actualDebt, expectedDebt), debtIndex) =>
+          withClue(s"debts[$debtIndex].debtId: ") {
+            actualDebt.debtId shouldBe expectedDebt.debtId
+          }
+          withClue(s"debts[$debtIndex].mainTrans: ") {
+            actualDebt.mainTrans shouldBe expectedDebt.mainTrans
+          }
+          withClue(s"debts[$debtIndex].debtTypeDescription: ") {
+            actualDebt.debtTypeDescription shouldBe expectedDebt.debtTypeDescription
+          }
+          withClue(s"debts[$debtIndex].interestDueDebtTotal: ") {
+            actualDebt.interestDueDebtTotal shouldBe expectedDebt.interestDueDebtTotal
+          }
+          withClue(s"debts[$debtIndex].totalAmountIntDebt: ") {
+            actualDebt.totalAmountIntDebt shouldBe expectedDebt.totalAmountIntDebt
+          }
+          withClue(s"debts[$debtIndex].combinedDailyAccrual: ") {
+            actualDebt.combinedDailyAccrual shouldBe expectedDebt.combinedDailyAccrual
+          }
+          withClue(s"debts[$debtIndex].parentMainTrans: ") {
+            actualDebt.parentMainTrans shouldBe expectedDebt.parentMainTrans
+          }
+          withClue(s"debts[$debtIndex].duties list length: ") {
+            actualDebt.duties.length shouldBe expectedDebt.duties.length
+          }
+
+          // Verify each SolDuty in duties list
+          actualDebt.duties.zip(expectedDebt.duties).zipWithIndex.foreach {
+            case ((actualDuty, expectedDuty), dutyIndex) =>
+              withClue(s"debts[$debtIndex].duties[$dutyIndex].subTrans: ") {
+                actualDuty.subTrans shouldBe expectedDuty.subTrans
+              }
+              withClue(s"debts[$debtIndex].duties[$dutyIndex].dutyTypeDescription: ") {
+                actualDuty.dutyTypeDescription shouldBe expectedDuty.dutyTypeDescription
+              }
+              withClue(s"debts[$debtIndex].duties[$dutyIndex].unpaidAmountDuty: ") {
+                actualDuty.unpaidAmountDuty shouldBe expectedDuty.unpaidAmountDuty
+              }
+              withClue(s"debts[$debtIndex].duties[$dutyIndex].combinedDailyAccrual: ") {
+                actualDuty.combinedDailyAccrual shouldBe expectedDuty.combinedDailyAccrual
+              }
+              withClue(s"debts[$debtIndex].duties[$dutyIndex].interestBearing: ") {
+                actualDuty.interestBearing shouldBe expectedDuty.interestBearing
+              }
+              withClue(s"debts[$debtIndex].duties[$dutyIndex].interestOnlyIndicator: ") {
+                actualDuty.interestOnlyIndicator shouldBe expectedDuty.interestOnlyIndicator
+              }
+          }
+        }
+      case None         => fail("Response body is empty")
+    }
+  }
+
+  def checkAmountIntTotalAndCombinedDailyAccrual(
+    amountIntTotal: BigInt,
+    combinedDailyAccrual: BigInt,
+    context: StatementOfLiabilityContext
+  ): Unit = {
+    withClue("amountIntTotal: ") {
+      context.responseBody.map(_.amountIntTotal) shouldBe Some(amountIntTotal)
+    }
+    withClue("combinedDailyAccrual: ") {
+      context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
+    }
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) sol debt summary will contain$
-  def theSolDebtSummaryWillContain(context: StatementOfLiabilityContext, index: Int, input: SolCalculation): Unit = {
-    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
-    // response.status should be(200)
-    // val debt: SolCalculation = Json.parse(response.body).as[SolCalculationSummaryResponse].debts(index - 1)
-    // debt.debtId                        shouldBe asMapTransposed.get("debtId").toString
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'input' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against input.
+  def theSolDebtSummaryWillContain(
+    debtSummaryEntry: Int,
+    debtId: String,
+    mainTrans: String,
+    debtTypeDescription: String,
+    interestDueDebtTotal: BigInt,
+    totalAmountIntDebt: BigInt,
+    combinedDailyAccrual: BigInt,
+    parentMainTrans: Option[String],
+    context: StatementOfLiabilityContext
+  ): Unit = {
+    val maybeDebtSummary = context.responseBody.map(_.debts(debtSummaryEntry - 1))
+
+    withClue("debtId: ") {
+      maybeDebtSummary.map(_.debtId) shouldBe Some(debtId)
+    }
+    withClue("mainTrans: ") {
+      maybeDebtSummary.map(_.mainTrans) shouldBe Some(mainTrans)
+    }
+    withClue("debtTypeDescription: ") {
+      maybeDebtSummary.map(_.debtTypeDescription) shouldBe Some(debtTypeDescription)
+    }
+    withClue("interestDueDebtTotal: ") {
+      maybeDebtSummary.map(_.interestDueDebtTotal) shouldBe Some(interestDueDebtTotal)
+    }
+    withClue("totalAmountIntDebt: ") {
+      maybeDebtSummary.map(_.totalAmountIntDebt) shouldBe Some(totalAmountIntDebt)
+    }
+    withClue("combinedDailyAccrual: ") {
+      maybeDebtSummary.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
+    }
+    withClue("parentMainTrans: ") {
+      if (parentMainTrans.isDefined)
+        maybeDebtSummary.map(_.parentMainTrans) shouldBe Some(parentMainTrans)
+    }
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) sol debt summary will contain duties$
   def theSolDebtSummaryWillContainDuties(
-    context: StatementOfLiabilityContext,
-    debtIndex: Int,
-    inputs: Seq[SolDuty]
+    solDutyEntry: Int,
+    subTrans: String,
+    dutyTypeDescription: Option[String] = None,
+    unpaidAmountDuty: BigInt,
+    combinedDailyAccrual: BigInt,
+    interestBearing: Boolean,
+    interestOnlyIndicator: Boolean,
+    context: StatementOfLiabilityContext
   ): Unit = {
-    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
-    // asMapTransposed.zipWithIndex.foreach { case (duty, index) =>
-    // val responseBody = Json
-    // .parse(response.body)
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'inputs' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against inputs.
-  }
+    val maybeDebtSummary =
+      context.responseBody
+        .map(_.debts.headOption.getOrElse(fail("Missing Debts from Sol Calculation Summary")))
+        .map(_.duties(solDutyEntry - 1))
 
- //  ^the {int}(st|nd|rd|th) customer statement of liability contains duty values as$
-  def theIntCustomerStatementOfLiabilityContainsDutyValuesAs(context: StatementOfLiabilityContext, p1: String): Unit = {
-    // int
-    // TODO: Implement typed helper for this step.
+    withClue("subTrans: ") {
+      maybeDebtSummary.map(_.subTrans) shouldBe Some(subTrans)
+    }
+    withClue("dutyTypeDescription: ") {
+      if (dutyTypeDescription.isDefined)
+        maybeDebtSummary.map(_.dutyTypeDescription) shouldBe Some(dutyTypeDescription)
+    }
+    withClue("unpaidAmountDuty: ") {
+      maybeDebtSummary.map(_.unpaidAmountDuty) shouldBe Some(unpaidAmountDuty)
+    }
+    withClue("combinedDailyAccrual: ") {
+      maybeDebtSummary.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
+    }
+    withClue("interestBearing: ") {
+      maybeDebtSummary.map(_.interestBearing) shouldBe Some(interestBearing)
+    }
+    withClue("interestOnlyIndicator: ") {
+      maybeDebtSummary.map(_.interestOnlyIndicator) shouldBe Some(interestOnlyIndicator)
+    }
   }
-
-  // ^the {int}(st|nd|rd|th) customer statement of liability contains debt values as$
-  def theIntCustomerStatementOfLiabilityContainsDebtValuesAs(context: StatementOfLiabilityContext, p1: String): Unit = {
-    // int
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple statement of liability duties summary will contain$
-  def theMultipleStatementOfLiabilityDutiesSummaryWillContain(
-    context: StatementOfLiabilityContext,
-    debtIndex: Int,
-    inputs: Seq[SolDuty]
-  ): Unit = {
-    // val asMapTransposed: Iterable[util.Map[Nothing, Nothing]] =
-    // val response: StandaloneWSResponse                        = StatementOfLiabilityContext.get("response")
-    // asMapTransposed.zipWithIndex.foreach { case (duty, _) =>
-    // val responseBody = Json.parse(response.body).as[SolCalculationSummaryResponse].debts(debtIndex - 1)
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'inputs' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against inputs.
-  }
-
- //  ^the sol service will respond with (.*)$
-  def theSolServiceWillRespondWith(context: StatementOfLiabilityContext, expectedMessage: String): Unit = {
-    // Migration hint: legacy StatementOfLiabilityContext usage
-    // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
-    // response.body shouldBe expectedMessage
-    // TODO: Implement typed helper for this step.
-  }
-
 }

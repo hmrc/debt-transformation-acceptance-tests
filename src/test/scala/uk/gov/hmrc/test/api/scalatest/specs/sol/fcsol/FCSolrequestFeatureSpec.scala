@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol.fcsol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{Debt, FCSolCalculation, PaymentHistory, SolMultipleDebtsRequest}
+import uk.gov.hmrc.test.api.models.sol.{Debt, FCSolCalculation, FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 
@@ -46,7 +46,7 @@ class FCSolrequestFeatureSpec
         solRequestedDate = "2021-05-13",
 
         debts = List(
-          Debt(
+          FcSolDebt(
             debtId = "duty01",
             originalAmount = BigDecimal("10000"),
             solDescription = "solDescription",
@@ -66,7 +66,7 @@ class FCSolrequestFeatureSpec
               )
             )
           ),
-          Debt(
+          FcSolDebt(
             debtId = "duty02",
             originalAmount = BigDecimal("10000"),
             solDescription = "solDescription",
@@ -126,7 +126,7 @@ class FCSolrequestFeatureSpec
         customerUniqueRef = "NEHA1234",
         solRequestedDate = "2021-05-13",
         debts = List(
-          Debt(
+          FcSolDebt(
             debtId = "duty01",
             originalAmount = BigDecimal("10000"),
             solDescription = "solDescription",
@@ -175,7 +175,7 @@ class FCSolrequestFeatureSpec
         customerUniqueRef = "NEHA1234",
         solRequestedDate = "2021-05-13",
         debts = List(
-          Debt(
+          FcSolDebt(
             debtId = "duty01",
             originalAmount = BigDecimal("10000"),
             solDescription = "Debt1",
@@ -201,7 +201,7 @@ class FCSolrequestFeatureSpec
           customerUniqueRef = "NEHA1234",
           solRequestedDate = "2021-05-13",
           debts = List(
-            Debt(
+            FcSolDebt(
               debtId = "XS002610170037",
               originalAmount = BigDecimal("9999999999"),
               solDescription = "Debt1",

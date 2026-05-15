@@ -36,7 +36,6 @@ class SuppresionStepDefs extends ScalaDsl with EN with Eventually with Matchers 
     withClue(s"Incorrect status with body : ${response.body}\n\n") {
       response.status should be(200)
     }
-
     println(s"suppression data RESPONSE ---------> ${response.body}")
     ScenarioContext.set("response", response)
   }

@@ -16,10 +16,13 @@
 
 package uk.gov.hmrc.test.api.scalatest.builders
 
-import play.api.libs.json.Json
+import org.scalatest.Assertions.fail
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.models.sol.SolDebtsRequest
 import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
+import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests.bearerToken
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
@@ -127,7 +130,27 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
   // HTTP client methods lifted from legacy Requests with typed context access.
   // -----------------------------------------------------------------------
 
-  def postSuppressionData(context: SuppressionRulesContext, json: String): StandaloneWSResponse = {
+  def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
+    val baseUri = s"$statementOfLiabilityApiUrl/sol"
+    val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
+
+    println("debt management baseUri ************************" + baseUri)
+    println("debt management request json *******************" + jsonRequest)
+
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+
+    println(s"request headers :::::::::::::::::::  ${headers.toString()}")
+
+    WsClient.post(baseUri, headers = headers, jsonRequest)
+  }
+
+  def putSuppressionData(maybeRequest: Option[SuppressionRequest]): StandaloneWSResponse = {
+    val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
+
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup
@@ -139,7 +162,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
     print("url ************************" + baseUri)
-    WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.put(baseUri, headers = headers, jsonRequest)
   }
 
   def deleteNewSuppressionData(context: SuppressionRulesContext): StandaloneWSResponse = {
