@@ -121,21 +121,91 @@ class RequestSoLForMultipleDebtsFeatureSpec
         serviceReturnsDebtStatementOfLiabilityData(context, response)
     }
 
-    ignore("2. Statement of liability for customer - 2 SA Non Interest bearing debts") { context =>
+    Scenario("2. Statement of liability for customer - 2 SA Non Interest bearing debts") { context =>
       Given("statement of liability multiple debt requests")
       // TODO: Helper 'statementOfLiabilityMultipleDebtRequests' expects context 'StatementOfLiabilityContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // statementOfLiabilityMultipleDebtRequests(context)
+      Given("statement of liability multiple debt requests")
+      val request = SolMultipleDebtsRequest(
+        solType = "UI",
+        customerUniqueRef = "customer-1",
+        debts = List(
+          Debt(
+            debtId = "debtSA0016",
+            interestRequestedTo = "2021-08-10"
+          ),
+          Debt(
+            debtId = "debtSA0014",
+            interestRequestedTo = "2021-08-10"
+          )
+        )
+      )
+
+      statementOfLiabilityMultipleDebtRequests(context, request)
 
       When("a debt statement of liability is requested")
       // TODO: Helper 'aDebtStatementOfLiabilityIsRequested' expects context 'StatementOfLiabilityContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtStatementOfLiabilityIsRequested(context)
+       aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
       // TODO: Helper 'serviceReturnsDebtStatementOfLiabilityData' expects context 'StatementOfLiabilityContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // serviceReturnsDebtStatementOfLiabilityData(context)
+
+      val response = SolCalculationSummaryResponse(
+        amountIntTotal = 1100000,
+        combinedDailyAccrual = 0,
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0016",
+            mainTrans = "6010",
+            debtTypeDescription = "SA Balancing Charge Interest",
+            interestDueDebtTotal = 0,
+            totalAmountIntDebt = 600000,
+            combinedDailyAccrual = 0,
+            parentMainTrans = Some("25"),
+            duties = Seq(
+              SolDuty(
+                subTrans = "1554",
+                dutyTypeDescription = Some("SA Late Payment Interest"),
+                unpaidAmountDuty = 400000,
+                combinedDailyAccrual = 0,
+                interestBearing = false,
+                interestOnlyIndicator = true
+              ),
+              SolDuty(
+                subTrans = "1554",
+                dutyTypeDescription = Some("SA Late Payment Interest"),
+                unpaidAmountDuty = 200000,
+                combinedDailyAccrual = 0,
+                interestBearing = false,
+                interestOnlyIndicator = true
+              )
+            )
+          ),
+          SolCalculation(
+            debtId = "debtSA0014",
+            mainTrans = "6010",
+            debtTypeDescription = "SA Late Payment Interest",
+            interestDueDebtTotal = 0,
+            totalAmountIntDebt = 500000,
+            combinedDailyAccrual = 0,
+            parentMainTrans = Some("33"),
+            duties = Seq(
+              SolDuty(
+                subTrans = "1554",
+                dutyTypeDescription = Some("SA Payment on Account 2 Interest"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 0,
+                interestBearing = false,
+                interestOnlyIndicator = true
+              )
+            )
+          )
+        )
+      )
+
+       serviceReturnsDebtStatementOfLiabilityData(context, response)
 
       And("the 1st customer statement of liability contains debt values as")
       // TODO: Helper 'theIntCustomerStatementOfLiabilityContainsDebtValuesAs' expects context 'StatementOfLiabilityContext' but this spec uses 'FCStatementOfLiabilityContext'.

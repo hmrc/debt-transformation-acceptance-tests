@@ -24,6 +24,8 @@ import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder, StatementOfLiabilityBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
+import java.time.LocalDate
+
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^a request is made to get response from sol hello world endpoint$
@@ -83,8 +85,11 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   def statementOfLiabilityMultipleDebtRequests(
     context: StatementOfLiabilityContext,
     request: SolMultipleDebtsRequest
-  ): Unit =
+  ): Unit = {
+
+    println("SolMultipleDebtsRequest : " + request)
     context.request = Some(request)
+  }
 
 
   // ^a debt statement of liability is requested$
@@ -113,6 +118,77 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
     //   // Assert the relevant element/field against input.
 
+    val actual = context.responseBody
+    println(s"actualResponseBody : " + actual)
+    println(s"expectedResponse : " + Some(expectedResponse))
+
+    context.status shouldBe 200
+
+    actual match {
+      case Some(actual) =>
+        // Verify top-level fields
+        withClue("amountIntTotal: ") {
+          actual.amountIntTotal shouldBe expectedResponse.amountIntTotal
+        }
+        withClue("combinedDailyAccrual: ") {
+          actual.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+        }
+        withClue("debts list length: ") {
+          actual.debts.length shouldBe expectedResponse.debts.length
+        }
+
+        // Verify each SolCalculation in debts list
+        actual.debts.zip(expectedResponse.debts).zipWithIndex.foreach { case ((actualDebt, expectedDebt), debtIndex) =>
+          withClue(s"debts[$debtIndex].debtId: ") {
+            actualDebt.debtId shouldBe expectedDebt.debtId
+          }
+          withClue(s"debts[$debtIndex].mainTrans: ") {
+            actualDebt.mainTrans shouldBe expectedDebt.mainTrans
+          }
+          withClue(s"debts[$debtIndex].debtTypeDescription: ") {
+            actualDebt.debtTypeDescription shouldBe expectedDebt.debtTypeDescription
+          }
+          withClue(s"debts[$debtIndex].interestDueDebtTotal: ") {
+            actualDebt.interestDueDebtTotal shouldBe expectedDebt.interestDueDebtTotal
+          }
+          withClue(s"debts[$debtIndex].totalAmountIntDebt: ") {
+            actualDebt.totalAmountIntDebt shouldBe expectedDebt.totalAmountIntDebt
+          }
+          withClue(s"debts[$debtIndex].combinedDailyAccrual: ") {
+            actualDebt.combinedDailyAccrual shouldBe expectedDebt.combinedDailyAccrual
+          }
+          withClue(s"debts[$debtIndex].parentMainTrans: ") {
+            actualDebt.parentMainTrans shouldBe expectedDebt.parentMainTrans
+          }
+          withClue(s"debts[$debtIndex].duties list length: ") {
+            actualDebt.duties.length shouldBe expectedDebt.duties.length
+          }
+
+          // Verify each SolDuty in duties list
+          actualDebt.duties.zip(expectedDebt.duties).zipWithIndex.foreach { case ((actualDuty, expectedDuty), dutyIndex) =>
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].subTrans: ") {
+              actualDuty.subTrans shouldBe expectedDuty.subTrans
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].dutyTypeDescription: ") {
+              actualDuty.dutyTypeDescription shouldBe expectedDuty.dutyTypeDescription
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].unpaidAmountDuty: ") {
+              actualDuty.unpaidAmountDuty shouldBe expectedDuty.unpaidAmountDuty
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].combinedDailyAccrual: ") {
+              actualDuty.combinedDailyAccrual shouldBe expectedDuty.combinedDailyAccrual
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].interestBearing: ") {
+              actualDuty.interestBearing shouldBe expectedDuty.interestBearing
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].interestOnlyIndicator: ") {
+              actualDuty.interestOnlyIndicator shouldBe expectedDuty.interestOnlyIndicator
+            }
+          }
+        }
+
+      case None => fail("Response body is empty")
+    }
     val actualResponseBody = context.responseBody
 
     context.status     shouldBe 200
