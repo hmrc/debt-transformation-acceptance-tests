@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import uk.gov.hmrc.test.api.models.DebtSubmission
 import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolCalculationSummaryResponse, SolDuty, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder, StatementOfLiabilityBuilder}
@@ -70,15 +71,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     // "{" + "\"solType\":\"UI\"," +
     // "\"customerUniqueRef\":\"XZ0000100351724\"," +
     // TODO: Implement typed helper for this step.
-  }
-
-  // ^debt details$
-  def debtDetails(
-    context: StatementOfLiabilityContext,
-    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
-  ): Unit = {
-    // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
   }
 
   // ^statement of liability multiple debt requests$

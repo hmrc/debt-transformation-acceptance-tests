@@ -31,6 +31,7 @@ object StatementOfLiabilityRequests extends BaseRequests with RandomValues {
 
   def getStatementOfLiability(json: String): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
+    println(s"baseUri :::::::::::::::::::  $baseUri")
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
