@@ -124,18 +124,31 @@ class FCSolrequestFeatureSpec
       )
 
     }
-    ignore("1. FC Sol request with multiple debt ID's and multiple payments.") { context =>
+    Scenario("1. FC Sol request with multiple debt ID's and multiple payments.") { context =>
       Given("fc sol request")
-      fcSolRequest(
-        context,
-        Seq(
-          FCStatementOfLiabilityBuilder.FcSolRequestInput(
-            customerUniqueRef = Some("NEHA1234"),
-            debtDetails = None,
-            solRequestedDate = Some("2021-05-13")
+      val request =SolMultipleDebtsRequest(
+        customerUniqueRef = "NEHA1234",
+        solRequestedDate = "2021-05-13",
+        debts = List(
+          Debt(
+            debtId = "duty01",
+            originalAmount = BigDecimal("10000"),
+            solDescription = "Debt1",
+            interestStartDate = "2020-05-13",
+            interestRequestedTo = "2021-08-01",
+            interestIndicator = "Y",
+            chargedInterest = BigDecimal("1000"),
+            periodEnd = "2020-05-13",
+            paymentHistory = List(
+              PaymentHistory(
+                paymentAmount = BigDecimal("300"),
+                paymentDate = "2021-04-06"
+              )
+        )
           )
         )
       )
+      fcSolRequest(context, request)
 
       And("the fc sol debt item has multiple debts")
       theFcSolDebtItemHasMultipleDebts(context)
@@ -165,10 +178,32 @@ class FCSolrequestFeatureSpec
       Then("service returns fc debt statement of liability data")
       // TODO: Step table was parsed, but the helper parameter type 'DebtCalculationsSummary' could not be matched to a generated builder input.
       // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
+      serviceReturnsFcDebtStatementOfLiabilityData(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = BigDecimal("0"),
+          interestDueCallTotal = BigDecimal("0"),
+          amountIntTotal = BigDecimal("9700"),
+          amountOnIntDueTotal = BigDecimal("0"),
+          unpaidAmountTotal = BigDecimal("0"),
+          debtCalculations = List.empty
+        )
+      )
 
       And("the 1st multiple fc statement of liability debt summary will contain duties")
       // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
-      // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
+       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+         context,
+         0,
+         Seq(
+           FCSolCalculation(
+             debtId = "duty01",
+             interestDueDebtTotal = BigInt("0"),
+             totalAmountIntDebt = BigDecimal("10012")
+           )
+         )
+       )
+
 
     }
     ignore("2. FC Sol request with Single debt ID's and single payments.") { context =>
@@ -199,7 +234,6 @@ class FCSolrequestFeatureSpec
           )
         )
       )
-
       When("a debt fc statement of liability is requested")
       aDebtFcStatementOfLiabilityIsRequested(context)
 
