@@ -86,13 +86,42 @@ class FCSolrequestFeatureSpec
       When("a debt fc statement of liability is requested")
       aDebtFcStatementOfLiabilityIsRequested(context)
 
+//      Then("service returns fc debt statement of liability data")
+//       TODO: Step table was parsed, but the helper parameter type 'DebtCalculationsSummary' could not be matched to a generated builder input.
+//       Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
+//
+//      And("the 1st multiple fc statement of liability debt summary will contain duties")
+//       TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
+//       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
       Then("service returns fc debt statement of liability data")
-      // TODO: Step table was parsed, but the helper parameter type 'DebtCalculationsSummary' could not be matched to a generated builder input.
-      // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
-
+      serviceReturnsFcDebtStatementOfLiabilityData(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = BigDecimal("0"),
+          interestDueCallTotal = BigDecimal("0"),
+          amountIntTotal = BigDecimal("19200"),
+          amountOnIntDueTotal = BigDecimal("0"),
+          unpaidAmountTotal = BigDecimal("0"),
+          debtCalculations = List.empty
+        )
+      )
       And("the 1st multiple fc statement of liability debt summary will contain duties")
-      // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
-      // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
+      theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+        context,
+        0,
+        Seq(
+          FCSolCalculation(
+            debtId = "duty01",
+            interestDueDebtTotal = BigInt("0"),
+            totalAmountIntDebt = BigDecimal("10910")
+          ),
+          FCSolCalculation(
+            debtId = "duty02",
+            interestDueDebtTotal = BigInt("0"),
+            totalAmountIntDebt = BigDecimal("11910")
+          )
+        )
+      )
 
     }
     ignore("1. FC Sol request with multiple debt ID's and multiple payments.") { context =>
