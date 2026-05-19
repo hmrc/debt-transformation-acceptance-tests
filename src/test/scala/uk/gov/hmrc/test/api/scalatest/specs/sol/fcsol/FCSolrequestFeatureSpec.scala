@@ -42,7 +42,7 @@ class FCSolrequestFeatureSpec
 
   Feature("fc statement of liability multiple debts") {
 
-    ignore("0. FC Sol request with multiple debt ID's and multiple payments and cotax interest charge.") { context =>
+    Scenario("0. FC Sol request with multiple debt ID's and multiple payments and cotax interest charge.") { context =>
       Given("fc sol request")
       val request = SolMultipleDebtsRequest(
         customerUniqueRef = "NEHA1234",

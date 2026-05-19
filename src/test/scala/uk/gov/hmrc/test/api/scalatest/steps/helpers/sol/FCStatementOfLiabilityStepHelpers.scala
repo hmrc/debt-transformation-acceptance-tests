@@ -24,6 +24,7 @@ import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, I
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import play.api.libs.json.Json
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
+import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.getBodyAsString
 
 trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 
