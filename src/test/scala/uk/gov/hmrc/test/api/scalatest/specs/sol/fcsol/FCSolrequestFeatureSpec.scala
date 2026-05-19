@@ -19,6 +19,8 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol.fcsol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
+import uk.gov.hmrc.test.api.models.DebtCalculationsSummary
+import uk.gov.hmrc.test.api.models.sol.{Debt, FCSolCalculation, PaymentHistory, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
@@ -42,38 +44,44 @@ class FCSolrequestFeatureSpec
 
     ignore("0. FC Sol request with multiple debt ID's and multiple payments and cotax interest charge.") { context =>
       Given("fc sol request")
-      fcSolRequest(
-        context,
-        Seq(
-          FCStatementOfLiabilityBuilder.FcSolRequestInput(
-            customerUniqueRef = Some("NEHA1234"),
-            debtDetails = None,
-            solRequestedDate = Some("2021-05-13")
-          )
-        )
-      )
-
-      And("fc sol debt item has multiple debts with charge interest")
-      fcSolDebtItemHasMultipleDebtsWithChargeInterest(context)
-
-      And("the debt item has fc sol payment history")
-      theDebtItemHasFcSolPaymentHistory(
-        context,
-        Seq(
-          InterestForecastingBuilder.PaymentHistoryInput(
-            debtItems = None,
-            paymentAmount = Some(BigDecimal("300")),
-            paymentDate = Some("2021-04-06"),
-            payments = None
+      val request = SolMultipleDebtsRequest(
+        customerUniqueRef = "NEHA1234",
+        solRequestedDate = "2021-05-13",
+        debts = List(
+          Debt(
+            debtId = "duty01",
+            originalAmount = BigDecimal("10000"),
+            solDescription = "solDescription",
+            interestStartDate = "2020-05-13",
+            interestRequestedTo = "2021-08-01",
+            interestIndicator = "Y",
+            chargedInterest = BigDecimal("1000"),
+            periodEnd = "2020-05-13",
+            paymentHistory = List(
+              PaymentHistory(
+                paymentAmount = BigDecimal("300"),
+                paymentDate = "2021-04-06"
+              ),
+              PaymentHistory(
+                paymentAmount = BigDecimal("100"),
+                paymentDate = "2021-05-06"
+              )
+            )
           ),
-          InterestForecastingBuilder.PaymentHistoryInput(
-            debtItems = None,
-            paymentAmount = Some(BigDecimal("100")),
-            paymentDate = Some("2021-05-06"),
-            payments = None
+          Debt(
+            debtId = "duty02",
+            originalAmount = BigDecimal("10000"),
+            solDescription = "solDescription",
+            interestStartDate = "2020-05-13",
+            interestRequestedTo = "2021-08-01",
+            interestIndicator = "Y",
+            chargedInterest = BigDecimal("2000"),
+            periodEnd = "2020-05-13",
+            paymentHistory = List.empty
           )
         )
       )
+      fcSolRequest(context,request)
 
       When("a debt fc statement of liability is requested")
       aDebtFcStatementOfLiabilityIsRequested(context)

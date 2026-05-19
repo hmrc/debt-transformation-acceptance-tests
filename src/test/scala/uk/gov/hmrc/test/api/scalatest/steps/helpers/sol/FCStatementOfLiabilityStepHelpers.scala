@@ -22,6 +22,8 @@ import uk.gov.hmrc.test.api.models.sol.FCSolCalculation
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
+import play.api.libs.json.Json
+import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 
 trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 
@@ -32,7 +34,44 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
   ): Unit = {
     // TODO: Wire inputs into context or request JSON using FCStatementOfLiabilityBuilder.
     // Suggested type: FCStatementOfLiabilityBuilder.FcSolRequestInput
+
+    val input = inputs.head
+
+    var firstItem = false
+    var debtDetails: String = null
+
+    try context.request
+    catch {
+      case _: Exception => firstItem = true
+
+    }
+
+    val fcSolMultipleDebts =
+      getBodyAsString ( "FCSolDebt")
+        .replaceAll("<REPLACE_customerUniqueRef>",
+          input.customerUniqueRef.get)
+        .replaceAll("<REPLACE_solRequestedDate>",
+          input.solRequestedDate.get)
+
+    if (firstItem){
+      debtDetails =
+        fcSolMultipleDebts
+    } else {
+      debtDetails =
+        context.request.toString.concat(",").concat(fcSolMultipleDebts)
+    }
+    context.request = debtDetails
+    println(debtDetails)
+
   }
+  def fcSolRequest(
+    context: FCStatementOfLiabilityContext,
+    request:SolMultipleDebtsRequest
+                  ):Unit = {
+    context.request = Json.toJson(request).toString()
+  }
+
+
 
   // ^fc sol debt item has multiple debts with charge interest$
   def fcSolDebtItemHasMultipleDebtsWithChargeInterest(context: FCStatementOfLiabilityContext): Unit = {
@@ -124,3 +163,4 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
 }
+
