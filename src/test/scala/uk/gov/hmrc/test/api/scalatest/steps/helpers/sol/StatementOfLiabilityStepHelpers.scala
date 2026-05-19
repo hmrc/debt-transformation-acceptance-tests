@@ -17,30 +17,35 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolDuty}
+import play.api.libs.json.JsValue
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import uk.gov.hmrc.test.api.models.DebtSubmission
+import uk.gov.hmrc.test.api.models.sol.{SolCalculation, SolCalculationSummaryResponse, SolDuty, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder, StatementOfLiabilityBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
+import java.time.LocalDate
+
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^a request is made to get response from sol hello world endpoint$
-  def aRequestIsMadeToGetResponseFromSolHelloWorldEndpoint(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
-
-    context.status = response.status
-    context.responseBody = response.body
-    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
-  }
-
-  // ^a request is made to an invalid sol endpoint$
-  def aRequestIsMadeToAnInvalidSolEndpoint(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
-
-    context.status = response.status
-    context.responseBody = response.body
-    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
-  }
+//  def aRequestIsMadeToGetResponseFromSolHelloWorldEndpoint(context: StatementOfLiabilityContext): Unit = {
+//    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
+//
+//    context.status = response.status
+//    context.responseBody = response.body
+//    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
+//  }
+//
+//  // ^a request is made to an invalid sol endpoint$
+//  def aRequestIsMadeToAnInvalidSolEndpoint(context: StatementOfLiabilityContext): Unit = {
+//    val response = StatementOfLiabilityRequests.getStatementLiabilityHelloWorld(context.request)
+//
+//    context.status = response.status
+//    context.responseBody = response.body
+//    context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
+//  }
 
   // ^the sol hello world response body should be (.*)$
   def theSolHelloWorldResponseBodyShouldBe(context: StatementOfLiabilityContext, p1: String): Unit = {
@@ -68,37 +73,31 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     // TODO: Implement typed helper for this step.
   }
 
-  // ^debt details$
-  def debtDetails(
-    context: StatementOfLiabilityContext,
-    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
-  ): Unit = {
-    // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
-  }
-
   // ^statement of liability multiple debt requests$
   def statementOfLiabilityMultipleDebtRequests(
     context: StatementOfLiabilityContext,
-    input: StatementOfLiabilityBuilder.DutyIdsInput
+    request: SolMultipleDebtsRequest
   ): Unit = {
-    // TODO: Wire input into context or request JSON using StatementOfLiabilityBuilder.
-    // Suggested type: StatementOfLiabilityBuilder.DutyIdsInput
+
+    println("SolMultipleDebtsRequest : " + request)
+    context.request = Some(request)
   }
+
 
   // ^a debt statement of liability is requested$
   def aDebtStatementOfLiabilityIsRequested(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityRequests.getStatementOfLiability(context.request)
+    val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.request)
 
+    val jsonResponseBody = response.body[JsValue]
     context.status = response.status
-    context.responseBody = response.body
+    context.responseBody = Some(jsonResponseBody.as[SolCalculationSummaryResponse])
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
   // ^service returns debt statement of liability data$
   def serviceReturnsDebtStatementOfLiabilityData(
     context: StatementOfLiabilityContext,
-    input: StatementOfLiabilityBuilder.DutyIdsInput
+    expectedResponse: SolCalculationSummaryResponse
   ): Unit = {
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")
     // response.status should be(200)
@@ -110,6 +109,85 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     //   context.status shouldBe 200
     //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
     //   // Assert the relevant element/field against input.
+
+    val actual = context.responseBody
+    println(s"actualResponseBody : " + actual)
+    println(s"expectedResponse : " + Some(expectedResponse))
+
+    context.status shouldBe 200
+
+    actual match {
+      case Some(actual) =>
+        // Verify top-level fields
+        withClue("amountIntTotal: ") {
+          actual.amountIntTotal shouldBe expectedResponse.amountIntTotal
+        }
+        withClue("combinedDailyAccrual: ") {
+          actual.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+        }
+        withClue("debts list length: ") {
+          actual.debts.length shouldBe expectedResponse.debts.length
+        }
+
+        // Verify each SolCalculation in debts list
+        actual.debts.zip(expectedResponse.debts).zipWithIndex.foreach { case ((actualDebt, expectedDebt), debtIndex) =>
+          withClue(s"debts[$debtIndex].debtId: ") {
+            actualDebt.debtId shouldBe expectedDebt.debtId
+          }
+          withClue(s"debts[$debtIndex].mainTrans: ") {
+            actualDebt.mainTrans shouldBe expectedDebt.mainTrans
+          }
+          withClue(s"debts[$debtIndex].debtTypeDescription: ") {
+            actualDebt.debtTypeDescription shouldBe expectedDebt.debtTypeDescription
+          }
+          withClue(s"debts[$debtIndex].interestDueDebtTotal: ") {
+            actualDebt.interestDueDebtTotal shouldBe expectedDebt.interestDueDebtTotal
+          }
+          withClue(s"debts[$debtIndex].totalAmountIntDebt: ") {
+            actualDebt.totalAmountIntDebt shouldBe expectedDebt.totalAmountIntDebt
+          }
+          withClue(s"debts[$debtIndex].combinedDailyAccrual: ") {
+            actualDebt.combinedDailyAccrual shouldBe expectedDebt.combinedDailyAccrual
+          }
+          withClue(s"debts[$debtIndex].parentMainTrans: ") {
+            actualDebt.parentMainTrans shouldBe expectedDebt.parentMainTrans
+          }
+          withClue(s"debts[$debtIndex].duties list length: ") {
+            actualDebt.duties.length shouldBe expectedDebt.duties.length
+          }
+
+          // Verify each SolDuty in duties list
+          actualDebt.duties.zip(expectedDebt.duties).zipWithIndex.foreach { case ((actualDuty, expectedDuty), dutyIndex) =>
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].subTrans: ") {
+              actualDuty.subTrans shouldBe expectedDuty.subTrans
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].dutyTypeDescription: ") {
+              actualDuty.dutyTypeDescription shouldBe expectedDuty.dutyTypeDescription
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].unpaidAmountDuty: ") {
+              actualDuty.unpaidAmountDuty shouldBe expectedDuty.unpaidAmountDuty
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].combinedDailyAccrual: ") {
+              actualDuty.combinedDailyAccrual shouldBe expectedDuty.combinedDailyAccrual
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].interestBearing: ") {
+              actualDuty.interestBearing shouldBe expectedDuty.interestBearing
+            }
+            withClue(s"debts[$debtIndex].duties[$dutyIndex].interestOnlyIndicator: ") {
+              actualDuty.interestOnlyIndicator shouldBe expectedDuty.interestOnlyIndicator
+            }
+          }
+        }
+
+      case None => fail("Response body is empty")
+    }
+    val actualResponseBody = context.responseBody
+
+    context.status     shouldBe 200
+    println(s"actualResponseBody : " + actualResponseBody)
+    println(s"expectedResponse : " + Some(expectedResponse))
+
+    actualResponseBody shouldBe Some(expectedResponse)
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) sol debt summary will contain$

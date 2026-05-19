@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.test.api.scalatest.builders
 
-import play.api.libs.json.Json
+import org.scalatest.Assertions.fail
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests.bearerToken
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
@@ -55,8 +57,13 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
   // HTTP client methods lifted from legacy Requests with typed context access.
   // -----------------------------------------------------------------------
 
-  def getStatementOfLiability(context: StatementOfLiabilityContext, json: String): StandaloneWSResponse = {
+  def getStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
+    val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
+
+    println("debt management baseUri ************************" + baseUri)
+    println("debt management request json *******************" + jsonRequest)
+
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -65,7 +72,7 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
     println(s"request headers :::::::::::::::::::  ${headers.toString()}")
 
-    WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
   def getStatementLiabilityHelloWorld(context: StatementOfLiabilityContext, endpoint: String): StandaloneWSResponse = {

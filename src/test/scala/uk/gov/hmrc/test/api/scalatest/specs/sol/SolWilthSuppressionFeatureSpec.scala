@@ -19,38 +19,62 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
+import uk.gov.hmrc.test.api.models.{DebtRequest, DebtSubmission, SuppressionInformation}
+import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppresionStepHelpers
 
 class SolWilthSuppressionFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCStatementOfLiabilityStepHelpers
-    with StatementOfLiabilityStepHelpers {
+    with StatementOfLiabilityStepHelpers
+    with SuppresionStepHelpers {
 
-  override type FixtureParam = FCStatementOfLiabilityContext
+  override type FixtureParam = SuppressionRulesContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = FCStatementOfLiabilityContext()
+    val context = SuppressionRulesContext()
     try test(context)
     finally ()
   }
 
   Feature("Sol With Suppression") {
 
-    ignore("Customer Outputs SoL where suppression is applied") { context =>
+    Scenario("Customer Outputs SoL where suppression is applied") { context =>
       Given("suppression configuration data is created")
       // TODO: No matching helper method found for this step. Validate and call the correct helper.
       // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+      val request = SuppressionInformation(
+        dateFrom = "2021-03-04",
+        dateTo = Some("2021-03-05"),
+        reason = "LEGISLATIVE",
+        reasonDesc = "COVID",
+        suppressionChargeDescription = "SA-Suppression",
+        postcode = None,
+        mainTrans = None,
+        subTrans = Some("1090"),
+        checkPeriodEnd = None
+      )
+      suppressionConfigurationDataIsCreated(context,request)
 
       When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      suppressionConfigurationIsSentToIfsService(context)
 
       And("debt details")
       // TODO: Helper 'debtDetails' expects context 'StatementOfLiabilityContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtDetails(context)
+      DebtSubmission(
+        solType = "CO",
+        customerUniqueRef = "NEHA1234",
+        debts = List(
+          DebtRequest(
+            debtId = "debt008",
+            interestRequestedTo = "2021-03-08"
+          )
+        )
+      )
+//       debtDetails(context, request)
 
       When("a debt statement of liability is requested")
       // TODO: Helper 'aDebtStatementOfLiabilityIsRequested' expects context 'StatementOfLiabilityContext' but this spec uses 'FCStatementOfLiabilityContext'.

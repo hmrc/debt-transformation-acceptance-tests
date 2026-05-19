@@ -86,6 +86,7 @@ class StatementOfLiabilitySteps extends ScalaDsl with EN with Eventually with Ma
     else { debtDetails = ScenarioContext.get("debtDetails").toString.concat(",").concat(debtDetailsTestfile) }
 
     ScenarioContext.set("debtDetails", debtDetails)
+    println(s"debtDetails request******:::::::::: $debtDetails")
   }
 
   Given("""statement of liability multiple debt requests""") { (dataTable: DataTable) =>
