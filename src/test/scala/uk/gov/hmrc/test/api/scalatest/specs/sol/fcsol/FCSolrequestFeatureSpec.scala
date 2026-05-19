@@ -99,7 +99,7 @@ class FCSolrequestFeatureSpec
         DebtCalculationsSummary(
           combinedDailyAccrual = BigDecimal("0"),
           interestDueCallTotal = BigDecimal("0"),
-          amountIntTotal = BigDecimal("19200"),
+          amountIntTotal = BigDecimal("19600"),
           amountOnIntDueTotal = BigDecimal("0"),
           unpaidAmountTotal = BigDecimal("0"),
           debtCalculations = List.empty

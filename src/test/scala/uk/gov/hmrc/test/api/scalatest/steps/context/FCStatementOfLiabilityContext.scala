@@ -15,11 +15,16 @@
  */
 
 package uk.gov.hmrc.test.api.scalatest.steps.context
+import uk.gov.hmrc.test.api.models.DebtCalculationsSummary
+import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 
 // Minimal per-scenario context; extend fields as migration progresses.
 final case class FCStatementOfLiabilityContext(
   var request: String = "",
   var responseBody: String = "",
   var status: Int = 0,
-  var headers: Map[String, String] = Map.empty
+  var headers: Map[String, String] = Map.empty,
+
+  var solRequest : Option[SolMultipleDebtsRequest] = None,
+var debtCalculationsSummary:Option[DebtCalculationsSummary]=None
 )

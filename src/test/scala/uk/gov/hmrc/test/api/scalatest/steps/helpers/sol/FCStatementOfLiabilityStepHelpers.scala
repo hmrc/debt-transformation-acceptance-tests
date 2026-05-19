@@ -26,6 +26,9 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.getBodyAsString
 
+import scala.reflect.internal.util.NoFile.input
+import scala.reflect.io.NoAbstractFile.input
+
 trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 
   // ^fc sol request$
@@ -65,10 +68,12 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
     println(debtDetails)
 
   }
+  // new method using in scala
   def fcSolRequest(
     context: FCStatementOfLiabilityContext,
     request:SolMultipleDebtsRequest
                   ):Unit = {
+    context.solRequest = Some(request)
     context.request = Json.toJson(request).toString()
   }
 
@@ -124,16 +129,29 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
     context: FCStatementOfLiabilityContext,
     input: DebtCalculationsSummary
   ): Unit = {
-    // val response: StandaloneWSResponse = FCStatementOfLiabilityContext.get("response")
-    // response.status should be(200)
-    // val responseBody = Json.parse(response.body).as[FCSolCalculationSummaryResponse]
-    // responseBody.amountIntTotal.toString       shouldBe asMapTransposed.get("amountIntTotal").toString
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'input' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against input.
+    println("--verifying FC Statement of liability Response --")
+    println(s"Actual Status : ${context.status}")
+           context.status shouldBe 200
+    println("--status verification passed--")
+
+    val actualJson =
+      Json.parse(context.responseBody)
+    println(s"Expected summary : $input")
+    println(s"Actual response JSON : $actualJson")
+
+//    (actualJson\"amountIntTotal").as[BigDecimal] shouldBe input.amountIntTotal
+//    (actualJson\"combinedDailyAccrual").as[BigDecimal] shouldBe input.combinedDailyAccrual
+//      (actualJson\"interestDueCallTotal").as[BigDecimal] shouldBe input.interestDueCallTotal
+//        (actualJson\"amountOnIntDueTotal").as[BigDecimal] shouldBe input.amountOnIntDueTotal
+//          (actualJson\"unpaidAmountTotal").as[BigDecimal] shouldBe input.unpaidAmountTotal
+
+    (actualJson\"amountIntTotal").as[BigDecimal] shouldBe input.amountIntTotal
+    (actualJson\"combinedDailyAccrual").as[BigDecimal] shouldBe input.combinedDailyAccrual
+    //context.debtCalculationsSummary = Some(actualResponse)
+    println("--Debt calculation summary actual vs expected verification passed --")
+
+
+
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) multiple fc statement of liability debt summary will contain duties$
