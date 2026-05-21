@@ -17,10 +17,12 @@
 package uk.gov.hmrc.test.api.requests
 
 import io.cucumber.datatable.DataTable
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, ScenarioContext, TestData}
+import org.scalatest.Assertions.fail
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
@@ -30,7 +32,7 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
     enrolments = Seq("read:statement-of-liability"),
     userType = getRandomAffinityGroup
   )
-
+//old one
   def getFCStatementOfLiability(json: String): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/fc-sol"
     val headers = Map(
@@ -39,6 +41,19 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
     WsClient.post(baseUri, headers = headers, Json.parse(json))
+  }
+
+  //new one
+  def getFCStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
+    val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
+
+    val baseUri = s"$statementOfLiabilityApiUrl/fc-sol"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
   def fcSolRequest(dataTable: DataTable): Unit = {

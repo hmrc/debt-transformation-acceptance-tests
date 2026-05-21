@@ -18,63 +18,63 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.DebtCalculationsSummary
-import uk.gov.hmrc.test.api.models.sol.FCSolCalculation
+import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import play.api.libs.json.Json
-import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
+import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.getBodyAsString
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
 
 import scala.reflect.internal.util.NoFile.input
 import scala.reflect.io.NoAbstractFile.input
 
 trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 
-  // ^fc sol request$
-  def fcSolRequest(
-    context: FCStatementOfLiabilityContext,
-    inputs: Seq[FCStatementOfLiabilityBuilder.FcSolRequestInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using FCStatementOfLiabilityBuilder.
-    // Suggested type: FCStatementOfLiabilityBuilder.FcSolRequestInput
-
-    val input = inputs.head
-
-    var firstItem = false
-    var debtDetails: String = null
-
-    try context.request
-    catch {
-      case _: Exception => firstItem = true
-
-    }
-
-    val fcSolMultipleDebts =
-      getBodyAsString ( "FCSolDebt")
-        .replaceAll("<REPLACE_customerUniqueRef>",
-          input.customerUniqueRef.get)
-        .replaceAll("<REPLACE_solRequestedDate>",
-          input.solRequestedDate.get)
-
-    if (firstItem){
-      debtDetails =
-        fcSolMultipleDebts
-    } else {
-      debtDetails =
-        context.request.toString.concat(",").concat(fcSolMultipleDebts)
-    }
-    context.request = debtDetails
-    println(debtDetails)
-
-  }
+   //^fc sol request$
+//  def fcSolRequest(
+//    context: FCStatementOfLiabilityContext,
+//    inputs: Seq[FCStatementOfLiabilityBuilder.FcSolRequestInput]
+//  ): Unit = {
+//    // TODO: Wire inputs into context or request JSON using FCStatementOfLiabilityBuilder.
+//    // Suggested type: FCStatementOfLiabilityBuilder.FcSolRequestInput
+//
+//    val input = inputs.head
+//
+//    var firstItem = false
+//    var debtDetails: String = null
+//
+//    try context.request
+//    catch {
+//      case _: Exception => firstItem = true
+//
+//    }
+//
+//    val fcSolMultipleDebts =
+//      getBodyAsString ( "FCSolDebt")
+//        .replaceAll("<REPLACE_customerUniqueRef>",
+//          input.customerUniqueRef.get)
+//        .replaceAll("<REPLACE_solRequestedDate>",
+//          input.solRequestedDate.get)
+//
+//    if (firstItem){
+//      debtDetails =
+//        fcSolMultipleDebts
+//    } else {
+//      debtDetails =
+//        context.request.toString.concat(",").concat(fcSolMultipleDebts)
+//    }
+//    context.request = debtDetails
+//    println(debtDetails)
+//
+//  }
   // new method using in scala
   def fcSolRequest(
     context: FCStatementOfLiabilityContext,
-    request:SolMultipleDebtsRequest
+    request: SolMultipleDebtsRequest
                   ):Unit = {
-    context.solRequest = Some(request)
-    context.request = Json.toJson(request).toString()
+//    context.solRequest = Some(request)
+    context.request = Some(request)
   }
 
 
@@ -119,25 +119,24 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
   def aDebtFcStatementOfLiabilityIsRequested(context: FCStatementOfLiabilityContext): Unit = {
     val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
 
+    val jsonResponse = response.body[JsValue]
     context.status = response.status
-    context.responseBody = response.body
+    context.responseBody = Some(jsonResponse.as[FCSolCalculationSummaryResponse])
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
   // ^service returns fc debt statement of liability data$
   def serviceReturnsFcDebtStatementOfLiabilityData(
     context: FCStatementOfLiabilityContext,
-    input: DebtCalculationsSummary
-  ): Unit = {
+    amountIntTotal: BigDecimal,
+    combinedDailyAccrual: Int): Unit = {
     println("--verifying FC Statement of liability Response --")
     println(s"Actual Status : ${context.status}")
            context.status shouldBe 200
     println("--status verification passed--")
 
-    val actualJson =
-      Json.parse(context.responseBody)
-    println(s"Expected summary : $input")
-    println(s"Actual response JSON : $actualJson")
+    println(s"Expected amountIntTotal : $amountIntTotal")
+    println(s"Expected combinedDailyAccrual : $combinedDailyAccrual")
 
 //    (actualJson\"amountIntTotal").as[BigDecimal] shouldBe input.amountIntTotal
 //    (actualJson\"combinedDailyAccrual").as[BigDecimal] shouldBe input.combinedDailyAccrual
@@ -145,8 +144,11 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
 //        (actualJson\"amountOnIntDueTotal").as[BigDecimal] shouldBe input.amountOnIntDueTotal
 //          (actualJson\"unpaidAmountTotal").as[BigDecimal] shouldBe input.unpaidAmountTotal
 
-    (actualJson\"amountIntTotal").as[BigDecimal] shouldBe input.amountIntTotal
-    (actualJson\"combinedDailyAccrual").as[BigDecimal] shouldBe input.combinedDailyAccrual
+    context.responseBody.map(_.amountIntTotal) shouldBe Some(amountIntTotal)
+    context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
+
+//    (actualJson\"amountIntTotal").as[BigDecimal] shouldBe input.amountIntTotal
+//    (actualJson\"combinedDailyAccrual").as[BigDecimal] shouldBe input.combinedDailyAccrual
     //context.debtCalculationsSummary = Some(actualResponse)
     println("--Debt calculation summary actual vs expected verification passed --")
 
@@ -167,7 +169,9 @@ trait FCStatementOfLiabilityStepHelpers { this: Matchers =>
     // TODO: Assertion step. Check models and builders to use to compare against.
     // Compare 'inputs' against the actual parsed response from context.responseBody.
     // Suggested approach:
-    //   context.status shouldBe 200
+       context.status shouldBe 200
+    val actualDebts = context.responseBody.get.debts
+    actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
     //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
     //   // Assert the relevant element/field against inputs.
   }
