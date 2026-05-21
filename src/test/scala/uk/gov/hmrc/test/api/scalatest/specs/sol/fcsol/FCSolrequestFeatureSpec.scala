@@ -49,7 +49,7 @@ class FCSolrequestFeatureSpec
       val request = SolMultipleDebtsRequest(
         customerUniqueRef = "NEHA1234",
         solRequestedDate = "2021-05-13",
-        //And
+        // And
         debts = List(
           Debt(
             debtId = "duty01",
@@ -80,7 +80,7 @@ class FCSolrequestFeatureSpec
             interestIndicator = "Y",
             chargedInterest = BigDecimal("2000"),
             periodEnd = "2020-05-13",
-            //And
+            // And
             paymentHistory = List(
               PaymentHistory(
                 paymentAmount = BigDecimal("300"),
@@ -95,17 +95,17 @@ class FCSolrequestFeatureSpec
         )
       )
       fcSolRequest(context, request)
-       //when
+      // when
       When("a debt fc statement of liability is requested")
       aDebtFcStatementOfLiabilityIsRequested(context)
-      //then
+      // then
       Then("service returns fc debt statement of liability data")
       serviceReturnsFcDebtStatementOfLiabilityData(
         context,
         amountIntTotal = 19200,
         combinedDailyAccrual = 0
       )
-      //and
+      // and
       And("the 1st multiple fc statement of liability debt summary will contain duties")
       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
@@ -131,23 +131,22 @@ class FCSolrequestFeatureSpec
         customerUniqueRef = "NEHA1234",
         solRequestedDate = "2021-05-13",
         debts = List(
-
-        Debt(
-          debtId = "duty01",
-          originalAmount = BigDecimal("10000"),
-          solDescription = "solDescription",
-          interestStartDate = "2020-05-13",
-          interestRequestedTo = "2021-08-01",
-          interestIndicator = "Y",
-          chargedInterest = BigDecimal("1000"),
-          periodEnd = "2020-05-13",
-          paymentHistory = List(
-            PaymentHistory(
-              paymentAmount = BigDecimal("300"),
-              paymentDate = "2021-04-06"
+          Debt(
+            debtId = "duty01",
+            originalAmount = BigDecimal("10000"),
+            solDescription = "solDescription",
+            interestStartDate = "2020-05-13",
+            interestRequestedTo = "2021-08-01",
+            interestIndicator = "Y",
+            chargedInterest = BigDecimal("1000"),
+            periodEnd = "2020-05-13",
+            paymentHistory = List(
+              PaymentHistory(
+                paymentAmount = BigDecimal("300"),
+                paymentDate = "2021-04-06"
+              )
             )
           )
-        )
         )
       )
       fcSolRequest(context, request)
@@ -180,78 +179,78 @@ class FCSolrequestFeatureSpec
 
     }
 
+    Scenario("2. FC Sol request with invalid or empty original amount.") { context =>
 
+      Given("fc sol request")
 
+      val request = SolMultipleDebtsRequest(
+        customerUniqueRef = "NEHA1234",
+        solRequestedDate = "2021-05-13",
+        debts = List(
+          Debt(
+            debtId = "duty01",
+            originalAmount = BigDecimal("10000"),
+            solDescription = "Debt1",
+            interestStartDate = "",
+            interestRequestedTo = "2021-08-01",
+            interestIndicator = "Y",
+            chargedInterest = BigDecimal("0"),
+            periodEnd = "2020-05-13",
+            paymentHistory = List.empty
+          )
+        )
+      )
 
+      fcSolRequest(
+        context,
+        request)
 
+//      And("the fc sol debts item has multiple debts")
+//      theFcSolDebtItemHasMultipleDebts(context)
+//
+//      And("the fc sol debt item has no payment history")
+//      theFcSolDebtItemHasNoPaymentHistory(context)
+//
+//      When("a debt fc statement of liability is requested")
+//      //aDebtFcStatementOfLiabilityIsRequestedForError(context)
 
-
-        //        ignore("2. FC Sol request with invalid or empty original amount.") { context =>
-        //          Given("fc sol request")
-        //          fcSolRequest(
-        //            context,
-        //            Seq(
-        //              FCStatementOfLiabilityBuilder.FcSolRequestInput(
-        //                customerUniqueRef = Some("NEHA1234"),
-        //                debtDetails = None,
-        //                solRequestedDate = Some("2021-05-13")
-        //              )
-        //            )
-        //          )
-        //
-        //          And("the fc sol debt item has multiple debts")
-        //          theFcSolDebtItemHasMultipleDebts(context)
-        //
-        //          And("the fc sol debt item has no payment history")
-        //          theFcSolDebtItemHasNoPaymentHistory(context)
-        //
-        //          When("a debt fc statement of liability is requested")
-        //          aDebtFcStatementOfLiabilityIsRequested(context)
-        //
-        //          Then("the fc sol service will respond with Invalid Json")
-        //          // TODO: No matching helper method found for this step. Validate and call the correct helper.
-        //
-        //        }
-        //
-        //        ignore("3. Large Non Interest bearing debt with no payments.") { context =>
-        //          Given("fc sol request")
-        //          fcSolRequest(
-        //            context,
-        //            Seq(
-        //              FCStatementOfLiabilityBuilder.FcSolRequestInput(
-        //                customerUniqueRef = Some("NEHA1234"),
-        //                debtDetails = None,
-        //                solRequestedDate = Some("2021-08-01")
-        //              )
-        //            )
-        //          )
-        //
-        //          And("the fc sol debt item has multiple debts")
-        //          theFcSolDebtItemHasMultipleDebts(context)
-        //
-        //          And("the fc sol debt item has no payment history")
-        //          theFcSolDebtItemHasNoPaymentHistory(context)
-        //
-        //          When("a debt fc statement of liability is requested")
-        //          aDebtFcStatementOfLiabilityIsRequested(context)
-        //
-        //          Then("service returns fc debt statement of liability data")
-        //          // TODO: Step table was parsed, but the helper parameter type 'DebtCalculationsSummary' could not be matched to a generated builder input.
-        //          // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
-        //
-        //          And("the 1st multiple fc statement of liability debt summary will contain duties")
-        //          // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
-        //          // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
-        //
-        //        }
-        //
-
-
-
-
-
+      Then("the fc sol service will respond with invalid Json")
+      theFcSolServiceWillRespondWith(context, "Invalid Json")
     }
 
+    //        ignore("3. Large Non Interest bearing debt with no payments.") { context =>
+    //          Given("fc sol request")
+    //          fcSolRequest(
+    //            context,
+    //            Seq(
+    //              FCStatementOfLiabilityBuilder.FcSolRequestInput(
+    //                customerUniqueRef = Some("NEHA1234"),
+    //                debtDetails = None,
+    //                solRequestedDate = Some("2021-08-01")
+    //              )
+    //            )
+    //          )
+    //
+    //          And("the fc sol debt item has multiple debts")
+    //          theFcSolDebtItemHasMultipleDebts(context)
+    //
+    //          And("the fc sol debt item has no payment history")
+    //          theFcSolDebtItemHasNoPaymentHistory(context)
+    //
+    //          When("a debt fc statement of liability is requested")
+    //          aDebtFcStatementOfLiabilityIsRequested(context)
+    //
+    //          Then("service returns fc debt statement of liability data")
+    //          // TODO: Step table was parsed, but the helper parameter type 'DebtCalculationsSummary' could not be matched to a generated builder input.
+    //          // Validate the helper signature and call serviceReturnsFcDebtStatementOfLiabilityData(context, ...)
+    //
+    //          And("the 1st multiple fc statement of liability debt summary will contain duties")
+    //          // TODO: Helper 'theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties' has multiple non-context parameters: summaryIndex: Int, inputs: Seq[FCSolCalculation].
+    //          // theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(context, /* TODO */)
+    //
+    //        }
+    //
 
+  }
 
 }
