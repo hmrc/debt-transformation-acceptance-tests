@@ -32,7 +32,6 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
     enrolments = Seq("read:statement-of-liability"),
     userType = getRandomAffinityGroup
   )
-//old one used in cucumber
   def getFCStatementOfLiability(json: String): StandaloneWSResponse = {
     val baseUri = s"$statementOfLiabilityApiUrl/fc-sol"
     val headers = Map(
@@ -43,7 +42,6 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
-  // new one used in scala
   def getFCStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 

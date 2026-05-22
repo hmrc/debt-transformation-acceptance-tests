@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests
-import uk.gov.hmrc.test.api.scalatest.builders.{InterestForecastingBuilder}
+import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import play.api.libs.json.{JsValue}
+import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 
 trait FCStatementOfLiabilityStepHelpers {
@@ -33,21 +33,37 @@ trait FCStatementOfLiabilityStepHelpers {
   ): Unit =
     context.request = Some(request)
 
-  def fcSolDebtItemHasMultipleDebtsWithChargeInterest(context: FCStatementOfLiabilityContext): Unit = {}
-
-  def theFcSolDebtItemHasMultipleDebts(context: FCStatementOfLiabilityContext): Unit = {}
-  def theFcSolDebtItemHasNoDebts(context: FCStatementOfLiabilityContext): Unit       = {}
+  def fcSolDebtItemHasMultipleDebtsWithChargeInterest(context: FCStatementOfLiabilityContext): Unit = {
+    // FCStatementOfLiabilityRequests.fcSolWithCotaxInterestChargeRequest(dataTable)
+    // TODO: No matching generated builder input or existing model was found.
+    // Add a typed parameter and wire it into context or request JSON.
+  }
+  def theFcSolDebtItemHasMultipleDebts(context: FCStatementOfLiabilityContext): Unit = {
+    // FCStatementOfLiabilityRequests.addFCDebts(dataTable)
+    // TODO: No matching generated builder input or existing model was found.
+    // Add a typed parameter and wire it into context or request JSON.
+  }
+  def theFcSolDebtItemHasNoDebts(context: FCStatementOfLiabilityContext): Unit = {
+    // Migration hint: request object reference: FCStatementOfLiabilityRequests
+    // FCStatementOfLiabilityRequests.FCSolWithNoDebts()
+    // TODO: Implement typed helper for this step.
+  }
 
   def theDebtItemHasFcSolPaymentHistory(
     context: FCStatementOfLiabilityContext,
     inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
-  ): Unit = {}
+  ): Unit = {
+    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
+    // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
+  }
 
-  def theFcSolDebtItemHasNoPaymentHistory(context: FCStatementOfLiabilityContext): Unit = {}
+  def theFcSolDebtItemHasNoPaymentHistory(context: FCStatementOfLiabilityContext): Unit = {
+    // FCSolWithNoPaymentHistory()
+    // TODO: Implement typed helper for this step.
+  }
 
   def aDebtFcStatementOfLiabilityIsRequested(context: FCStatementOfLiabilityContext): Unit = {
-    val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
-
+    val response     = FCStatementOfLiabilityBuilder.getFCStatementOfLiability(context.request)
     val jsonResponse = response.body[JsValue]
     context.status = response.status
     context.responseBody = Some(jsonResponse.as[FCSolCalculationSummaryResponse])
@@ -59,14 +75,10 @@ trait FCStatementOfLiabilityStepHelpers {
     amountIntTotal: BigDecimal,
     combinedDailyAccrual: Int
   ): Unit = {
-    println("--verifying FC Statement of liability Response --")
     println(s"Actual Status : ${context.status}")
-    context.status shouldBe 200
-    println("--status verification passed--")
-
+    context.status                                   shouldBe 200
     println(s"Expected amountIntTotal : $amountIntTotal")
     println(s"Expected combinedDailyAccrual : $combinedDailyAccrual")
-
     context.responseBody.map(_.amountIntTotal)       shouldBe Some(amountIntTotal)
     context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
     println("--Debt calculation summary actual vs expected verification passed --")
@@ -85,23 +97,18 @@ trait FCStatementOfLiabilityStepHelpers {
   }
 
   def aDebtFcStatementOfLiabilityIsRequestedForError(context: FCStatementOfLiabilityContext): Unit = {
-
     val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
     context.status = response.status
     println(response.body)
   }
 
   def theFcSolServiceWillRespondWith(context: FCStatementOfLiabilityContext, expectedMessage: String): Unit = {
-
     val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
 
-    println("--verifying error response--")
     println(s"ActualStatus : ${response.status}")
     println(s"Expected Message : $expectedMessage")
     println(s"Actual Response : ${response.body}")
     response.status shouldBe 400
-    response.body     should include(expectedMessage)
-    println("-- error response assertion passed --")
+    response.body should include(expectedMessage)
   }
-
 }
