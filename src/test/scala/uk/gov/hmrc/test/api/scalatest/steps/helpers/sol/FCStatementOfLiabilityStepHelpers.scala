@@ -39,7 +39,6 @@ trait FCStatementOfLiabilityStepHelpers {
     context.responseBody = Some(jsonResponse.as[FCSolCalculationSummaryResponse])
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
-
   def serviceReturnsFcDebtStatementOfLiabilityData(
     context: FCStatementOfLiabilityContext,
     amountIntTotal: BigDecimal,
@@ -49,20 +48,18 @@ trait FCStatementOfLiabilityStepHelpers {
     context.responseBody.map(_.amountIntTotal)       shouldBe Some(amountIntTotal)
     context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
   }
-
   def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
     context: FCStatementOfLiabilityContext,
     summaryIndex: Int,
     inputs: Seq[FCSolCalculation]
   ): Unit = {
-
     context.status shouldBe 200
     val actualDebts = context.responseBody.get.debts
     actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
     actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
   }
   def theFcSolServiceWillRespondWith(context: FCStatementOfLiabilityContext, expectedMessage: String): Unit = {
-    val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
+    val response = FCStatementOfLiabilityBuilder.getFCStatementOfLiability(context.request)
     response.status shouldBe 400
     response.body     should include(expectedMessage)
   }

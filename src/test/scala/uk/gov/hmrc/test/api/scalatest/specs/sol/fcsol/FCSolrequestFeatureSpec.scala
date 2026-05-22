@@ -100,7 +100,6 @@ class FCSolrequestFeatureSpec
         amountIntTotal = 19200,
         combinedDailyAccrual = 0
       )
-
       And("the 1st multiple fc statement of liability debt summary will contain duties")
       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
@@ -189,7 +188,6 @@ class FCSolrequestFeatureSpec
         )
       )
       fcSolRequest(context, request)
-
       Then("the fc sol service will respond with invalid Json")
       theFcSolServiceWillRespondWith(context, "Invalid Json")
     }
@@ -215,7 +213,6 @@ class FCSolrequestFeatureSpec
           )
         )
       fcSolRequest(context, request)
-
       When("a debt fc statement of liability is requested")
       aDebtFcStatementOfLiabilityIsRequested(context)
 
@@ -225,7 +222,6 @@ class FCSolrequestFeatureSpec
         amountIntTotal = BigDecimal("9999999999"),
         combinedDailyAccrual = 0
       )
-
       And("the 1st multiple fc statement of liability debt summary will contain duties")
       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,

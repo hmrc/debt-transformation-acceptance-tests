@@ -21,6 +21,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
+import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.{bearerToken, statementOfLiabilityApiUrl}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
@@ -39,13 +40,6 @@ object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
   )
   def getFCStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
-
-    val baseUri = s"$statementOfLiabilityApiUrl/fc-sol"
-    val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
-      "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
-    )
-    WsClient.post(baseUri, headers = headers, jsonRequest)
+    FCStatementOfLiabilityRequests.getFCStatementOfLiability(jsonRequest.toString())
   }
 }
