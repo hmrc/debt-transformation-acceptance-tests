@@ -42,6 +42,18 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
     WsClient.post(baseUri, headers = headers, Json.parse(json))
   }
 
+  def getFCStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
+    val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
+
+    val baseUri = s"$statementOfLiabilityApiUrl/fc-sol"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.post(baseUri, headers = headers, jsonRequest)
+  }
+
   def fcSolRequest(dataTable: DataTable): Unit = {
     val asMapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
     var firstItem           = false

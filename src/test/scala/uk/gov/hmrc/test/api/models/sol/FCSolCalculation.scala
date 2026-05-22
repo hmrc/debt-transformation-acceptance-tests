@@ -23,6 +23,7 @@ case class FCSolCalculation(
   interestDueDebtTotal: BigInt,
   totalAmountIntDebt: BigDecimal
 )
+
 object FCSolCalculation {
   implicit val formatOutputVariables: OFormat[FCSolCalculation] = Json.format[FCSolCalculation]
 }
