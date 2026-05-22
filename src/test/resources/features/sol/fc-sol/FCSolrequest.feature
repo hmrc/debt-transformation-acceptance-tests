@@ -1,3 +1,4 @@
+@tests
 Feature: fc statement of liability multiple debts
 
   Scenario: 0. FC Sol request with multiple debt ID's and multiple payments and cotax interest charge.

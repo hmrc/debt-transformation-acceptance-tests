@@ -30,38 +30,8 @@ trait FCStatementOfLiabilityStepHelpers {
   def fcSolRequest(
     context: FCStatementOfLiabilityContext,
     request: SolMultipleDebtsRequest
-  ): Unit =
+  ): Unit                                                                                  =
     context.request = Some(request)
-
-  def fcSolDebtItemHasMultipleDebtsWithChargeInterest(context: FCStatementOfLiabilityContext): Unit = {
-    // FCStatementOfLiabilityRequests.fcSolWithCotaxInterestChargeRequest(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
-  def theFcSolDebtItemHasMultipleDebts(context: FCStatementOfLiabilityContext): Unit = {
-    // FCStatementOfLiabilityRequests.addFCDebts(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
-  def theFcSolDebtItemHasNoDebts(context: FCStatementOfLiabilityContext): Unit = {
-    // Migration hint: request object reference: FCStatementOfLiabilityRequests
-    // FCStatementOfLiabilityRequests.FCSolWithNoDebts()
-    // TODO: Implement typed helper for this step.
-  }
-
-  def theDebtItemHasFcSolPaymentHistory(
-    context: FCStatementOfLiabilityContext,
-    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
-  }
-
-  def theFcSolDebtItemHasNoPaymentHistory(context: FCStatementOfLiabilityContext): Unit = {
-    // FCSolWithNoPaymentHistory()
-    // TODO: Implement typed helper for this step.
-  }
-
   def aDebtFcStatementOfLiabilityIsRequested(context: FCStatementOfLiabilityContext): Unit = {
     val response     = FCStatementOfLiabilityBuilder.getFCStatementOfLiability(context.request)
     val jsonResponse = response.body[JsValue]
@@ -75,13 +45,9 @@ trait FCStatementOfLiabilityStepHelpers {
     amountIntTotal: BigDecimal,
     combinedDailyAccrual: Int
   ): Unit = {
-    println(s"Actual Status : ${context.status}")
     context.status                                   shouldBe 200
-    println(s"Expected amountIntTotal : $amountIntTotal")
-    println(s"Expected combinedDailyAccrual : $combinedDailyAccrual")
     context.responseBody.map(_.amountIntTotal)       shouldBe Some(amountIntTotal)
     context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
-    println("--Debt calculation summary actual vs expected verification passed --")
   }
 
   def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
@@ -95,20 +61,9 @@ trait FCStatementOfLiabilityStepHelpers {
     actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
     actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
   }
-
-  def aDebtFcStatementOfLiabilityIsRequestedForError(context: FCStatementOfLiabilityContext): Unit = {
-    val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
-    context.status = response.status
-    println(response.body)
-  }
-
   def theFcSolServiceWillRespondWith(context: FCStatementOfLiabilityContext, expectedMessage: String): Unit = {
     val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
-
-    println(s"ActualStatus : ${response.status}")
-    println(s"Expected Message : $expectedMessage")
-    println(s"Actual Response : ${response.body}")
     response.status shouldBe 400
-    response.body should include(expectedMessage)
+    response.body     should include(expectedMessage)
   }
 }

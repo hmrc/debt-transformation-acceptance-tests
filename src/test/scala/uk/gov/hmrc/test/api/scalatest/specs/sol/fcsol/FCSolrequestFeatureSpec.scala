@@ -146,10 +146,6 @@ class FCSolrequestFeatureSpec
       )
       fcSolRequest(context, request)
 
-      And("the fc sol debt item has multiple debts")
-
-      theFcSolDebtItemHasMultipleDebts(context)
-
       When("a debt fc statement of liability is requested")
       aDebtFcStatementOfLiabilityIsRequested(context)
 
@@ -162,7 +158,7 @@ class FCSolrequestFeatureSpec
       And("the 1st multiple fc statement of liability debt summary will contain duties")
       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
-        summaryIndex=0,
+        summaryIndex = 0,
         Seq(
           FCSolCalculation(
             debtId = "duty01",
@@ -233,7 +229,7 @@ class FCSolrequestFeatureSpec
       And("the 1st multiple fc statement of liability debt summary will contain duties")
       theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
-        summaryIndex=0,
+        summaryIndex = 0,
         Seq(
           FCSolCalculation(
             debtId = "XS002610170037",

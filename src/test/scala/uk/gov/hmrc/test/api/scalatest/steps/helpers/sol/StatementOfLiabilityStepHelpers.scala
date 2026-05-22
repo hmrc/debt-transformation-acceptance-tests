@@ -52,13 +52,13 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     // TODO: Implement typed helper for this step.
   }
 
-  // ^the sol response code should be {int}$
+ //  ^the sol response code should be {int}$
   def theSolResponseCodeShouldBeInt(context: StatementOfLiabilityContext): Unit = {
     // int
     // TODO: Implement typed helper for this step.
   }
 
-  // ^a request to sol with no debt items provided$
+ //  ^a request to sol with no debt items provided$
   def aRequestToSolWithNoDebtItemsProvided(context: StatementOfLiabilityContext): Unit = {
     // Migration hint: legacy StatementOfLiabilityContext usage
     // StatementOfLiabilityContext.set(
@@ -68,7 +68,7 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     // TODO: Implement typed helper for this step.
   }
 
-  // ^debt details$
+ //  ^debt details$
   def debtDetails(
     context: StatementOfLiabilityContext,
     input: InterestForecastingBuilder.InterestTypeRequestBodyInput
@@ -144,7 +144,7 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     //   // Assert the relevant element/field against inputs.
   }
 
-  // ^the {int}(st|nd|rd|th) customer statement of liability contains duty values as$
+ //  ^the {int}(st|nd|rd|th) customer statement of liability contains duty values as$
   def theIntCustomerStatementOfLiabilityContainsDutyValuesAs(context: StatementOfLiabilityContext, p1: String): Unit = {
     // int
     // TODO: Implement typed helper for this step.
@@ -174,7 +174,7 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     //   // Assert the relevant element/field against inputs.
   }
 
-  // ^the sol service will respond with (.*)$
+ //  ^the sol service will respond with (.*)$
   def theSolServiceWillRespondWith(context: StatementOfLiabilityContext, expectedMessage: String): Unit = {
     // Migration hint: legacy StatementOfLiabilityContext usage
     // val response: StandaloneWSResponse = StatementOfLiabilityContext.get("response")

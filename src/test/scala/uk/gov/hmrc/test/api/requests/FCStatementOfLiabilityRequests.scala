@@ -133,7 +133,6 @@ object FCStatementOfLiabilityRequests extends BaseRequests with RandomValues {
           .replaceAll("<REPLACE_paymentAmount>", payment.get("paymentAmount"))
           .replaceAll("<REPLACE_paymentDate>", payment.get("paymentDate"))
       )
-
       if (index + 1 < asMapTransposed.size) payments = payments.concat(",")
     }
     val jsonWithPayments = ScenarioContext.get("debtDetails").toString.replaceAll("<REPLACE_payments>", payments)
