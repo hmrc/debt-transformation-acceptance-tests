@@ -131,7 +131,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
   // -----------------------------------------------------------------------
 
   def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
-    val baseUri = s"$statementOfLiabilityApiUrl/sol"
+    val baseUri              = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 
     println("debt management baseUri ************************" + baseUri)
