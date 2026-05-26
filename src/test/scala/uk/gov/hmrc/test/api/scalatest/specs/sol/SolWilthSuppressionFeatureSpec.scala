@@ -19,9 +19,10 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{Debt, SolDebtsRequest}
+import uk.gov.hmrc.test.api.models.sol.{Debt, SolCalculation, SolCalculationSummaryResponse, SolDebtsRequest, SolDuty}
 import uk.gov.hmrc.test.api.models.SuppressionInformation
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.CommonStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppresionStepHelpers
 
@@ -77,36 +78,32 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
-        amountIntTotal = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        context
+      val expectedResponse = SolCalculationSummaryResponse(
+        amountIntTotal = 500177,
+        combinedDailyAccrual = 35,
+        debts = List(
+          SolCalculation(
+            debtId = "debt008",
+            mainTrans = "1545",
+            debtTypeDescription = "CO: TPSS Contract Settlement",
+            interestDueDebtTotal = 177,
+            totalAmountIntDebt = 500177,
+            combinedDailyAccrual = 35,
+            parentMainTrans = None,
+            duties = Vector(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("CO: TGPEN"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 35,
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-
-      And("the 1st sol debt summary will contain")
-      checkDebtSummaryContains(
-        debtSummaryEntry = 1,
-        debtId = "debt008",
-        mainTrans = "1545",
-        debtTypeDescription = "CO: TPSS Contract Settlement",
-        interestDueDebtTotal = BigInt(177),
-        totalAmountIntDebt = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-
-      And("the 1st sol debt summary will contain duties")
-      checkSolDutyOfFirstSolCalculationContains(
-        solDutyEntry = 1,
-        subTrans = "1090",
-        dutyTypeDescription = Some("CO: TGPEN"),
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
     }
 
     Scenario("Customer Outputs SoL suppression NOT applied to a different postcode") { context =>
@@ -144,25 +141,34 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
-        amountIntTotal = BigInt(500249),
-        combinedDailyAccrual = BigInt(35),
-        context
+      val expectedResponse = SolCalculationSummaryResponse(
+        amountIntTotal = 500249,
+        combinedDailyAccrual = 35,
+        debts = List(
+          SolCalculation(
+            debtId = "debt008",
+            mainTrans = "1545",
+            debtTypeDescription = "CO: TPSS Contract Settlement",
+            interestDueDebtTotal = 249,
+            totalAmountIntDebt = 500249,
+            combinedDailyAccrual = 35,
+            parentMainTrans = None,
+            duties = Vector(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("CO: TGPEN"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 35,
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      checkDebtSummaryContains(
-        debtSummaryEntry = 1,
-        debtId = "debt008",
-        mainTrans = "1545",
-        debtTypeDescription = "CO: TPSS Contract Settlement",
-        interestDueDebtTotal = BigInt(249),
-        totalAmountIntDebt = BigInt(500249),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-
+      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
     }
+
     Scenario("Customer Outputs SoL where suppression is applied by Period End") { context =>
       Given("suppression configuration data is created")
       val ifsRequest = SuppressionInformation(
@@ -198,37 +204,34 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
-        amountIntTotal = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        context
+      val expectedResponse = SolCalculationSummaryResponse(
+        amountIntTotal = 500177,
+        combinedDailyAccrual = 35,
+        debts = List(
+          SolCalculation(
+            debtId = "debt008",
+            mainTrans = "1545",
+            debtTypeDescription = "CO: TPSS Contract Settlement",
+            interestDueDebtTotal = 177,
+            totalAmountIntDebt = 500177,
+            combinedDailyAccrual = 35,
+            parentMainTrans = None,
+            duties = Vector(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("CO: TGPEN"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 35,
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-
-      And("the 1st sol debt summary will contain")
-      checkDebtSummaryContains(
-        debtSummaryEntry = 1,
-        debtId = "debt008",
-        mainTrans = "1545",
-        debtTypeDescription = "CO: TPSS Contract Settlement",
-        interestDueDebtTotal = BigInt(177),
-        totalAmountIntDebt = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-
-      And("the 1st sol debt summary will contain duties")
-      checkSolDutyOfFirstSolCalculationContains(
-        solDutyEntry = 1,
-        subTrans = "1090",
-        dutyTypeDescription = Some("CO: TGPEN"),
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
     }
+
     Scenario("Customer Outputs SoL where suppression is applied by Main Trans") { context =>
       Given("suppression configuration data is created")
       val ifsRequest = SuppressionInformation(
@@ -264,38 +267,34 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
-        amountIntTotal = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        context
+      val expectedResponse =SolCalculationSummaryResponse(
+        amountIntTotal = 500177,
+        combinedDailyAccrual = 35,
+        debts = List(
+          SolCalculation(
+            debtId = "debt008",
+            mainTrans = "1545",
+            debtTypeDescription = "CO: TPSS Contract Settlement",
+            interestDueDebtTotal = 177,
+            totalAmountIntDebt = 500177,
+            combinedDailyAccrual = 35,
+            parentMainTrans = None,
+            duties = Vector(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("CO: TGPEN"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 35,
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-
-      And("the 1st sol debt summary will contain")
-      checkDebtSummaryContains(
-        debtSummaryEntry = 1,
-        debtId = "debt008",
-        mainTrans = "1545",
-        debtTypeDescription = "CO: TPSS Contract Settlement",
-        interestDueDebtTotal = BigInt(177),
-        totalAmountIntDebt = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-
-      And("the 1st sol debt summary will contain duties")
-      checkSolDutyOfFirstSolCalculationContains(
-        solDutyEntry = 1,
-        subTrans = "1090",
-        dutyTypeDescription = Some("CO: TGPEN"),
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
-
+      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
     }
+
     Scenario("Customer Outputs SoL suppression NOT applied to a different subTrans") { context =>
       Given("suppression configuration data is created")
       val ifsRequest = SuppressionInformation(
@@ -331,25 +330,34 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
-        amountIntTotal = BigInt(500249),
-        combinedDailyAccrual = BigInt(35),
-        context
+      val expectedResponse = SolCalculationSummaryResponse(
+        amountIntTotal = 500249,
+        combinedDailyAccrual = 35,
+        debts = List(
+          SolCalculation(
+            debtId = "debt008",
+            mainTrans = "1545",
+            debtTypeDescription = "CO: TPSS Contract Settlement",
+            interestDueDebtTotal = 249,
+            totalAmountIntDebt = 500249,
+            combinedDailyAccrual = 35,
+            parentMainTrans = None,
+            duties = Vector(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("CO: TGPEN"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 35,
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-
-      And("the 1st sol debt summary will contain")
-      checkDebtSummaryContains(
-        debtSummaryEntry = 1,
-        debtId = "debt008",
-        mainTrans = "1545",
-        debtTypeDescription = "CO: TPSS Contract Settlement",
-        interestDueDebtTotal = BigInt(249),
-        totalAmountIntDebt = BigInt(500249),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
     }
+
     Scenario("Customer Outputs SoL where suppression is applied - based on testRegime") { context =>
       Given("suppression configuration data is created")
       val ifsRequest = SuppressionInformation(
@@ -385,37 +393,32 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
-        amountIntTotal = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        context
+      val expectedResponse = SolCalculationSummaryResponse(
+        amountIntTotal = 500177,
+        combinedDailyAccrual = 35,
+        debts = List(
+          SolCalculation(
+            debtId = "debt008",
+            mainTrans = "1545",
+            debtTypeDescription = "CO: TPSS Contract Settlement",
+            interestDueDebtTotal = 177,
+            totalAmountIntDebt = 500177,
+            combinedDailyAccrual = 35,
+            parentMainTrans = None,
+            duties = Vector(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("CO: TGPEN"),
+                unpaidAmountDuty = 500000,
+                combinedDailyAccrual = 35,
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-
-      And("the 1st sol debt summary will contain")
-      checkDebtSummaryContains(
-        debtSummaryEntry = 1,
-        debtId = "debt008",
-        mainTrans = "1545",
-        debtTypeDescription = "CO: TPSS Contract Settlement",
-        interestDueDebtTotal = BigInt(177),
-        totalAmountIntDebt = BigInt(500177),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-
-      And("the 1st sol debt summary will contain duties")
-      checkSolDutyOfFirstSolCalculationContains(
-        solDutyEntry = 1,
-        subTrans = "1090",
-        dutyTypeDescription = Some("CO: TGPEN"),
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
-
+      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
     }
   }
 }

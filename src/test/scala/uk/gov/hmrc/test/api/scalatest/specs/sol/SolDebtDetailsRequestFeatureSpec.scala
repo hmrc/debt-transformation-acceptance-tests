@@ -21,12 +21,14 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.{Debt, SolCalculation, SolCalculationSummaryResponse, SolDebtsRequest, SolDuty}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.CommonStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 
 class SolDebtDetailsRequestFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
+    with CommonStepHelpers
     with StatementOfLiabilityStepHelpers {
 
   override type FixtureParam = StatementOfLiabilityContext
@@ -241,7 +243,7 @@ class SolDebtDetailsRequestFeatureSpec
       serviceReturnsDebtStatementOfLiabilityData(context, response)
     }
 
-    Scenario("7. Interest bearing debts - 2 duties each with payment history and breathing space") { context =>
+    Scenario("5. Interest bearing debts - 2 duties each with payment history and breathing space") { context =>
       Given("debt details")
       val request = SolDebtsRequest(
         solType = "UI",

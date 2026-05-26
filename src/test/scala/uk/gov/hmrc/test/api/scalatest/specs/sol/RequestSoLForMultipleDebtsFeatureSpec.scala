@@ -21,6 +21,7 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.{Debt, SolCalculation, SolCalculationSummaryResponse, SolDebtsRequest, SolDuty}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.CommonStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 import uk.gov.hmrc.test.api.scalatest.tags._
 
@@ -29,6 +30,7 @@ class RequestSoLForMultipleDebtsFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCStatementOfLiabilityStepHelpers
+    with CommonStepHelpers
     with StatementOfLiabilityStepHelpers {
 
   override type FixtureParam = StatementOfLiabilityContext
@@ -69,7 +71,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
           combinedDailyAccrual = 63,
           debts = List(
             SolCalculation(
-              // the 1st customer statement of liability contains debt values as
               debtId = "debt001",
               mainTrans = "1525",
               debtTypeDescription = "TPSS Account Tax Assessment",
@@ -79,7 +80,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
               parentMainTrans = None,
               duties = Seq(
                 SolDuty(
-                  // the 1st customer statement of liability contains duty values as
                   subTrans = "1000",
                   dutyTypeDescription = Some("IT"),
                   unpaidAmountDuty = 500000,
@@ -88,7 +88,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
                   interestOnlyIndicator = false
                 ),
                 SolDuty(
-                  // the 2nd customer statement of liability contains debt values as
                   subTrans = "1000",
                   dutyTypeDescription = Some("IT"),
                   unpaidAmountDuty = 400000,
@@ -99,7 +98,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
               )
             ),
             SolCalculation(
-              // the 2nd customer statement of liability contains debt values as
               debtId = "debt004",
               mainTrans = "5350",
               debtTypeDescription = "UI: ChB Migrated Debt",
@@ -109,7 +107,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
               parentMainTrans = None,
               duties = Seq(
                 SolDuty(
-                  // the 2nd customer statement of liability contains duty values as
                   subTrans = "7012",
                   dutyTypeDescription = Some("UI: Child Benefit Migrated Debt"),
                   unpaidAmountDuty = 200000,
@@ -151,7 +148,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
         combinedDailyAccrual = 0,
         debts = List(
           SolCalculation(
-            // the 1st customer statement of liability contains debt values as
             debtId = "debtSA0016",
             mainTrans = "6010",
             debtTypeDescription = "SA Balancing Charge Interest",
@@ -161,7 +157,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
             parentMainTrans = Some("25"),
             duties = Seq(
               SolDuty(
-                // the 1st customer statement of liability contains duty values as
                 subTrans = "1554",
                 dutyTypeDescription = Some("SA Late Payment Interest"),
                 unpaidAmountDuty = 400000,
@@ -170,7 +165,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
                 interestOnlyIndicator = true
               ),
               SolDuty(
-                // the 2nd customer statement of liability contains duty values as
                 subTrans = "1554",
                 dutyTypeDescription = Some("SA Late Payment Interest"),
                 unpaidAmountDuty = 200000,
@@ -181,7 +175,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
             )
           ),
           SolCalculation(
-            // the 2nd customer statement of liability contains debt values as
             debtId = "debtSA0014",
             mainTrans = "6010",
             debtTypeDescription = "SA Late Payment Interest",
@@ -191,7 +184,6 @@ class RequestSoLForMultipleDebtsFeatureSpec
             parentMainTrans = Some("33"),
             duties = Seq(
               SolDuty(
-                // the 2nd customer statement of liability contains duty values as
                 subTrans = "1554",
                 dutyTypeDescription = Some("SA Payment on Account 2 Interest"),
                 unpaidAmountDuty = 500000,

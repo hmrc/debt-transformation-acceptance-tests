@@ -21,6 +21,7 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.{Debt, SolCalculation, SolCalculationSummaryResponse, SolDebtsRequest, SolDuty}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.CommonStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags._
 
@@ -28,6 +29,7 @@ class SolSADebtDetailsRequestFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
+    with CommonStepHelpers
     with StatementOfLiabilityStepHelpers {
 
   override type FixtureParam = StatementOfLiabilityContext
@@ -67,7 +69,6 @@ class SolSADebtDetailsRequestFeatureSpec
         combinedDailyAccrual = BigInt(63L),
         debts = List(
           SolCalculation(
-            // the 1st sol debt summary will contain
             debtId = "debtSA001",
             mainTrans = "4920",
             debtTypeDescription = "SA 1st Payment on Account",
@@ -76,7 +77,6 @@ class SolSADebtDetailsRequestFeatureSpec
             combinedDailyAccrual = BigInt(63L),
             parentMainTrans = None,
             duties = Seq(
-              // the 1st sol debt summary will contain duties
               SolDuty(
                 subTrans = "1553",
                 dutyTypeDescription = Some("SA 1st Payment on Account"),
@@ -122,7 +122,6 @@ class SolSADebtDetailsRequestFeatureSpec
         combinedDailyAccrual = BigInt(0L),
         debts = List(
           SolCalculation(
-            // the 1st sol debt summary will contain
             debtId = "debtSA002",
             mainTrans = "5073",
             debtTypeDescription = "SA Transfer to OAS",
@@ -132,7 +131,6 @@ class SolSADebtDetailsRequestFeatureSpec
             parentMainTrans = None,
             duties = Seq(
               SolDuty(
-                // the 1st sol debt summary will contain duties
                 subTrans = "1553",
                 dutyTypeDescription = None,
                 unpaidAmountDuty = BigInt(500000L),
@@ -171,7 +169,6 @@ class SolSADebtDetailsRequestFeatureSpec
           combinedDailyAccrual = BigInt(41L),
           debts = List(
             SolCalculation(
-              // the 1st sol debt summary will contain
               debtId = "debtSA003",
               mainTrans = "4920",
               debtTypeDescription = "SA 1st Payment on Account",
@@ -181,7 +178,6 @@ class SolSADebtDetailsRequestFeatureSpec
               parentMainTrans = None,
               duties = Seq(
                 SolDuty(
-                  // the 1st sol debt summary will contain 1st duties
                   subTrans = "1553",
                   dutyTypeDescription = Some("SA 1st Payment on Account"),
                   unpaidAmountDuty = BigInt(350000L),
@@ -190,7 +186,6 @@ class SolSADebtDetailsRequestFeatureSpec
                   interestOnlyIndicator = false
                 ),
                 SolDuty(
-                  // the 1st sol debt summary will contain 2nd duties
                   subTrans = "1090",
                   dutyTypeDescription = Some("SA Pship Late Filing Penalty"),
                   unpaidAmountDuty = BigInt(250000L),
@@ -206,7 +201,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "6. Statement of liability for customer with ETMP parentMainTrans   - Single Non Interest bearing debt",
+      "4. Statement of liability for customer with ETMP parentMainTrans   - Single Non Interest bearing debt",
       DTD_2940
     ) { context =>
       Given("debt details")
@@ -226,34 +221,32 @@ class SolSADebtDetailsRequestFeatureSpec
       aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(500000),
         combinedDailyAccrual = BigInt(0),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0014",
+            mainTrans = "6010",
+            debtTypeDescription = "SA Late Payment Interest",
+            interestDueDebtTotal = BigInt(0),
+            totalAmountIntDebt = BigInt(500000),
+            combinedDailyAccrual = BigInt(0),
+            parentMainTrans = Some("33"),
+            duties = Seq(
+              SolDuty(
+                subTrans = "1554",
+                dutyTypeDescription = Some("SA Payment on Account 2 Interest"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(0),
+                interestBearing = false,
+                interestOnlyIndicator = true
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0014",
-        mainTrans = "6010",
-        debtTypeDescription = "SA Late Payment Interest",
-        interestDueDebtTotal = BigInt(0),
-        totalAmountIntDebt = BigInt(500000),
-        combinedDailyAccrual = BigInt(0),
-        parentMainTrans = Option("33"),
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1554",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(0),
-        interestBearing = false,
-        interestOnlyIndicator = true,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
 
     Scenario(
@@ -277,34 +270,32 @@ class SolSADebtDetailsRequestFeatureSpec
       aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(500000),
         combinedDailyAccrual = BigInt(0),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0015",
+            mainTrans = "6010",
+            debtTypeDescription = "SA Balancing Charge Interest",
+            interestDueDebtTotal = BigInt(0),
+            totalAmountIntDebt = BigInt(500000),
+            combinedDailyAccrual = BigInt(0),
+            parentMainTrans = Some("25"),
+            duties = Seq(
+              SolDuty(
+                subTrans = "1554",
+                dutyTypeDescription = Some("SA Late Payment Interest"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(0),
+                interestBearing = false,
+                interestOnlyIndicator = true
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0015",
-        mainTrans = "6010",
-        debtTypeDescription = "SA Balancing Charge Interest",
-        interestDueDebtTotal = BigInt(0),
-        totalAmountIntDebt = BigInt(500000),
-        combinedDailyAccrual = BigInt(0),
-        parentMainTrans = Option("25"),
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1554",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(0),
-        interestBearing = false,
-        interestOnlyIndicator = true,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
 
     Scenario(
@@ -327,34 +318,34 @@ class SolSADebtDetailsRequestFeatureSpec
       When("a debt statement of liability is requested")
       aDebtStatementOfLiabilityIsRequested(context)
 
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      Then("service returns debt statement of liability data")
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(504629),
         combinedDailyAccrual = BigInt(35),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0017",
+            mainTrans = "4027",
+            debtTypeDescription = "Penalty reform charge",
+            interestDueDebtTotal = BigInt(4629),
+            totalAmountIntDebt = BigInt(504629),
+            combinedDailyAccrual = BigInt(35),
+            parentMainTrans = None,
+            duties = Seq(
+              SolDuty(
+                subTrans = "1080",
+                dutyTypeDescription = Some("Penalty reform charge"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(35),
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0017",
-        mainTrans = "4027",
-        debtTypeDescription = "Penalty reform charge",
-        interestDueDebtTotal = BigInt(4629),
-        totalAmountIntDebt = BigInt(504629),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1080",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
+
     }
 
     Scenario(
@@ -377,34 +368,33 @@ class SolSADebtDetailsRequestFeatureSpec
       When("a debt statement of liability is requested")
       aDebtStatementOfLiabilityIsRequested(context)
 
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      Then("service returns debt statement of liability data")
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(504629),
         combinedDailyAccrual = BigInt(35),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0018",
+            mainTrans = "4028",
+            debtTypeDescription = "Penalty reform charge",
+            interestDueDebtTotal = BigInt(4629),
+            totalAmountIntDebt = BigInt(504629),
+            combinedDailyAccrual = BigInt(35),
+            parentMainTrans = None,
+            duties = Seq(
+              SolDuty(
+                subTrans = "1085",
+                dutyTypeDescription = Some("Penalty reform charge"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(35),
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0018",
-        mainTrans = "4028",
-        debtTypeDescription = "Penalty reform charge",
-        interestDueDebtTotal = BigInt(4629),
-        totalAmountIntDebt = BigInt(504629),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1085",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
 
     Scenario(
@@ -427,34 +417,33 @@ class SolSADebtDetailsRequestFeatureSpec
       When("a debt statement of liability is requested")
       aDebtStatementOfLiabilityIsRequested(context)
 
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      Then("service returns debt statement of liability data")
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(504629),
         combinedDailyAccrual = BigInt(35),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0019",
+            mainTrans = "4029",
+            debtTypeDescription = "Penalty reform charge",
+            interestDueDebtTotal = BigInt(4629),
+            totalAmountIntDebt = BigInt(504629),
+            combinedDailyAccrual = BigInt(35),
+            parentMainTrans = None,
+            duties = Seq(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("Penalty reform charge"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(35),
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0019",
-        mainTrans = "4029",
-        debtTypeDescription = "Penalty reform charge",
-        interestDueDebtTotal = BigInt(4629),
-        totalAmountIntDebt = BigInt(504629),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1090",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
 
     Scenario(
@@ -477,34 +466,33 @@ class SolSADebtDetailsRequestFeatureSpec
       When("a debt statement of liability is requested")
       aDebtStatementOfLiabilityIsRequested(context)
 
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      Then("service returns debt statement of liability data")
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(504629),
         combinedDailyAccrual = BigInt(35),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0020",
+            mainTrans = "4031",
+            debtTypeDescription = "Penalty reform charge",
+            interestDueDebtTotal = BigInt(4629),
+            totalAmountIntDebt = BigInt(504629),
+            combinedDailyAccrual = BigInt(35),
+            parentMainTrans = None,
+            duties = Seq(
+              SolDuty(
+                subTrans = "1095",
+                dutyTypeDescription = Some("Penalty reform charge"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(35),
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0020",
-        mainTrans = "4031",
-        debtTypeDescription = "Penalty reform charge",
-        interestDueDebtTotal = BigInt(4629),
-        totalAmountIntDebt = BigInt(504629),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1095",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
 
     Scenario(
@@ -527,34 +515,33 @@ class SolSADebtDetailsRequestFeatureSpec
       When("a debt statement of liability is requested")
       aDebtStatementOfLiabilityIsRequested(context)
 
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      Then("service returns debt statement of liability data")
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(504629),
         combinedDailyAccrual = BigInt(35),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0021",
+            mainTrans = "4032",
+            debtTypeDescription = "Penalty reform charge",
+            interestDueDebtTotal = BigInt(4629),
+            totalAmountIntDebt = BigInt(504629),
+            combinedDailyAccrual = BigInt(35),
+            parentMainTrans = None,
+            duties = Seq(
+              SolDuty(
+                subTrans = "1090",
+                dutyTypeDescription = Some("Penalty reform charge"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(35),
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0021",
-        mainTrans = "4032",
-        debtTypeDescription = "Penalty reform charge",
-        interestDueDebtTotal = BigInt(4629),
-        totalAmountIntDebt = BigInt(504629),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1090",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
 
     Scenario(
@@ -576,34 +563,33 @@ class SolSADebtDetailsRequestFeatureSpec
       When("a debt statement of liability is requested")
       aDebtStatementOfLiabilityIsRequested(context)
 
-      checkAmountIntTotalAndCombinedDailyAccrual(
+      Then("service returns debt statement of liability data")
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = BigInt(504629),
         combinedDailyAccrual = BigInt(35),
-        context
+        debts = List(
+          SolCalculation(
+            debtId = "debtSA0022",
+            mainTrans = "4033",
+            debtTypeDescription = "Penalty reform charge",
+            interestDueDebtTotal = BigInt(4629),
+            totalAmountIntDebt = BigInt(504629),
+            combinedDailyAccrual = BigInt(35),
+            parentMainTrans = None,
+            duties = Seq(
+              SolDuty(
+                subTrans = "1095",
+                dutyTypeDescription = Some("Penalty reform charge"),
+                unpaidAmountDuty = BigInt(500000),
+                combinedDailyAccrual = BigInt(35),
+                interestBearing = true,
+                interestOnlyIndicator = false
+              )
+            )
+          )
+        )
       )
-      And("the 1st sol debt summary will contain")
-      theSolDebtSummaryWillContain(
-        debtSummaryEntry = 1,
-        debtId = "debtSA0022",
-        mainTrans = "4033",
-        debtTypeDescription = "Penalty reform charge",
-        interestDueDebtTotal = BigInt(4629),
-        totalAmountIntDebt = BigInt(504629),
-        combinedDailyAccrual = BigInt(35),
-        parentMainTrans = None,
-        context
-      )
-      And("the 1st sol debt summary will contain duties")
-      theSolDebtSummaryWillContainDuties(
-        solDutyEntry = 1,
-        subTrans = "1095",
-        dutyTypeDescription = None,
-        unpaidAmountDuty = BigInt(500000),
-        combinedDailyAccrual = BigInt(35),
-        interestBearing = true,
-        interestOnlyIndicator = false,
-        context
-      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedResponse)
     }
   }
 }
