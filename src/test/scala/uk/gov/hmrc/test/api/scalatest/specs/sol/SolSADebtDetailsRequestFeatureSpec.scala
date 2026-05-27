@@ -250,7 +250,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "7. Statement of liability for customer with parentMainTrans   - Single SA Non Interest bearing debt",
+      "5. Statement of liability for customer with parentMainTrans   - Single SA Non Interest bearing debt",
       DTD_2940
     ) { context =>
       Given("debt details")
