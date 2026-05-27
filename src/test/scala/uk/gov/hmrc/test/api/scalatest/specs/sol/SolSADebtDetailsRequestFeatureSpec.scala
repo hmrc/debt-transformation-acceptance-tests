@@ -299,7 +299,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "8. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0017, mainTrans=4027, subTrans=1080, interestBearing=true, interestOnlyIndicator=false]",
+      "6. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0017, mainTrans=4027, subTrans=1080, interestBearing=true, interestOnlyIndicator=false]",
       DTD_3523
     ) { context =>
       Given("debt details")
@@ -349,7 +349,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "8. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0018, mainTrans=4028, subTrans=1085, interestBearing=true, interestOnlyIndicator=false]",
+      "7. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0018, mainTrans=4028, subTrans=1085, interestBearing=true, interestOnlyIndicator=false]",
       DTD_3523
     ) { context =>
       Given("debt details")
@@ -447,7 +447,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "8. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0020, mainTrans=4031, subTrans=1095, interestBearing=true, interestOnlyIndicator=false]",
+      "9. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0020, mainTrans=4031, subTrans=1095, interestBearing=true, interestOnlyIndicator=false]",
       DTD_3523
     ) { context =>
       Given("debt details")
@@ -496,7 +496,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "8. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0021, mainTrans=4032, subTrans=1090, interestBearing=true, interestOnlyIndicator=false]",
+      "10. SA customer statement of liability - Penalty Reform Charge - Interest bearing debt [debtId=debtSA0021, mainTrans=4032, subTrans=1090, interestBearing=true, interestOnlyIndicator=false]",
       DTD_3523
     ) { context =>
       Given("debt details")
@@ -545,7 +545,7 @@ class SolSADebtDetailsRequestFeatureSpec
     }
 
     Scenario(
-      "9. SA customer statement of liability - Penalty Reform Charge - Non Interest bearing debt [debtId=debtSA0022, mainTrans=4033, subTrans=1095, interestBearing=false, interestOnlyIndicator=true]"
+      "11. SA customer statement of liability - Penalty Reform Charge - Non Interest bearing debt [debtId=debtSA0022, mainTrans=4033, subTrans=1095, interestBearing=false, interestOnlyIndicator=true]"
     ) { context =>
       Given("debt details")
       val request = SolDebtsRequest(
