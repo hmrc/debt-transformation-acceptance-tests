@@ -17,18 +17,19 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.SuppressionApplied
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
+import uk.gov.hmrc.test.api.models._
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 trait InterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a debt item$
-  def aDebtItem(context: InterestForecastingContext): Unit = {
-    // createInterestFocastingRequestBody(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
+  // ^a debt calculation$
+  def aDebtCalculation(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
+    context.ifsRequest = Some(request)
 
   // ^no debt item$
   def noDebtItem(context: InterestForecastingContext): Unit = {
@@ -91,13 +92,24 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the debt item(s) is sent to the ifs service$
-  def theDebtItemIsSentToTheIfsService(context: InterestForecastingContext, p1: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage
-    // val request  = InterestForecastingContext.get("debtItems").toString
-    // println(s"IFS REQUEST --> $request")
-    // val response = getDebtCalculation(request)
-    // println(s"IFS RESPONSE --> ${response.body}")
-    // TODO: Implement typed helper for this step.
+  def theDebtItemIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
+    val requestJson                    = Json.stringify(Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context"))))
+    val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtCalculation(context, requestJson)
+    context.response = response
+
+    val jsonResponseBody = response.body[JsValue]
+    context.ifsResponseBody = Some(jsonResponseBody.as[DebtCalculationsSummary])
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+
+    println("\n==== REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== RESPONSE STATUS ====")
+    println(context.status)
+
+    println("\n==== RESPONSE BODY ====")
+    println(jsonResponseBody)
   }
 
   // ^the debt interest type request is sent to the ifs service$
@@ -110,26 +122,86 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // TODO: Implement typed helper for this step.
   }
 
-  // ^the ifs service wilL return a total debts summary of$
-  def theIfsServiceWillReturnATotalDebtsSummaryOf(context: InterestForecastingContext): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // val responseBody = Json.parse(response.body).as[DebtCalculationsSummary]
-    // locally {
-    // val fieldName = "combinedDailyAccrual"
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  // ^the ifs service will return a total debts summary of$
+  def theIfsServiceWillReturnATotalDebtsSummaryOf(
+    context: InterestForecastingContext,
+    expectedResponse: DebtCalculationsSummary
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    withClue("combinedDailyAccrual") {
+      responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+    }
+
+    withClue("interestDueCallTotal") {
+      responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal
+    }
+
+    withClue("amountIntTotal") {
+      responseBody.amountIntTotal shouldBe expectedResponse.amountIntTotal
+    }
+
+    withClue("amountOnIntDueTotal") {
+      responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal
+    }
+
+    withClue("unpaidAmountTotal") {
+      responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+    }
+
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain$
-  def theDebtSummaryWillContain(context: InterestForecastingContext, index: Int): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.status should be(200)
-    // val responseBody: DebtCalculation =
-    // Json.parse(response.body).as[DebtCalculationsSummary].debtCalculations(index - 1)
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  def theDebtSummaryWillContain(
+    context: InterestForecastingContext,
+    index: Int,
+    expectedResponse: DebtCalculation
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    val debtCalculations = responseBody.debtCalculations(index - 1)
+
+    withClue("DebtCalculations") {
+      withClue("debtItemChargeId") {
+        debtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+      }
+
+      withClue("debtID") {
+        debtCalculations.debtID shouldBe expectedResponse.debtID
+      }
+
+      withClue("interestBearing") {
+        debtCalculations.interestBearing shouldBe expectedResponse.interestBearing
+      }
+
+      withClue("numberOfChargeableDays") {
+        debtCalculations.numberOfChargeableDays shouldBe expectedResponse.numberOfChargeableDays
+      }
+
+      withClue("interestDueDailyAccrual") {
+        debtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+      }
+
+      withClue("interestDueDutyTotal") {
+        debtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal
+      }
+
+      withClue("amountOnIntDueDuty") {
+        debtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty
+      }
+
+      withClue("totalAmountIntDuty") {
+        debtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty
+      }
+
+      withClue("totalAmountIntDuty") {
+        debtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+      }
+
+      withClue("totalAmountIntDuty") {
+        debtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+      }
+    }
   }
 
   // ^the ifs service will respond with (.*)$
@@ -153,28 +225,136 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows$
-  def theDebtSummaryWillHaveCalculationWindows(context: InterestForecastingContext, summaryIndex: Int): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
-    // val responseBody =
-    // Json
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  def theDebtSummaryWillHaveCalculationWindows(
+    context: InterestForecastingContext,
+    summaryIndex: Int,
+    inputs: List[CalculationWindow]
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    inputs.zipWithIndex.foreach { case (expectedResponse, index) =>
+      val actual = responseBody
+        .debtCalculations(summaryIndex - 1)
+        .calculationWindows(index)
+
+      withClue("CalculationWindows") {
+        withClue("periodFrom: ") {
+          actual.periodFrom shouldBe expectedResponse.periodFrom
+        }
+
+        withClue("periodTo: ") {
+          actual.periodTo shouldBe expectedResponse.periodTo
+        }
+
+        withClue("numberOfDays: ") {
+          actual.numberOfDays shouldBe expectedResponse.numberOfDays
+        }
+
+        withClue("interestRate: ") {
+          actual.interestRate shouldBe expectedResponse.interestRate
+        }
+
+        withClue("interestDueDailyAccrual: ") {
+          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+        }
+
+        withClue("interestDueWindow: ") {
+          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow
+        }
+
+        withClue("amountOnIntDueWindow: ") {
+          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow
+        }
+
+        withClue("unpaidAmountWindow: ") {
+          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow
+        }
+
+        withClue("breathingSpaceApplied: ") {
+          actual.breathingSpaceApplied shouldBe expectedResponse.breathingSpaceApplied
+        }
+
+        // only assert suppressionApplied fields if they are present in input
+        expectedResponse.suppressionApplied.foreach { expectedSuppression =>
+          if (expectedSuppression.reason.nonEmpty) {
+            withClue("reason: ") {
+              actual.suppressionApplied.head.reason shouldBe expectedSuppression.reason
+            }
+          }
+
+          if (expectedSuppression.description.nonEmpty) {
+            withClue("description: ") {
+              actual.suppressionApplied.head.description shouldBe expectedSuppression.description
+            }
+          }
+
+          if (expectedSuppression.code.nonEmpty) {
+            withClue("code: ") {
+              actual.suppressionApplied.head.code shouldBe expectedSuppression.code
+            }
+          }
+        }
+      }
+    }
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will have suppression applied calculation windows$
   def theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(
     context: InterestForecastingContext,
-    summaryIndex: Int
+    summaryIndex: Int,
+    windowIndex: Int,
+    expectedResponse: SuppressionsApplied
   ): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
-    // val calculationWindows = Json
-    // .parse(response.body)
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+    val responseBody = context.ifsResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    val calculationWindows = responseBody
+      .debtCalculations(summaryIndex - 1)
+      .calculationWindows
+
+    if (calculationWindows.isDefinedAt(windowIndex - 1)) {
+      val suppressions = calculationWindows(windowIndex - 1).suppressionsApplied
+        .getOrElse(List.empty)
+
+      suppressions.foreach { suppression =>
+        withClue("SuppressionsApplied") {
+          withClue("dateFrom") {
+            suppression.dateFrom shouldBe expectedResponse.dateFrom
+          }
+
+          withClue("dateTo") {
+            suppression.dateTo shouldBe expectedResponse.dateTo
+          }
+
+          withClue("reason") {
+            suppression.reason shouldBe expectedResponse.reason
+          }
+
+          withClue("reasonDesc") {
+            suppression.reasonDesc shouldBe expectedResponse.reasonDesc
+          }
+
+          withClue("postcode") {
+            suppression.postcode shouldBe expectedResponse.postcode
+          }
+
+          withClue("mainTrans") {
+            suppression.mainTrans shouldBe expectedResponse.mainTrans
+          }
+
+          withClue("subTrans") {
+            suppression.subTrans shouldBe expectedResponse.subTrans
+          }
+
+          withClue("periodEnd") {
+            suppression.periodEnd shouldBe expectedResponse.periodEnd
+          }
+        }
+      }
+    }
   }
 
   // ^Ifs service returns response code (.*)$

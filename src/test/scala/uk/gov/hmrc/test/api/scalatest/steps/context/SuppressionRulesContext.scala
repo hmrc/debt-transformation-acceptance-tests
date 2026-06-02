@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.context
 
-import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
 import uk.gov.hmrc.test.api.models.SuppressionRequest
+import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
 
-// Minimal per-scenario context; extend fields as migration progresses.
 final case class SuppressionRulesContext(
-  var ifsRequest: Option[SuppressionRequest] = None,
+  var suppressionRequest: Option[SuppressionRequest] = None,
   var solRequest: Option[SolDebtsRequest] = None,
   var solResponseBody: Option[SolCalculationSummaryResponse] = None,
   var status: Int = 0,

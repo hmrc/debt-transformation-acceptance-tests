@@ -17,18 +17,20 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, FieldCollectionsBuilder, InterestForecastingBuilder}
-import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
+import uk.gov.hmrc.test.api.models.{FCCalculationWindow, FCDebtCalculation, FCDebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.{FieldCollectionsBuilder, InterestForecastingBuilder}
+import uk.gov.hmrc.test.api.scalatest.steps.context.{FieldCollectionsContext, InterestForecastingContext}
 
 // TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCInterestForecastingSteps.scala.
 trait FCInterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a fc debt item$
-  def aFcDebtItem(context: InterestForecastingContext): Unit = {
-    // createInterestFocastingRequestBodyFC(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
+  // ^a fc debt collection$
+  def aFcDebtCalculation(context: FieldCollectionsContext, request: FCDebtCalculationRequest): Unit =
+    context.ifsRequest = Some(request)
 
   // ^fc debt item with cotax charge interest$
   def fcDebtItemWithCotaxChargeInterest(context: InterestForecastingContext): Unit = {
@@ -53,60 +55,165 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the debt item(s) is sent to the fc ifs service$
-  def theDebtItemIsSentToTheFcIfsService(context: InterestForecastingContext, p1: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage
-    // val request  = InterestForecastingContext.get("fcDebtItem").toString
-    // println(s"IFS REQUEST --> $request")
-    // val response = getDebtCalculation(request)
-    // println(s"IFS RESPONSE --> ${response.body}")
-    // TODO: Implement typed helper for this step.
+  def theDebtItemIsSentToTheFcIfsService(context: FieldCollectionsContext): Unit = {
+    val requestJson                    = Json.stringify(Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context"))))
+    val response: StandaloneWSResponse = FieldCollectionsBuilder.getDebtCalculation(context, requestJson)
+    context.response = response
+
+    val jsonResponseBody = response.body[JsValue]
+    context.ifsResponseBody = Some(jsonResponseBody.as[FCDebtCalculationsSummary])
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+
+    println("\n==== REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== RESPONSE STATUS ====")
+    println(context.status)
+
+    println("\n==== RESPONSE BODY ====")
+    println(jsonResponseBody)
   }
 
-  // ^the fc ifs service wilL return a total debts summary of$
-  def theFcIfsServiceWillReturnATotalDebtsSummaryOf(context: InterestForecastingContext): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // val responseBody = Json.parse(response.body).as[FCDebtCalculationsSummary]
-    // locally {
-    // val fieldName = "combinedDailyAccrual"
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  // ^the fc ifs service will return a total debts summary of$
+  def theFcIfsServiceWillReturnATotalDebtsSummaryOf(
+    context: FieldCollectionsContext,
+    expectedResponse: FCDebtCalculationsSummary
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    withClue("FCDebtCalculationsSummary") {
+      withClue("dateOfCalculation") {
+        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+      }
+
+      withClue("combinedDailyAccrual") {
+        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+      }
+
+      withClue("unpaidAmountTotal") {
+        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+      }
+
+      withClue("interestDueCallTotal") {
+        responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal
+      }
+
+      withClue("totalAmountIntTotal") {
+        responseBody.totalAmountIntTotal shouldBe expectedResponse.totalAmountIntTotal
+      }
+
+      withClue("amountOnIntDueTotal") {
+        responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal
+      }
+    }
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc debt summary will contain$
   def theFcDebtSummaryWillContain(
-    context: InterestForecastingContext,
+    context: FieldCollectionsContext,
     index: Int,
-    input: FCStatementOfLiabilityBuilder.FCDebtsInput
+    expectedResponse: FCDebtCalculation
   ): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.status should be(200)
-    // val responseBody: FCDebtCalculation =
-    // Json.parse(response.body).as[FCDebtCalculationsSummary].debtCalculations(index - 1)
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'input' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against input.
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    val FCDebtCalculations = responseBody.debtCalculations(index - 1)
+
+    withClue("FCDebtCalculation") {
+      withClue("debtItemChargeId") {
+        FCDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+      }
+
+      withClue("interestDueDailyAccrual") {
+        FCDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+      }
+
+      withClue("interestDueDutyTotal") {
+        FCDebtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal
+      }
+
+      withClue("amountOnIntDueDuty") {
+        FCDebtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty
+      }
+
+      withClue("totalAmountIntDuty") {
+        FCDebtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty
+      }
+
+      withClue("unpaidAmountDuty") {
+        FCDebtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+      }
+    }
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have calculation windows$
   def theFcDebtSummaryWillHaveCalculationWindows(
-    context: InterestForecastingContext,
+    context: FieldCollectionsContext,
     summaryIndex: Int,
-    inputs: Seq[FCStatementOfLiabilityBuilder.FCDebtsInput]
+    inputs: List[FCCalculationWindow]
   ): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // asMapTransposed.zipWithIndex.foreach { case (window, index) =>
-    // val responseBody =
-    // Json
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'inputs' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against inputs.
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    inputs.zipWithIndex.foreach { case (expectedResponse, index) =>
+      val actual = responseBody
+        .debtCalculations(summaryIndex - 1)
+        .calculationWindows(index)
+
+      withClue("FCDebtCalculationsSummary") {
+        withClue("periodFrom") {
+          actual.periodFrom shouldBe expectedResponse.periodFrom
+        }
+
+        withClue("periodTo") {
+          actual.periodTo shouldBe expectedResponse.periodTo
+        }
+
+        withClue("numberOfDays") {
+          actual.numberOfDays shouldBe expectedResponse.numberOfDays
+        }
+
+        withClue("interestRate") {
+          actual.interestRate shouldBe expectedResponse.interestRate
+        }
+
+        withClue("interestDueDailyAccrual") {
+          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+        }
+
+        withClue("interestDueWindow") {
+          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow
+        }
+
+        withClue("amountOnIntDueWindow") {
+          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow
+        }
+
+        withClue("unpaidAmountWindow") {
+          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow
+        }
+
+        // only assert suppressionApplied fields if they are present in input
+        expectedResponse.suppressionApplied.foreach { expectedSuppression =>
+          if (expectedSuppression.reason.nonEmpty) {
+            withClue("reason") {
+              actual.suppressionApplied.head.reason shouldBe expectedSuppression.reason
+            }
+          }
+
+          if (expectedSuppression.description.nonEmpty) {
+            withClue("description") {
+              actual.suppressionApplied.head.description shouldBe expectedSuppression.description
+            }
+          }
+
+          if (expectedSuppression.code.nonEmpty) {
+            withClue("code") {
+              actual.suppressionApplied.head.code shouldBe expectedSuppression.code
+            }
+          }
+        }
+      }
+    }
   }
 
   // ^the fc customer has breathing spaces applied$
@@ -147,10 +254,8 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will not have any calculation windows$
-  def theFcDebtSummaryWillNotHaveAnyCalculationWindows(context: InterestForecastingContext, summaryIndex: Int): Unit = {
-    // getFCCountOfCalculationWindows(summaryIndex) shouldBe 0
-    // TODO: Implement typed helper for this step.
-  }
+  def theFcDebtSummaryWillNotHaveAnyCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Unit =
+    getFCCountOfCalculationWindows(context, summaryIndex) shouldBe 0
 
   // ^the fc ifs service will respond with (.*)$
   def theFcIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
@@ -169,6 +274,11 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   ): Unit = {
     // getFCCountOfCalculationWindows(summaryIndex) shouldBe numberOfWindows
     // TODO: Implement typed helper for this step.
+  }
+
+  def getFCCountOfCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Int = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+    responseBody.debtCalculations(summaryIndex - 1).calculationWindows.size
   }
 
 }

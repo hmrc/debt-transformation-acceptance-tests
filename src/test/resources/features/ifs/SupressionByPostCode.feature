@@ -69,10 +69,7 @@ Feature: Suppression by Postcode
       | 2021-02-04 | 2021-05-04 | 90           | 0.0          | 0                       | 0                 | 100000             | 100000               | false                 | LEGISLATIVE | Converted from new suppression style | COVID       | COVID      | EC2M 2LS | 1535      |
       | 2021-05-05 | 2021-07-06 | 63           | 2.6          | 35                      | 2243              | 502243             | 500000               | false                 | LEGISLATIVE | Converted from new suppression style | COVID       |            |          |           |
 
-
-
- #TODO Fails Suppression not applied when customer has 2 matching postcodes
-  @wip @DTD-400
+  @DTD-400
   Scenario: Suppression applied to customers latest postcode - 2 postcodes
     Given suppression configuration data is created
       | dateFrom   | dateTo     | reason      | reasonDesc | suppressionChargeDescription | postcode |

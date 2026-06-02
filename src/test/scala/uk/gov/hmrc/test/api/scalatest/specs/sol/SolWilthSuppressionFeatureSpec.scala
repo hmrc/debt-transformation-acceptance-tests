@@ -19,19 +19,18 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{Debt, SolCalculation, SolCalculationSummaryResponse, SolDebtsRequest, SolDuty}
-import uk.gov.hmrc.test.api.models.SuppressionInformation
+import uk.gov.hmrc.test.api.models.sol._
+import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.CommonStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppresionStepHelpers
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 
 class SolWilthSuppressionFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with StatementOfLiabilityStepHelpers
-    with SuppresionStepHelpers {
+    with SuppressionStepHelpers {
 
   override type FixtureParam = SuppressionRulesContext
 
@@ -45,16 +44,20 @@ class SolWilthSuppressionFeatureSpec
 
     Scenario("Customer Outputs SoL where suppression is applied") { context =>
       Given("suppression configuration data is created")
-      val ifsRequest = SuppressionInformation(
-        dateFrom = "2021-03-04",
-        dateTo = Some("2021-03-05"),
-        reason = "LEGISLATIVE",
-        reasonDesc = "COVID",
-        suppressionChargeDescription = "SA-Suppression",
-        postcode = None,
-        mainTrans = None,
-        subTrans = Some("1090"),
-        checkPeriodEnd = None
+      val ifsRequest = SuppressionRequest(
+        List(
+          SuppressionInformation(
+            dateFrom = "2021-03-04",
+            dateTo = Some("2021-03-05"),
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1090"),
+            checkPeriodEnd = None
+          )
+        )
       )
       suppressionConfigurationDataIsCreated(context, ifsRequest)
 
@@ -108,16 +111,20 @@ class SolWilthSuppressionFeatureSpec
 
     Scenario("Customer Outputs SoL suppression NOT applied to a different postcode") { context =>
       Given("suppression configuration data is created")
-      val ifsRequest = SuppressionInformation(
-        dateFrom = "2021-03-04",
-        dateTo = Some("2021-03-05"),
-        reason = "LEGISLATIVE",
-        reasonDesc = "COVID",
-        suppressionChargeDescription = "SA-Suppression",
-        postcode = Some("NW23 4PT"),
-        mainTrans = None,
-        subTrans = None,
-        checkPeriodEnd = None
+      val ifsRequest = SuppressionRequest(
+        List(
+          SuppressionInformation(
+            dateFrom = "2021-03-04",
+            dateTo = Some("2021-03-05"),
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = Some("NW23 4PT"),
+            mainTrans = None,
+            subTrans = None,
+            checkPeriodEnd = None
+          )
+        )
       )
       suppressionConfigurationDataIsCreated(context, ifsRequest)
 
@@ -171,16 +178,20 @@ class SolWilthSuppressionFeatureSpec
 
     Scenario("Customer Outputs SoL where suppression is applied by Period End") { context =>
       Given("suppression configuration data is created")
-      val ifsRequest = SuppressionInformation(
-        dateFrom = "2021-03-04",
-        dateTo = Some("2021-03-05"),
-        reason = "LEGISLATIVE",
-        reasonDesc = "COVID",
-        suppressionChargeDescription = "SA-Suppression",
-        postcode = None,
-        mainTrans = None,
-        subTrans = None,
-        checkPeriodEnd = Some(true)
+      val ifsRequest = SuppressionRequest(
+        List(
+          SuppressionInformation(
+            dateFrom = "2021-03-04",
+            dateTo = Some("2021-03-05"),
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = None,
+            checkPeriodEnd = Some(true)
+          )
+        )
       )
       suppressionConfigurationDataIsCreated(context, ifsRequest)
 
@@ -234,16 +245,20 @@ class SolWilthSuppressionFeatureSpec
 
     Scenario("Customer Outputs SoL where suppression is applied by Main Trans") { context =>
       Given("suppression configuration data is created")
-      val ifsRequest = SuppressionInformation(
-        dateFrom = "2021-03-04",
-        dateTo = Some("2021-03-05"),
-        reason = "LEGISLATIVE",
-        reasonDesc = "COVID",
-        suppressionChargeDescription = "SA-Suppression",
-        postcode = None,
-        mainTrans = Some("1545"),
-        subTrans = None,
-        checkPeriodEnd = None
+      val ifsRequest = SuppressionRequest(
+        List(
+          SuppressionInformation(
+            dateFrom = "2021-03-04",
+            dateTo = Some("2021-03-05"),
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = Some("1545"),
+            subTrans = None,
+            checkPeriodEnd = None
+          )
+        )
       )
       suppressionConfigurationDataIsCreated(context, ifsRequest)
 
@@ -267,7 +282,7 @@ class SolWilthSuppressionFeatureSpec
       aRequestIsSentToSolServiceToGetSolCalculation(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse =SolCalculationSummaryResponse(
+      val expectedResponse = SolCalculationSummaryResponse(
         amountIntTotal = 500177,
         combinedDailyAccrual = 35,
         debts = List(
@@ -297,16 +312,20 @@ class SolWilthSuppressionFeatureSpec
 
     Scenario("Customer Outputs SoL suppression NOT applied to a different subTrans") { context =>
       Given("suppression configuration data is created")
-      val ifsRequest = SuppressionInformation(
-        dateFrom = "2021-03-04",
-        dateTo = Some("2021-03-05"),
-        reason = "LEGISLATIVE",
-        reasonDesc = "COVID",
-        suppressionChargeDescription = "SA-Suppression",
-        postcode = None,
-        mainTrans = Some("1090"),
-        subTrans = None,
-        checkPeriodEnd = None
+      val ifsRequest = SuppressionRequest(
+        List(
+          SuppressionInformation(
+            dateFrom = "2021-03-04",
+            dateTo = Some("2021-03-05"),
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = Some("1090"),
+            subTrans = None,
+            checkPeriodEnd = None
+          )
+        )
       )
       suppressionConfigurationDataIsCreated(context, ifsRequest)
 
@@ -360,16 +379,20 @@ class SolWilthSuppressionFeatureSpec
 
     Scenario("Customer Outputs SoL where suppression is applied - based on testRegime") { context =>
       Given("suppression configuration data is created")
-      val ifsRequest = SuppressionInformation(
-        dateFrom = "2021-03-04",
-        dateTo = Some("2021-03-05"),
-        reason = "LEGISLATIVE",
-        reasonDesc = "COVID",
-        suppressionChargeDescription = "SA-Suppression",
-        postcode = Some("TW33 4QQ"),
-        mainTrans = None,
-        subTrans = None,
-        checkPeriodEnd = None
+      val ifsRequest = SuppressionRequest(
+        List(
+          SuppressionInformation(
+            dateFrom = "2021-03-04",
+            dateTo = Some("2021-03-05"),
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = Some("TW33 4QQ"),
+            mainTrans = None,
+            subTrans = None,
+            checkPeriodEnd = None
+          )
+        )
       )
       suppressionConfigurationDataIsCreated(context, ifsRequest)
 
