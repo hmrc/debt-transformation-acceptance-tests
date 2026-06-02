@@ -3,13 +3,13 @@
 environment="local"
 
 cucumberTags="not @wip and not @ignore"
-scalaTestTags="\"uk.gov.hmrc.tags.WIP uk.gov.hmrc.tags.IGNORE\""
+scalaTestTags="\"WIP IGNORE\""
 
 if [ $# -gt 0 -a "$1" != "$environment" ];
 then
   environment="$1"
   cucumberTags="not @wip and not @ignore"
-  scalaTestTags="\"uk.gov.hmrc.tags.WIP uk.gov.hmrc.tags.IGNORE\""
+  scalaTestTags="\"WIP IGNORE\""
 fi
 
 # DTD-216: Workaround to load the rule set
@@ -22,14 +22,11 @@ sleep 2
 
 scala_exit=0
 cucumber_exit=0
-scala_test_report_dir="target/scalatest-reports"
-
 
 printf "\n\n\n\n*****************STARTING SCALATEST TESTS*****************\n\n"
-printf "NOTE: ScalaTest test report is available in $scala_test_report_dir\n\n"
 echo "*** running on $environment for scala tags '$scalaTestTags' ***"
 sbt -Denvironment="$environment" clean \
-  "testOnly uk.gov.hmrc.test.api.scalatest.specs.* -- -l $scalaTestTags -u $scala_test_report_dir" \
+  "testOnly uk.gov.hmrc.test.api.scalatest.specs.* -- -l $scalaTestTags" \
   || scala_exit=$?
 
 printf "\n\n\n\n*****************STARTING CUCUMBER TESTS*****************\n\n"
