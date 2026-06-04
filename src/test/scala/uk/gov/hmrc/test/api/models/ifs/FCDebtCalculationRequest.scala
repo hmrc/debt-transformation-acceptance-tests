@@ -2,20 +2,21 @@ package uk.gov.hmrc.test.api.models.ifs
 
 import play.api.libs.json.{Json, OFormat}
 
-final case class DebtItems(
+final case class FCDebtItems(
   debtItemChargeId: Option[String],
   originalAmount: Int,
   interestIndicator: String,
   periodEnd: String,
   interestStartDate: Option[String],
   interestRequestedTo: String,
+  chargedInterest: Option[Int] = None,
   breathingSpaces: Option[List[BreathingSpaces]],
   paymentHistory: Option[List[PaymentHistory]],
   customerPostcodes: Option[List[FCCustomerPostCode]]
 )
 
-object DebtItems {
-  implicit val formatDebtItems: OFormat[DebtItems] = Json.format[DebtItems]
+object FCDebtItems {
+  implicit val formatDebtItems: OFormat[FCDebtItems] = Json.format[FCDebtItems]
 }
 
 final case class FCCustomerPostCode(
@@ -28,7 +29,7 @@ object FCCustomerPostCode {
 }
 
 final case class FCDebtCalculationRequest(
-  debtItems: List[DebtItems]
+  debtItems: List[FCDebtItems]
 )
 
 object FCDebtCalculationRequest {

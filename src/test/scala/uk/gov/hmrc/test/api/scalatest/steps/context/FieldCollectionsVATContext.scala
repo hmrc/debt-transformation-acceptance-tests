@@ -16,10 +16,15 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.context
 
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.FCVATDebtCalculationsSummary
+import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
+
 // Minimal per-scenario context; extend fields as migration progresses.
 final case class FieldCollectionsVATContext(
-  var request: String = "",
-  var responseBody: String = "",
+  var ifsRequest: Option[FCVATDebtCalculationRequest] = None,
+  var ifsResponseBody: Option[FCVATDebtCalculationsSummary] = None,
+  var response: StandaloneWSResponse = null,
   var status: Int = 0,
   var headers: Map[String, String] = Map.empty
 )

@@ -17,18 +17,20 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
-import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
+import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.{FieldCollectionsVATBuilder, InterestForecastingBuilder}
+import uk.gov.hmrc.test.api.scalatest.steps.context.{FieldCollectionsVATContext, InterestForecastingContext}
 
 // TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCVATInterestForecastingSteps.scala.
 trait FCVATInterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a fc vat debt item$
-  def aFcVatDebtItem(context: InterestForecastingContext): Unit = {
-    // createInterestForecastingRequestBodyFCVAT(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
+  // ^a fc vat debt calculation$
+  def aFcVatDebtCalculation(context: FieldCollectionsVATContext, request: FCVATDebtCalculationRequest): Unit =
+    context.ifsRequest = Some(request)
 
   // ^the fc vat debt item has payment history$
   def theFcVatDebtItemHasPaymentHistory(
@@ -46,35 +48,76 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the debt item(s) is sent to the fc vat ifs service$
-  def theDebtItemIsSentToTheFcVatIfsService(context: InterestForecastingContext, p1: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage
-    // addFcVatDebtItemRequest()
-    // val request  = InterestForecastingContext.get("fcVatDebtItem").toString
-    // println(s"IFS REQUEST --> $request")
-    // val response = getDebtCalculation(request)
-    // TODO: Implement typed helper for this step.
+  def theDebtItemIsSentToTheFcVatIfsService(context: FieldCollectionsVATContext): Unit = {
+    val requestJson                    = Json.stringify(Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context"))))
+    val response: StandaloneWSResponse = FieldCollectionsVATBuilder.getDebtCalculation(context, requestJson)
+    context.response = response
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+
+    println("\n==== REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== RESPONSE STATUS ====")
+    println(context.status)
+
+    if (response.status == 200) {
+      val jsonResponseBody = response.body[JsValue]
+      context.ifsResponseBody = Some(jsonResponseBody.as[FCVATDebtCalculationsSummary])
+
+      println("\n==== RESPONSE BODY ====")
+      println(jsonResponseBody)
+    } else {
+      println("\n==== ERROR RESPONSE BODY ====")
+      println(response.body)
+    }
   }
 
   // ^the fc vat ifs service wilL return a total debts summary of$
-  def theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context: InterestForecastingContext): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // val toDaysDate                     = LocalDate.now().toString
-    // val responseBody = Json.parse(response.body).as[FCVATDebtCalculationsSummary]
-    // responseBody.dateOfCalculation.toString shouldBe toDaysDate
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  def theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(
+    context: FieldCollectionsVATContext,
+    expectedResponse: FCVATDebtCalculationsSummary
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    withClue("FCDebtCalculationsSummary") {
+      withClue("dateOfCalculation") {
+        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+      }
+
+      withClue("combinedDailyAccrual") {
+        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+      }
+
+      withClue("unpaidAmountTotal") {
+        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+      }
+    }
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc vat debt summary will contain$
-  def theFcVatDebtSummaryWillContain(context: InterestForecastingContext, index: Int): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.status should be(200)
-    // val responseBody =
-    // Json
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  def theFcVatDebtSummaryWillContain(
+    context: FieldCollectionsVATContext,
+    index: Int,
+    expectedResponse: FCVATDebtCalculation
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    val FCVATDebtCalculations = responseBody.debtCalculations(index - 1)
+
+    withClue("FCDebtCalculation") {
+      withClue("debtItemChargeId") {
+        FCVATDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+      }
+
+      withClue("interestDueDailyAccrual") {
+        FCVATDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+      }
+
+      withClue("interestRate") {
+        FCVATDebtCalculations.interestRate shouldBe expectedResponse.interestRate
+      }
+    }
   }
 
   // ^the fc vat customer has breathing spaces applied$
@@ -93,12 +136,16 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^the fc vat ifs service will respond with (.*)$
-  def theFcVatIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage, response assertion
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.body   should include(expectedMessage)
-    // response.status should be(400)
-    // TODO: Implement typed helper for this step.
+  def theFcVatIfsServiceWillRespondWith(context: FieldCollectionsVATContext, expectedMessage: String): Unit = {
+    val response = Option(context.response).getOrElse(fail("Missing response in context"))
+
+    withClue("response body should include expected message") {
+      response.body should include(expectedMessage)
+    }
+
+    withClue("response status") {
+      context.status shouldBe 400
+    }
   }
 
 }

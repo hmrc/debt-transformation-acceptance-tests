@@ -46,7 +46,7 @@ class FCBreathingSpaceFeatureSpec
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "Y",
@@ -61,8 +61,8 @@ class FCBreathingSpaceFeatureSpec
                 )
               )
             ),
-            paymentHistory = Some(List.empty),
-            customerPostcodes = Some(List.empty)
+            paymentHistory = Some(List.empty[PaymentHistory]),
+            customerPostcodes = Some(List.empty[FCCustomerPostCode])
           )
         )
       )
@@ -139,7 +139,7 @@ class FCBreathingSpaceFeatureSpec
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "Y",
@@ -257,7 +257,7 @@ class FCBreathingSpaceFeatureSpec
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "N",
@@ -272,8 +272,8 @@ class FCBreathingSpaceFeatureSpec
                 )
               )
             ),
-            paymentHistory = Some(List.empty),
-            customerPostcodes = Some(List.empty)
+            paymentHistory = Some(List.empty[PaymentHistory]),
+            customerPostcodes = Some(List.empty[FCCustomerPostCode])
           )
         )
       )
@@ -315,7 +315,7 @@ class FCBreathingSpaceFeatureSpec
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "Y",
@@ -330,10 +330,10 @@ class FCBreathingSpaceFeatureSpec
                 )
               )
             ),
-            paymentHistory = Some(List.empty),
-            customerPostcodes = Some(List.empty)
+            paymentHistory = Some(List.empty[PaymentHistory]),
+            customerPostcodes = Some(List.empty[FCCustomerPostCode])
           ),
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "Y",
@@ -352,8 +352,8 @@ class FCBreathingSpaceFeatureSpec
                 )
               )
             ),
-            paymentHistory = Some(List.empty),
-            customerPostcodes = Some(List.empty)
+            paymentHistory = Some(List.empty[PaymentHistory]),
+            customerPostcodes = Some(List.empty[FCCustomerPostCode])
           )
         )
       )
@@ -502,7 +502,7 @@ class FCBreathingSpaceFeatureSpec
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "Y",
@@ -510,10 +510,10 @@ class FCBreathingSpaceFeatureSpec
             interestStartDate = Some("2021-02-01"),
             interestRequestedTo = "2021-11-30",
             breathingSpaces = Some(List.empty),
-            paymentHistory = Some(List.empty),
-            customerPostcodes = Some(List.empty)
+            paymentHistory = Some(List.empty[PaymentHistory]),
+            customerPostcodes = Some(List.empty[FCCustomerPostCode])
           ),
-          DebtItems(
+          FCDebtItems(
             debtItemChargeId = Some("123"),
             originalAmount = 500000,
             interestIndicator = "Y",
@@ -528,8 +528,8 @@ class FCBreathingSpaceFeatureSpec
                 )
               )
             ),
-            paymentHistory = Some(List.empty),
-            customerPostcodes = Some(List.empty)
+            paymentHistory = Some(List.empty[PaymentHistory]),
+            customerPostcodes = Some(List.empty[FCCustomerPostCode])
           )
         )
       )
