@@ -65,7 +65,7 @@ Feature: FC Debt Calculation Breathing Space
       | interestDueDailyAccrual | interestDueDutyTotal |
       | 0                       | 0                    |
     And the 1st fc debt summary will not have any calculation windows
-@a
+
   Scenario: Multiple debts with multiple breathing Spaces
     Given a fc debt item
       | originalAmount | interestStartDate | interestRequestedTo | interestIndicator | periodEnd  | debtId |

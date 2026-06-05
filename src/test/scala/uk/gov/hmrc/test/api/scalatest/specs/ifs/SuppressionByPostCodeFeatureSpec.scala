@@ -80,7 +80,7 @@ class SuppressionByPostCodeFeatureSpec
         When("suppression configuration is sent to ifs service")
         suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-        And("a debt calculation")
+        And("a debt calculation is created")
         val ifsRequest = DebtCalculationRequest(
           debtItems = List(
             DebtItem(
@@ -105,7 +105,7 @@ class SuppressionByPostCodeFeatureSpec
             )
           )
         )
-        aDebtCalculation(context, ifsRequest)
+        aDebtCalculationIsCreated(context, ifsRequest)
 
         When("the debt item is sent to the ifs service")
         theDebtItemIsSentToTheIfsService(context)
@@ -224,7 +224,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -253,7 +253,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -383,7 +383,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -408,7 +408,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -611,7 +611,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -636,7 +636,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -767,7 +767,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -788,7 +788,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -882,7 +882,7 @@ class SuppressionByPostCodeFeatureSpec
         When("suppression configuration is sent to ifs service")
         suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-        And("a debt calculation")
+        And("a debt calculation is created")
         val ifsRequest = DebtCalculationRequest(
           debtItems = List(
             DebtItem(
@@ -903,7 +903,7 @@ class SuppressionByPostCodeFeatureSpec
             )
           )
         )
-        aDebtCalculation(context, ifsRequest)
+        aDebtCalculationIsCreated(context, ifsRequest)
 
         When("the debt item is sent to the ifs service")
         theDebtItemIsSentToTheIfsService(context)
@@ -978,7 +978,7 @@ class SuppressionByPostCodeFeatureSpec
         When("suppression configuration is sent to ifs service")
         suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-        And("a debt calculation")
+        And("a debt calculation is created")
         val ifsRequest = DebtCalculationRequest(
           debtItems = List(
             DebtItem(
@@ -999,7 +999,7 @@ class SuppressionByPostCodeFeatureSpec
             )
           )
         )
-        aDebtCalculation(context, ifsRequest)
+        aDebtCalculationIsCreated(context, ifsRequest)
 
         When("the debt item is sent to the ifs service")
         theDebtItemIsSentToTheIfsService(context)
@@ -1105,7 +1105,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -1126,7 +1126,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1166,7 +1166,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -1187,7 +1187,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1227,7 +1227,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -1248,7 +1248,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1288,7 +1288,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -1309,7 +1309,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1349,7 +1349,7 @@ class SuppressionByPostCodeFeatureSpec
       When("suppression configuration is sent to ifs service")
       suppressionConfigurationIsSentToIfsService(suppressionRulesContext)
 
-      And("a debt calculation")
+      And("a debt calculation is created")
       val ifsRequest = DebtCalculationRequest(
         debtItems = List(
           DebtItem(
@@ -1370,7 +1370,7 @@ class SuppressionByPostCodeFeatureSpec
           )
         )
       )
-      aDebtCalculation(context, ifsRequest)
+      aDebtCalculationIsCreated(context, ifsRequest)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)

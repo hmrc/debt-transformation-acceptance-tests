@@ -28,7 +28,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 trait InterestForecastingStepHelpers { this: Matchers =>
 
   // ^a debt calculation$
-  def aDebtCalculation(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
+  def aDebtCalculationIsCreated(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
 
   // ^no debt item$
