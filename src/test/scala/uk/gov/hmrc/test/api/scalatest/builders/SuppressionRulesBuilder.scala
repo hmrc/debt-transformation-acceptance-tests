@@ -148,9 +148,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
-  def putSuppressionData(maybeRequest: Option[SuppressionRequest]): StandaloneWSResponse = {
-    val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
-
+  def putSuppressionData(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup

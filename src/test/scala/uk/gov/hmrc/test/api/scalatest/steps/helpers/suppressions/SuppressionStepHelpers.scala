@@ -33,16 +33,16 @@ trait SuppressionStepHelpers {
 
   // ^suppression configuration is sent to ifs service$
   def suppressionConfigurationIsSentToIfsService(context: SuppressionRulesContext): Unit = {
-    val requestJson = Json.stringify(Json.toJson(context.suppressionRequest.getOrElse(fail("Missing request in context"))))
-    val suppressionResponse = SuppressionRulesBuilder.putSuppressionData(context.suppressionRequest)
-    val suppressionStatus = suppressionResponse.status
+    val requestJson         = Json.toJson(context.suppressionRequest.getOrElse(fail("Missing request in context")))
+    val suppressionResponse = SuppressionRulesBuilder.putSuppressionData(requestJson)
+    val suppressionStatus   = suppressionResponse.status
 
     suppressionStatus shouldBe 200
     context.status = suppressionStatus
     context.headers = suppressionResponse.headers.view.mapValues(_.mkString(", ")).toMap
 
     println("\n==== SUPPRESSION REQUEST BODY ====")
-    println(requestJson)
+    println(Json.stringify(requestJson))
 
     println("\n==== SUPPRESSION RESPONSE STATUS ====")
     println(context.status)
@@ -50,7 +50,7 @@ trait SuppressionStepHelpers {
 
   // ^a request is sent to ifs service to get suppression$
   def aRequestIsSentToSolServiceToGetSolCalculation(context: SuppressionRulesContext): Unit = {
-    val solResponse = SuppressionRulesBuilder.getStatementOfLiability(context.solRequest)
+    val solResponse  = SuppressionRulesBuilder.getStatementOfLiability(context.solRequest)
     val jsonResponse = solResponse.body[JsValue]
     context.solResponseBody = Some(jsonResponse.as[SolCalculationSummaryResponse])
     context.status = solResponse.status
@@ -59,15 +59,15 @@ trait SuppressionStepHelpers {
 
   // ^debt details$
   def debtDetails(
-                   context: SuppressionRulesContext,
-                   request: SolDebtsRequest
-                 ): Unit =
+    context: SuppressionRulesContext,
+    request: SolDebtsRequest
+  ): Unit =
     context.solRequest = Some(request)
 
   def serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(
-                                                                context: SuppressionRulesContext,
-                                                                expectedResponse: SolCalculationSummaryResponse
-                                                              ): Unit = {
+    context: SuppressionRulesContext,
+    expectedResponse: SolCalculationSummaryResponse
+  ): Unit = {
     val actual = context.solResponseBody
     println(s"actualResponseBody : " + actual)
     println(s"expectedResponse : " + Some(expectedResponse))
@@ -136,7 +136,7 @@ trait SuppressionStepHelpers {
               }
           }
         }
-      case None => fail("Response body is empty")
+      case None         => fail("Response body is empty")
     }
   }
 
