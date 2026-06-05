@@ -49,8 +49,8 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
 
   // ^the debt item(s) is sent to the fc vat ifs service$
   def theDebtItemIsSentToTheFcVatIfsService(context: FieldCollectionsVATContext): Unit = {
-    val requestJson                    = Json.stringify(Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context"))))
-    val response: StandaloneWSResponse = FieldCollectionsVATBuilder.getDebtCalculation(context, requestJson)
+    val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+    val response: StandaloneWSResponse = FieldCollectionsVATBuilder.getDebtCalculation(requestJson)
     context.response = response
     context.status = response.status
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap

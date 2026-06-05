@@ -56,8 +56,8 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
 
   // ^the debt item(s) is sent to the fc ifs service$
   def theDebtItemIsSentToTheFcIfsService(context: FieldCollectionsContext): Unit = {
-    val requestJson                    = Json.stringify(Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context"))))
-    val response: StandaloneWSResponse = FieldCollectionsBuilder.getDebtCalculation(context, requestJson)
+    val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+    val response: StandaloneWSResponse = FieldCollectionsBuilder.getDebtCalculation(requestJson)
     context.response = response
 
     val jsonResponseBody = response.body[JsValue]

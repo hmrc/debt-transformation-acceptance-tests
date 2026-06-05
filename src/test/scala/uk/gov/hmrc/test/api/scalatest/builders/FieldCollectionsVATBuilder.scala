@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.builders
 
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
@@ -108,7 +108,7 @@ object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
   // HTTP client methods lifted from legacy Requests with typed context access.
   // -----------------------------------------------------------------------
 
-  def getDebtCalculation(context: FieldCollectionsVATContext, json: String): StandaloneWSResponse = {
+  def getDebtCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
@@ -120,9 +120,7 @@ object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
     print("IFS FC VAT debt-calculation baseUri ************************" + baseUri)
-    print("IFS FC VAT debt-calculation request json********************" + Json.parse(json))
-
-    WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
 }
