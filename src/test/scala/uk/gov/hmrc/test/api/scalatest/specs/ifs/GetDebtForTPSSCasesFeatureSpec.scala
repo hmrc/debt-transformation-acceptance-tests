@@ -19,8 +19,12 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
+import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
+import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+
+import java.time.LocalDate
 
 class GetDebtForTPSSCasesFeatureSpec
     extends FixtureAnyFeatureSpec
@@ -30,457 +34,752 @@ class GetDebtForTPSSCasesFeatureSpec
     with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers {
 
-  override type FixtureParam = FCStatementOfLiabilityContext
+
+
+  override type FixtureParam = InterestForecastingContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = FCStatementOfLiabilityContext()
+    val context = InterestForecastingContext()
     try test(context)
     finally ()
   }
 
   Feature("Debt Calculation For Interest & Non Interest Bearing cases") {
 
-    ignore("Interest Bearing TPSS MainTrans 1525 debt") { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
+    Scenario("Interest Bearing TPSS MainTrans 1525 debt") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
+      aDebtCalculation(context, request)
 
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 35,
+          interestDueCallTotal = 249,
+          amountIntTotal = 500249,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
+      )
 
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
 
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = true,
+          numberOfChargeableDays = 7,
+          interestDueDailyAccrual = 35,
+          interestDueDutyTotal = 249,
+          amountOnIntDueDuty = 500000,
+          totalAmountIntDuty = 500249,
+          unpaidAmountDuty = 500000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
       And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
-
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2021-03-01"),
+            periodTo = LocalDate.parse("2021-03-08"),
+            numberOfDays = 7,
+            interestRate = 2.6,
+            interestDueDailyAccrual = 35,
+            interestDueWindow = 249,
+            amountOnIntDueWindow = 500000,
+            unpaidAmountWindow = 500249,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
+        )
+      )
     }
-    ignore("Non Interest Bearing TPSS MainTrans 1520 debt") { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
 
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
+    Scenario("Non Interest Bearing TPSS MainTrans 1520 debt") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1090",
+            mainTrans = "1520",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 0,
+          amountIntTotal = 500000,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
+      )
 
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
 
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will not have any calculation windows")
-      // TODO: Helper 'theDebtSummaryWillNotHaveAnyCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = false,
+          numberOfChargeableDays = 0,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 0,
+          amountOnIntDueDuty = 500000,
+          totalAmountIntDuty = 500000,
+          unpaidAmountDuty = 500000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the debt summary will have no calculation windows")
+      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
-    ignore(
-      "interestBearing flag should be true where amount has been paid off. Payment date AFTER interest start date (for bug DTD-509)"
-    ) { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
 
-      And("the debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
+    Scenario("interestBearing flag should be true where amount has been paid off. Payment date AFTER interest start date (for bug DTD-509)") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 500000,
+                  paymentDate = "2021-03-04"
+                )
+              )
+            )
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 106,
+          amountIntTotal = 106,
+          amountOnIntDueTotal = 0,
+          unpaidAmountTotal = 0,
+          debtCalculations = List.empty
+        )
+      )
 
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
 
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = true,
+          numberOfChargeableDays = 3,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 106,
+          amountOnIntDueDuty = 0,
+          totalAmountIntDuty = 106,
+          unpaidAmountDuty = 0,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
       And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
-
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2021-03-01"),
+            periodTo = LocalDate.parse("2021-03-04"),
+            numberOfDays = 3,
+            interestRate = 2.6,
+            interestDueDailyAccrual = 35,
+            interestDueWindow = 106,
+            amountOnIntDueWindow = 500000,
+            unpaidAmountWindow = 500106,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
+        )
+      )
     }
-    ignore(
-      "interestBearing flag should be true even when debt has been paid off. Payment date BEFORE interest start date (for bug DTD-509)"
-    ) { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
 
-      And("the debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
+    Scenario("interestBearing flag should be true even when debt has been paid off. Payment date BEFORE interest start date (for bug DTD-509)") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 500000,
+                  paymentDate = "2021-02-04"
+                )
+              )
+            )
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 0,
+          amountIntTotal = 0,
+          amountOnIntDueTotal = 0,
+          unpaidAmountTotal = 0,
+          debtCalculations = List.empty
+        )
+      )
 
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
 
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = true,
+          numberOfChargeableDays = 0,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 0,
+          amountOnIntDueDuty = 0,
+          totalAmountIntDuty = 0,
+          unpaidAmountDuty = 0,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the debt summary will have no calculation windows")
+      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
-    ignore("Non Interest Bearing where amount has been paid off") { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
 
-      And("the debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
+    Scenario("Non Interest Bearing where amount has been paid off") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1090",
+            mainTrans = "1520",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-06-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 300000,
+                  paymentDate = "2021-03-23"
+                ),
+                PaymentHistory(
+                  paymentAmount = 200000,
+                  paymentDate = "2021-04-05"
+                )
+              )
+            )
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 0,
+          amountIntTotal = 0,
+          amountOnIntDueTotal = 0,
+          unpaidAmountTotal = 0,
+          debtCalculations = List.empty
+        )
+      )
 
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
 
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will not have any calculation windows")
-      // TODO: Helper 'theDebtSummaryWillNotHaveAnyCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = false,
+          numberOfChargeableDays = 0,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 0,
+          amountOnIntDueDuty = 0,
+          totalAmountIntDuty = 0,
+          unpaidAmountDuty = 0,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the debt summary will have no calculation windows")
+      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
-    ignore("interestStartDate should be optional for non interest bearing debt. Without payments (for bug DTD-496)") {
-      context =>
-        Given("a debt item")
-        // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // aDebtItem(context)
 
-        And("the debt item has no payment history")
-        // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemHasNoPaymentHistory(context)
+    Scenario("interestStartDate should be optional for non interest bearing debt. Without payments (for bug DTD-496)") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1090",
+            mainTrans = "1520",
+            interestStartDate = None,
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-        And("no breathing spaces have been applied to the debt item")
-        // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-        And("no post codes have been provided for the customer")
-        // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 0,
+          amountIntTotal = 500000,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
+      )
 
-        When("the debt item is sent to the ifs service")
-        // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemIsSentToTheIfsService(context)
 
-        Then("the ifs service wilL return a total debts summary of")
-        // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-        Then("the 1st debt summary will contain")
-        // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillContain(context)
-
-        And("the 1st debt summary will not have any calculation windows")
-        // TODO: Helper 'theDebtSummaryWillNotHaveAnyCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = false,
+          numberOfChargeableDays = 0,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 0,
+          amountOnIntDueDuty = 500000,
+          totalAmountIntDuty = 500000,
+          unpaidAmountDuty = 500000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the debt summary will have no calculation windows")
+      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
-    ignore("interestStartDate should be optional for non interest bearing debt. With payments (for bug DTD-496)") {
-      context =>
-        Given("a debt item")
-        // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // aDebtItem(context)
 
-        And("the debt item has payment history")
-        // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemHasPaymentHistory(context)
+    Scenario("interestStartDate should be optional for non interest bearing debt. With payments (for bug DTD-496)") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1090",
+            mainTrans = "1520",
+            interestStartDate = None,
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 100000,
+                  paymentDate = "2021-03-04"
+                )
+              )
+            )
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-        And("no breathing spaces have been applied to the debt item")
-        // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-        And("no post codes have been provided for the customer")
-        // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 0,
+          amountIntTotal = 400000,
+          amountOnIntDueTotal = 400000,
+          unpaidAmountTotal = 400000,
+          debtCalculations = List.empty
+        )
+      )
 
-        When("the debt item is sent to the ifs service")
-        // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemIsSentToTheIfsService(context)
 
-        Then("the ifs service wilL return a total debts summary of")
-        // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-        Then("the 1st debt summary will contain")
-        // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillContain(context)
-
-        And("the 1st debt summary will not have any calculation windows")
-        // TODO: Helper 'theDebtSummaryWillNotHaveAnyCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = false,
+          numberOfChargeableDays = 0,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 0,
+          amountOnIntDueDuty = 400000,
+          totalAmountIntDuty = 400000,
+          unpaidAmountDuty = 400000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the debt summary will have no calculation windows")
+      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
-    ignore("interestStartDate should be optional for non interest bearing debt. Multiple debts (for bug DTD-496)") {
-      context =>
-        Given("a debt item")
-        // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // aDebtItem(context)
 
-        And("the debt item has payment history")
-        // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemHasPaymentHistory(context)
+    Scenario("interestStartDate should be optional for non interest bearing debt. Multiple debts (for bug DTD-496)") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 100000,
+                  paymentDate = "2021-03-04"
+                )
+              )
+            )
+          ),
+          DebtItem(
+            debtID = Some("456"),
+            originalAmount = 500000,
+            subTrans = "1090",
+            mainTrans = "1520",
+            interestStartDate = None,
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          ),
+        ),
+        customerPostCodes = List.empty
+      )
 
-        Given("a debt item")
-        // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // aDebtItem(context)
+      aDebtCalculation(context, request)
 
-        And("the debt item has no payment history")
-        // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemHasNoPaymentHistory(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 28,
+          interestDueCallTotal = 220,
+          amountIntTotal = 900220,
+          amountOnIntDueTotal = 900000,
+          unpaidAmountTotal = 900000,
+          debtCalculations = List.empty
+        )
+      )
 
-        And("no breathing spaces have been applied to the debt item")
-        // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-        And("no post codes have been provided for the customer")
-        // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noPostCodesHaveBeenProvidedForTheCustomer(context)
-
-        When("the debt item is sent to the ifs service")
-        // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtItemIsSentToTheIfsService(context)
-
-        Then("the ifs service wilL return a total debts summary of")
-        // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-        Then("the 1st debt summary will contain")
-        // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillContain(context)
-
-        And("the 1st debt summary will have calculation windows")
-        // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillHaveCalculationWindows(context)
-
-        Then("the 2nd debt summary will contain")
-        // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillContain(context)
-
-        And("the 2nd debt summary will not have any calculation windows")
-        // TODO: Helper 'theDebtSummaryWillNotHaveAnyCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
-
-    }
-    ignore("Interest only debt that is interest bearing") { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
-
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
-
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
-
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = true,
+          numberOfChargeableDays = 10,
+          interestDueDailyAccrual = 28,
+          interestDueDutyTotal = 220,
+          amountOnIntDueDuty = 400000,
+          totalAmountIntDuty = 400220,
+          unpaidAmountDuty = 400000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
       And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2021-03-01"),
+            periodTo = LocalDate.parse("2021-03-04"),
+            numberOfDays = 3,
+            interestRate = 2.6,
+            interestDueDailyAccrual = 7,
+            interestDueWindow = 21,
+            amountOnIntDueWindow = 100000,
+            unpaidAmountWindow = 100021,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2021-03-01"),
+            periodTo = LocalDate.parse("2021-03-08"),
+            numberOfDays = 7,
+            interestRate = 2.6,
+            interestDueDailyAccrual = 28,
+            interestDueWindow = 199,
+            amountOnIntDueWindow = 400000,
+            unpaidAmountWindow = 400199,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
+        )
+      )
+      And("the 2nd debt summary will contain")
+            theDebtSummaryWillContain(
+            context,
+            2,
+            DebtCalculation(
+              debtItemChargeId = None,
+              debtID = Some("456"),
+              interestBearing = false,
+              numberOfChargeableDays = 0,
+              interestDueDailyAccrual = 0,
+              interestDueDutyTotal = 0,
+              amountOnIntDueDuty = 500000,
+              totalAmountIntDuty = 500000,
+              unpaidAmountDuty = 500000,
+              interestOnlyIndicator = false,
+              calculationWindows = Nil
+            )
+          )
+
+
+      And("the 2nd debt summary will have no calculation windows")
+        theDebtSummaryWillNotHaveAnyCalculationWindows(context, 2)
+
 
     }
-    ignore("Non Interest Bearing TPSS MainTrans 2421 debt") { context =>
-      Given("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
 
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
+    Scenario("Interest only debt that is interest bearing") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        ),
+        customerPostCodes = List.empty
+      )
 
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
+      aDebtCalculation(context, request)
 
-      And("no post codes have been provided for the customer")
-      // TODO: Helper 'noPostCodesHaveBeenProvidedForTheCustomer' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noPostCodesHaveBeenProvidedForTheCustomer(context)
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 35,
+          interestDueCallTotal = 249,
+          amountIntTotal = 500249,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
+      )
 
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      Then("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will not have any calculation windows")
-      // TODO: Helper 'theDebtSummaryWillNotHaveAnyCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillNotHaveAnyCalculationWindows(context)
-
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = true,
+          numberOfChargeableDays = 7,
+          interestDueDailyAccrual = 35,
+          interestDueDutyTotal = 249,
+          amountOnIntDueDuty = 500000,
+          totalAmountIntDuty = 500249,
+          unpaidAmountDuty = 500000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the 1st debt summary will have calculation windows")
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2021-03-01"),
+            periodTo = LocalDate.parse("2021-03-08"),
+            numberOfDays = 7,
+            interestRate = 2.6,
+            interestDueDailyAccrual = 35,
+            interestDueWindow = 249,
+            amountOnIntDueWindow = 500000,
+            unpaidAmountWindow = 500249,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
+        )
+      )
     }
+
+    Scenario("Non Interest Bearing TPSS MainTrans 2421 debt") { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1150",
+            mainTrans = "2421",
+            interestStartDate = Some("2021-03-01"),
+            interestRequestedTo = "2021-03-08",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        ),
+        customerPostCodes = List.empty
+      )
+
+      aDebtCalculation(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+      Then("the IFS service will return a total debts summary")
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 0,
+          amountIntTotal = 500000,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
+      )
+
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculation(
+          debtItemChargeId = None,
+          debtID = Some("123"),
+          interestBearing = false,
+          numberOfChargeableDays = 0,
+          interestDueDailyAccrual = 0,
+          interestDueDutyTotal = 0,
+          amountOnIntDueDuty = 500000,
+          totalAmountIntDuty = 500000,
+          unpaidAmountDuty = 500000,
+          interestOnlyIndicator = false,
+          calculationWindows = Nil
+        )
+      )
+      And("the debt summary will have no calculation windows")
+      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
+    }
+
   }
 }

@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary, FCDebtCalculation, FCDebtCalculationsSummary, SuppressionInformation, SuppressionRequest}
-import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, CustomerPostCode, DebtCalculationRequest, DebtItem, DebtItems, FCDebtCalculationRequest, PaymentHistory}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{FCStatementOfLiabilityContext, FieldCollectionsContext, InterestForecastingContext, SuppressionRulesContext}
+import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary, SuppressionInformation, SuppressionRequest}
+import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, CustomerPostCode, DebtCalculationRequest, DebtItem, PaymentHistory}
+import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags._
@@ -35,8 +35,7 @@ class BreathingSpaceFeatureSpec
     with FCInterestForecastingStepHelpers
     with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers
-    with SuppressionStepHelpers{
-
+    with SuppressionStepHelpers {
 
   override type FixtureParam = InterestForecastingContext
 
@@ -125,8 +124,7 @@ class BreathingSpaceFeatureSpec
             breathingSpaceApplied = false,
             suppressionApplied = None,
             suppressionsApplied = None
-          )
-          ,
+          ),
           CalculationWindow(
             periodFrom = LocalDate.parse("2019-01-03"),
             periodTo = LocalDate.parse("2019-02-03"),
@@ -157,254 +155,253 @@ class BreathingSpaceFeatureSpec
       )
     }
 
-    Scenario("2 debts with breathing space. No payment history (Scenario 1 - step 6) (SA)", DTD_2140, DTD_2243) { context =>
+    Scenario("2 debts with breathing space. No payment history (Scenario 1 - step 6) (SA)", DTD_2140, DTD_2243) {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 50000,
+              subTrans = "1553",
+              mainTrans = "4920",
+              interestStartDate = Some("2022-01-31"),
+              interestRequestedTo = "2022-05-15",
+              breathingSpaces = Some(
+                List(
+                  BreathingSpaces(
+                    debtRespiteFrom = "2022-03-01",
+                    debtRespiteTo = "2022-04-29"
+                  )
+                )
+              ),
+              paymentHistory = Some(List.empty)
+            ),
+            DebtItem(
+              debtID = Some("456"),
+              originalAmount = 50000,
+              subTrans = "1553",
+              mainTrans = "4920",
+              interestStartDate = Some("2022-01-31"),
+              interestRequestedTo = "2022-05-15",
+              breathingSpaces = Some(
+                List(
+                  BreathingSpaces(
+                    debtRespiteFrom = "2022-03-01",
+                    debtRespiteTo = "2022-04-29"
+                  )
+                )
+              ),
+              paymentHistory = Some(List.empty)
+            )
+          ),
+          customerPostCodes = List.empty
+        )
 
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service wilL return a total debts summary of")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 8,
+            interestDueCallTotal = 356,
+            amountIntTotal = 100356,
+            amountOnIntDueTotal = 100000,
+            unpaidAmountTotal = 100000,
+            debtCalculations = List.empty
+          )
+        )
+
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
             debtID = Some("123"),
-            originalAmount = 50000,
-            subTrans = "1553",
-            mainTrans = "4920",
-            interestStartDate = Some("2022-01-31"),
-            interestRequestedTo = "2022-05-15",
-            breathingSpaces = Some(
-              List(
-                BreathingSpaces(
-                  debtRespiteFrom = "2022-03-01",
-                  debtRespiteTo = "2022-04-29"
-                )
-              )
+            interestBearing = true,
+            numberOfChargeableDays = 44L,
+            interestDueDailyAccrual = 4,
+            interestDueDutyTotal = 178,
+            amountOnIntDueDuty = 50000,
+            totalAmountIntDuty = 50178,
+            unpaidAmountDuty = 50000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
+        )
+
+        And("the 1st debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          1,
+          List(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-01-31"),
+              periodTo = LocalDate.parse("2022-02-20"),
+              numberOfDays = 20,
+              interestRate = 2.75,
+              interestDueDailyAccrual = 3,
+              interestDueWindow = 75,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50075,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
             ),
-            paymentHistory = Some(List.empty)
-          ),
-          DebtItem(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-02-21"),
+              periodTo = LocalDate.parse("2022-02-28"),
+              numberOfDays = 8,
+              interestRate = 3.0,
+              interestDueDailyAccrual = 4,
+              interestDueWindow = 32,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50032,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-03-01"),
+              periodTo = LocalDate.parse("2022-04-04"),
+              numberOfDays = 35,
+              interestRate = 0.0,
+              interestDueDailyAccrual = 0,
+              interestDueWindow = 0,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50000,
+              breathingSpaceApplied = true,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-04-05"),
+              periodTo = LocalDate.parse("2022-04-29"),
+              numberOfDays = 25,
+              interestRate = 0.0,
+              interestDueDailyAccrual = 0,
+              interestDueWindow = 0,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50000,
+              breathingSpaceApplied = true,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-04-30"),
+              periodTo = LocalDate.parse("2022-05-15"),
+              numberOfDays = 16,
+              interestRate = 3.25,
+              interestDueDailyAccrual = 4,
+              interestDueWindow = 71,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50071,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            )
+          )
+        )
+
+        And("the 2nd debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          2,
+          DebtCalculation(
+            debtItemChargeId = None,
             debtID = Some("456"),
-            originalAmount = 50000,
-            subTrans = "1553",
-            mainTrans = "4920",
-            interestStartDate = Some("2022-01-31"),
-            interestRequestedTo = "2022-05-15",
-            breathingSpaces = Some(
-              List(
-                BreathingSpaces(
-                  debtRespiteFrom = "2022-03-01",
-                  debtRespiteTo = "2022-04-29"
-                )
-              )
+            interestBearing = true,
+            numberOfChargeableDays = 44L,
+            interestDueDailyAccrual = 4,
+            interestDueDutyTotal = 178,
+            amountOnIntDueDuty = 50000,
+            totalAmountIntDuty = 50178,
+            unpaidAmountDuty = 50000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
+        )
+
+        And("the 2nd debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          2,
+          List(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-01-31"),
+              periodTo = LocalDate.parse("2022-02-20"),
+              numberOfDays = 20,
+              interestRate = 2.75,
+              interestDueDailyAccrual = 3,
+              interestDueWindow = 75,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50075,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
             ),
-            paymentHistory = Some(List.empty)
-          )
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 8,
-          interestDueCallTotal = 356,
-          amountIntTotal = 100356,
-          amountOnIntDueTotal = 100000,
-          unpaidAmountTotal = 100000,
-          debtCalculations = List.empty
-        )
-      )
-
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 44L,
-          interestDueDailyAccrual = 4,
-          interestDueDutyTotal = 178,
-          amountOnIntDueDuty = 50000,
-          totalAmountIntDuty = 50178,
-          unpaidAmountDuty = 50000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-      )
-
-      And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-01-31"),
-            periodTo = LocalDate.parse("2022-02-20"),
-            numberOfDays = 20,
-            interestRate = 2.75,
-            interestDueDailyAccrual = 3,
-            interestDueWindow = 75,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50075,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-02-21"),
-            periodTo = LocalDate.parse("2022-02-28"),
-            numberOfDays = 8,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 4,
-            interestDueWindow = 32,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50032,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-03-01"),
-            periodTo = LocalDate.parse("2022-04-04"),
-            numberOfDays = 35,
-            interestRate = 0.0,
-            interestDueDailyAccrual = 0,
-            interestDueWindow = 0,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50000,
-            breathingSpaceApplied = true,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-04-05"),
-            periodTo = LocalDate.parse("2022-04-29"),
-            numberOfDays = 25,
-            interestRate = 0.0,
-            interestDueDailyAccrual = 0,
-            interestDueWindow = 0,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50000,
-            breathingSpaceApplied = true,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-04-30"),
-            periodTo = LocalDate.parse("2022-05-15"),
-            numberOfDays = 16,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 4,
-            interestDueWindow = 71,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50071,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-02-21"),
+              periodTo = LocalDate.parse("2022-02-28"),
+              numberOfDays = 8,
+              interestRate = 3.0,
+              interestDueDailyAccrual = 4,
+              interestDueWindow = 32,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50032,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-03-01"),
+              periodTo = LocalDate.parse("2022-04-04"),
+              numberOfDays = 35,
+              interestRate = 0.0,
+              interestDueDailyAccrual = 0,
+              interestDueWindow = 0,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50000,
+              breathingSpaceApplied = true,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-04-05"),
+              periodTo = LocalDate.parse("2022-04-29"),
+              numberOfDays = 25,
+              interestRate = 0.0,
+              interestDueDailyAccrual = 0,
+              interestDueWindow = 0,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50000,
+              breathingSpaceApplied = true,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2022-04-30"),
+              periodTo = LocalDate.parse("2022-05-15"),
+              numberOfDays = 16,
+              interestRate = 3.25,
+              interestDueDailyAccrual = 4,
+              interestDueWindow = 71,
+              amountOnIntDueWindow = 50000,
+              unpaidAmountWindow = 50071,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            )
           )
         )
-      )
-
-      And("the 2nd debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        2,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("456"),
-          interestBearing = true,
-          numberOfChargeableDays = 44L,
-          interestDueDailyAccrual = 4,
-          interestDueDutyTotal = 178,
-          amountOnIntDueDuty = 50000,
-          totalAmountIntDuty = 50178,
-          unpaidAmountDuty = 50000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-      )
-
-      And("the 2nd debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        2,
-        List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-01-31"),
-            periodTo = LocalDate.parse("2022-02-20"),
-            numberOfDays = 20,
-            interestRate = 2.75,
-            interestDueDailyAccrual = 3,
-            interestDueWindow = 75,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50075,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-02-21"),
-            periodTo = LocalDate.parse("2022-02-28"),
-            numberOfDays = 8,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 4,
-            interestDueWindow = 32,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50032,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-03-01"),
-            periodTo = LocalDate.parse("2022-04-04"),
-            numberOfDays = 35,
-            interestRate = 0.0,
-            interestDueDailyAccrual = 0,
-            interestDueWindow = 0,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50000,
-            breathingSpaceApplied = true,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-04-05"),
-            periodTo = LocalDate.parse("2022-04-29"),
-            numberOfDays = 25,
-            interestRate = 0.0,
-            interestDueDailyAccrual = 0,
-            interestDueWindow = 0,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50000,
-            breathingSpaceApplied = true,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2022-04-30"),
-            periodTo = LocalDate.parse("2022-05-15"),
-            numberOfDays = 16,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 4,
-            interestDueWindow = 71,
-            amountOnIntDueWindow = 50000,
-            unpaidAmountWindow = 50071,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          )
-        )
-      )
     }
 
     Scenario("Single debt with breathing space AND payment history (SA)", DTD_2140, DTD_2243, DTD_2244) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -565,7 +562,6 @@ class BreathingSpaceFeatureSpec
       DTD_2140,
       DTD_2243
     ) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -634,20 +630,164 @@ class BreathingSpaceFeatureSpec
       theDebtSummaryWillHaveCalculationWindows(
         context,
         1,
-          List(
-            CalculationWindow(LocalDate.parse("2022-01-31"), LocalDate.parse("2022-02-20"), 20, 2.75, 37, 1, 25000, false, 25037, None, None),
-            CalculationWindow(LocalDate.parse("2022-02-21"), LocalDate.parse("2022-02-28"), 8, 3.0, 16, 2, 25000, false, 25016, None, None),
-            CalculationWindow(LocalDate.parse("2022-03-01"), LocalDate.parse("2022-04-04"), 35, 0.0, 0, 0, 25000, true, 25000, None, None),
-            CalculationWindow(LocalDate.parse("2022-04-05"), LocalDate.parse("2022-04-29"), 25, 0.0, 0, 0, 25000, true, 25000, None, None),
-            CalculationWindow(LocalDate.parse("2022-04-30"), LocalDate.parse("2022-05-23"), 24, 3.25, 53, 2, 25000, false, 25053, None, None),
-            CalculationWindow(LocalDate.parse("2022-05-24"), LocalDate.parse("2022-05-30"), 7, 3.5, 16, 2, 25000, false, 25016, None, None),
-            CalculationWindow(LocalDate.parse("2022-01-31"), LocalDate.parse("2022-02-20"), 20, 2.75, 37, 1, 25000, false, 25037, None, None),
-            CalculationWindow(LocalDate.parse("2022-02-21"), LocalDate.parse("2022-02-28"), 8, 3.0, 16, 2, 25000, false, 25016, None, None),
-            CalculationWindow(LocalDate.parse("2022-03-01"), LocalDate.parse("2022-04-04"), 35, 0.0, 0, 0, 25000, true, 25000, None, None),
-            CalculationWindow(LocalDate.parse("2022-04-05"), LocalDate.parse("2022-04-29"), 25, 0.0, 0, 0, 25000, true, 25000, None, None),
-            CalculationWindow(LocalDate.parse("2022-04-30"), LocalDate.parse("2022-05-23"), 24, 3.25, 53, 2, 25000, false, 25053, None, None),
-            CalculationWindow(LocalDate.parse("2022-05-24"), LocalDate.parse("2022-06-10"), 18, 3.5, 43, 2, 25000, false, 25043, None, None)
+        List(
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-31"),
+            periodTo = LocalDate.parse("2022-02-20"),
+            numberOfDays = 20,
+            interestRate = 2.75,
+            interestDueWindow = 37,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25037,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-02-21"),
+            periodTo = LocalDate.parse("2022-02-28"),
+            numberOfDays = 8,
+            interestRate = 3.0,
+            interestDueWindow = 16,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25016,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-03-01"),
+            periodTo = LocalDate.parse("2022-04-04"),
+            numberOfDays = 35,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-05"),
+            periodTo = LocalDate.parse("2022-04-29"),
+            numberOfDays = 25,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-30"),
+            periodTo = LocalDate.parse("2022-05-23"),
+            numberOfDays = 24,
+            interestRate = 3.25,
+            interestDueWindow = 53,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25053,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-24"),
+            periodTo = LocalDate.parse("2022-05-30"),
+            numberOfDays = 7,
+            interestRate = 3.5,
+            interestDueWindow = 16,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25016,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-31"),
+            periodTo = LocalDate.parse("2022-02-20"),
+            numberOfDays = 20,
+            interestRate = 2.75,
+            interestDueWindow = 37,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25037,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-02-21"),
+            periodTo = LocalDate.parse("2022-02-28"),
+            numberOfDays = 8,
+            interestRate = 3.0,
+            interestDueWindow = 16,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25016,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-03-01"),
+            periodTo = LocalDate.parse("2022-04-04"),
+            numberOfDays = 35,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-05"),
+            periodTo = LocalDate.parse("2022-04-29"),
+            numberOfDays = 25,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-30"),
+            periodTo = LocalDate.parse("2022-05-23"),
+            numberOfDays = 24,
+            interestRate = 3.25,
+            interestDueWindow = 53,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25053,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-24"),
+            periodTo = LocalDate.parse("2022-06-10"),
+            numberOfDays = 18,
+            interestRate = 3.5,
+            interestDueWindow = 43,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25043,
+            suppressionApplied = None,
+            suppressionsApplied = None
           )
+        )
       )
 
       And("the 2nd debt summary will contain")
@@ -677,7 +817,6 @@ class BreathingSpaceFeatureSpec
       "1 debt with a payment and 2 breathing spaces (incl an open ended BS), 1 late payment debt, 3rd debt with BS (Scenario 2, Step 4) (SA)",
       DTD_2140
     ) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -782,19 +921,175 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2022-01-31"), LocalDate.parse("2022-02-20"), 20, 2.75, 37, 1, 25000, false, 25037, None, None),
-          CalculationWindow(LocalDate.parse("2022-02-21"), LocalDate.parse("2022-02-28"), 8, 3.0, 16, 2, 25000, false, 25016, None, None),
-          CalculationWindow(LocalDate.parse("2022-03-01"), LocalDate.parse("2022-04-04"), 35, 0.0, 0, 0, 25000, true, 25000, None, None),
-          CalculationWindow(LocalDate.parse("2022-04-05"), LocalDate.parse("2022-04-29"), 25, 0.0, 0, 0, 25000, true, 25000, None, None),
-          CalculationWindow(LocalDate.parse("2022-04-30"), LocalDate.parse("2022-05-23"), 24, 3.25, 53, 2, 25000, false, 25053, None, None),
-          CalculationWindow(LocalDate.parse("2022-05-24"), LocalDate.parse("2022-05-30"), 7, 3.5, 16, 2, 25000, false, 25016, None, None),
-          CalculationWindow(LocalDate.parse("2022-01-31"), LocalDate.parse("2022-02-20"), 20, 2.75, 37, 1, 25000, false, 25037, None, None),
-          CalculationWindow(LocalDate.parse("2022-02-21"), LocalDate.parse("2022-02-28"), 8, 3.0, 16, 2, 25000, false, 25016, None, None),
-          CalculationWindow(LocalDate.parse("2022-03-01"), LocalDate.parse("2022-04-04"), 35, 0.0, 0, 0, 25000, true, 25000, None, None),
-          CalculationWindow(LocalDate.parse("2022-04-05"), LocalDate.parse("2022-04-29"), 25, 0.0, 0, 0, 25000, true, 25000, None, None),
-          CalculationWindow(LocalDate.parse("2022-04-30"), LocalDate.parse("2022-05-23"), 24, 3.25, 53, 2, 25000, false, 25053, None, None),
-          CalculationWindow(LocalDate.parse("2022-05-24"), LocalDate.parse("2022-05-31"), 8, 3.5, 19, 2, 25000, false, 25019, None, None),
-          CalculationWindow(LocalDate.parse("2022-06-01"), LocalDate.parse("2022-06-19"), 19, 0.0, 0, 0, 25000, true, 25000, None, None)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-31"),
+            periodTo = LocalDate.parse("2022-02-20"),
+            numberOfDays = 20,
+            interestRate = 2.75,
+            interestDueWindow = 37,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25037,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-02-21"),
+            periodTo = LocalDate.parse("2022-02-28"),
+            numberOfDays = 8,
+            interestRate = 3.0,
+            interestDueWindow = 16,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25016,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-03-01"),
+            periodTo = LocalDate.parse("2022-04-04"),
+            numberOfDays = 35,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-05"),
+            periodTo = LocalDate.parse("2022-04-29"),
+            numberOfDays = 25,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-30"),
+            periodTo = LocalDate.parse("2022-05-23"),
+            numberOfDays = 24,
+            interestRate = 3.25,
+            interestDueWindow = 53,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25053,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-24"),
+            periodTo = LocalDate.parse("2022-05-30"),
+            numberOfDays = 7,
+            interestRate = 3.5,
+            interestDueWindow = 16,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25016,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-31"),
+            periodTo = LocalDate.parse("2022-02-20"),
+            numberOfDays = 20,
+            interestRate = 2.75,
+            interestDueWindow = 37,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25037,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-02-21"),
+            periodTo = LocalDate.parse("2022-02-28"),
+            numberOfDays = 8,
+            interestRate = 3.0,
+            interestDueWindow = 16,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25016,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-03-01"),
+            periodTo = LocalDate.parse("2022-04-04"),
+            numberOfDays = 35,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-05"),
+            periodTo = LocalDate.parse("2022-04-29"),
+            numberOfDays = 25,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-30"),
+            periodTo = LocalDate.parse("2022-05-23"),
+            numberOfDays = 24,
+            interestRate = 3.25,
+            interestDueWindow = 53,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25053,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-24"),
+            periodTo = LocalDate.parse("2022-05-31"),
+            numberOfDays = 8,
+            interestRate = 3.5,
+            interestDueWindow = 19,
+            interestDueDailyAccrual = 2,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 25019,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-06-01"),
+            periodTo = LocalDate.parse("2022-06-19"),
+            numberOfDays = 19,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 25000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 25000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
 
@@ -844,14 +1139,37 @@ class BreathingSpaceFeatureSpec
         context,
         3,
         List(
-          CalculationWindow(LocalDate.parse("2022-07-30"), LocalDate.parse("2022-07-31"), 1, 3.75, 5, 5, 50000, false, 50005, None, None),
-          CalculationWindow(LocalDate.parse("2022-08-01"), LocalDate.parse("2022-08-10"), 10, 0.0, 0, 0, 50000, true, 50000, None, None)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-07-30"),
+            periodTo = LocalDate.parse("2022-07-31"),
+            numberOfDays = 1,
+            interestRate = 3.75,
+            interestDueWindow = 5,
+            interestDueDailyAccrual = 5,
+            amountOnIntDueWindow = 50000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 50005,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-08-01"),
+            periodTo = LocalDate.parse("2022-08-10"),
+            numberOfDays = 10,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 50000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 50000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
     }
 
     Scenario("Customer makes payment whilst in an active Breathing Space period (Scenario 4) (SA)") { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -921,18 +1239,162 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2022-01-31"), LocalDate.parse("2022-02-20"), 20, 2.75, 15, 0, 10000, false, 10015, None, None),
-          CalculationWindow(LocalDate.parse("2022-02-21"), LocalDate.parse("2022-04-04"), 43, 3.0, 35, 0, 10000, false, 10035, None, None),
-          CalculationWindow(LocalDate.parse("2022-04-05"), LocalDate.parse("2022-05-23"), 49, 3.25, 43, 0, 10000, false, 10043, None, None),
-          CalculationWindow(LocalDate.parse("2022-05-24"), LocalDate.parse("2022-05-31"), 8, 3.5, 7, 0, 10000, false, 10007, None, None),
-          CalculationWindow(LocalDate.parse("2022-06-01"), LocalDate.parse("2022-07-01"), 31, 0.0, 0, 0, 10000, true, 10000, None, None),
-          CalculationWindow(LocalDate.parse("2022-01-31"), LocalDate.parse("2022-02-20"), 20, 2.75, 22, 1, 15000, false, 15022, None, None),
-          CalculationWindow(LocalDate.parse("2022-02-21"), LocalDate.parse("2022-04-04"), 43, 3.0, 53, 1, 15000, false, 15053, None, None),
-          CalculationWindow(LocalDate.parse("2022-04-05"), LocalDate.parse("2022-05-23"), 49, 3.25, 65, 1, 15000, false, 15065, None, None),
-          CalculationWindow(LocalDate.parse("2022-05-24"), LocalDate.parse("2022-05-31"), 8, 3.5, 11, 1, 15000, false, 15011, None, None),
-          CalculationWindow(LocalDate.parse("2022-06-01"), LocalDate.parse("2022-07-04"), 34, 0.0, 0, 0, 15000, true, 15000, None, None),
-          CalculationWindow(LocalDate.parse("2022-07-05"), LocalDate.parse("2022-07-30"), 26, 0.0, 0, 0, 15000, true, 15000, None, None),
-          CalculationWindow(LocalDate.parse("2022-07-31"), LocalDate.parse("2022-08-01"), 2, 3.75, 3, 1, 15000, false, 15003, None, None)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-31"),
+            periodTo = LocalDate.parse("2022-02-20"),
+            numberOfDays = 20,
+            interestRate = 2.75,
+            interestDueWindow = 15,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 10000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 10015,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-02-21"),
+            periodTo = LocalDate.parse("2022-04-04"),
+            numberOfDays = 43,
+            interestRate = 3.0,
+            interestDueWindow = 35,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 10000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 10035,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-05"),
+            periodTo = LocalDate.parse("2022-05-23"),
+            numberOfDays = 49,
+            interestRate = 3.25,
+            interestDueWindow = 43,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 10000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 10043,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-24"),
+            periodTo = LocalDate.parse("2022-05-31"),
+            numberOfDays = 8,
+            interestRate = 3.5,
+            interestDueWindow = 7,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 10000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 10007,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-06-01"),
+            periodTo = LocalDate.parse("2022-07-01"),
+            numberOfDays = 31,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 10000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 10000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-31"),
+            periodTo = LocalDate.parse("2022-02-20"),
+            numberOfDays = 20,
+            interestRate = 2.75,
+            interestDueWindow = 22,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15022,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-02-21"),
+            periodTo = LocalDate.parse("2022-04-04"),
+            numberOfDays = 43,
+            interestRate = 3.0,
+            interestDueWindow = 53,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15053,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-04-05"),
+            periodTo = LocalDate.parse("2022-05-23"),
+            numberOfDays = 49,
+            interestRate = 3.25,
+            interestDueWindow = 65,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15065,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-24"),
+            periodTo = LocalDate.parse("2022-05-31"),
+            numberOfDays = 8,
+            interestRate = 3.5,
+            interestDueWindow = 11,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15011,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-06-01"),
+            periodTo = LocalDate.parse("2022-07-04"),
+            numberOfDays = 34,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 15000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-07-05"),
+            periodTo = LocalDate.parse("2022-07-30"),
+            numberOfDays = 26,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 15000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-07-31"),
+            periodTo = LocalDate.parse("2022-08-01"),
+            numberOfDays = 2,
+            interestRate = 3.75,
+            interestDueWindow = 3,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15003,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
 
@@ -960,86 +1422,158 @@ class BreathingSpaceFeatureSpec
         context,
         2,
         List(
-          CalculationWindow(LocalDate.parse("2022-05-30"), LocalDate.parse("2022-05-31"), 1, 3.5, 1, 1, 15000, false, 15001, None, None),
-          CalculationWindow(LocalDate.parse("2022-06-01"), LocalDate.parse("2022-07-04"), 34, 0.0, 0, 0, 15000, true, 15000, None, None),
-          CalculationWindow(LocalDate.parse("2022-07-05"), LocalDate.parse("2022-07-30"), 26, 0.0, 0, 0, 15000, true, 15000, None, None),
-          CalculationWindow(LocalDate.parse("2022-07-31"), LocalDate.parse("2022-08-01"), 2, 3.75, 3, 1, 15000, false, 15003, None, None)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-05-30"),
+            periodTo = LocalDate.parse("2022-05-31"),
+            numberOfDays = 1,
+            interestRate = 3.5,
+            interestDueWindow = 1,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15001,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-06-01"),
+            periodTo = LocalDate.parse("2022-07-04"),
+            numberOfDays = 34,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 15000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-07-05"),
+            periodTo = LocalDate.parse("2022-07-30"),
+            numberOfDays = 26,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 15000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-07-31"),
+            periodTo = LocalDate.parse("2022-08-01"),
+            numberOfDays = 2,
+            interestRate = 3.75,
+            interestDueWindow = 3,
+            interestDueDailyAccrual = 1,
+            amountOnIntDueWindow = 15000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 15003,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
     }
 
-    Scenario("Interest Bearing. Breathing space that starts before the interest start date (SA)", DTD_2167, DTD_2244) { context =>
-
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
-            debtID = Some("123"),
-            originalAmount = 500000,
-            subTrans = "1553",
-            mainTrans = "4920",
-            interestStartDate = Some("2018-12-16"),
-            interestRequestedTo = "2019-04-14",
-            breathingSpaces = Some(
-              List(
-                BreathingSpaces(
-                  debtRespiteFrom = "2017-01-03",
-                  debtRespiteTo = "2019-02-03"
+    Scenario("Interest Bearing. Breathing space that starts before the interest start date (SA)", DTD_2167, DTD_2244) {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 500000,
+              subTrans = "1553",
+              mainTrans = "4920",
+              interestStartDate = Some("2018-12-16"),
+              interestRequestedTo = "2019-04-14",
+              breathingSpaces = Some(
+                List(
+                  BreathingSpaces(
+                    debtRespiteFrom = "2017-01-03",
+                    debtRespiteTo = "2019-02-03"
+                  )
                 )
-              )
-            ),
-            paymentHistory = Some(List.empty)
+              ),
+              paymentHistory = Some(List.empty)
+            )
+          ),
+          customerPostCodes = List.empty
+        )
+
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service will return a total debts summary of")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 44,
+            interestDueCallTotal = 3116,
+            amountIntTotal = 503116,
+            amountOnIntDueTotal = 500000,
+            unpaidAmountTotal = 500000,
+            debtCalculations = List.empty
           )
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 44,
-          interestDueCallTotal = 3116,
-          amountIntTotal = 503116,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
         )
-      )
 
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 70,
-          interestDueDailyAccrual = 44,
-          interestDueDutyTotal = 3116,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 503116,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("123"),
+            interestBearing = true,
+            numberOfChargeableDays = 70,
+            interestDueDailyAccrual = 44,
+            interestDueDutyTotal = 3116,
+            amountOnIntDueDuty = 500000,
+            totalAmountIntDuty = 503116,
+            unpaidAmountDuty = 500000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
         )
-      )
 
-      And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
-          CalculationWindow(LocalDate.parse("2018-12-16"), LocalDate.parse("2019-02-03"), 49, 0.0, 0, 0, 500000, true, 500000, None, None),
-          CalculationWindow(LocalDate.parse("2019-02-04"), LocalDate.parse("2019-04-14"), 70, 3.25, 3116, 44, 500000, false, 503116, None, None)
+        And("the 1st debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          1,
+          List(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2018-12-16"),
+              periodTo = LocalDate.parse("2019-02-03"),
+              numberOfDays = 49,
+              interestRate = 0.0,
+              interestDueWindow = 0,
+              interestDueDailyAccrual = 0,
+              amountOnIntDueWindow = 500000,
+              breathingSpaceApplied = true,
+              unpaidAmountWindow = 500000,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2019-02-04"),
+              periodTo = LocalDate.parse("2019-04-14"),
+              numberOfDays = 70,
+              interestRate = 3.25,
+              interestDueWindow = 3116,
+              interestDueDailyAccrual = 44,
+              amountOnIntDueWindow = 500000,
+              breathingSpaceApplied = false,
+              unpaidAmountWindow = 503116,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            )
+          )
         )
-      )
     }
 
     Scenario(
@@ -1047,7 +1581,6 @@ class BreathingSpaceFeatureSpec
       DTD_2167,
       DTD_2244
     ) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -1114,87 +1647,126 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2018-12-16"), LocalDate.parse("2019-04-14"), 119, 0.0, 0, 0, 500000, true, 500000, None, None)
-        )
-      )
-    }
-
-    Scenario("Interest Bearing. Breathing space that starts same day as interest start date (SA)", DTD_2168, DTD_2244) { context =>
-
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
-            debtID = Some("123"),
-            originalAmount = 500000,
-            subTrans = "1553",
-            mainTrans = "4920",
-            interestStartDate = Some("2018-12-16"),
-            interestRequestedTo = "2019-04-14",
-            breathingSpaces = Some(
-              List(
-                BreathingSpaces(
-                  debtRespiteFrom = "2018-12-16",
-                  debtRespiteTo = "2019-02-03"
-                )
-              )
-            ),
-            paymentHistory = Some(List.empty)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2018-12-16"),
+            periodTo = LocalDate.parse("2019-04-14"),
+            numberOfDays = 119,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 500000,
+            suppressionApplied = None,
+            suppressionsApplied = None
           )
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 44,
-          interestDueCallTotal = 3116,
-          amountIntTotal = 503116,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
-      )
-
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 70,
-          interestDueDailyAccrual = 44,
-          interestDueDutyTotal = 3116,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 503116,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-      )
-
-      And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
-          CalculationWindow(LocalDate.parse("2018-12-16"), LocalDate.parse("2019-02-03"), 49, 0.0, 0, 0, 500000, true, 500000, None, None),
-          CalculationWindow(LocalDate.parse("2019-02-04"), LocalDate.parse("2019-04-14"), 70, 3.25, 3116, 44, 500000, false, 503116, None, None)
         )
       )
     }
 
-    Scenario("Non Interest Bearing. Breathing space that starts same day as interest start date (SA)", DTD_2168, DTD_2244) { context =>
+    Scenario("Interest Bearing. Breathing space that starts same day as interest start date (SA)", DTD_2168, DTD_2244) {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 500000,
+              subTrans = "1553",
+              mainTrans = "4920",
+              interestStartDate = Some("2018-12-16"),
+              interestRequestedTo = "2019-04-14",
+              breathingSpaces = Some(
+                List(
+                  BreathingSpaces(
+                    debtRespiteFrom = "2018-12-16",
+                    debtRespiteTo = "2019-02-03"
+                  )
+                )
+              ),
+              paymentHistory = Some(List.empty)
+            )
+          ),
+          customerPostCodes = List.empty
+        )
 
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service will return a total debts summary of")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 44,
+            interestDueCallTotal = 3116,
+            amountIntTotal = 503116,
+            amountOnIntDueTotal = 500000,
+            unpaidAmountTotal = 500000,
+            debtCalculations = List.empty
+          )
+        )
+
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("123"),
+            interestBearing = true,
+            numberOfChargeableDays = 70,
+            interestDueDailyAccrual = 44,
+            interestDueDutyTotal = 3116,
+            amountOnIntDueDuty = 500000,
+            totalAmountIntDuty = 503116,
+            unpaidAmountDuty = 500000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
+        )
+
+        And("the 1st debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          1,
+          List(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2018-12-16"),
+              periodTo = LocalDate.parse("2019-02-03"),
+              numberOfDays = 49,
+              interestRate = 0.0,
+              interestDueWindow = 0,
+              interestDueDailyAccrual = 0,
+              amountOnIntDueWindow = 500000,
+              breathingSpaceApplied = true,
+              unpaidAmountWindow = 500000,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2019-02-04"),
+              periodTo = LocalDate.parse("2019-04-14"),
+              numberOfDays = 70,
+              interestRate = 3.25,
+              interestDueWindow = 3116,
+              interestDueDailyAccrual = 44,
+              amountOnIntDueWindow = 500000,
+              breathingSpaceApplied = false,
+              unpaidAmountWindow = 503116,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            )
+          )
+        )
+    }
+
+    Scenario(
+      "Non Interest Bearing. Breathing space that starts same day as interest start date (SA)",
+      DTD_2168,
+      DTD_2244
+    ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -1258,7 +1830,6 @@ class BreathingSpaceFeatureSpec
     }
 
     Scenario("Breathing space that ends same day as interest requested", DTD_2371) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -1330,8 +1901,32 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2024-01-01"), LocalDate.parse("2024-01-03"), 2, 6.5, 177, 88, 500000, false, 500177, None, None),
-          CalculationWindow(LocalDate.parse("2024-01-04"), LocalDate.parse("2024-01-10"), 7, 0.0, 0, 0, 500000, true, 500000, None, None)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2024-01-01"),
+            periodTo = LocalDate.parse("2024-01-03"),
+            numberOfDays = 2,
+            interestRate = 6.5,
+            interestDueWindow = 177,
+            interestDueDailyAccrual = 88,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 500177,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2024-01-04"),
+            periodTo = LocalDate.parse("2024-01-10"),
+            numberOfDays = 7,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 500000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
     }
@@ -1341,7 +1936,6 @@ class BreathingSpaceFeatureSpec
       DTD_2371,
       DTD_3180
     ) { context =>
-
       Given("suppression configuration data is created")
       val suppressionContext = SuppressionRulesContext()
 
@@ -1437,8 +2031,32 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2024-01-01"), LocalDate.parse("2024-01-03"), 2, 6.5, 177, 88, 500000, false, 500177, None, None),
-          CalculationWindow(LocalDate.parse("2024-01-04"), LocalDate.parse("2024-01-10"), 7, 0.0, 0, 0, 500000, true, 500000, None, None)
+          CalculationWindow(
+            periodFrom =LocalDate.parse("2024-01-01"),
+            periodTo = LocalDate.parse("2024-01-03"),
+            numberOfDays = 2,
+            interestRate = 6.5,
+            interestDueWindow = 177,
+            interestDueDailyAccrual = 88,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 500177,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            LocalDate.parse("2024-01-04"),
+            periodTo = LocalDate.parse("2024-01-10"),
+            numberOfDays = 7,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 500000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
     }
@@ -1447,7 +2065,6 @@ class BreathingSpaceFeatureSpec
       "Interest Bearing. Breathing space that ends same day as interest requested to. Breathing space includes interest rate change(SA)",
       DTD_2371
     ) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -1514,96 +2131,155 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2022-01-01"), LocalDate.parse("2022-01-03"), 2, 2.6, 71, 35, 500000, false, 500071, None, None),
-          CalculationWindow(LocalDate.parse("2022-01-04"), LocalDate.parse("2022-01-06"), 3, 0.0, 0, 0, 500000, true, 500000, None, None),
-          CalculationWindow(LocalDate.parse("2022-01-07"), LocalDate.parse("2022-01-10"), 4, 0.0, 0, 0, 500000, true, 500000, None, None)
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-01"),
+            periodTo = LocalDate.parse("2022-01-03"),
+            numberOfDays = 2,
+            interestRate = 2.6,
+            interestDueWindow = 71,
+            interestDueDailyAccrual = 35,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = false,
+            unpaidAmountWindow = 500071,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-04"),
+            periodTo = LocalDate.parse("2022-01-06"),
+            numberOfDays = 3,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 500000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          ),
+          CalculationWindow(
+            periodFrom = LocalDate.parse("2022-01-07"),
+            periodTo =  LocalDate.parse("2022-01-10"),
+            numberOfDays = 4,
+            interestRate = 0.0,
+            interestDueWindow = 0,
+            interestDueDailyAccrual = 0,
+            amountOnIntDueWindow = 500000,
+            breathingSpaceApplied = true,
+            unpaidAmountWindow = 500000,
+            suppressionApplied = None,
+            suppressionsApplied = None
+          )
         )
       )
     }
 
-    Scenario("Interest Bearing. 2 breathing spaces. First ends same day as interest requested to (SA)", DTD_2371) { context =>
-
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
-            debtID = Some("123"),
-            originalAmount = 500000,
-            subTrans = "1553",
-            mainTrans = "4920",
-            interestStartDate = Some("2021-01-01"),
-            interestRequestedTo = "2021-01-10",
-            breathingSpaces = Some(
-              List(
-                BreathingSpaces(
-                  debtRespiteFrom = "2021-01-04",
-                  debtRespiteTo = "2021-01-10"
-                ),
-                BreathingSpaces(
-                  debtRespiteFrom = "2021-03-01",
-                  debtRespiteTo = "2021-03-10"
+    Scenario("Interest Bearing. 2 breathing spaces. First ends same day as interest requested to (SA)", DTD_2371) {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 500000,
+              subTrans = "1553",
+              mainTrans = "4920",
+              interestStartDate = Some("2021-01-01"),
+              interestRequestedTo = "2021-01-10",
+              breathingSpaces = Some(
+                List(
+                  BreathingSpaces(
+                    debtRespiteFrom = "2021-01-04",
+                    debtRespiteTo = "2021-01-10"
+                  ),
+                  BreathingSpaces(
+                    debtRespiteFrom = "2021-03-01",
+                    debtRespiteTo = "2021-03-10"
+                  )
                 )
-              )
-            ),
-            paymentHistory = Some(List.empty)
+              ),
+              paymentHistory = Some(List.empty)
+            )
+          ),
+          customerPostCodes = List.empty
+        )
+
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the ifs service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service will return a total debts summary of")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 0,
+            interestDueCallTotal = 71,
+            amountIntTotal = 500071,
+            amountOnIntDueTotal = 500000,
+            unpaidAmountTotal = 500000,
+            debtCalculations = List.empty
           )
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 71,
-          amountIntTotal = 500071,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
         )
-      )
 
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 2,
-          interestDueDailyAccrual = 0,
-          interestDueDutyTotal = 71,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 500071,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("123"),
+            interestBearing = true,
+            numberOfChargeableDays = 2,
+            interestDueDailyAccrual = 0,
+            interestDueDutyTotal = 71,
+            amountOnIntDueDuty = 500000,
+            totalAmountIntDuty = 500071,
+            unpaidAmountDuty = 500000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
         )
-      )
 
-      And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
-          CalculationWindow(LocalDate.parse("2021-01-01"), LocalDate.parse("2021-01-03"), 2, 2.6, 71, 35, 500000, false, 500071, None, None),
-          CalculationWindow(LocalDate.parse("2021-01-04"), LocalDate.parse("2021-01-10"), 7, 0.0, 0, 0, 500000, true, 500000, None, None)
+        And("the 1st debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          1,
+          List(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2021-01-01"),
+              periodTo = LocalDate.parse("2021-01-03"),
+              numberOfDays =2,
+              interestRate = 2.6,
+              interestDueWindow = 71,
+              interestDueDailyAccrual = 35,
+              amountOnIntDueWindow = 500000,
+              breathingSpaceApplied = false,
+              unpaidAmountWindow = 500071,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2021-01-04"),
+              periodTo = LocalDate.parse("2021-01-10"),
+              numberOfDays = 7,
+              interestRate = 0.0,
+              interestDueWindow = 0,
+              interestDueDailyAccrual = 0,
+              amountOnIntDueWindow = 500000,
+              breathingSpaceApplied = true,
+              unpaidAmountWindow = 500000,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            )
+          )
         )
-      )
     }
 
     Scenario(
       "Interest Bearing. Overlapping breathing spaces should be merged into 1 calculation window. No interest rate changes (SA)",
       DTD_2351
     ) { context =>
-
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -1674,9 +2350,45 @@ class BreathingSpaceFeatureSpec
         context,
         1,
         List(
-          CalculationWindow(LocalDate.parse("2021-01-01"), LocalDate.parse("2021-01-03"), 2, 2.6, 71, 35, 500000, false, 500071, None, None),
-          CalculationWindow(LocalDate.parse("2021-01-04"), LocalDate.parse("2021-01-09"), 6, 0.0, 0, 0, 500000, true, 500000, None, None),
-          CalculationWindow(LocalDate.parse("2021-01-10"), LocalDate.parse("2021-01-10"), 1, 2.6, 35, 35, 500000, false, 500035, None, None)
+          CalculationWindow(
+            periodFrom              = LocalDate.parse("2021-01-01"),
+            periodTo                = LocalDate.parse("2021-01-03"),
+            numberOfDays            = 2,
+            interestRate            = 2.6,
+            interestDueDailyAccrual = 35,
+            interestDueWindow       = 71,
+            amountOnIntDueWindow    = 500000,
+            unpaidAmountWindow      = 500071,
+            breathingSpaceApplied   = false,
+            suppressionApplied      = None,
+            suppressionsApplied     = None
+          ),
+          CalculationWindow(
+            periodFrom              = LocalDate.parse("2021-01-04"),
+            periodTo                = LocalDate.parse("2021-01-09"),
+            numberOfDays            = 6,
+            interestRate            = 0.0,
+            interestDueDailyAccrual = 0,
+            interestDueWindow       = 0,
+            amountOnIntDueWindow    = 500000,
+            unpaidAmountWindow      = 500000,
+            breathingSpaceApplied   = true,
+            suppressionApplied      = None,
+            suppressionsApplied     = None
+          ),
+          CalculationWindow(
+            periodFrom              = LocalDate.parse("2021-01-10"),
+            periodTo                = LocalDate.parse("2021-01-10"),
+            numberOfDays            = 1,
+            interestRate            = 2.6,
+            interestDueDailyAccrual = 35,
+            interestDueWindow       = 35,
+            amountOnIntDueWindow    = 500000,
+            unpaidAmountWindow      = 500035,
+            breathingSpaceApplied   = false,
+            suppressionApplied      = None,
+            suppressionsApplied     = None
+          )
         )
       )
     }
