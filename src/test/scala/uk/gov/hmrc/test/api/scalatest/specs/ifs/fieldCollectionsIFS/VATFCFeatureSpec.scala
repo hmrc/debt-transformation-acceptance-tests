@@ -42,7 +42,7 @@ class VATFCFeatureSpec
 
   Feature("FC VAT Debt Calculation End point testing") {
 
-    Scenario("2. Interest Indicator as No. 1 Payment of 1 debt.") { context =>
+    Scenario("Interest Indicator as No. 1 Payment of 1 debt.") { context =>
       Given("a fc vat debt calculation")
       val ifsRequest = FCVATDebtCalculationRequest(
         debtItems = List(
@@ -88,7 +88,7 @@ class VATFCFeatureSpec
 
     }
 
-    Scenario("3. Interest Indicator as Yes. 2 Payment of 1 debt.") { context =>
+    Scenario("Interest Indicator as Yes. 2 Payment of 1 debt.") { context =>
       Given("a fc vat debt calculation")
       val ifsRequest = FCVATDebtCalculationRequest(
         debtItems = List(
@@ -138,7 +138,7 @@ class VATFCFeatureSpec
 
     }
 
-    Scenario("6. Interest Indicator as Yes. 2 Payment of 2 debt.") { context =>
+    Scenario("Interest Indicator as Yes. 2 Payment of 2 debt.") { context =>
       Given("a fc vat debt calculation")
       val ifsRequest = FCVATDebtCalculationRequest(
         debtItems = List(
@@ -208,7 +208,7 @@ class VATFCFeatureSpec
 
     }
 
-    Scenario("7. Interest Indicator as Yes. No Payment History.") { context =>
+    Scenario("Interest Indicator as Yes. No Payment History.") { context =>
       Given("a fc vat debt calculation")
       val ifsRequest = FCVATDebtCalculationRequest(
         debtItems = List(
@@ -247,7 +247,7 @@ class VATFCFeatureSpec
 
     }
 
-    Scenario("8. Interest Indicator as No. No Payment History.") { context =>
+    Scenario("Interest Indicator as No. No Payment History.") { context =>
       Given("a fc vat debt calculation")
       val ifsRequest = FCVATDebtCalculationRequest(
         debtItems = List(
@@ -287,7 +287,7 @@ class VATFCFeatureSpec
     }
 
 //    The below  test should be removed once a UT/IT is created
-    Scenario("9. periodEnd missing. Interest Indicator as No. No Payment History.") { context =>
+    Scenario("periodEnd missing. Interest Indicator as No. No Payment History.") { context =>
       Given("a fc vat debt calculation")
       val ifsRequest = FCVATDebtCalculationRequest(
         debtItems = List(

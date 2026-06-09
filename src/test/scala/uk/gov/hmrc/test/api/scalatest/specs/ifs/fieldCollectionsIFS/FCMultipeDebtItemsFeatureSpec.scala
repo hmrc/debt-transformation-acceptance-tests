@@ -42,7 +42,7 @@ class FCMultipeDebtItemsFeatureSpec
 
   Feature("FC Debt Calculation End point testing") {
 
-    Scenario("0. Interest Indicators. 2 debt. 1 payment history and cotax charge interest") { context =>
+    Scenario("Interest Indicators. 2 debt. 1 payment history and cotax charge interest") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
@@ -123,7 +123,7 @@ class FCMultipeDebtItemsFeatureSpec
 
     }
 
-    Scenario("1. Interest Indicators. 2 debt. 1 payment history") { context =>
+    Scenario("Interest Indicators. 2 debt. 1 payment history") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
@@ -203,7 +203,7 @@ class FCMultipeDebtItemsFeatureSpec
 
     }
 
-    Scenario("2. Interest Indicator. 1 Payment of 1 debt.") { context =>
+    Scenario("Interest Indicator. 1 Payment of 1 debt.") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
@@ -265,7 +265,7 @@ class FCMultipeDebtItemsFeatureSpec
 
     }
 
-    Scenario("3. No Interest Indicator. 1 Payment of 1 debt.") { context =>
+    Scenario("No Interest Indicator. 1 Payment of 1 debt.") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
@@ -330,7 +330,7 @@ class FCMultipeDebtItemsFeatureSpec
 
     }
 
-    Scenario("4. Interest Indicator. 1 Payment of 1 debt. No breathing space.") { context =>
+    Scenario("Interest Indicator. 1 Payment of 1 debt. No breathing space.") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
@@ -392,7 +392,7 @@ class FCMultipeDebtItemsFeatureSpec
 
     }
 
-    Scenario("5. 1 debt, no payment history") { context =>
+    Scenario("1 debt, no payment history") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
@@ -440,7 +440,7 @@ class FCMultipeDebtItemsFeatureSpec
 
     }
 
-    Scenario("6. Interest Indicator. 1 Payment of 1 debt. Payment Done.") { context =>
+    Scenario("Interest Indicator. 1 Payment of 1 debt. Payment Done.") { context =>
       Given("a fc debt calculation")
       val ifsRequest = FCDebtCalculationRequest(
         debtItems = List(
