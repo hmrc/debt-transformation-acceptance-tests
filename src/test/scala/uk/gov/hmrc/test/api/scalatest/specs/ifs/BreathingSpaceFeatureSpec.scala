@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.GivenWhenThen
+import org.scalatest.{GivenWhenThen, Outcome}
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary, SuppressionInformation, SuppressionRequest}
@@ -39,7 +39,7 @@ class BreathingSpaceFeatureSpec
 
   override type FixtureParam = InterestForecastingContext
 
-  override def withFixture(test: OneArgTest) = {
+  override def withFixture(test: OneArgTest): Outcome = {
     val context = InterestForecastingContext()
     try test(context)
     finally ()
@@ -2032,7 +2032,7 @@ class BreathingSpaceFeatureSpec
         1,
         List(
           CalculationWindow(
-            periodFrom =LocalDate.parse("2024-01-01"),
+            periodFrom = LocalDate.parse("2024-01-01"),
             periodTo = LocalDate.parse("2024-01-03"),
             numberOfDays = 2,
             interestRate = 6.5,
@@ -2159,7 +2159,7 @@ class BreathingSpaceFeatureSpec
           ),
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-01-07"),
-            periodTo =  LocalDate.parse("2022-01-10"),
+            periodTo = LocalDate.parse("2022-01-10"),
             numberOfDays = 4,
             interestRate = 0.0,
             interestDueWindow = 0,
@@ -2249,7 +2249,7 @@ class BreathingSpaceFeatureSpec
             CalculationWindow(
               periodFrom = LocalDate.parse("2021-01-01"),
               periodTo = LocalDate.parse("2021-01-03"),
-              numberOfDays =2,
+              numberOfDays = 2,
               interestRate = 2.6,
               interestDueWindow = 71,
               interestDueDailyAccrual = 35,
@@ -2351,43 +2351,43 @@ class BreathingSpaceFeatureSpec
         1,
         List(
           CalculationWindow(
-            periodFrom              = LocalDate.parse("2021-01-01"),
-            periodTo                = LocalDate.parse("2021-01-03"),
-            numberOfDays            = 2,
-            interestRate            = 2.6,
+            periodFrom = LocalDate.parse("2021-01-01"),
+            periodTo = LocalDate.parse("2021-01-03"),
+            numberOfDays = 2,
+            interestRate = 2.6,
             interestDueDailyAccrual = 35,
-            interestDueWindow       = 71,
-            amountOnIntDueWindow    = 500000,
-            unpaidAmountWindow      = 500071,
-            breathingSpaceApplied   = false,
-            suppressionApplied      = None,
-            suppressionsApplied     = None
+            interestDueWindow = 71,
+            amountOnIntDueWindow = 500000,
+            unpaidAmountWindow = 500071,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
           ),
           CalculationWindow(
-            periodFrom              = LocalDate.parse("2021-01-04"),
-            periodTo                = LocalDate.parse("2021-01-09"),
-            numberOfDays            = 6,
-            interestRate            = 0.0,
+            periodFrom = LocalDate.parse("2021-01-04"),
+            periodTo = LocalDate.parse("2021-01-09"),
+            numberOfDays = 6,
+            interestRate = 0.0,
             interestDueDailyAccrual = 0,
-            interestDueWindow       = 0,
-            amountOnIntDueWindow    = 500000,
-            unpaidAmountWindow      = 500000,
-            breathingSpaceApplied   = true,
-            suppressionApplied      = None,
-            suppressionsApplied     = None
+            interestDueWindow = 0,
+            amountOnIntDueWindow = 500000,
+            unpaidAmountWindow = 500000,
+            breathingSpaceApplied = true,
+            suppressionApplied = None,
+            suppressionsApplied = None
           ),
           CalculationWindow(
-            periodFrom              = LocalDate.parse("2021-01-10"),
-            periodTo                = LocalDate.parse("2021-01-10"),
-            numberOfDays            = 1,
-            interestRate            = 2.6,
+            periodFrom = LocalDate.parse("2021-01-10"),
+            periodTo = LocalDate.parse("2021-01-10"),
+            numberOfDays = 1,
+            interestRate = 2.6,
             interestDueDailyAccrual = 35,
-            interestDueWindow       = 35,
-            amountOnIntDueWindow    = 500000,
-            unpaidAmountWindow      = 500035,
-            breathingSpaceApplied   = false,
-            suppressionApplied      = None,
-            suppressionsApplied     = None
+            interestDueWindow = 35,
+            amountOnIntDueWindow = 500000,
+            unpaidAmountWindow = 500035,
+            breathingSpaceApplied = false,
+            suppressionApplied = None,
+            suppressionsApplied = None
           )
         )
       )

@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.GivenWhenThen
+import org.scalatest.{GivenWhenThen, Outcome}
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
@@ -34,11 +34,9 @@ class GetDebtForTPSSCasesFeatureSpec
     with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers {
 
-
-
   override type FixtureParam = InterestForecastingContext
 
-  override def withFixture(test: OneArgTest) = {
+  override def withFixture(test: OneArgTest): Outcome = {
     val context = InterestForecastingContext()
     try test(context)
     finally ()
@@ -80,7 +78,6 @@ class GetDebtForTPSSCasesFeatureSpec
           debtCalculations = List.empty
         )
       )
-
 
       And("the 1st debt summary will contain")
       theDebtSummaryWillContain(
@@ -157,7 +154,6 @@ class GetDebtForTPSSCasesFeatureSpec
         )
       )
 
-
       And("the 1st debt summary will contain")
       theDebtSummaryWillContain(
         context,
@@ -180,7 +176,9 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
-    Scenario("interestBearing flag should be true where amount has been paid off. Payment date AFTER interest start date (for bug DTD-509)") { context =>
+    Scenario(
+      "interestBearing flag should be true where amount has been paid off. Payment date AFTER interest start date (for bug DTD-509)"
+    ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -222,7 +220,6 @@ class GetDebtForTPSSCasesFeatureSpec
         )
       )
 
-
       And("the 1st debt summary will contain")
       theDebtSummaryWillContain(
         context,
@@ -263,7 +260,9 @@ class GetDebtForTPSSCasesFeatureSpec
       )
     }
 
-    Scenario("interestBearing flag should be true even when debt has been paid off. Payment date BEFORE interest start date (for bug DTD-509)") { context =>
+    Scenario(
+      "interestBearing flag should be true even when debt has been paid off. Payment date BEFORE interest start date (for bug DTD-509)"
+    ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -304,7 +303,6 @@ class GetDebtForTPSSCasesFeatureSpec
           debtCalculations = List.empty
         )
       )
-
 
       And("the 1st debt summary will contain")
       theDebtSummaryWillContain(
@@ -374,7 +372,6 @@ class GetDebtForTPSSCasesFeatureSpec
         )
       )
 
-
       And("the 1st debt summary will contain")
       theDebtSummaryWillContain(
         context,
@@ -397,255 +394,254 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
-    Scenario("interestStartDate should be optional for non interest bearing debt. Without payments (for bug DTD-496)") { context =>
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
-            debtID = Some("123"),
-            originalAmount = 500000,
-            subTrans = "1090",
-            mainTrans = "1520",
-            interestStartDate = None,
-            interestRequestedTo = "2021-03-08",
-            breathingSpaces = Some(List.empty),
-            paymentHistory = Some(List.empty)
-          )
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-      Then("the IFS service will return a total debts summary")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 500000,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
-      )
-
-
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = false,
-          numberOfChargeableDays = 0,
-          interestDueDailyAccrual = 0,
-          interestDueDutyTotal = 0,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 500000,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-      )
-      And("the debt summary will have no calculation windows")
-      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
-    }
-
-    Scenario("interestStartDate should be optional for non interest bearing debt. With payments (for bug DTD-496)") { context =>
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
-            debtID = Some("123"),
-            originalAmount = 500000,
-            subTrans = "1090",
-            mainTrans = "1520",
-            interestStartDate = None,
-            interestRequestedTo = "2021-03-08",
-            breathingSpaces = Some(List.empty),
-            paymentHistory = Some(
-              List(
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2021-03-04"
-                )
-              )
+    Scenario("interestStartDate should be optional for non interest bearing debt. Without payments (for bug DTD-496)") {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 500000,
+              subTrans = "1090",
+              mainTrans = "1520",
+              interestStartDate = None,
+              interestRequestedTo = "2021-03-08",
+              breathingSpaces = Some(List.empty),
+              paymentHistory = Some(List.empty)
             )
+          ),
+          customerPostCodes = List.empty
+        )
+
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+        Then("the IFS service will return a total debts summary")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 0,
+            interestDueCallTotal = 0,
+            amountIntTotal = 500000,
+            amountOnIntDueTotal = 500000,
+            unpaidAmountTotal = 500000,
+            debtCalculations = List.empty
           )
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-      Then("the IFS service will return a total debts summary")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 400000,
-          amountOnIntDueTotal = 400000,
-          unpaidAmountTotal = 400000,
-          debtCalculations = List.empty
         )
-      )
 
-
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = false,
-          numberOfChargeableDays = 0,
-          interestDueDailyAccrual = 0,
-          interestDueDutyTotal = 0,
-          amountOnIntDueDuty = 400000,
-          totalAmountIntDuty = 400000,
-          unpaidAmountDuty = 400000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("123"),
+            interestBearing = false,
+            numberOfChargeableDays = 0,
+            interestDueDailyAccrual = 0,
+            interestDueDutyTotal = 0,
+            amountOnIntDueDuty = 500000,
+            totalAmountIntDuty = 500000,
+            unpaidAmountDuty = 500000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
         )
-      )
-      And("the debt summary will have no calculation windows")
-      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
+        And("the debt summary will have no calculation windows")
+        theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
-    Scenario("interestStartDate should be optional for non interest bearing debt. Multiple debts (for bug DTD-496)") { context =>
-      Given("a debt calculation")
-      val request = DebtCalculationRequest(
-        debtItems = List(
-          DebtItem(
-            debtID = Some("123"),
-            originalAmount = 500000,
-            subTrans = "1000",
-            mainTrans = "1525",
-            interestStartDate = Some("2021-03-01"),
-            interestRequestedTo = "2021-03-08",
-            breathingSpaces = Some(List.empty),
-            paymentHistory = Some(
-              List(
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2021-03-04"
+    Scenario("interestStartDate should be optional for non interest bearing debt. With payments (for bug DTD-496)") {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 500000,
+              subTrans = "1090",
+              mainTrans = "1520",
+              interestStartDate = None,
+              interestRequestedTo = "2021-03-08",
+              breathingSpaces = Some(List.empty),
+              paymentHistory = Some(
+                List(
+                  PaymentHistory(
+                    paymentAmount = 100000,
+                    paymentDate = "2021-03-04"
+                  )
                 )
               )
             )
           ),
-          DebtItem(
-            debtID = Some("456"),
-            originalAmount = 500000,
-            subTrans = "1090",
-            mainTrans = "1520",
-            interestStartDate = None,
-            interestRequestedTo = "2021-03-08",
-            breathingSpaces = Some(List.empty),
-            paymentHistory = Some(List.empty)
-          ),
-        ),
-        customerPostCodes = List.empty
-      )
-
-      aDebtCalculation(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-      Then("the IFS service will return a total debts summary")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 28,
-          interestDueCallTotal = 220,
-          amountIntTotal = 900220,
-          amountOnIntDueTotal = 900000,
-          unpaidAmountTotal = 900000,
-          debtCalculations = List.empty
+          customerPostCodes = List.empty
         )
-      )
 
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 10,
-          interestDueDailyAccrual = 28,
-          interestDueDutyTotal = 220,
-          amountOnIntDueDuty = 400000,
-          totalAmountIntDuty = 400220,
-          unpaidAmountDuty = 400000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-      )
-      And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2021-03-01"),
-            periodTo = LocalDate.parse("2021-03-04"),
-            numberOfDays = 3,
-            interestRate = 2.6,
-            interestDueDailyAccrual = 7,
-            interestDueWindow = 21,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 100021,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2021-03-01"),
-            periodTo = LocalDate.parse("2021-03-08"),
-            numberOfDays = 7,
-            interestRate = 2.6,
-            interestDueDailyAccrual = 28,
-            interestDueWindow = 199,
-            amountOnIntDueWindow = 400000,
-            unpaidAmountWindow = 400199,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+        Then("the IFS service will return a total debts summary")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 0,
+            interestDueCallTotal = 0,
+            amountIntTotal = 400000,
+            amountOnIntDueTotal = 400000,
+            unpaidAmountTotal = 400000,
+            debtCalculations = List.empty
           )
         )
-      )
-      And("the 2nd debt summary will contain")
-            theDebtSummaryWillContain(
-            context,
-            2,
-            DebtCalculation(
-              debtItemChargeId = None,
+
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("123"),
+            interestBearing = false,
+            numberOfChargeableDays = 0,
+            interestDueDailyAccrual = 0,
+            interestDueDutyTotal = 0,
+            amountOnIntDueDuty = 400000,
+            totalAmountIntDuty = 400000,
+            unpaidAmountDuty = 400000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
+        )
+        And("the debt summary will have no calculation windows")
+        theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
+    }
+
+    Scenario("interestStartDate should be optional for non interest bearing debt. Multiple debts (for bug DTD-496)") {
+      context =>
+        Given("a debt calculation")
+        val request = DebtCalculationRequest(
+          debtItems = List(
+            DebtItem(
+              debtID = Some("123"),
+              originalAmount = 500000,
+              subTrans = "1000",
+              mainTrans = "1525",
+              interestStartDate = Some("2021-03-01"),
+              interestRequestedTo = "2021-03-08",
+              breathingSpaces = Some(List.empty),
+              paymentHistory = Some(
+                List(
+                  PaymentHistory(
+                    paymentAmount = 100000,
+                    paymentDate = "2021-03-04"
+                  )
+                )
+              )
+            ),
+            DebtItem(
               debtID = Some("456"),
-              interestBearing = false,
-              numberOfChargeableDays = 0,
-              interestDueDailyAccrual = 0,
-              interestDueDutyTotal = 0,
-              amountOnIntDueDuty = 500000,
-              totalAmountIntDuty = 500000,
-              unpaidAmountDuty = 500000,
-              interestOnlyIndicator = false,
-              calculationWindows = Nil
+              originalAmount = 500000,
+              subTrans = "1090",
+              mainTrans = "1520",
+              interestStartDate = None,
+              interestRequestedTo = "2021-03-08",
+              breathingSpaces = Some(List.empty),
+              paymentHistory = Some(List.empty)
+            )
+          ),
+          customerPostCodes = List.empty
+        )
+
+        aDebtCalculation(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+        Then("the IFS service will return a total debts summary")
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummary(
+            combinedDailyAccrual = 28,
+            interestDueCallTotal = 220,
+            amountIntTotal = 900220,
+            amountOnIntDueTotal = 900000,
+            unpaidAmountTotal = 900000,
+            debtCalculations = List.empty
+          )
+        )
+
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("123"),
+            interestBearing = true,
+            numberOfChargeableDays = 10,
+            interestDueDailyAccrual = 28,
+            interestDueDutyTotal = 220,
+            amountOnIntDueDuty = 400000,
+            totalAmountIntDuty = 400220,
+            unpaidAmountDuty = 400000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
+        )
+        And("the 1st debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          1,
+          List(
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2021-03-01"),
+              periodTo = LocalDate.parse("2021-03-04"),
+              numberOfDays = 3,
+              interestRate = 2.6,
+              interestDueDailyAccrual = 7,
+              interestDueWindow = 21,
+              amountOnIntDueWindow = 100000,
+              unpaidAmountWindow = 100021,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
+            ),
+            CalculationWindow(
+              periodFrom = LocalDate.parse("2021-03-01"),
+              periodTo = LocalDate.parse("2021-03-08"),
+              numberOfDays = 7,
+              interestRate = 2.6,
+              interestDueDailyAccrual = 28,
+              interestDueWindow = 199,
+              amountOnIntDueWindow = 400000,
+              unpaidAmountWindow = 400199,
+              breathingSpaceApplied = false,
+              suppressionApplied = None,
+              suppressionsApplied = None
             )
           )
+        )
+        And("the 2nd debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          2,
+          DebtCalculation(
+            debtItemChargeId = None,
+            debtID = Some("456"),
+            interestBearing = false,
+            numberOfChargeableDays = 0,
+            interestDueDailyAccrual = 0,
+            interestDueDutyTotal = 0,
+            amountOnIntDueDuty = 500000,
+            totalAmountIntDuty = 500000,
+            unpaidAmountDuty = 500000,
+            interestOnlyIndicator = false,
+            calculationWindows = Nil
+          )
+        )
 
-
-      And("the 2nd debt summary will have no calculation windows")
+        And("the 2nd debt summary will have no calculation windows")
         theDebtSummaryWillNotHaveAnyCalculationWindows(context, 2)
-
 
     }
 

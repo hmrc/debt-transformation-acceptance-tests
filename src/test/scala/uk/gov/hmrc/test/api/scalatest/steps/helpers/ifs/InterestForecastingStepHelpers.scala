@@ -87,7 +87,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     aDebtCalculation(context, request)
   }
 
-
   // ^the debt item has payment history$
   def theDebtItemHasPaymentHistory(
     context: InterestForecastingContext,
