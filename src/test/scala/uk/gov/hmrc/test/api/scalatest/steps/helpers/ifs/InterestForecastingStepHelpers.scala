@@ -84,7 +84,7 @@ trait InterestForecastingStepHelpers { this: Matchers =>
       customerPostCodes = List.empty
     )
 
-    aDebtCalculation(context, request)
+    aDebtCalculationIsCreated(context, request)
   }
 
   // ^the debt item has payment history$

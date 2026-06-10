@@ -62,7 +62,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -137,7 +137,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -203,7 +203,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -287,7 +287,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -355,7 +355,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -413,7 +413,7 @@ class GetDebtForTPSSCasesFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
         theDebtItemIsSentToTheIfsService(context)
@@ -478,7 +478,7 @@ class GetDebtForTPSSCasesFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
         theDebtItemIsSentToTheIfsService(context)
@@ -553,7 +553,7 @@ class GetDebtForTPSSCasesFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
         theDebtItemIsSentToTheIfsService(context)
@@ -663,7 +663,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -738,7 +738,7 @@ class GetDebtForTPSSCasesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)

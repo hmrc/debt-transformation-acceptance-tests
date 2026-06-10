@@ -62,7 +62,7 @@ class InterestRateChangesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -163,7 +163,7 @@ class InterestRateChangesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -298,7 +298,7 @@ class InterestRateChangesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -412,7 +412,7 @@ class InterestRateChangesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -549,7 +549,7 @@ class InterestRateChangesFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the ifs service")
         theDebtItemIsSentToTheIfsService(context)
@@ -796,7 +796,7 @@ class InterestRateChangesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -855,7 +855,7 @@ class InterestRateChangesFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)

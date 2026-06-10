@@ -71,7 +71,7 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -198,7 +198,7 @@ class BreathingSpaceFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
         theDebtItemIsSentToTheIfsService(context)
@@ -433,7 +433,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -589,7 +589,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -879,7 +879,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1197,7 +1197,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1504,7 +1504,7 @@ class BreathingSpaceFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
         theDebtItemIsSentToTheIfsService(context)
@@ -1605,7 +1605,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1690,7 +1690,7 @@ class BreathingSpaceFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
         theDebtItemIsSentToTheIfsService(context)
@@ -1791,7 +1791,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1859,7 +1859,7 @@ class BreathingSpaceFeatureSpec
         )
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
       theDebtItemIsSentToTheIfsService(context)
@@ -1989,7 +1989,7 @@ class BreathingSpaceFeatureSpec
         )
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -2089,7 +2089,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -2204,7 +2204,7 @@ class BreathingSpaceFeatureSpec
           customerPostCodes = List.empty
         )
 
-        aDebtCalculation(context, request)
+        aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the ifs service")
         theDebtItemIsSentToTheIfsService(context)
@@ -2308,7 +2308,7 @@ class BreathingSpaceFeatureSpec
         customerPostCodes = List.empty
       )
 
-      aDebtCalculation(context, request)
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
