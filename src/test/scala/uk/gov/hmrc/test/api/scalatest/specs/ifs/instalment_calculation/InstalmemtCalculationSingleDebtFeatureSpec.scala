@@ -19,10 +19,10 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
 import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
+import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags._
 
 import java.time.LocalDate
@@ -59,7 +59,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
         quoteDate = LocalDate.parse("2020-03-13"),
         quoteType = "instalmentAmount",
         isQuoteDateNonInclusive = Some(false),
-        instalmentPaymentDate = "2020-03-14",
+        instalmentPaymentDate = LocalDate.parse("2020-03-14"),
         paymentFrequency = "monthly",
         duration = Some(24),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -104,7 +104,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
           quoteDate = LocalDate.parse("2023-03-17"),
           quoteType = "instalmentAmount",
           isQuoteDateNonInclusive = Some(true),
-          instalmentPaymentDate = "2023-04-20",
+          instalmentPaymentDate = LocalDate.parse("2023-04-20"),
           paymentFrequency = "monthly",
           duration = Some(6),
           customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -171,7 +171,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
           quoteDate = LocalDate.parse("2023-03-23"),
           quoteType = "instalmentAmount",
           isQuoteDateNonInclusive = Some(true),
-          instalmentPaymentDate = "2023-05-20",
+          instalmentPaymentDate = LocalDate.parse("2023-05-20"),
           paymentFrequency = "monthly",
           duration = Some(4),
           customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -223,51 +223,51 @@ class InstalmemtCalculationSingleDebtFeatureSpec
 
     }
 
-    Scenario("InterestStartDate is included but not in the Future, then quote date should be used", DTD_3163) { context =>
-      Given("instalment calculation details")
-      val ifsRequest = InstalmentCalculationRequest(
-        debtItemCharges = Some(
-          List(
-            DebtItemCharge(
-              debtId = "1234",
-              debtAmount = 100000,
-              subTrans = "1000",
-              mainTrans = "1545",
-              interestStartDate = Some(LocalDate.parse("2025-01-14"))
+    Scenario("InterestStartDate is included but not in the Future, then quote date should be used", DTD_3163) {
+      context =>
+        Given("instalment calculation details")
+        val ifsRequest = InstalmentCalculationRequest(
+          debtItemCharges = Some(
+            List(
+              DebtItemCharge(
+                debtId = "1234",
+                debtAmount = 100000,
+                subTrans = "1000",
+                mainTrans = "1545",
+                interestStartDate = Some(LocalDate.parse("2025-01-14"))
+              )
             )
-          )
-        ),
-        quoteDate = LocalDate.parse("2020-03-13"),
-        quoteType = "instalmentAmount",
-        isQuoteDateNonInclusive = Some(false),
-        instalmentPaymentDate = "2020-03-14",
-        paymentFrequency = "monthly",
-        duration = Some(24),
-        customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
-        interestCallDueTotal = 0,
-        initialPaymentDate = Some(LocalDate.parse("2020-03-13")),
-        initialPaymentAmount = Some(5000)
-      )
-      instalmentCalculationDetails(context, ifsRequest)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      theInstalmentCalculationDetailIsSentToTheIfsService(context)
-
-
-      Then("IFS response contains expected values")
-      val instalmentsResponse = Seq(
-        InstalmentResponse(
-          debtId = "1234",
-          instalmentNumber = 1,
-          dueDate = LocalDate.parse("2020-03-13"),
-          amountDue = 5000,
-          instalmentBalance = 100000,
-          instalmentInterestAccrued = 8,
-          expectedPayment = 5000,
-          intRate = 3.25
+          ),
+          quoteDate = LocalDate.parse("2020-03-13"),
+          quoteType = "instalmentAmount",
+          isQuoteDateNonInclusive = Some(false),
+          instalmentPaymentDate = LocalDate.parse("2020-03-14"),
+          paymentFrequency = "monthly",
+          duration = Some(24),
+          customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
+          interestCallDueTotal = 0,
+          initialPaymentDate = Some(LocalDate.parse("2020-03-13")),
+          initialPaymentAmount = Some(5000)
         )
-      )
-      ifsResponseContainsExpectedValues(context, instalmentsResponse)
+        instalmentCalculationDetails(context, ifsRequest)
+
+        When("the instalment calculation detail is sent to the ifs service")
+        theInstalmentCalculationDetailIsSentToTheIfsService(context)
+
+        Then("IFS response contains expected values")
+        val instalmentsResponse = Seq(
+          InstalmentResponse(
+            debtId = "1234",
+            instalmentNumber = 1,
+            dueDate = LocalDate.parse("2020-03-13"),
+            amountDue = 5000,
+            instalmentBalance = 100000,
+            instalmentInterestAccrued = 8,
+            expectedPayment = 5000,
+            intRate = 3.25
+          )
+        )
+        ifsResponseContainsExpectedValues(context, instalmentsResponse)
 
     }
 
@@ -289,7 +289,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
           quoteDate = LocalDate.parse("2025-06-01"),
           quoteType = "instalmentAmount",
           isQuoteDateNonInclusive = Some(false),
-          instalmentPaymentDate = "2025-08-25",
+          instalmentPaymentDate = LocalDate.parse("2025-08-25"),
           paymentFrequency = "monthly",
           duration = Some(24),
           customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -318,7 +318,8 @@ class InstalmemtCalculationSingleDebtFeatureSpec
     }
 
     Scenario(
-      "With initial payment - InterestStartDate is included but in the Future, then interestStartDate should be used", DTD_3163
+      "With initial payment - InterestStartDate is included but in the Future, then interestStartDate should be used",
+      DTD_3163
     ) { context =>
       Given("instalment calculation details")
       val ifsRequest = InstalmentCalculationRequest(
@@ -336,7 +337,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
         quoteDate = LocalDate.parse("2025-06-01"),
         quoteType = "instalmentAmount",
         isQuoteDateNonInclusive = Some(false),
-        instalmentPaymentDate = "2025-06-10",
+        instalmentPaymentDate = LocalDate.parse("2025-06-10"),
         paymentFrequency = "monthly",
         duration = Some(24),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),

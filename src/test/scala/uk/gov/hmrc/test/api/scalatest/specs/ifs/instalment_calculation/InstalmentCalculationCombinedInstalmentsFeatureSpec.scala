@@ -19,10 +19,10 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
 import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{FCStatementOfLiabilityContext, IFSInstalmentCalculationContext}
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
+import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
 
 import java.time.LocalDate
 
@@ -57,7 +57,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         ),
         quoteDate = LocalDate.parse("2021-06-10"),
         quoteType = "duration",
-        instalmentPaymentDate = "2021-08-01",
+        instalmentPaymentDate = LocalDate.parse("2021-08-01"),
         paymentFrequency = "monthly",
         instalmentPaymentAmount = Some(1000),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -114,7 +114,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
           List(
             DebtItemCharge(
               debtId = "TPSSDebt1",
-              debtAmount = BigDecimal(4000),
+              debtAmount = 4000,
               subTrans = "1000",
               mainTrans = "1525"
             )
@@ -122,7 +122,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         ),
         quoteDate = LocalDate.parse("2021-06-10"),
         quoteType = "duration",
-        instalmentPaymentDate = "2021-08-01",
+        instalmentPaymentDate = LocalDate.parse("2021-08-01"),
         paymentFrequency = "monthly",
         instalmentPaymentAmount = Some(1000),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -188,7 +188,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
           ),
           quoteDate = LocalDate.parse("2021-06-10"),
           quoteType = "duration",
-          instalmentPaymentDate = "2021-08-01",
+          instalmentPaymentDate = LocalDate.parse("2021-08-01"),
           paymentFrequency = "monthly",
           instalmentPaymentAmount = Some(999),
           customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -253,7 +253,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         ),
         quoteDate = LocalDate.parse("2021-06-10"),
         quoteType = "duration",
-        instalmentPaymentDate = "2021-08-01",
+        instalmentPaymentDate = LocalDate.parse("2021-08-01"),
         paymentFrequency = "monthly",
         instalmentPaymentAmount = Some(999),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -312,7 +312,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
           List(
             DebtItemCharge(
               debtId = "TPSSDebt1",
-              debtAmount = BigDecimal(4000),
+              debtAmount = 4000,
               subTrans = "1000",
               mainTrans = "1525"
             )
@@ -320,7 +320,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         ),
         quoteDate = LocalDate.parse("2021-06-10"),
         quoteType = "duration",
-        instalmentPaymentDate = "2021-08-01",
+        instalmentPaymentDate = LocalDate.parse("2021-08-01"),
         paymentFrequency = "monthly",
         instalmentPaymentAmount = Some(999),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
@@ -403,11 +403,11 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         ),
         quoteDate = LocalDate.parse("2021-06-10"),
         quoteType = "duration",
-        instalmentPaymentDate = "2021-08-01",
+        instalmentPaymentDate = LocalDate.parse("2021-08-01"),
         paymentFrequency = "monthly",
         instalmentPaymentAmount = Some(6000),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
-        interestCallDueTotal = BigDecimal(1000),
+        interestCallDueTotal = 1000,
         initialPaymentDate = Some(LocalDate.parse("2021-07-01")),
         initialPaymentAmount = Some(5000)
       )
@@ -480,7 +480,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         ),
         quoteDate = LocalDate.parse("2021-06-10"),
         quoteType = "duration",
-        instalmentPaymentDate = "2021-08-01",
+        instalmentPaymentDate = LocalDate.parse("2021-08-01"),
         paymentFrequency = "monthly",
         instalmentPaymentAmount = Some(1006),
         customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),

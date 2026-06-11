@@ -366,6 +366,10 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
           actualInstalment.debtId shouldBe expectedInstalment.debtId
         }
 
+        withClue("instalmentNumber") {
+          actualInstalment.instalmentNumber shouldBe expectedInstalment.instalmentNumber
+        }
+
         withClue("dueDate") {
           actualInstalment.dueDate shouldBe expectedInstalment.dueDate
         }
@@ -378,16 +382,16 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
           actualInstalment.instalmentBalance shouldBe expectedInstalment.instalmentBalance
         }
 
-        withClue("instalmentNumber") {
-          actualInstalment.instalmentNumber shouldBe expectedInstalment.instalmentNumber
+        withClue("instalmentInterestAccrued") {
+          actualInstalment.instalmentInterestAccrued shouldBe expectedInstalment.instalmentInterestAccrued
+        }
+
+        withClue("expectedPayment") {
+          actualInstalment.expectedPayment shouldBe expectedInstalment.expectedPayment
         }
 
         withClue("intRate") {
           actualInstalment.intRate shouldBe expectedInstalment.intRate
-        }
-
-        withClue("instalmentInterestAccrued") {
-          actualInstalment.instalmentInterestAccrued shouldBe expectedInstalment.instalmentInterestAccrued
         }
       }
     }

@@ -9,7 +9,7 @@ final case class InstalmentCalculationRequest(
   quoteDate: LocalDate,
   quoteType: String,
   isQuoteDateNonInclusive: Option[Boolean] = None,
-  instalmentPaymentDate: String,
+  instalmentPaymentDate: LocalDate,
   paymentFrequency: String,
   instalmentPaymentAmount: Option[Int] = None,
   duration: Option[Int] = None,
