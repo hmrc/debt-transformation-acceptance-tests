@@ -20,6 +20,7 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.InstalmentCalculationSummaryResponse
 import uk.gov.hmrc.test.api.models.ifs.InstalmentCalculationRequest
 
+// Minimal per-scenario context; extend fields as migration progresses.
 final case class IFSInstalmentCalculationContext(
   var ifsRequest: Option[InstalmentCalculationRequest] = None,
   var ifsResponseBody: Option[InstalmentCalculationSummaryResponse] = None,
