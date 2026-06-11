@@ -19,260 +19,341 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.fieldCollectionsIFS
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, FCVATDebtCalculationRequest, FCVATDebtItems, PaymentHistory}
+import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCVATInterestForecastingStepHelpers
+
+import java.time.LocalDate
 
 class VATFCBreathingSpaceFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCInterestForecastingStepHelpers
-    with IFSInstalmentCalculationStepHelpers
-    with InterestForecastingStepHelpers {
+    with FCVATInterestForecastingStepHelpers {
 
-  override type FixtureParam = FCStatementOfLiabilityContext
+  override type FixtureParam = FieldCollectionsVATContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = FCStatementOfLiabilityContext()
+    val context = FieldCollectionsVATContext()
     try test(context)
     finally ()
   }
 
   Feature("FC VAT Debt Calculation with Breathing Space") {
 
-    ignore("Breathing space for interest bearing debt with payments.") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
-
-      Then("the fc vat ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theFcIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    }
-    ignore("Breathing space for interest bearing debt with no payments.") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has no payment history")
-      // TODO: Helper 'theFcDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcDebtItemHasNoPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
-
-      Then("the fc vat ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theFcIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    }
-    ignore("Non interest bearing debt should not have breathing space applied") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has no payment history")
-      // TODO: Helper 'theFcDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcDebtItemHasNoPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
-
-      Then("the fc vat ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theFcIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    }
-    ignore("Multiple debts with multiple breathing Spaces") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
-
-      Then("the fc vat ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theFcIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the 2nd fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    }
-    ignore("Multiple debts, 1 with a breathing Space, 1 without") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("no breathing spaces have been applied to the fc vat customer")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
-
-      Then("the fc vat ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theFcIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the 2nd fc vat debt summary will contain")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    }
-    ignore("Breathing space for  interest bearing debt with payments -no debtRespiteFrom") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
-
-      When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
-
-      Then(
-        "the fc vat ifs service will respond with Field at path /debtItems(0)/breathingSpaces(0)/debtRespiteFrom missing or invalid"
+    Scenario("Breathing space for interest bearing debt with payments.") { context =>
+      Given("a fc vat debt calculation")
+      val ifsRequest = FCVATDebtCalculationRequest(
+        debtItems = List(
+          FCVATDebtItems(
+            debtItemChargeId = Some("123"),
+            originalAmount = 500000,
+            interestIndicator = "Y",
+            periodEnd = "2022-04-01",
+            interestRequestedTo = "2021-11-15",
+            breathingSpaces = Some(
+              List(
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-11-01",
+                  debtRespiteTo = "2021-12-01"
+                )
+              )
+            ),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 100000,
+                  paymentDate = "2021-06-01"
+                )
+              )
+            )
+          )
+        )
       )
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-    }
-    ignore("Breathing space -no interest bearing indictor.") { context =>
-      Given("a fc vat debt item")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      And("the fc vat debt item has payment history")
-      // TODO: Helper 'theDebtItemHasPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasPaymentHistory(context)
-
-      And("the fc vat customer has breathing spaces applied")
-      // TODO: Helper 'theFcCustomerHasBreathingSpacesApplied' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theFcCustomerHasBreathingSpacesApplied(context)
+      aFcVatDebtCalculation(context, ifsRequest)
 
       When("the debt item is sent to the fc vat ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheFcIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheFcIfsService(context)
+      theDebtItemIsSentToTheFcVatIfsService(context)
 
-      Then("the fc vat ifs service will respond with Field at path /debtItems(0)/interestIndicator missing or invalid")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      Then("the fc vat ifs service will return a total debts summary of")
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
+        dateOfCalculation = LocalDate.now(),
+        combinedDailyAccrual = 0,
+        unpaidAmountTotal = 400000,
+        debtCalculations = List.empty[FCVATDebtCalculation]
+      )
+      theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
+
+      And("the 1st fc vat debt summary will contain")
+      val expected1stDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "123",
+        interestDueDailyAccrual = 0,
+        interestRate = 0
+      )
+      theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
     }
+
+    Scenario("Breathing space for interest bearing debt with no payments.") { context =>
+      Given("a fc vat debt calculation")
+      val ifsRequest = FCVATDebtCalculationRequest(
+        debtItems = List(
+          FCVATDebtItems(
+            debtItemChargeId = Some("123"),
+            originalAmount = 500000,
+            interestIndicator = "Y",
+            periodEnd = "2022-04-01",
+            interestRequestedTo = "2021-10-04",
+            breathingSpaces = Some(
+              List(
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-09-01",
+                  debtRespiteTo = "2021-12-01"
+                )
+              )
+            ),
+            paymentHistory = Some(List.empty[PaymentHistory])
+          )
+        )
+      )
+      aFcVatDebtCalculation(context, ifsRequest)
+
+      When("the debt item is sent to the fc vat ifs service")
+      theDebtItemIsSentToTheFcVatIfsService(context)
+
+      Then("the fc vat ifs service will return a total debts summary of")
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
+        dateOfCalculation = LocalDate.now(),
+        combinedDailyAccrual = 0,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty[FCVATDebtCalculation]
+      )
+      theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
+
+      And("the 1st fc vat debt summary will contain")
+      val expected1stDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "123",
+        interestDueDailyAccrual = 0,
+        interestRate = 0
+      )
+      theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
+
+    }
+
+    Scenario("Non interest bearing debt should not have breathing space applied") { context =>
+      Given("a fc vat debt calculation")
+      val ifsRequest = FCVATDebtCalculationRequest(
+        debtItems = List(
+          FCVATDebtItems(
+            debtItemChargeId = Some("123"),
+            originalAmount = 500000,
+            interestIndicator = "N",
+            periodEnd = "2022-04-01",
+            interestRequestedTo = "2021-11-30",
+            breathingSpaces = Some(
+              List(
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-11-01",
+                  debtRespiteTo = "2021-12-01"
+                )
+              )
+            ),
+            paymentHistory = Some(List.empty[PaymentHistory])
+          )
+        )
+      )
+      aFcVatDebtCalculation(context, ifsRequest)
+
+      When("the debt item is sent to the fc vat ifs service")
+      theDebtItemIsSentToTheFcVatIfsService(context)
+
+      Then("the fc vat ifs service will return a total debts summary of")
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
+        dateOfCalculation = LocalDate.now(),
+        combinedDailyAccrual = 0,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty[FCVATDebtCalculation]
+      )
+      theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
+
+      And("the 1st fc vat debt summary will contain")
+      val expected1stDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "123",
+        interestDueDailyAccrual = 0,
+        interestRate = 0
+      )
+      theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
+
+    }
+
+    Scenario("Multiple debts with multiple breathing Spaces") { context =>
+      Given("a fc vat debt calculation")
+      val ifsRequest = FCVATDebtCalculationRequest(
+        debtItems = List(
+          FCVATDebtItems(
+            debtItemChargeId = Some("123"),
+            originalAmount = 500000,
+            interestIndicator = "Y",
+            periodEnd = "2022-04-01",
+            interestRequestedTo = "2022-02-07",
+            breathingSpaces = Some(
+              List(
+                BreathingSpaces(
+                  debtRespiteFrom = "2022-01-30",
+                  debtRespiteTo = "2022-02-28"
+                ),
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-08-16",
+                  debtRespiteTo = "2021-08-18"
+                )
+              )
+            ),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 100000,
+                  paymentDate = "2021-06-01"
+                )
+              )
+            )
+          ),
+          FCVATDebtItems(
+            debtItemChargeId = Some("debtItemChargeId1"),
+            originalAmount = 500000,
+            interestIndicator = "Y",
+            periodEnd = "2022-04-01",
+            interestRequestedTo = "2021-03-14",
+            breathingSpaces = Some(
+              List(
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-01-04",
+                  debtRespiteTo = "2021-02-14"
+                )
+              )
+            ),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 50000,
+                  paymentDate = "2021-10-01"
+                )
+              )
+            )
+          )
+        )
+      )
+      aFcVatDebtCalculation(context, ifsRequest)
+
+      When("the debt item is sent to the fc vat ifs service")
+      theDebtItemIsSentToTheFcVatIfsService(context)
+
+      Then("the fc vat ifs service will return a total debts summary of")
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
+        dateOfCalculation = LocalDate.now(),
+        combinedDailyAccrual = 32,
+        unpaidAmountTotal = 850000,
+        debtCalculations = List.empty[FCVATDebtCalculation]
+      )
+      theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
+
+      And("the 1st fc vat debt summary will contain")
+      val expected1stDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "123",
+        interestDueDailyAccrual = 0,
+        interestRate = 0
+      )
+      theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
+
+      And("the 2nd fc vat debt summary will contain")
+      val expected2ndDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "debtItemChargeId1",
+        interestDueDailyAccrual = 32,
+        interestRate = 2.6
+      )
+      theFcVatDebtSummaryWillContain(context, 2, expected2ndDebtCalculations)
+
+    }
+
+    Scenario("Multiple debts, 1 with a breathing Space, 1 without") { context =>
+      Given("a fc vat debt calculation")
+      val ifsRequest = FCVATDebtCalculationRequest(
+        debtItems = List(
+          FCVATDebtItems(
+            debtItemChargeId = Some("123"),
+            originalAmount = 800000,
+            interestIndicator = "Y",
+            periodEnd = "2022-04-01",
+            interestRequestedTo = "2021-09-10",
+            breathingSpaces = Some(
+              List(
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-06-30",
+                  debtRespiteTo = "2021-08-14"
+                ),
+                BreathingSpaces(
+                  debtRespiteFrom = "2021-09-01",
+                  debtRespiteTo = "2021-10-01"
+                )
+              )
+            ),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 100000,
+                  paymentDate = "2021-06-01"
+                )
+              )
+            )
+          ),
+          FCVATDebtItems(
+            debtItemChargeId = Some("debtItemChargeId1"),
+            originalAmount = 600000,
+            interestIndicator = "Y",
+            periodEnd = "2019-04-01",
+            interestRequestedTo = "2021-01-01",
+            breathingSpaces = Some(List.empty[BreathingSpaces]),
+            paymentHistory = Some(
+              List(
+                PaymentHistory(
+                  paymentAmount = 50000,
+                  paymentDate = "2020-01-04"
+                )
+              )
+            )
+          )
+        )
+      )
+      aFcVatDebtCalculation(context, ifsRequest)
+
+      When("the debt item is sent to the fc vat ifs service")
+      theDebtItemIsSentToTheFcVatIfsService(context)
+
+      Then("the fc vat ifs service will return a total debts summary of")
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
+        dateOfCalculation = LocalDate.now(),
+        combinedDailyAccrual = 39,
+        unpaidAmountTotal = 1250000,
+        debtCalculations = List.empty[FCVATDebtCalculation]
+      )
+      theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
+
+      And("the 1st fc vat debt summary will contain")
+      val expected1stDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "123",
+        interestDueDailyAccrual = 0,
+        interestRate = 0
+      )
+      theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
+
+      And("the 2nd fc vat debt summary will contain")
+      val expected2ndDebtCalculations = FCVATDebtCalculation(
+        debtItemChargeId = "debtItemChargeId1",
+        interestDueDailyAccrual = 39,
+        interestRate = 2.6
+      )
+      theFcVatDebtSummaryWillContain(context, 2, expected2ndDebtCalculations)
+    }
+
   }
 }

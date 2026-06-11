@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.builders
 
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
@@ -148,7 +148,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
   // HTTP client methods lifted from legacy Requests with typed context access.
   // -----------------------------------------------------------------------
 
-  def getInstalmentCalculation(context: IFSInstalmentCalculationContext, json: String): StandaloneWSResponse = {
+  def getInstalmentCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken =
       createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
     val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
@@ -159,12 +159,11 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
     print("instalment-calculation baseUri ********************" + baseUri)
-    WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
   def getInstalmentCalculationWithQueryParams(
-    context: IFSInstalmentCalculationContext,
-    json: String,
+    jsonRequest: JsValue,
     combineLastInstalments: String
   ): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
@@ -186,7 +185,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
     println(s"query string parameters ******************** --> $queryParameters")
     println(s"instalment-calculation baseUri ******************** --> $baseUri")
 
-    WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, Json.parse(json))
+    WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, jsonRequest)
   }
 
 }

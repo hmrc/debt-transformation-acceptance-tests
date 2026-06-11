@@ -17,6 +17,10 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.ifs.InstalmentCalculationRequest
 import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
 import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
@@ -24,11 +28,11 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationCont
 trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
 
   // ^debt instalment calculation with details$
-  def debtInstalmentCalculationWithDetails(context: IFSInstalmentCalculationContext): Unit = {
-    // createInstalmentCalculationRequestBody(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
+  def instalmentCalculationDetails(
+    context: IFSInstalmentCalculationContext,
+    request: InstalmentCalculationRequest
+  ): Unit =
+    context.ifsRequest = Some(request)
 
   // ^debt instalment calculation with 129 details$
   def debtInstalmentCalculationWith129Details(context: IFSInstalmentCalculationContext): Unit = {
@@ -75,25 +79,51 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^the instalment calculation detail(s) is sent to the ifs service$
-  def theInstalmentCalculationDetailIsSentToTheIfsService(
-    context: IFSInstalmentCalculationContext,
-    p1: String
-  ): Unit = {
-    // Migration hint: legacy IFSInstalmentCalculationContext usage
-    // val request  = IFSInstalmentCalculationContext.get("paymentPlan").toString
-    // println(s"IFS REQUST --> $request")
-    // val response = getInstalmentCalculation(request)
-    // println(s"RESP --> ${response.body}")
-    // TODO: Implement typed helper for this step.
+  def theInstalmentCalculationDetailIsSentToTheIfsService(context: IFSInstalmentCalculationContext): Unit = {
+    val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+    val response: StandaloneWSResponse = IFSInstalmentCalculationBuilder.getInstalmentCalculation(requestJson)
+    context.response = response
+
+    val jsonResponseBody = response.body[JsValue]
+    context.ifsResponseBody = Some(jsonResponseBody.as[InstalmentCalculationSummaryResponse])
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+
+    println("\n==== REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== RESPONSE STATUS ====")
+    println(context.status)
+
+    println("\n==== RESPONSE BODY ====")
+    println(jsonResponseBody)
   }
 
   // ^the instalment calculation is sent to the ifs service with query parameters$
   def theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(
     context: IFSInstalmentCalculationContext,
-    input: IFSInstalmentCalculationBuilder.DebtItemChargesToInstalmentCalculationInput
+    combineLastInstalments: String
   ): Unit = {
-    // TODO: Wire input into context or request JSON using IFSInstalmentCalculationBuilder.
-    // Suggested type: IFSInstalmentCalculationBuilder.DebtItemChargesToInstalmentCalculationInput
+    val requestJson = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+
+    val response: StandaloneWSResponse =
+      IFSInstalmentCalculationBuilder.getInstalmentCalculationWithQueryParams(requestJson, combineLastInstalments)
+
+    context.response = response
+
+    val jsonResponseBody = response.body[JsValue]
+    context.ifsResponseBody = Some(jsonResponseBody.as[InstalmentCalculationSummaryResponse])
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+
+    println("\n==== REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== RESPONSE STATUS ====")
+    println(context.status)
+
+    println("\n==== RESPONSE BODY ====")
+    println(jsonResponseBody)
   }
 
   // ^add initial payment for the debt item charge$
@@ -281,31 +311,86 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
   }
 
   // ^the instalment calculation summary contains values$
-  def theInstalmentCalculationSummaryContainsValues(context: IFSInstalmentCalculationContext): Unit = {
-    // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
-    // val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
-    // response.status.shouldBe(200)
-    // locally {
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  def theInstalmentCalculationSummaryContainsValues(
+    context: IFSInstalmentCalculationContext,
+    expectedResponse: InstalmentCalculationSummaryResponse
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    withClue("InstalmentCalculationSummaryResponse") {
+      withClue("dateOfCalculation") {
+        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+      }
+
+      withClue("numberOfInstalments") {
+        responseBody.numberOfInstalments shouldBe expectedResponse.numberOfInstalments
+      }
+
+      withClue("planInterest") {
+        responseBody.planInterest shouldBe expectedResponse.planInterest
+      }
+
+      withClue("interestAccrued") {
+        responseBody.interestAccrued shouldBe expectedResponse.interestAccrued
+      }
+
+      withClue("totalInterest") {
+        responseBody.totalInterest shouldBe expectedResponse.totalInterest
+      }
+
+      withClue("duration") {
+        responseBody.duration shouldBe expectedResponse.duration
+      }
+    }
   }
 
   // ^IFS response contains expected values$
   def ifsResponseContainsExpectedValues(
     context: IFSInstalmentCalculationContext,
-    inputs: Seq[InstalmentResponse]
+    expectedResponse: Seq[InstalmentResponse]
   ): Unit = {
-    // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
-    // val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
-    // response.status.shouldBe(200)
-    // map.zipWithIndex.foreach { case (expectedInstalment, _) =>
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'inputs' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against inputs.
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    expectedResponse.foreach { expectedInstalment =>
+      // use instalmentNumber to find the correct actual instalment
+      val responseIndex: Int = expectedInstalment.instalmentNumber - 1
+
+      val actualInstalment = responseBody.instalments
+        .lift(responseIndex)
+        .getOrElse(
+          fail(s"Missing instalment at index [$responseIndex] in response")
+        )
+
+      withClue("Instalments") {
+        withClue("debtId") {
+          actualInstalment.debtId shouldBe expectedInstalment.debtId
+        }
+
+        withClue("dueDate") {
+          actualInstalment.dueDate shouldBe expectedInstalment.dueDate
+        }
+
+        withClue("amountDue") {
+          actualInstalment.amountDue shouldBe expectedInstalment.amountDue
+        }
+
+        withClue("instalmentBalance") {
+          actualInstalment.instalmentBalance shouldBe expectedInstalment.instalmentBalance
+        }
+
+        withClue("instalmentNumber") {
+          actualInstalment.instalmentNumber shouldBe expectedInstalment.instalmentNumber
+        }
+
+        withClue("intRate") {
+          actualInstalment.intRate shouldBe expectedInstalment.intRate
+        }
+
+        withClue("instalmentInterestAccrued") {
+          actualInstalment.instalmentInterestAccrued shouldBe expectedInstalment.instalmentInterestAccrued
+        }
+      }
+    }
   }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$
