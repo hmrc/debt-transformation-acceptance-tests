@@ -19,96 +19,117 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
+import uk.gov.hmrc.test.api.models.InstalmentResponse
+import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
+import uk.gov.hmrc.test.api.scalatest.steps.context.{FCStatementOfLiabilityContext, IFSInstalmentCalculationContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 import uk.gov.hmrc.test.api.scalatest.tags._
+
+import java.time.LocalDate
 
 class InstalmentCalculationMultipleDebtsFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCInterestForecastingStepHelpers
-    with IFSInstalmentCalculationStepHelpers
-    with InterestForecastingStepHelpers {
+    with IFSInstalmentCalculationStepHelpers {
 
-  override type FixtureParam = FCStatementOfLiabilityContext
+  override type FixtureParam = IFSInstalmentCalculationContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = FCStatementOfLiabilityContext()
+    val context = IFSInstalmentCalculationContext()
     try test(context)
     finally ()
   }
 
   Feature("Instalment calculation for multiple debts - Input 1 & 2") {
 
-    ignore(
-      "Should calculate quote for multiple debts with interest bearing & non-interest bearing debts combined",
-      DTD_3163,
-      DTD_4201
-    ) { context =>
-      Given("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+    // Input 1
+    Scenario("Should calculate quote for multiple debts with interest bearing & non-interest bearing debts combined") {
+      context =>
+        Given("instalment calculation details")
+        val ifsRequest = InstalmentCalculationRequest(
+          debtItemCharges = Some(
+            List(
+              DebtItemCharge(
+                debtId = "1234",
+                debtAmount = 80000,
+                subTrans = "1000",
+                mainTrans = "1545",
+              ),
+              DebtItemCharge(
+                debtId = "12345",
+                debtAmount = 70000,
+                subTrans = "2000",
+                mainTrans = "1541",
+              )
+            )
+          ),
+          quoteDate = LocalDate.parse("2020-03-13"),
+          quoteType = "duration",
+          instalmentPaymentDate = "2020-03-14",
+          paymentFrequency = "monthly",
+          instalmentPaymentAmount = Some(10000),
+          customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
+          interestCallDueTotal = 5900,
+          initialPaymentDate = Some(LocalDate.parse("2020-03-14")),
+          initialPaymentAmount = Some(100)
+        )
+        instalmentCalculationDetails(context, ifsRequest)
 
-      And("the instalment calculation has no postcodes")
-      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasNoPostcodes(context)
+        When("the instalment calculation detail is sent to the ifs service")
+        theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
-      And("debt plan details with initial payment")
-      // TODO: Helper 'debtPlanDetailsWithInitialPayment' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtPlanDetailsWithInitialPayment(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
-
-      Then("IFS response contains expected values")
-      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // ifsResponseContainsExpectedValues(context)
-
-    }
-    ignore("InterestStartDate is included but in the Future, then interestStartDate should be used") { context =>
-      Given("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
-
-      And("the instalment calculation has no postcodes")
-      // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasNoPostcodes(context)
-
-      And("debt plan details with initial payment")
-      // TODO: Helper 'debtPlanDetailsWithInitialPayment' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtPlanDetailsWithInitialPayment(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
-
-      Then("IFS response contains expected values")
-      // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // ifsResponseContainsExpectedValues(context)
+        Then("IFS response contains expected values")
+        val instalmentsResponse = Seq(
+          InstalmentResponse(
+            debtId = "12345",
+            instalmentNumber = 9,
+            dueDate = LocalDate.parse("2020-10-14"),
+            amountDue = 100,
+            instalmentBalance = 70000,
+            instalmentInterestAccrued = 0,
+            expectedPayment = 801000,
+            intRate = 0
+          )
+        )
+        ifsResponseContainsExpectedValues(context, instalmentsResponse)
 
     }
+
+    ignore("InterestStartDate is included but in the Future, then interestStartDate should be used", DTD_3163) {
+      context =>
+        Given("debt instalment calculation with details")
+        // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // debtInstalmentCalculationWithDetails(context)
+
+        And("the instalment calculation has no postcodes")
+        // TODO: Helper 'theInstalmentCalculationHasNoPostcodes' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationHasNoPostcodes(context)
+
+        And("debt plan details with initial payment")
+        // TODO: Helper 'debtPlanDetailsWithInitialPayment' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // debtPlanDetailsWithInitialPayment(context)
+
+        And("the instalment calculation has debt item charges")
+        // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationHasDebtItemCharges(context)
+
+        When("the instalment calculation detail is sent to the ifs service")
+        // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+
+        Then("IFS response contains expected values")
+        // TODO: Helper 'ifsResponseContainsExpectedValues' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
+        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
+        // ifsResponseContainsExpectedValues(context)
+
+    }
+
     ignore("Should calculate quote for multiple debts both with interest bearing & 1 initial payment history") {
       context =>
         Given("debt instalment calculation with details")
@@ -142,6 +163,8 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
         // ifsResponseContainsExpectedValues(context)
 
     }
+
+    // Input 2
     ignore("Should calculate debts amount for 2 debts with initial payment (input 2)") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
@@ -179,9 +202,9 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
+
     ignore(
-      "Multiple debt item charges - duration should not include initial payment (initial payment date before instalment date)",
-      DTD_3163
+      "Multiple debt item charges - duration should not include initial payment (initial payment date before instalment date)"
     ) { context =>
       Given("debt instalment calculation with 129 details")
       // TODO: Helper 'debtInstalmentCalculationWith129Details' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
@@ -219,7 +242,8 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    ignore("InterestStartDate is included but not in the Future, then quote date should be used") { context =>
+
+    ignore("InterestStartDate is included but not in the Future, then quote date should be used", DTD_3163) { context =>
       Given("debt instalment calculation with 129 details")
       // TODO: Helper 'debtInstalmentCalculationWith129Details' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -256,6 +280,7 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
+
     ignore(
       "Multiple debt item charges - duration should not include initial payment (initial payment on instalment date)"
     ) { context =>
@@ -295,7 +320,8 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    ignore("Multiple Debts should be returned in the order they are sent in", DTD_1874) { context =>
+
+    ignore("Multiple Debts should be returned in the order they are sent in") { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -327,7 +353,8 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
-    ignore("Multiple Debts can be paid off within the same instalment period") { context =>
+
+    ignore("Multiple Debts can be paid off within the same instalment period", DTD_1874) { context =>
       Given("debt instalment calculation with details")
       // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
       // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
@@ -359,5 +386,6 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
       // ifsResponseContainsExpectedValues(context)
 
     }
+
   }
 }

@@ -1,5 +1,6 @@
 Feature: Instalment calculation for multiple debts - Input 1 & 2
   #  Input 1
+
   Scenario: Should calculate quote for multiple debts with interest bearing & non-interest bearing debts combined
     Given debt instalment calculation with details
       | instalmentPaymentAmount | paymentFrequency | instalmentPaymentDate | interestCallDueTotal | numberOfDay | quoteType | quoteDate  |
