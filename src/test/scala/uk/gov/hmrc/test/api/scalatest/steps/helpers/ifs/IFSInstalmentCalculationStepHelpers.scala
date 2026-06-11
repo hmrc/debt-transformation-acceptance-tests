@@ -346,15 +346,14 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
     }
   }
 
-  // ^IFS response contains expected values$
   def ifsResponseContainsExpectedValues(
-    context: IFSInstalmentCalculationContext,
-    expectedResponse: Seq[InstalmentResponse]
-  ): Unit = {
+                                         context: IFSInstalmentCalculationContext,
+                                         expectedResponse: Seq[InstalmentResponse]
+                                       ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     expectedResponse.foreach { expectedInstalment =>
-      // use instalmentNumber to find the correct actual instalment
+
       val responseIndex: Int = expectedInstalment.instalmentNumber - 1
 
       val actualInstalment = responseBody.instalments
@@ -397,6 +396,41 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
         }
       }
     }
+  }
+
+  // ^IFS response contains expected values$
+  def ifsResponseContainsExpectedValues(
+    context: IFSInstalmentCalculationContext,
+    expectedResponse: InstalmentCalculationSummaryResponse
+  ): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    withClue("dateOfCalculation") {
+      responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+    }
+
+    withClue("numberOfInstalments") {
+      responseBody.numberOfInstalments shouldBe expectedResponse.numberOfInstalments
+    }
+
+    withClue("planInterest") {
+      responseBody.planInterest shouldBe expectedResponse.planInterest
+    }
+
+    withClue("interestAccrued") {
+      responseBody.interestAccrued shouldBe expectedResponse.interestAccrued
+    }
+
+    withClue("totalInterest") {
+      responseBody.totalInterest shouldBe expectedResponse.totalInterest
+    }
+
+    withClue("duration") {
+      responseBody.duration shouldBe expectedResponse.duration
+    }
+
+    ifsResponseContainsExpectedValues(context, expectedResponse.instalments)
+
   }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$
