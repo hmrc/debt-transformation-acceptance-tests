@@ -19,10 +19,11 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstalmentCalculationRequest}
+import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
 import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+
 import java.time.LocalDate
 
 class InstalmentCalculationMultipleDebtsInput2FeatureSpec
@@ -68,7 +69,7 @@ class InstalmentCalculationMultipleDebtsInput2FeatureSpec
         instalmentPaymentDate = "2020-03-14",
         paymentFrequency = "monthly",
         duration = Some(24),
-        customerPostCodes = None,
+        customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
         interestCallDueTotal = 0
       )
       instalmentCalculationDetails(context, ifsRequest)
@@ -126,7 +127,7 @@ class InstalmentCalculationMultipleDebtsInput2FeatureSpec
         instalmentPaymentDate = "2022-11-23",
         paymentFrequency = "monthly",
         duration = Some(2),
-        customerPostCodes = None,
+        customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
         interestCallDueTotal = 0
       )
       instalmentCalculationDetails(context, ifsRequest)
@@ -184,7 +185,7 @@ class InstalmentCalculationMultipleDebtsInput2FeatureSpec
         instalmentPaymentDate = "2022-11-20",
         paymentFrequency = "monthly",
         duration = Some(2),
-        customerPostCodes = None,
+        customerPostCodes = Some(List.empty[InstallmentCalculationCustomerPostCode]),
         interestCallDueTotal = 0
       )
       instalmentCalculationDetails(context, ifsRequest)
