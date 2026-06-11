@@ -93,7 +93,6 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
           )
         )
         ifsResponseContainsExpectedValues(context, instalmentsResponse)
-
     }
 
     ignore("InterestStartDate is included but in the Future, then interestStartDate should be used", DTD_3163) {
