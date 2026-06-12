@@ -310,8 +310,8 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
     // TODO: Implement typed helper for this step.
   }
 
-  // ^the instalment calculation summary contains values$
-  def theInstalmentCalculationSummaryContainsValues(
+  // ^IFS response contains expected values$
+  def ifsResponseContainsExpectedValues(
     context: IFSInstalmentCalculationContext,
     expectedResponse: InstalmentCalculationSummaryResponse
   ): Unit = {
@@ -341,6 +341,8 @@ trait IFSInstalmentCalculationStepHelpers { this: Matchers =>
       withClue("duration") {
         responseBody.duration shouldBe expectedResponse.duration
       }
+
+      ifsResponseContainsExpectedValues(context, responseBody.instalments)
     }
   }
 
