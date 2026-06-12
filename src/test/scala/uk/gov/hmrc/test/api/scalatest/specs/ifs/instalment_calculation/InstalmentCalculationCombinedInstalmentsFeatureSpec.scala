@@ -51,7 +51,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
               debtId = "TPSSDebt1",
               debtAmount = 4000,
               subTrans = "1000",
-              mainTrans = "1545"
+              mainTrans = "1525"
             )
           )
         ),
@@ -107,7 +107,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
 
     }
 
-    Scenario("Final two instalments are not merged when when request to merge is false") { context =>
+    Scenario("Final two instalments are not merged when request to merge is false") { context =>
       Given("debt instalment calculation with details")
       val ifsRequest = InstalmentCalculationRequest(
         debtItemCharges = Some(
@@ -172,7 +172,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
 
     }
 
-    Scenario("Final two instalments of non interest bearing debts are not merged when when request to merge is false") {
+    Scenario("Final two instalments of non interest bearing debts are not merged when request to merge is false") {
       context =>
         Given("debt instalment calculation with details")
         val ifsRequest = InstalmentCalculationRequest(
@@ -238,7 +238,7 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
 
     }
 
-    Scenario("Final two instalments of non interest bearing debts are merged when when requested") { context =>
+    Scenario("Final two instalments of non interest bearing debts are merged when requested") { context =>
       Given("debt instalment calculation with details")
       val ifsRequest = InstalmentCalculationRequest(
         debtItemCharges = Some(

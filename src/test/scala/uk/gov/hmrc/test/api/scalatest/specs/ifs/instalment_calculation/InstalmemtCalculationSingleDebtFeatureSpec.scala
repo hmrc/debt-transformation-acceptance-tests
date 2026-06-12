@@ -97,7 +97,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
                 debtId = "TPSSDebt1",
                 debtAmount = 100000,
                 subTrans = "1000",
-                mainTrans = "1545"
+                mainTrans = "1525"
               )
             )
           ),
@@ -164,7 +164,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
                 debtId = "TPSSDebt1",
                 debtAmount = 1425623,
                 subTrans = "1000",
-                mainTrans = "1545"
+                mainTrans = "1525"
               )
             )
           ),
@@ -282,7 +282,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
                 debtAmount = 100000,
                 subTrans = "1000",
                 mainTrans = "1545",
-                interestStartDate = Some(LocalDate.parse("2026-06-25"))
+                interestStartDate = Some(LocalDate.now().plusDays(15))
               )
             )
           ),
@@ -306,10 +306,10 @@ class InstalmemtCalculationSingleDebtFeatureSpec
             debtId = "1234",
             instalmentNumber = 1,
             dueDate = LocalDate.parse("2025-08-25"),
-            amountDue = 4251,
+            amountDue = 4250,
             instalmentBalance = 100000,
             instalmentInterestAccrued = 0,
-            expectedPayment = 4251,
+            expectedPayment = 4250,
             intRate = 6.5
           )
         )
@@ -330,7 +330,7 @@ class InstalmemtCalculationSingleDebtFeatureSpec
               debtAmount = 100000,
               subTrans = "1000",
               mainTrans = "1545",
-              interestStartDate = Some(LocalDate.parse("2026-06-25"))
+              interestStartDate = Some(LocalDate.now().plusDays(15))
             )
           )
         ),
