@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.{GivenWhenThen, Outcome}
+import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{FCStatementOfLiabilityContext, InterestForecastingContext}
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 
 import java.time.LocalDate
 
@@ -30,13 +30,11 @@ class InterestRateChangesFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCInterestForecastingStepHelpers
-    with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers {
 
   override type FixtureParam = InterestForecastingContext
 
-  override def withFixture(test: OneArgTest): Outcome = {
+  override def withFixture(test: OneArgTest) = {
     val context = InterestForecastingContext()
     try test(context)
     finally ()
@@ -61,7 +59,14 @@ class InterestRateChangesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 44,
+        interestDueCallTotal = 20695,
+        amountIntTotal = 520695,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -70,14 +75,7 @@ class InterestRateChangesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 44,
-          interestDueCallTotal = 20695,
-          amountIntTotal = 520695,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -162,7 +160,14 @@ class InterestRateChangesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 22,
+        interestDueCallTotal = 19188,
+        amountIntTotal = 319188,
+        amountOnIntDueTotal = 300000,
+        unpaidAmountTotal = 300000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -171,14 +176,7 @@ class InterestRateChangesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 22,
-          interestDueCallTotal = 19188,
-          amountIntTotal = 319188,
-          amountOnIntDueTotal = 300000,
-          unpaidAmountTotal = 300000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -273,6 +271,7 @@ class InterestRateChangesFeatureSpec
         )
       )
     }
+
     Scenario("Interest rate changes from 3% to 3.25% after a payment is made") { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
@@ -297,7 +296,14 @@ class InterestRateChangesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 35,
+        interestDueCallTotal = 16136,
+        amountIntTotal = 416136,
+        amountOnIntDueTotal = 400000,
+        unpaidAmountTotal = 400000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -306,14 +312,7 @@ class InterestRateChangesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 35,
-          interestDueCallTotal = 16136,
-          amountIntTotal = 416136,
-          amountOnIntDueTotal = 400000,
-          unpaidAmountTotal = 400000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -411,7 +410,14 @@ class InterestRateChangesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 26,
+        interestDueCallTotal = 15661,
+        amountIntTotal = 315661,
+        amountOnIntDueTotal = 300000,
+        unpaidAmountTotal = 300000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -420,14 +426,7 @@ class InterestRateChangesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 26,
-          interestDueCallTotal = 15661,
-          amountIntTotal = 315661,
-          amountOnIntDueTotal = 300000,
-          unpaidAmountTotal = 300000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -548,7 +547,14 @@ class InterestRateChangesFeatureSpec
           ),
           customerPostCodes = List.empty
         )
-
+        val expectedResponse = DebtCalculationsSummary(
+          combinedDailyAccrual = 52,
+          interestDueCallTotal = 37775,
+          amountIntTotal = 637775,
+          amountOnIntDueTotal = 600000,
+          unpaidAmountTotal = 600000,
+          debtCalculations = List.empty
+        )
         aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the ifs service")
@@ -557,14 +563,7 @@ class InterestRateChangesFeatureSpec
         Then("the ifs service will return a total debts summary of")
         theIfsServiceWillReturnATotalDebtsSummaryOf(
           context,
-          DebtCalculationsSummary(
-            combinedDailyAccrual = 52,
-            interestDueCallTotal = 37775,
-            amountIntTotal = 637775,
-            amountOnIntDueTotal = 600000,
-            unpaidAmountTotal = 600000,
-            debtCalculations = List.empty
-          )
+          expectedResponse
         )
 
         And("the 1st debt summary will contain")
@@ -795,7 +794,14 @@ class InterestRateChangesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 0,
+        amountIntTotal = 500000,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -804,14 +810,7 @@ class InterestRateChangesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 500000,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -854,7 +853,14 @@ class InterestRateChangesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 41,
+        interestDueCallTotal = 13363,
+        amountIntTotal = 513363,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -863,14 +869,7 @@ class InterestRateChangesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 41,
-          interestDueCallTotal = 13363,
-          amountIntTotal = 513363,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")

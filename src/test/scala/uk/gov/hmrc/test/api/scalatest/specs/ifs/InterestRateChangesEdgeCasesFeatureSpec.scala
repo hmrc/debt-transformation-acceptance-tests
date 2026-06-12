@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.{GivenWhenThen, Outcome}
+import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
 import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 
 import java.time.LocalDate
 
@@ -30,13 +30,11 @@ class InterestRateChangesEdgeCasesFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCInterestForecastingStepHelpers
-    with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers {
 
   override type FixtureParam = InterestForecastingContext
 
-  override def withFixture(test: OneArgTest): Outcome = {
+  override def withFixture(test: OneArgTest) = {
     val context = InterestForecastingContext()
     try test(context)
     finally ()
@@ -46,7 +44,30 @@ class InterestRateChangesEdgeCasesFeatureSpec
 
     Scenario("300 Debt items - Interest rate changes from 3.0% to 3.25%") { context =>
       Given("a debt calculation")
-      debtItemsWhereInterestRateChangesFrom30To325(context, 300)
+      val request = DebtCalculationRequest(
+        debtItems = (1 to 300).map { index =>
+          DebtItem(
+            debtID = Some(index.toString),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("2018-01-01"),
+            interestRequestedTo = "2018-10-30",
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        }.toList,
+        customerPostCodes = List.empty
+      )
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 13200,
+        interestDueCallTotal = 3795900,
+        amountIntTotal = 153795900,
+        amountOnIntDueTotal = 150000000,
+        unpaidAmountTotal = 150000000,
+        debtCalculations = List.empty
+      )
+      aDebtCalculationIsCreated(context, request)
 
       When("the debt items are sent to the ifs service")
       theDebtItemIsSentToTheIfsService(context)
@@ -54,14 +75,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 13200,
-          interestDueCallTotal = 3795900,
-          amountIntTotal = 153795900,
-          amountOnIntDueTotal = 150000000,
-          unpaidAmountTotal = 150000000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 300th debt summary will contain")
@@ -124,7 +138,14 @@ class InterestRateChangesEdgeCasesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 62,
+        interestDueCallTotal = 48638,
+        amountIntTotal = 848638,
+        amountOnIntDueTotal = 800000,
+        unpaidAmountTotal = 800000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -133,14 +154,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 62,
-          interestDueCallTotal = 48638,
-          amountIntTotal = 848638,
-          amountOnIntDueTotal = 800000,
-          unpaidAmountTotal = 800000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -338,6 +352,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
           )
         )
       )
+
       And("the 2nd debt summary will contain")
       theDebtSummaryWillContain(
         context,
@@ -457,7 +472,14 @@ class InterestRateChangesEdgeCasesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 28,
+        interestDueCallTotal = 14420,
+        amountIntTotal = 414420,
+        amountOnIntDueTotal = 400000,
+        unpaidAmountTotal = 400000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -466,14 +488,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 28,
-          interestDueCallTotal = 14420,
-          amountIntTotal = 414420,
-          amountOnIntDueTotal = 400000,
-          unpaidAmountTotal = 400000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -581,8 +596,8 @@ class InterestRateChangesEdgeCasesFeatureSpec
         )
       )
     }
-
   }
+
   ignore("Interest rate changes on same day as interest requested to") { context =>
     Given("a debt item")
     // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.

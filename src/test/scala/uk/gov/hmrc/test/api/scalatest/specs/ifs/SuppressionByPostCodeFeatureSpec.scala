@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.{GivenWhenThen, Outcome}
+import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{CustomerPostCode, DebtCalculationRequest, DebtItem}
@@ -37,7 +37,7 @@ class SuppressionByPostCodeFeatureSpec
 
   override type FixtureParam = InterestForecastingContext
 
-  override def withFixture(test: OneArgTest): Outcome = {
+  override def withFixture(test: OneArgTest) = {
     val context = InterestForecastingContext()
     try test(context)
     finally ()

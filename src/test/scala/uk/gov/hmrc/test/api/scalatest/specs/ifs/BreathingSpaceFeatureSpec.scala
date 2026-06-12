@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.{GivenWhenThen, Outcome}
+import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary, SuppressionInformation, SuppressionRequest}
-import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, CustomerPostCode, DebtCalculationRequest, DebtItem, PaymentHistory}
+import uk.gov.hmrc.test.api.models.ifs._
+import uk.gov.hmrc.test.api.models._
 import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags._
 
@@ -32,14 +32,12 @@ class BreathingSpaceFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCInterestForecastingStepHelpers
-    with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers
     with SuppressionStepHelpers {
 
   override type FixtureParam = InterestForecastingContext
 
-  override def withFixture(test: OneArgTest): Outcome = {
+  override def withFixture(test: OneArgTest) = {
     val context = InterestForecastingContext()
     try test(context)
     finally ()
@@ -71,6 +69,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 44,
+        interestDueCallTotal = 3872,
+        amountIntTotal = 503872,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -79,14 +85,7 @@ class BreathingSpaceFeatureSpec
       Then("the IFS service will return a total debts summary")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 44,
-          interestDueCallTotal = 3872,
-          amountIntTotal = 503872,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -155,7 +154,7 @@ class BreathingSpaceFeatureSpec
       )
     }
 
-    Scenario("2 debts with breathing space. No payment history (Scenario 1 - step 6) (SA)", DTD_2140, DTD_2243) {
+    Scenario("2 debts with breathing space. No payment history (Scenario 1 - step 6) (SA)", DTD_2244) {
       context =>
         Given("a debt calculation")
         val request = DebtCalculationRequest(
@@ -197,7 +196,14 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
-
+        val expectedResponse = DebtCalculationsSummary(
+          combinedDailyAccrual = 8,
+          interestDueCallTotal = 356,
+          amountIntTotal = 100356,
+          amountOnIntDueTotal = 100000,
+          unpaidAmountTotal = 100000,
+          debtCalculations = List.empty
+        )
         aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
@@ -206,14 +212,7 @@ class BreathingSpaceFeatureSpec
         Then("the ifs service wilL return a total debts summary of")
         theIfsServiceWillReturnATotalDebtsSummaryOf(
           context,
-          DebtCalculationsSummary(
-            combinedDailyAccrual = 8,
-            interestDueCallTotal = 356,
-            amountIntTotal = 100356,
-            amountOnIntDueTotal = 100000,
-            unpaidAmountTotal = 100000,
-            debtCalculations = List.empty
-          )
+          expectedResponse
         )
 
         And("the 1st debt summary will contain")
@@ -401,7 +400,7 @@ class BreathingSpaceFeatureSpec
         )
     }
 
-    Scenario("Single debt with breathing space AND payment history (SA)", DTD_2140, DTD_2243, DTD_2244) { context =>
+    Scenario("Single debt with breathing space AND payment history (SA)", DTD_2140, DTD_2243) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -432,7 +431,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 2,
+        interestDueCallTotal = 44,
+        amountIntTotal = 30044,
+        amountOnIntDueTotal = 30000,
+        unpaidAmountTotal = 30000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -441,14 +447,7 @@ class BreathingSpaceFeatureSpec
       Then("the IFS service will return a total debts summary")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 2,
-          interestDueCallTotal = 44,
-          amountIntTotal = 30044,
-          amountOnIntDueTotal = 30000,
-          unpaidAmountTotal = 30000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -588,7 +587,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 2,
+        interestDueCallTotal = 271,
+        amountIntTotal = 26771,
+        amountOnIntDueTotal = 26500,
+        unpaidAmountTotal = 26500,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -597,14 +603,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service wilL return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 2,
-          interestDueCallTotal = 271,
-          amountIntTotal = 26771,
-          amountOnIntDueTotal = 26500,
-          unpaidAmountTotal = 26500,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -815,7 +814,8 @@ class BreathingSpaceFeatureSpec
 
     Scenario(
       "1 debt with a payment and 2 breathing spaces (incl an open ended BS), 1 late payment debt, 3rd debt with BS (Scenario 2, Step 4) (SA)",
-      DTD_2140
+      DTD_2140,
+      DTD_2243
     ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
@@ -878,7 +878,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 252,
+        amountIntTotal = 76752,
+        amountOnIntDueTotal = 76500,
+        unpaidAmountTotal = 76500,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -887,14 +894,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service wilL return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 252,
-          amountIntTotal = 76752,
-          amountOnIntDueTotal = 76500,
-          unpaidAmountTotal = 76500,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -1169,7 +1169,7 @@ class BreathingSpaceFeatureSpec
       )
     }
 
-    Scenario("Customer makes payment whilst in an active Breathing Space period (Scenario 4) (SA)") { context =>
+    Scenario("Customer makes payment whilst in an active Breathing Space period (Scenario 4) (SA)", DTD_2140) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -1196,7 +1196,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 2,
+        interestDueCallTotal = 258,
+        amountIntTotal = 30258,
+        amountOnIntDueTotal = 30000,
+        unpaidAmountTotal = 30000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -1205,14 +1212,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 2,
-          interestDueCallTotal = 258,
-          amountIntTotal = 30258,
-          amountOnIntDueTotal = 30000,
-          unpaidAmountTotal = 30000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -1503,7 +1503,14 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
-
+        val expectedResponse = DebtCalculationsSummary(
+          combinedDailyAccrual = 44,
+          interestDueCallTotal = 3116,
+          amountIntTotal = 503116,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
         aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
@@ -1512,14 +1519,7 @@ class BreathingSpaceFeatureSpec
         Then("the ifs service will return a total debts summary of")
         theIfsServiceWillReturnATotalDebtsSummaryOf(
           context,
-          DebtCalculationsSummary(
-            combinedDailyAccrual = 44,
-            interestDueCallTotal = 3116,
-            amountIntTotal = 503116,
-            amountOnIntDueTotal = 500000,
-            unpaidAmountTotal = 500000,
-            debtCalculations = List.empty
-          )
+          expectedResponse
         )
 
         And("the 1st debt summary will contain")
@@ -1604,7 +1604,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 0,
+        amountIntTotal = 500000,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -1613,14 +1620,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 500000,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -1689,7 +1689,14 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
-
+        val expectedResponse = DebtCalculationsSummary(
+          combinedDailyAccrual = 44,
+          interestDueCallTotal = 3116,
+          amountIntTotal = 503116,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
         aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the IFS service")
@@ -1698,14 +1705,7 @@ class BreathingSpaceFeatureSpec
         Then("the ifs service will return a total debts summary of")
         theIfsServiceWillReturnATotalDebtsSummaryOf(
           context,
-          DebtCalculationsSummary(
-            combinedDailyAccrual = 44,
-            interestDueCallTotal = 3116,
-            amountIntTotal = 503116,
-            amountOnIntDueTotal = 500000,
-            unpaidAmountTotal = 500000,
-            debtCalculations = List.empty
-          )
+          expectedResponse
         )
 
         And("the 1st debt summary will contain")
@@ -1790,7 +1790,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 0,
+        amountIntTotal = 500000,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -1799,14 +1806,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 500000,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -1858,7 +1858,14 @@ class BreathingSpaceFeatureSpec
           )
         )
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 177,
+        amountIntTotal = 500177,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -1867,14 +1874,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 177,
-          amountIntTotal = 500177,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -1938,7 +1938,6 @@ class BreathingSpaceFeatureSpec
     ) { context =>
       Given("suppression configuration data is created")
       val suppressionContext = SuppressionRulesContext()
-
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
           SuppressionInformation(
@@ -1954,7 +1953,6 @@ class BreathingSpaceFeatureSpec
           )
         )
       )
-
       suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
@@ -1988,7 +1986,14 @@ class BreathingSpaceFeatureSpec
           )
         )
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 177,
+        amountIntTotal = 500177,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -1997,14 +2002,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 177,
-          amountIntTotal = 500177,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -2088,7 +2086,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 0,
+        interestDueCallTotal = 71,
+        amountIntTotal = 500071,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -2097,14 +2102,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 71,
-          amountIntTotal = 500071,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")
@@ -2203,7 +2201,14 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
-
+        val expectedResponse = DebtCalculationsSummary(
+          combinedDailyAccrual = 0,
+          interestDueCallTotal = 71,
+          amountIntTotal = 500071,
+          amountOnIntDueTotal = 500000,
+          unpaidAmountTotal = 500000,
+          debtCalculations = List.empty
+        )
         aDebtCalculationIsCreated(context, request)
 
         When("the debt item is sent to the ifs service")
@@ -2212,14 +2217,7 @@ class BreathingSpaceFeatureSpec
         Then("the ifs service will return a total debts summary of")
         theIfsServiceWillReturnATotalDebtsSummaryOf(
           context,
-          DebtCalculationsSummary(
-            combinedDailyAccrual = 0,
-            interestDueCallTotal = 71,
-            amountIntTotal = 500071,
-            amountOnIntDueTotal = 500000,
-            unpaidAmountTotal = 500000,
-            debtCalculations = List.empty
-          )
+          expectedResponse
         )
 
         And("the 1st debt summary will contain")
@@ -2278,7 +2276,7 @@ class BreathingSpaceFeatureSpec
 
     Scenario(
       "Interest Bearing. Overlapping breathing spaces should be merged into 1 calculation window. No interest rate changes (SA)",
-      DTD_2351
+      DTD_2371
     ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
@@ -2307,7 +2305,14 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 35,
+        interestDueCallTotal = 106,
+        amountIntTotal = 500106,
+        amountOnIntDueTotal = 500000,
+        unpaidAmountTotal = 500000,
+        debtCalculations = List.empty
+      )
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the ifs service")
@@ -2316,14 +2321,7 @@ class BreathingSpaceFeatureSpec
       Then("the ifs service will return a total debts summary of")
       theIfsServiceWillReturnATotalDebtsSummaryOf(
         context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 35,
-          interestDueCallTotal = 106,
-          amountIntTotal = 500106,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
-        )
+        expectedResponse
       )
 
       And("the 1st debt summary will contain")

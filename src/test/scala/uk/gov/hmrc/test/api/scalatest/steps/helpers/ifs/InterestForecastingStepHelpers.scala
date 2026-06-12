@@ -66,27 +66,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     // TODO: Implement typed helper for this step.
   }
 
-  // ^(.*) debt items where interest rate changes from 3\\.0 to 3\\.25$
-  def debtItemsWhereInterestRateChangesFrom30To325(context: InterestForecastingContext, numberItems: Int): Unit = {
-    val request = DebtCalculationRequest(
-      debtItems = (1 to numberItems).map { index =>
-        DebtItem(
-          debtID = Some(index.toString),
-          originalAmount = 500000,
-          subTrans = "1000",
-          mainTrans = "1525",
-          interestStartDate = Some("2018-01-01"),
-          interestRequestedTo = "2018-10-30",
-          breathingSpaces = Some(List.empty),
-          paymentHistory = Some(List.empty)
-        )
-      }.toList,
-      customerPostCodes = List.empty
-    )
-
-    aDebtCalculationIsCreated(context, request)
-  }
-
   // ^the debt item has payment history$
   def theDebtItemHasPaymentHistory(
     context: InterestForecastingContext,
