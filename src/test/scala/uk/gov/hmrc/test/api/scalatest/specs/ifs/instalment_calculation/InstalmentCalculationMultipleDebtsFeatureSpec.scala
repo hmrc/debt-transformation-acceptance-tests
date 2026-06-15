@@ -54,7 +54,7 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
                 debtId = "1234",
                 debtAmount = 80000,
                 subTrans = "1000",
-                mainTrans = "1545"
+                mainTrans = "1525"
               ),
               DebtItemCharge(
                 debtId = "12345",
@@ -179,7 +179,7 @@ class InstalmentCalculationMultipleDebtsFeatureSpec
                 debtId = "12345",
                 debtAmount = 70000,
                 subTrans = "2000",
-                mainTrans = "1541"
+                mainTrans = "1530"
               )
             )
           ),
