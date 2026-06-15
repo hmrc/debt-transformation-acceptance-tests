@@ -59,6 +59,12 @@ class InterestRateChangesEdgeCasesFeatureSpec
         }.toList,
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt items are sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 13200,
         interestDueCallTotal = 3795900,
@@ -67,23 +73,11 @@ class InterestRateChangesEdgeCasesFeatureSpec
         unpaidAmountTotal = 150000000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt items are sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 300th debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        300,
-        DebtCalculation(
-          debtItemChargeId = None,
+      val expectedDebtSummary = DebtCalculation(
+        debtItemChargeId = None,
           debtID = Some("300"),
           interestBearing = true,
           numberOfChargeableDays = 302,
@@ -94,8 +88,8 @@ class InterestRateChangesEdgeCasesFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 300, expectedDebtSummary)
     }
 
     Scenario(
@@ -138,6 +132,12 @@ class InterestRateChangesEdgeCasesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 62,
         interestDueCallTotal = 48638,
@@ -146,22 +146,10 @@ class InterestRateChangesEdgeCasesFeatureSpec
         unpaidAmountTotal = 800000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -173,14 +161,11 @@ class InterestRateChangesEdgeCasesFeatureSpec
           unpaidAmountDuty = 300000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2018-06-01"),
             periodTo = LocalDate.parse("2018-08-20"),
@@ -350,14 +335,11 @@ class InterestRateChangesEdgeCasesFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
 
       And("the 2nd debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        2,
-        DebtCalculation(
+      val expected2ndDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("456"),
           interestBearing = true,
@@ -369,14 +351,11 @@ class InterestRateChangesEdgeCasesFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
       And("the 2nd debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        2,
-        List(
+      val expected2ndCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2009-01-01"),
             periodTo = LocalDate.parse("2009-01-05"),
@@ -442,8 +421,8 @@ class InterestRateChangesEdgeCasesFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindows)
     }
 
     Scenario(
@@ -472,6 +451,12 @@ class InterestRateChangesEdgeCasesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 28,
         interestDueCallTotal = 14420,
@@ -480,22 +465,10 @@ class InterestRateChangesEdgeCasesFeatureSpec
         unpaidAmountTotal = 400000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -507,14 +480,11 @@ class InterestRateChangesEdgeCasesFeatureSpec
           unpaidAmountDuty = 400000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2020-01-01"),
             periodTo = LocalDate.parse("2020-03-29"),
@@ -593,8 +563,8 @@ class InterestRateChangesEdgeCasesFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
   }
 }

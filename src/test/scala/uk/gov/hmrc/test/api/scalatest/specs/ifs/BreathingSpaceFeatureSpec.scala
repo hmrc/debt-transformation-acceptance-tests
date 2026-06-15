@@ -45,7 +45,7 @@ class BreathingSpaceFeatureSpec
 
   Feature("Breathing Space") {
 
-    Scenario("Interest Bearing. Single debt with breathing space and no payment history (SA)", DTD_2244) { context =>
+    Scenario("Interest Bearing. Single debt with breathing space and no payment history (SA)", DTD_2244, DTD_2273, DTD_2274) { context =>
       Given("a fc debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(
@@ -69,6 +69,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the IFS service will return a total debts summary")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 44,
         interestDueCallTotal = 3872,
@@ -77,81 +83,66 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the IFS service will return a total debts summary")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
+      val expectedDebtSummary = DebtCalculation(
+        debtItemChargeId = None,
+        debtID = Some("123"),
+        interestBearing = true,
+        numberOfChargeableDays = 87L,
+        interestDueDailyAccrual = 44,
+        interestDueDutyTotal = 3872,
+        amountOnIntDueDuty = 500000,
+        totalAmountIntDuty = 503872,
+        unpaidAmountDuty = 500000,
+        interestOnlyIndicator = false,
+        calculationWindows = Nil
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
-      And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 87L,
-          interestDueDailyAccrual = 44,
-          interestDueDutyTotal = 3872,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 503872,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-      )
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-12-16"),
-            periodTo = LocalDate.parse("2019-01-02"),
-            numberOfDays = 17L,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 44,
-            interestDueWindow = 756,
-            amountOnIntDueWindow = 500000,
-            unpaidAmountWindow = 500756,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2019-01-03"),
-            periodTo = LocalDate.parse("2019-02-03"),
-            numberOfDays = 32,
-            interestRate = 0.0,
-            interestDueDailyAccrual = 0,
-            interestDueWindow = 0,
-            amountOnIntDueWindow = 500000,
-            unpaidAmountWindow = 500000,
-            breathingSpaceApplied = true,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2019-02-04"),
-            periodTo = LocalDate.parse("2019-04-14"),
-            numberOfDays = 70,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 44,
-            interestDueWindow = 3116,
-            amountOnIntDueWindow = 500000,
-            unpaidAmountWindow = 503116,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          )
+      val expectedCalculationWindows = List(
+        CalculationWindow(
+          periodFrom = LocalDate.parse("2018-12-16"),
+          periodTo = LocalDate.parse("2019-01-02"),
+          numberOfDays = 17L,
+          interestRate = 3.25,
+          interestDueDailyAccrual = 44,
+          interestDueWindow = 756,
+          amountOnIntDueWindow = 500000,
+          unpaidAmountWindow = 500756,
+          breathingSpaceApplied = false,
+          suppressionApplied = None,
+          suppressionsApplied = None
+        ),
+        CalculationWindow(
+          periodFrom = LocalDate.parse("2019-01-03"),
+          periodTo = LocalDate.parse("2019-02-03"),
+          numberOfDays = 32L,
+          interestRate = 0.0,
+          interestDueDailyAccrual = 0,
+          interestDueWindow = 0,
+          amountOnIntDueWindow = 500000,
+          unpaidAmountWindow = 500000,
+          breathingSpaceApplied = true,
+          suppressionApplied = None,
+          suppressionsApplied = None
+        ),
+        CalculationWindow(
+          periodFrom = LocalDate.parse("2019-02-04"),
+          periodTo = LocalDate.parse("2019-04-14"),
+          numberOfDays = 70L,
+          interestRate = 3.25,
+          interestDueDailyAccrual = 44,
+          interestDueWindow = 3116,
+          amountOnIntDueWindow = 500000,
+          unpaidAmountWindow = 503116,
+          breathingSpaceApplied = false,
+          suppressionApplied = None,
+          suppressionsApplied = None
         )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
     }
 
     Scenario("2 debts with breathing space. No payment history (Scenario 1 - step 6) (SA)", DTD_2244) {
@@ -196,6 +187,12 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
+        aDebtCalculationIsCreated(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service wilL return a total debts summary of")
         val expectedResponse = DebtCalculationsSummary(
           combinedDailyAccrual = 8,
           interestDueCallTotal = 356,
@@ -204,22 +201,10 @@ class BreathingSpaceFeatureSpec
           unpaidAmountTotal = 100000,
           debtCalculations = List.empty
         )
-        aDebtCalculationIsCreated(context, request)
-
-        When("the debt item is sent to the IFS service")
-        theDebtItemIsSentToTheIfsService(context)
-
-        Then("the ifs service wilL return a total debts summary of")
-        theIfsServiceWillReturnATotalDebtsSummaryOf(
-          context,
-          expectedResponse
-        )
+        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
         And("the 1st debt summary will contain")
-        theDebtSummaryWillContain(
-          context,
-          1,
-          DebtCalculation(
+        val expectedDebtSummary = DebtCalculation(
             debtItemChargeId = None,
             debtID = Some("123"),
             interestBearing = true,
@@ -232,13 +217,10 @@ class BreathingSpaceFeatureSpec
             interestOnlyIndicator = false,
             calculationWindows = Nil
           )
-        )
+        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the 1st debt summary will have calculation windows")
-        theDebtSummaryWillHaveCalculationWindows(
-          context,
-          1,
-          List(
+        val expectedCalculationWindows = List(
             CalculationWindow(
               periodFrom = LocalDate.parse("2022-01-31"),
               periodTo = LocalDate.parse("2022-02-20"),
@@ -305,13 +287,10 @@ class BreathingSpaceFeatureSpec
               suppressionsApplied = None
             )
           )
-        )
+        theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
 
         And("the 2nd debt summary will contain")
-        theDebtSummaryWillContain(
-          context,
-          2,
-          DebtCalculation(
+        val expected2ndDebtSummary = DebtCalculation(
             debtItemChargeId = None,
             debtID = Some("456"),
             interestBearing = true,
@@ -323,14 +302,11 @@ class BreathingSpaceFeatureSpec
             unpaidAmountDuty = 50000,
             interestOnlyIndicator = false,
             calculationWindows = Nil
-          )
         )
+        theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
         And("the 2nd debt summary will have calculation windows")
-        theDebtSummaryWillHaveCalculationWindows(
-          context,
-          2,
-          List(
+        val expected2ndCalculationWindows = List(
             CalculationWindow(
               periodFrom = LocalDate.parse("2022-01-31"),
               periodTo = LocalDate.parse("2022-02-20"),
@@ -396,8 +372,8 @@ class BreathingSpaceFeatureSpec
               suppressionApplied = None,
               suppressionsApplied = None
             )
-          )
         )
+        theDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindows)
     }
 
     Scenario("Single debt with breathing space AND payment history (SA)", DTD_2140, DTD_2243) { context =>
@@ -431,6 +407,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the IFS service will return a total debts summary")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 2,
         interestDueCallTotal = 44,
@@ -439,22 +421,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 30000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the IFS service will return a total debts summary")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -466,14 +436,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 30000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-04-06"),
             periodTo = LocalDate.parse("2022-04-09"),
@@ -552,8 +519,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario(
@@ -587,6 +554,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service wilL return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 2,
         interestDueCallTotal = 271,
@@ -595,22 +568,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 26500,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -622,14 +583,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 25000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-01-31"),
             periodTo = LocalDate.parse("2022-02-20"),
@@ -786,14 +744,11 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
 
       And("the 2nd debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        2,
-        DebtCalculation(
+      val expected2ndDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("456"),
           interestBearing = false,
@@ -805,8 +760,8 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 1500,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
       And("the 2nd debt summary will have no calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 2)
@@ -878,6 +833,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service wilL return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 0,
         interestDueCallTotal = 252,
@@ -886,22 +847,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 76500,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -913,14 +862,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 25000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-01-31"),
             periodTo = LocalDate.parse("2022-02-20"),
@@ -1090,14 +1036,11 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
 
       And("the 2nd debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        2,
-        DebtCalculation(
+      val expected2ndDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("456"),
           interestBearing = false,
@@ -1109,17 +1052,14 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 1500,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
       And("the 2nd debt summary will have no calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 2)
 
       And("the 3rd debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        3,
-        DebtCalculation(
+      val expected3rdDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("789"),
           interestBearing = true,
@@ -1131,14 +1071,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 50000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 3, expected3rdDebtSummary)
 
       And("the 3rd debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        3,
-        List(
+      val expected3rdCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-07-30"),
             periodTo = LocalDate.parse("2022-07-31"),
@@ -1165,8 +1102,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 3, expected3rdCalculationWindows)
     }
 
     Scenario("Customer makes payment whilst in an active Breathing Space period (Scenario 4) (SA)", DTD_2140) { context =>
@@ -1196,6 +1133,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 2,
         interestDueCallTotal = 258,
@@ -1204,22 +1147,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 30000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -1231,14 +1162,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 15000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-01-31"),
             periodTo = LocalDate.parse("2022-02-20"),
@@ -1395,14 +1323,11 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
 
       And("the 2nd debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        2,
-        DebtCalculation(
+      val expected2ndDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("456"),
           interestBearing = true,
@@ -1414,14 +1339,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 15000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
       And("the 2nd debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        2,
-        List(
+      val expected2ndCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-05-30"),
             periodTo = LocalDate.parse("2022-05-31"),
@@ -1474,8 +1396,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindows)
     }
 
     Scenario("Interest Bearing. Breathing space that starts before the interest start date (SA)", DTD_2167, DTD_2244) {
@@ -1503,6 +1425,12 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
+        aDebtCalculationIsCreated(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service will return a total debts summary of")
         val expectedResponse = DebtCalculationsSummary(
           combinedDailyAccrual = 44,
           interestDueCallTotal = 3116,
@@ -1511,22 +1439,10 @@ class BreathingSpaceFeatureSpec
           unpaidAmountTotal = 500000,
           debtCalculations = List.empty
         )
-        aDebtCalculationIsCreated(context, request)
-
-        When("the debt item is sent to the IFS service")
-        theDebtItemIsSentToTheIfsService(context)
-
-        Then("the ifs service will return a total debts summary of")
-        theIfsServiceWillReturnATotalDebtsSummaryOf(
-          context,
-          expectedResponse
-        )
+        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
         And("the 1st debt summary will contain")
-        theDebtSummaryWillContain(
-          context,
-          1,
-          DebtCalculation(
+        val expectedDebtSummary = DebtCalculation(
             debtItemChargeId = None,
             debtID = Some("123"),
             interestBearing = true,
@@ -1538,14 +1454,11 @@ class BreathingSpaceFeatureSpec
             unpaidAmountDuty = 500000,
             interestOnlyIndicator = false,
             calculationWindows = Nil
-          )
         )
+        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the 1st debt summary will have calculation windows")
-        theDebtSummaryWillHaveCalculationWindows(
-          context,
-          1,
-          List(
+        val expectedCalculationWindows = List(
             CalculationWindow(
               periodFrom = LocalDate.parse("2018-12-16"),
               periodTo = LocalDate.parse("2019-02-03"),
@@ -1572,8 +1485,8 @@ class BreathingSpaceFeatureSpec
               suppressionApplied = None,
               suppressionsApplied = None
             )
-          )
         )
+        theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario(
@@ -1604,6 +1517,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 0,
         interestDueCallTotal = 0,
@@ -1612,23 +1531,11 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
-          debtItemChargeId = None,
+      val expectedDebtSummary = DebtCalculation(
+        debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
           numberOfChargeableDays = 0,
@@ -1639,14 +1546,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2018-12-16"),
             periodTo = LocalDate.parse("2019-04-14"),
@@ -1660,8 +1564,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario("Interest Bearing. Breathing space that starts same day as interest start date (SA)", DTD_2168, DTD_2244) {
@@ -1689,6 +1593,12 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
+        aDebtCalculationIsCreated(context, request)
+
+        When("the debt item is sent to the IFS service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service will return a total debts summary of")
         val expectedResponse = DebtCalculationsSummary(
           combinedDailyAccrual = 44,
           interestDueCallTotal = 3116,
@@ -1697,22 +1607,10 @@ class BreathingSpaceFeatureSpec
           unpaidAmountTotal = 500000,
           debtCalculations = List.empty
         )
-        aDebtCalculationIsCreated(context, request)
-
-        When("the debt item is sent to the IFS service")
-        theDebtItemIsSentToTheIfsService(context)
-
-        Then("the ifs service will return a total debts summary of")
-        theIfsServiceWillReturnATotalDebtsSummaryOf(
-          context,
-          expectedResponse
-        )
+        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
         And("the 1st debt summary will contain")
-        theDebtSummaryWillContain(
-          context,
-          1,
-          DebtCalculation(
+        val expectedDebtSummary = DebtCalculation(
             debtItemChargeId = None,
             debtID = Some("123"),
             interestBearing = true,
@@ -1724,14 +1622,11 @@ class BreathingSpaceFeatureSpec
             unpaidAmountDuty = 500000,
             interestOnlyIndicator = false,
             calculationWindows = Nil
-          )
         )
+        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the 1st debt summary will have calculation windows")
-        theDebtSummaryWillHaveCalculationWindows(
-          context,
-          1,
-          List(
+        val expectedCalculationWindows = List(
             CalculationWindow(
               periodFrom = LocalDate.parse("2018-12-16"),
               periodTo = LocalDate.parse("2019-02-03"),
@@ -1758,8 +1653,8 @@ class BreathingSpaceFeatureSpec
               suppressionApplied = None,
               suppressionsApplied = None
             )
-          )
         )
+        theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario(
@@ -1790,6 +1685,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 0,
         interestDueCallTotal = 0,
@@ -1798,22 +1699,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = false,
@@ -1825,8 +1714,8 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
     }
 
     Scenario("Breathing space that ends same day as interest requested", DTD_2371) { context =>
@@ -1858,6 +1747,12 @@ class BreathingSpaceFeatureSpec
           )
         )
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the IFS service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 0,
         interestDueCallTotal = 177,
@@ -1866,22 +1761,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the IFS service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -1893,14 +1776,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2024-01-01"),
             periodTo = LocalDate.parse("2024-01-03"),
@@ -1927,8 +1807,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario(
@@ -1986,6 +1866,12 @@ class BreathingSpaceFeatureSpec
           )
         )
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 0,
         interestDueCallTotal = 177,
@@ -1994,22 +1880,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -2021,14 +1895,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2024-01-01"),
             periodTo = LocalDate.parse("2024-01-03"),
@@ -2055,8 +1926,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario(
@@ -2086,6 +1957,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 0,
         interestDueCallTotal = 71,
@@ -2094,22 +1971,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -2121,14 +1986,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2022-01-01"),
             periodTo = LocalDate.parse("2022-01-03"),
@@ -2168,8 +2030,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario("Interest Bearing. 2 breathing spaces. First ends same day as interest requested to (SA)", DTD_2371) {
@@ -2201,6 +2063,12 @@ class BreathingSpaceFeatureSpec
           ),
           customerPostCodes = List.empty
         )
+        aDebtCalculationIsCreated(context, request)
+
+        When("the debt item is sent to the ifs service")
+        theDebtItemIsSentToTheIfsService(context)
+
+        Then("the ifs service will return a total debts summary of")
         val expectedResponse = DebtCalculationsSummary(
           combinedDailyAccrual = 0,
           interestDueCallTotal = 71,
@@ -2209,22 +2077,10 @@ class BreathingSpaceFeatureSpec
           unpaidAmountTotal = 500000,
           debtCalculations = List.empty
         )
-        aDebtCalculationIsCreated(context, request)
-
-        When("the debt item is sent to the ifs service")
-        theDebtItemIsSentToTheIfsService(context)
-
-        Then("the ifs service will return a total debts summary of")
-        theIfsServiceWillReturnATotalDebtsSummaryOf(
-          context,
-          expectedResponse
-        )
+        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
         And("the 1st debt summary will contain")
-        theDebtSummaryWillContain(
-          context,
-          1,
-          DebtCalculation(
+        val expectedDebtSummary = DebtCalculation(
             debtItemChargeId = None,
             debtID = Some("123"),
             interestBearing = true,
@@ -2236,14 +2092,11 @@ class BreathingSpaceFeatureSpec
             unpaidAmountDuty = 500000,
             interestOnlyIndicator = false,
             calculationWindows = Nil
-          )
         )
+        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the 1st debt summary will have calculation windows")
-        theDebtSummaryWillHaveCalculationWindows(
-          context,
-          1,
-          List(
+        val expectedCalculationWindows = List(
             CalculationWindow(
               periodFrom = LocalDate.parse("2021-01-01"),
               periodTo = LocalDate.parse("2021-01-03"),
@@ -2270,8 +2123,8 @@ class BreathingSpaceFeatureSpec
               suppressionApplied = None,
               suppressionsApplied = None
             )
-          )
         )
+        theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     Scenario(
@@ -2305,6 +2158,12 @@ class BreathingSpaceFeatureSpec
         ),
         customerPostCodes = List.empty
       )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
       val expectedResponse = DebtCalculationsSummary(
         combinedDailyAccrual = 35,
         interestDueCallTotal = 106,
@@ -2313,22 +2172,10 @@ class BreathingSpaceFeatureSpec
         unpaidAmountTotal = 500000,
         debtCalculations = List.empty
       )
-      aDebtCalculationIsCreated(context, request)
-
-      When("the debt item is sent to the ifs service")
-      theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service will return a total debts summary of")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        expectedResponse
-      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -2340,14 +2187,11 @@ class BreathingSpaceFeatureSpec
           unpaidAmountDuty = 500000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2021-01-01"),
             periodTo = LocalDate.parse("2021-01-03"),
@@ -2387,8 +2231,8 @@ class BreathingSpaceFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
   }
 }

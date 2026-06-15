@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem}
+import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
 import uk.gov.hmrc.test.api.models._
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
