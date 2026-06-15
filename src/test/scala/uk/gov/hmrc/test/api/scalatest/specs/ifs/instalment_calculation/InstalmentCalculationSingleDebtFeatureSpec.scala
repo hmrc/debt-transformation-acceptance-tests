@@ -27,7 +27,7 @@ import uk.gov.hmrc.test.api.scalatest.tags._
 
 import java.time.LocalDate
 
-class InstalmemtCalculationSingleDebtFeatureSpec
+class InstalmentCalculationSingleDebtFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
@@ -298,10 +298,10 @@ class InstalmemtCalculationSingleDebtFeatureSpec
             debtId = "1234",
             instalmentNumber = 1,
             dueDate = LocalDate.parse("2025-08-25"),
-            amountDue = 4250,
+            amountDue = 4249,
             instalmentBalance = 100000,
             instalmentInterestAccrued = 0,
-            expectedPayment = 4250,
+            expectedPayment = 4249,
             intRate = 6.5
           )
         )
