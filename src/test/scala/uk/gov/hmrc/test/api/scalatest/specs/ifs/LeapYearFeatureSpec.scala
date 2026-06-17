@@ -200,23 +200,18 @@ class LeapYearFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      theIfsServiceWillReturnATotalDebtsSummaryOf(
-        context,
-        DebtCalculationsSummary(
-          combinedDailyAccrual = 28,
-          interestDueCallTotal = 5933,
-          amountIntTotal = 405933,
-          amountOnIntDueTotal = 400000,
-          unpaidAmountTotal = 400000,
-          debtCalculations = List.empty
-        )
+      val expectedResponse = DebtCalculationsSummary(
+        combinedDailyAccrual = 28,
+        interestDueCallTotal = 5933,
+        amountIntTotal = 405933,
+        amountOnIntDueTotal = 400000,
+        unpaidAmountTotal = 400000,
+        debtCalculations = List.empty
       )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      theDebtSummaryWillContain(
-        context,
-        1,
-        DebtCalculation(
+      val expectedDebtSummary = DebtCalculation(
           debtItemChargeId = None,
           debtID = Some("123"),
           interestBearing = true,
@@ -228,13 +223,11 @@ class LeapYearFeatureSpec
           unpaidAmountDuty = 400000,
           interestOnlyIndicator = false,
           calculationWindows = Nil
-        )
       )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
+
       And("the 1st debt summary will have calculation windows")
-      theDebtSummaryWillHaveCalculationWindows(
-        context,
-        1,
-        List(
+      val expectedCalculationWindows = List(
           CalculationWindow(
             periodFrom = LocalDate.parse("2019-12-16"),
             periodTo = LocalDate.parse("2019-12-31"),
@@ -339,8 +332,8 @@ class LeapYearFeatureSpec
             suppressionApplied = None,
             suppressionsApplied = None
           )
-        )
       )
+      theDebtSummaryWillHaveCalculationWindows(context, 1,expectedCalculationWindows)
     }
 
     ignore("Debt spanning multiple leap years") { context =>

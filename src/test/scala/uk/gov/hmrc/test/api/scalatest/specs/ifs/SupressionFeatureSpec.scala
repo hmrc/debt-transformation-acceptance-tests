@@ -19,22 +19,23 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags._
 
 class SupressionFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
-    with FCInterestForecastingStepHelpers
+    with SuppressionStepHelpers
     with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers {
 
-  override type FixtureParam = FCStatementOfLiabilityContext
+  override type FixtureParam = InterestForecastingContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = FCStatementOfLiabilityContext()
+    val context = InterestForecastingContext()
     try test(context)
     finally ()
   }

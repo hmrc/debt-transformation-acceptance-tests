@@ -102,6 +102,17 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     println(jsonResponseBody)
   }
 
+  def theDebtItemIsSentToTheIfsServiceAndFails(
+    context: InterestForecastingContext
+    ): Unit = {
+    val requestJson = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+    val response = InterestForecastingBuilder.getDebtCalculation(requestJson)
+
+    context.response = response
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+  }
+
   // ^the debt interest type request is sent to the ifs service$
   def theDebtInterestTypeRequestIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
     val requestJson                    = Json.toJson(context.ditRequest.getOrElse(fail("Missing request in context")))
