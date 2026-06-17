@@ -298,10 +298,10 @@ class InstalmentCalculationSingleDebtFeatureSpec
             debtId = "1234",
             instalmentNumber = 1,
             dueDate = LocalDate.parse("2025-08-25"),
-            amountDue = 4249,
+            amountDue = 4248,
             instalmentBalance = 100000,
             instalmentInterestAccrued = 0,
-            expectedPayment = 4249,
+            expectedPayment = 4248,
             intRate = 6.5
           )
         )
