@@ -26,7 +26,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingSt
 import java.time.LocalDate
 
 class InstalmentCalculationMultipleDutiesFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
