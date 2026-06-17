@@ -27,7 +27,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingSt
 import java.time.LocalDate
 
 class InstalmentCalculationSingleDutyFeatureSpec
-  extends FixtureAnyFeatureSpec
+    extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with FCInterestForecastingStepHelpers
@@ -143,7 +143,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
 
     }
 
-    Scenario("Payment plan calculation instalment - 4Weekly payment frequency with end of month instalment start Date") { context =>
+    Scenario(
+      "Payment plan calculation instalment - 4Weekly payment frequency with end of month instalment start Date"
+    ) { context =>
       Given("instalment calculation details")
       val ifsRequest = InstalmentCalculationRequest(
         debtItemCharges = Some(
@@ -176,7 +178,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
 
     }
 
-    Scenario("Payment plan calculation instalment - Quarterly payment frequency with end of Leap year instalment Date") { context =>
+    Scenario(
+      "Payment plan calculation instalment - Quarterly payment frequency with end of Leap year instalment Date"
+    ) { context =>
       Given("instalment calculation details")
       val ifsRequest = InstalmentCalculationRequest(
         debtItemCharges = Some(
@@ -209,7 +213,9 @@ class InstalmentCalculationSingleDutyFeatureSpec
 
     }
 
-    Scenario("Payment plan calculation instalment - 6Monthly payment frequency instalment Date starts in non leap year to Leap year") { context =>
+    Scenario(
+      "Payment plan calculation instalment - 6Monthly payment frequency instalment Date starts in non leap year to Leap year"
+    ) { context =>
       Given("instalment calculation details")
       val ifsRequest = InstalmentCalculationRequest(
         debtItemCharges = Some(
@@ -349,9 +355,36 @@ class InstalmentCalculationSingleDutyFeatureSpec
         totalInterest = 5320,
         duration = 5,
         instalments = Seq(
-          InstalmentResponse(debtId = "Debt1", instalmentNumber = 1, dueDate = LocalDate.parse("2021-07-01"), amountDue = 60000, instalmentBalance = 100000, instalmentInterestAccrued = 17, expectedPayment = 10680, intRate = 3.25),
-          InstalmentResponse(debtId = "Debt1", instalmentNumber = 2, dueDate = LocalDate.parse("2021-08-01"), amountDue = 15000, instalmentBalance = 100000, instalmentInterestAccrued = 17, expectedPayment = 10680, intRate = 3.25),
-          InstalmentResponse(debtId = "Debt1", instalmentNumber = 5, dueDate = LocalDate.parse("2021-11-01"), amountDue = 320, instalmentBalance = 100000, instalmentInterestAccrued = 17, expectedPayment = 10680, intRate = 3.25)
+          InstalmentResponse(
+            debtId = "Debt1",
+            instalmentNumber = 1,
+            dueDate = LocalDate.parse("2021-07-01"),
+            amountDue = 60000,
+            instalmentBalance = 100000,
+            instalmentInterestAccrued = 17,
+            expectedPayment = 10680,
+            intRate = 3.25
+          ),
+          InstalmentResponse(
+            debtId = "Debt1",
+            instalmentNumber = 2,
+            dueDate = LocalDate.parse("2021-08-01"),
+            amountDue = 15000,
+            instalmentBalance = 100000,
+            instalmentInterestAccrued = 17,
+            expectedPayment = 10680,
+            intRate = 3.25
+          ),
+          InstalmentResponse(
+            debtId = "Debt1",
+            instalmentNumber = 5,
+            dueDate = LocalDate.parse("2021-11-01"),
+            amountDue = 320,
+            instalmentBalance = 100000,
+            instalmentInterestAccrued = 17,
+            expectedPayment = 10680,
+            intRate = 3.25
+          )
         )
       )
       ifsResponseContainsExpectedValues(context, expectedInstalmentResponse)
