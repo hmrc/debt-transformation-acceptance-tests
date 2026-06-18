@@ -187,4 +187,19 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
     WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, jsonRequest)
   }
 
+  def updateSuppressionData(json: JsValue): StandaloneWSResponse = {
+    val bearerToken = createBearerToken(
+      enrolments = Seq("read:suppression-data"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val headers     = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    print("url ************************" + baseUri)
+    WsClient.put(baseUri, headers = headers, json)
+  }
+
 }

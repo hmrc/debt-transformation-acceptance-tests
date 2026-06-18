@@ -21,7 +21,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.ifs.InstalmentCalculationRequest
-import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
+import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse, SuppressionRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import java.time.LocalDate
@@ -41,6 +41,12 @@ trait IFSInstalmentCalculationStepHelpers {
     request: InstalmentCalculationRequest
   ): Unit =
     context.ifsRequest = Some(request)
+
+  def suppressionInformationDetails(
+    context: IFSInstalmentCalculationContext,
+    request: SuppressionRequest
+  ): Unit =
+    context.siRequest = Some(request)
 
   // ^debt instalment calculation with 129 details$
   def debtInstalmentCalculationWith129Details(context: IFSInstalmentCalculationContext): Unit = {
@@ -105,6 +111,28 @@ trait IFSInstalmentCalculationStepHelpers {
 
     println("\n==== RESPONSE BODY ====")
     println(jsonResponseBody)
+  }
+
+  def theSuppressionConfigurationIsSentToTheIfsService(context: IFSInstalmentCalculationContext): Unit = {
+    val requestJson                    = Json.toJson(context.siRequest.getOrElse(fail("Missing request in context")))
+    val response: StandaloneWSResponse = IFSInstalmentCalculationBuilder.updateSuppressionData(requestJson)
+    context.response = response
+
+    context.status = response.status
+    context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
+
+    println("\n==== SUPPRESSION REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== SUPPRESSION RESPONSE STATUS ====")
+    println(context.status)
+
+    withClue(s"Incorrect status with body : ${response.body}\n\n") {
+      response.status should be(200)
+    }
+
+    println("\n==== SUPPRESSION DATA RESPONSE BODY ====")
+    println(response.body)
   }
 
   // ^the instalment calculation is sent to the ifs service with query parameters$
@@ -362,10 +390,8 @@ trait IFSInstalmentCalculationStepHelpers {
 
   // ^the IFS request should return status (.*)$
   def theIfsRequestShouldReturnStatus(context: IFSInstalmentCalculationContext, status: Int): Unit = {
-    // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
-    // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
-    // response.status shouldBe status
-    // TODO: Implement typed helper for this step.
+    val response: StandaloneWSResponse = context.response
+    response.status shouldBe status
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) instalment should have an interest accrued of (.*)$
@@ -374,11 +400,10 @@ trait IFSInstalmentCalculationStepHelpers {
     index: Int,
     interestAccrued: Int
   ): Unit = {
-    // Migration hint: legacy IFSInstalmentCalculationContext usage, response assertion
-    // val response: StandaloneWSResponse = IFSInstalmentCalculationContext.get("response")
-    // val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
-    // responseBody.instalments(index - 1).instalmentInterestAccrued shouldBe interestAccrued
-    // TODO: Implement typed helper for this step.
+    val response: StandaloneWSResponse = context.response
+    val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
+
+    responseBody.instalments(index - 1).instalmentInterestAccrued shouldBe interestAccrued
   }
 
   // ^ifs service returns monthly payment frequency instalment calculation plan$

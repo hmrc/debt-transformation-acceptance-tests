@@ -19,8 +19,13 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
+import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
+import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
+import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.tags.DTD_417
+
+import java.time.LocalDate
 
 class InstalmentCalculationSuppressionsFeatureSpec
     extends FixtureAnyFeatureSpec
@@ -30,313 +35,424 @@ class InstalmentCalculationSuppressionsFeatureSpec
     with IFSInstalmentCalculationStepHelpers
     with InterestForecastingStepHelpers {
 
-  override type FixtureParam = FCStatementOfLiabilityContext
+  override type FixtureParam = IFSInstalmentCalculationContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = FCStatementOfLiabilityContext()
+    val context = IFSInstalmentCalculationContext()
     try test(context)
     finally ()
   }
 
   Feature("Suppression Period ends after quote date") {
+    val dateInFuture = Some(LocalDate.now().plusYears(1).toString)
 
-    ignore("Instalment calculation has been requested where a postcode suppression period ends after the quote date") {
-      context =>
-        Given("suppression configuration data is created")
-        // TODO: No matching helper method found for this step. Validate and call the correct helper.
-        // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+    Scenario(
+      "Instalment calculation has been requested where a postcode suppression period ends after the quote date"
+    ) { context =>
+      Given("suppression configuration data is created")
+      val suppressionRequest = SuppressionRequest(suppressions =
+        Seq(
+          SuppressionInformation(
+            dateFrom = "2024-03-01",
+            dateTo = dateInFuture,
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1000"),
+            checkPeriodEnd = None
+          )
+        )
+      )
+      suppressionInformationDetails(context, suppressionRequest)
 
-        When("suppression configuration is sent to ifs service")
-        // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      When("suppression configuration is sent to ifs service")
+      theSuppressionConfigurationIsSentToTheIfsService(context)
 
-        And("debt instalment calculation with details")
-        // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // debtInstalmentCalculationWithDetails(context)
+      And("instalment calculation details with postcode date a year in the past")
+      val ifsRequest = InstalmentCalculationRequest(
+        debtItemCharges = Some(
+          List(
+            DebtItemCharge(
+              debtId = "debtId",
+              debtAmount = 100000,
+              mainTrans = "1525",
+              subTrans = "1000"
+            )
+          )
+        ),
+        quoteDate = LocalDate.now(),
+        quoteType = "duration",
+        isQuoteDateNonInclusive = None,
+        instalmentPaymentDate = LocalDate.now.plusDays(1),
+        paymentFrequency = "monthly",
+        duration = None,
+        customerPostCodes = Some(
+          List(
+            InstallmentCalculationCustomerPostCode(
+              postCode = "BS39 5DP",
+              postCodeDate = LocalDate.now().minusYears(1).toString
+            )
+          )
+        ),
+        interestCallDueTotal = 1423,
+        instalmentPaymentAmount = Some(10000)
+      )
+      instalmentCalculationDetails(context, ifsRequest)
 
-        And("the instalment calculation has postcode BS39 5DP with postcode date a year in the past")
-        // TODO: Helper 'theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context)
+      And("the instalment calculation detail is sent to the ifs service")
+      theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
-        And("no initial payment for the debt item charge")
-        // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // noInitialPaymentForTheDebtItemCharge(context)
+      Then("the IFS request should return status 200")
+      theIfsRequestShouldReturnStatus(context, 200)
 
-        And("the instalment calculation has debt item charges")
-        // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theInstalmentCalculationHasDebtItemCharges(context)
+      And("the 1st instalment should have an interest accrued of 0")
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 1, 0)
 
-        When("the instalment calculation detail is sent to the ifs service")
-        // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theInstalmentCalculationDetailIsSentToTheIfsService(context)
-
-        Then("the IFS request should return status 200")
-        // TODO: Helper 'theIfsRequestShouldReturnStatus' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theIfsRequestShouldReturnStatus(context)
-
-        And("the 1st instalment should have an interest accrued of 0")
-        // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theInstalmentShouldHaveAnInterestAccruedOf(context)
-
-        And("the 2nd instalment should have an interest accrued of 0")
-        // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-        // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-        // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      And("the 2nd instalment should have an interest accrued of 0")
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 2, 0)
 
     }
-    ignore(
+
+    Scenario(
       "Instalment calculation has been requested where a period end suppression period ends after the quote date"
     ) { context =>
       Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+      val suppressionRequest = SuppressionRequest(suppressions =
+        Seq(
+          SuppressionInformation(
+            dateFrom = "2024-03-01",
+            dateTo = dateInFuture,
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1000"),
+            checkPeriodEnd = None
+          )
+        )
+      )
+      suppressionInformationDetails(context, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      theSuppressionConfigurationIsSentToTheIfsService(context)
 
-      And("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+      And("instalment calculation details with postcode date a year in the past")
+      val ifsRequest = InstalmentCalculationRequest(
+        debtItemCharges = Some(
+          List(
+            DebtItemCharge(
+              debtId = "debtId",
+              debtAmount = 100000,
+              mainTrans = "1525",
+              subTrans = "1000"
+            )
+          )
+        ),
+        quoteDate = LocalDate.now(),
+        quoteType = "duration",
+        isQuoteDateNonInclusive = None,
+        instalmentPaymentDate = LocalDate.now.plusDays(1),
+        paymentFrequency = "monthly",
+        duration = None,
+        customerPostCodes = Some(
+          List(
+            InstallmentCalculationCustomerPostCode(
+              postCode = "TW3",
+              postCodeDate = LocalDate.now().minusYears(1).toString
+            )
+          )
+        ),
+        interestCallDueTotal = 1423,
+        instalmentPaymentAmount = Some(10000)
+      )
+      instalmentCalculationDetails(context, ifsRequest)
 
-      And("the instalment calculation has postcode TW3 with postcode date a year in the past")
-      // TODO: Helper 'theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context)
-
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+      And("the instalment calculation detail is sent to the ifs service")
+      theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
       Then("the IFS request should return status 200")
-      // TODO: Helper 'theIfsRequestShouldReturnStatus' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsRequestShouldReturnStatus(context)
+      theIfsRequestShouldReturnStatus(context, 200)
 
       And("the 1st instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 1, 0)
 
       And("the 2nd instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 2, 0)
 
     }
-    ignore(
+
+    Scenario(
       "Instalment calculation has been requested where a main trans suppression period ends after the quote date"
     ) { context =>
       Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+      val suppressionRequest = SuppressionRequest(suppressions =
+        Seq(
+          SuppressionInformation(
+            dateFrom = "2024-03-01",
+            dateTo = dateInFuture,
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1000"),
+            checkPeriodEnd = None
+          )
+        )
+      )
+      suppressionInformationDetails(context, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      theSuppressionConfigurationIsSentToTheIfsService(context)
 
-      And("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+      And("instalment calculation details with postcode date a year in the past")
+      val ifsRequest = InstalmentCalculationRequest(
+        debtItemCharges = Some(
+          List(
+            DebtItemCharge(
+              debtId = "debtId",
+              debtAmount = 100000,
+              mainTrans = "1525",
+              subTrans = "1000",
+              periodEnd = Some(LocalDate.parse("2021-08-16"))
+            )
+          )
+        ),
+        quoteDate = LocalDate.now(),
+        quoteType = "duration",
+        isQuoteDateNonInclusive = None,
+        instalmentPaymentDate = LocalDate.now.plusDays(1),
+        paymentFrequency = "monthly",
+        duration = None,
+        customerPostCodes = Some(
+          List(
+            InstallmentCalculationCustomerPostCode(
+              postCode = "TW3",
+              postCodeDate = LocalDate.now().minusYears(1).toString
+            )
+          )
+        ),
+        interestCallDueTotal = 1423,
+        instalmentPaymentAmount = Some(10000)
+      )
+      instalmentCalculationDetails(context, ifsRequest)
 
-      And("the instalment calculation has postcode TW3 with postcode date a year in the past")
-      // TODO: Helper 'theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context)
-
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+      And("the instalment calculation detail is sent to the ifs service")
+      theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
       Then("the IFS request should return status 200")
-      // TODO: Helper 'theIfsRequestShouldReturnStatus' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsRequestShouldReturnStatus(context)
+      theIfsRequestShouldReturnStatus(context, 200)
 
       And("the 1st instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 1, 0)
 
       And("the 2nd instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 2, 0)
 
     }
-    ignore("Should calculate instalment where suppression period ends after the quote date") { context =>
+
+    Scenario("Should calculate instalment where suppression period ends after the quote date", DTD_417) { context =>
       Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+      val suppressionRequest = SuppressionRequest(suppressions =
+        Seq(
+          SuppressionInformation(
+            dateFrom = "2024-03-01",
+            dateTo = dateInFuture,
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1000"),
+            checkPeriodEnd = None
+          )
+        )
+      )
+      suppressionInformationDetails(context, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      theSuppressionConfigurationIsSentToTheIfsService(context)
 
-      And("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+      And("instalment calculation details with postcode date a year in the past")
+      val ifsRequest = InstalmentCalculationRequest(
+        debtItemCharges = Some(
+          List(
+            DebtItemCharge(
+              debtId = "debtId",
+              debtAmount = 100000,
+              mainTrans = "1525",
+              subTrans = "1000"
+            )
+          )
+        ),
+        quoteDate = LocalDate.now(),
+        quoteType = "instalmentAmount",
+        isQuoteDateNonInclusive = None,
+        instalmentPaymentDate = LocalDate.now.plusDays(1),
+        paymentFrequency = "monthly",
+        duration = Some(24),
+        customerPostCodes = Some(
+          List(
+            InstallmentCalculationCustomerPostCode(
+              postCode = "BS39 5DP",
+              postCodeDate = LocalDate.now().minusYears(1).toString
+            )
+          )
+        ),
+        interestCallDueTotal = 0,
+        instalmentPaymentAmount = None
+      )
+      instalmentCalculationDetails(context, ifsRequest)
 
-      And("the instalment calculation has postcode BS39 5DP with postcode date a year in the past")
-      // TODO: Helper 'theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context)
-
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+      And("the instalment calculation detail is sent to the ifs service")
+      theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
       Then("the IFS request should return status 200")
-      // TODO: Helper 'theIfsRequestShouldReturnStatus' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsRequestShouldReturnStatus(context)
+      theIfsRequestShouldReturnStatus(context, 200)
 
       And("the 1st instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 1, 0)
 
       And("the 2nd instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 2, 0)
 
     }
-    ignore("Should calculate instalment where a period end suppression period ends after the quote date") { context =>
+
+    Scenario("Should calculate instalment where a period end suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+      val suppressionRequest = SuppressionRequest(suppressions =
+        Seq(
+          SuppressionInformation(
+            dateFrom = "2024-03-01",
+            dateTo = dateInFuture,
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1000"),
+            checkPeriodEnd = None
+          )
+        )
+      )
+      suppressionInformationDetails(context, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      theSuppressionConfigurationIsSentToTheIfsService(context)
 
-      And("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+      And("instalment calculation details with postcode date a year in the past")
+      val ifsRequest = InstalmentCalculationRequest(
+        debtItemCharges = Some(
+          List(
+            DebtItemCharge(
+              debtId = "debtId",
+              debtAmount = 100000,
+              mainTrans = "1525",
+              subTrans = "1000"
+            )
+          )
+        ),
+        quoteDate = LocalDate.now(),
+        quoteType = "instalmentAmount",
+        isQuoteDateNonInclusive = None,
+        instalmentPaymentDate = LocalDate.now.plusDays(1),
+        paymentFrequency = "monthly",
+        duration = Some(24),
+        customerPostCodes = Some(
+          List(
+            InstallmentCalculationCustomerPostCode(
+              postCode = "TW3",
+              postCodeDate = LocalDate.now().minusYears(1).toString
+            )
+          )
+        ),
+        interestCallDueTotal = 0,
+        instalmentPaymentAmount = None
+      )
+      instalmentCalculationDetails(context, ifsRequest)
 
-      And("the instalment calculation has postcode TW3 with postcode date a year in the past")
-      // TODO: Helper 'theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context)
-
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+      And("the instalment calculation detail is sent to the ifs service")
+      theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
       Then("the IFS request should return status 200")
-      // TODO: Helper 'theIfsRequestShouldReturnStatus' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsRequestShouldReturnStatus(context)
+      theIfsRequestShouldReturnStatus(context, 200)
 
       And("the 1st instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 1, 0)
 
       And("the 2nd instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 2, 0)
 
     }
-    ignore("Should calculate instalment where a main trans suppression period ends after the quote date") { context =>
+
+    Scenario("Should calculate instalment where a main trans suppression period ends after the quote date") { context =>
       Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
+      val suppressionRequest = SuppressionRequest(suppressions =
+        Seq(
+          SuppressionInformation(
+            dateFrom = "2024-03-01",
+            dateTo = dateInFuture,
+            reason = "LEGISLATIVE",
+            reasonDesc = "COVID",
+            suppressionChargeDescription = "SA-Suppression",
+            postcode = None,
+            mainTrans = None,
+            subTrans = Some("1000"),
+            checkPeriodEnd = None
+          )
+        )
+      )
+      suppressionInformationDetails(context, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
+      theSuppressionConfigurationIsSentToTheIfsService(context)
 
-      And("debt instalment calculation with details")
-      // TODO: Helper 'debtInstalmentCalculationWithDetails' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // debtInstalmentCalculationWithDetails(context)
+      And("instalment calculation details with postcode date a year in the past")
+      val ifsRequest = InstalmentCalculationRequest(
+        debtItemCharges = Some(
+          List(
+            DebtItemCharge(
+              debtId = "debtId",
+              debtAmount = 100000,
+              mainTrans = "1525",
+              subTrans = "1000",
+              periodEnd = Some(LocalDate.parse("2021-08-16"))
+            )
+          )
+        ),
+        quoteDate = LocalDate.now(),
+        quoteType = "instalmentAmount",
+        isQuoteDateNonInclusive = None,
+        instalmentPaymentDate = LocalDate.now.plusDays(1),
+        paymentFrequency = "monthly",
+        duration = Some(24),
+        customerPostCodes = Some(
+          List(
+            InstallmentCalculationCustomerPostCode(
+              postCode = "TW3",
+              postCodeDate = LocalDate.now().minusYears(1).toString
+            )
+          )
+        ),
+        interestCallDueTotal = 0,
+        instalmentPaymentAmount = None
+      )
+      instalmentCalculationDetails(context, ifsRequest)
 
-      And("the instalment calculation has postcode TW3 with postcode date a year in the past")
-      // TODO: Helper 'theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasPostcodeWithPostcodeDateAYearInThePast(context)
-
-      And("no initial payment for the debt item charge")
-      // TODO: Helper 'noInitialPaymentForTheDebtItemCharge' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noInitialPaymentForTheDebtItemCharge(context)
-
-      And("the instalment calculation has debt item charges")
-      // TODO: Helper 'theInstalmentCalculationHasDebtItemCharges' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationHasDebtItemCharges(context)
-
-      When("the instalment calculation detail is sent to the ifs service")
-      // TODO: Helper 'theInstalmentCalculationDetailIsSentToTheIfsService' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentCalculationDetailIsSentToTheIfsService(context)
+      And("the instalment calculation detail is sent to the ifs service")
+      theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
       Then("the IFS request should return status 200")
-      // TODO: Helper 'theIfsRequestShouldReturnStatus' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsRequestShouldReturnStatus(context)
+      theIfsRequestShouldReturnStatus(context, 200)
 
       And("the 1st instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 1, 0)
 
       And("the 2nd instalment should have an interest accrued of 0")
-      // TODO: Helper 'theInstalmentShouldHaveAnInterestAccruedOf' expects context 'IFSInstalmentCalculationContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theInstalmentShouldHaveAnInterestAccruedOf(context)
+      theInstalmentShouldHaveAnInterestAccruedOf(context, 2, 0)
 
     }
   }

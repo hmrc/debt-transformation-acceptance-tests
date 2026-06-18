@@ -28,7 +28,8 @@ final case class DebtItemCharge(
   debtAmount: BigDecimal,
   subTrans: String,
   mainTrans: String,
-  interestStartDate: Option[LocalDate] = None
+  interestStartDate: Option[LocalDate] = None,
+  periodEnd: Option[LocalDate] = None
 )
 
 object DebtItemCharge {
@@ -36,8 +37,8 @@ object DebtItemCharge {
 }
 
 final case class InstallmentCalculationCustomerPostCode(
-  postcode: String,
-  postcodeDate: String
+  postCode: String,
+  postCodeDate: String
 )
 
 object InstallmentCalculationCustomerPostCode {
