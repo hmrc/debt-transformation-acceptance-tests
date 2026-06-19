@@ -10,7 +10,8 @@ final case class DebtItem(
   interestStartDate: Option[String],
   interestRequestedTo: String,
   breathingSpaces: Option[List[BreathingSpaces]],
-  paymentHistory: Option[List[PaymentHistory]]
+  paymentHistory: Option[List[PaymentHistory]],
+  periodEnd: Option[String] = None
 )
 
 object DebtItem {
