@@ -104,12 +104,22 @@ trait InterestForecastingStepHelpers { this: Matchers =>
 
   // ^the debt interest type request is sent to the ifs service$
   def theDebtInterestTypeRequestIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage
-    // val request  = InterestForecastingContext.get("debtInterestTypes").toString
-    // println(s"IFS REQUEST --> $request")
-    // val response = getDebtInterestTypeRequestBody(request)
-    // println(s"IFS Service RESPONSE --> ${response.body}")
-    // TODO: Implement typed helper for this step.
+    val requestJson                    = Json.toJson(context.ditRequest.getOrElse(fail("Missing request in context")))
+    val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtInterestTypeRequestBody(context, requestJson)
+    context.response = response
+
+    val jsonResponseBody = response.body[JsValue]
+    context.ditResponseBody = Some(jsonResponseBody.as[DebtInterestTypeResponse])
+    context.status = response.status
+
+    println("\n==== REQUEST BODY ====")
+    println(requestJson)
+
+    println("\n==== RESPONSE STATUS ====")
+    println(context.status)
+
+    println("\n==== RESPONSE BODY ====")
+    println(jsonResponseBody)
   }
 
   // ^the ifs service will return a total debts summary of$
@@ -402,21 +412,43 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   }
 
   // ^a debt interest type item$
-  def aDebtInterestTypeItem(context: InterestForecastingContext): Unit = {
-    // createInterestTypeRequestBody(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
+  def aDebtInterestTypeItem(context: InterestForecastingContext, debtInterestType: Seq[DebtInterestTypeRequest]): Unit =
+    context.ditRequest = Some(debtInterestType)
 
   // ^the ([0-9])(?:st|nd|rd|th) debt interest type response summary will contain$
-  def theDebtInterestTypeResponseSummaryWillContain(context: InterestForecastingContext, index: Int): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.status should be(200)
-    // val responseBody: DebtInterestType = Json.parse(response.body).as[DebtInterestTypeResponse].debts(index - 1)
-    // locally {
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+  def theDebtInterestTypeResponseSummaryWillContain(
+    context: InterestForecastingContext,
+    index: Int,
+    expectedResponse: DebtInterestType
+  ): Unit = {
+    val response: StandaloneWSResponse = context.response
+    response.status should be(200)
+
+    val responseBody: DebtInterestType = Json.parse(response.body).as[DebtInterestTypeResponse].debts(index - 1)
+
+    locally {
+      withClue("interestBearing") {
+        responseBody.interestBearing shouldBe expectedResponse.interestBearing
+      }
+    }
+    locally {
+
+      withClue(s"mainTrans") {
+        responseBody.mainTrans shouldBe expectedResponse.mainTrans
+      }
+    }
+
+    locally {
+      withClue("subTrans") {
+        responseBody.subTrans shouldBe expectedResponse.subTrans
+      }
+    }
+
+    locally {
+      withClue("useChargeReference") {
+        responseBody.useChargeReference shouldBe expectedResponse.useChargeReference
+      }
+    }
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt applied suppression summary contains values as$

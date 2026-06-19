@@ -198,7 +198,7 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
-  def getDebtInterestTypeRequestBody(context: InterestForecastingContext, json: String): StandaloneWSResponse = {
+  def getDebtInterestTypeRequestBody(context: InterestForecastingContext, json: JsValue): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
@@ -210,9 +210,9 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
     print("IFS debt-interest type baseUri ************************" + baseUri)
-    print("IFS debt-interest Type json********************" + Json.parse(json))
+    print("IFS debt-interest Type json********************" + json)
 
-    WsClient.post(baseUri, headers = headers, Json.parse(json))
+    WsClient.post(baseUri, headers = headers, json)
   }
 
 }
