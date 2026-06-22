@@ -16,14 +16,13 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs
 
-import org.scalatest.{GivenWhenThen, Outcome}
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.{GivenWhenThen, Outcome}
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
 import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
-import uk.gov.hmrc.test.api.scalatest.tags._
 
 import java.time.LocalDate
 
@@ -812,7 +811,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
     }
-    // check if this is ok
+
     Scenario("7. 1 debt with a payment amount greater than original debt amount") { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
@@ -856,6 +855,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
           DebtItem(
             debtID = Some("123"),
             originalAmount = 500000,
+            dateCreated = Some("2020-12-22"),
             subTrans = "1000",
             mainTrans = "1525",
             interestStartDate = Some("2020-10-16"),
