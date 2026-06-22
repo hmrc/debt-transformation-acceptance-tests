@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
+import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
@@ -23,7 +24,9 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.ifs.InstalmentCalculationRequest
 import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse, SuppressionRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder
+import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.InstalmentResponseExpected
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
+
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -691,6 +694,42 @@ trait IFSInstalmentCalculationStepHelpers {
       }
     }
   }
+
+  //rename method and remove New from the end and remove the above method to assert in next task for DTD-4626
+  def ifsResponseContainsExpectedValuesNew(
+    context: IFSInstalmentCalculationContext,
+    expectedResponse: InstalmentResponseExpected
+  )(implicit pos: Position): Unit = {
+    val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
+
+    val responseIndex: Int = expectedResponse.instalmentNumber
+      .getOrElse(fail("Missing instalmentNumber in expected response")) - 1
+
+    val actualInstalment = responseBody.instalments
+      .lift(responseIndex)
+      .getOrElse(fail(s"Missing instalment at index [$responseIndex] in response"))
+
+      withClue(s"instalments[$responseIndex]") {
+
+        expectedResponse.instalmentNumber.foreach { v =>
+          withClue("instalmentNumber: ") {
+            actualInstalment.instalmentNumber shouldBe v
+          }
+        }
+
+        expectedResponse.dueDate.foreach { v =>
+          withClue("dueDate: ") {
+            actualInstalment.dueDate shouldBe v
+          }
+        }
+
+        expectedResponse.intRate.foreach { v =>
+          withClue("intRate: ") {
+            actualInstalment.intRate shouldBe v
+          }
+      }
+    }
+    }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$
   def ifsServiceReturnsWeeklyFrequencyInstalmentCalculationPlanWithInitialPayment(

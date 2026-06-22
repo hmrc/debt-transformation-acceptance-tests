@@ -21,6 +21,8 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
 
+import java.time.LocalDate
+
 object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
 
   // -----------------------------------------------------------------------
@@ -146,6 +148,17 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
   // -----------------------------------------------------------------------
   // HTTP client methods lifted from legacy Requests with typed context access.
   // -----------------------------------------------------------------------
+
+  final case class InstalmentResponseExpected(
+    debtId: Option[String] = None,
+    instalmentNumber: Option[Int] = None,
+    dueDate: Option[LocalDate] = None,
+    amountDue: Option[Int] = None,
+    instalmentBalance: Option[Int] = None,
+    instalmentInterestAccrued: Option[Int] = None,
+    expectedPayment: Option[Int] = None,
+    intRate: Option[Double] = None
+  )
 
   def getInstalmentCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken =

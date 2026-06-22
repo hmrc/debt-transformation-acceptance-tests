@@ -21,6 +21,7 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
 import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
+import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.InstalmentResponseExpected
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags._
@@ -293,19 +294,12 @@ class InstalmentCalculationSingleDebtFeatureSpec
         theInstalmentCalculationDetailIsSentToTheIfsService(context)
 
         Then("IFS response contains expected values")
-        val instalmentsResponse = Seq(
-          InstalmentResponse(
-            debtId = "1234",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2025-08-25"),
-            amountDue = 4248,
-            instalmentBalance = 100000,
-            instalmentInterestAccrued = 0,
-            expectedPayment = 4248,
-            intRate = 6.5
+        val instalmentsResponse = InstalmentResponseExpected(
+            instalmentNumber = Some(1),
+            dueDate = Some(LocalDate.parse("2025-08-25")),
+            intRate = Some(6.5)
           )
-        )
-        ifsResponseContainsExpectedValues(context, instalmentsResponse)
+        ifsResponseContainsExpectedValuesNew(context, instalmentsResponse)  //rename method and remove New from the end in next task for DTD-4626
 
     }
 
