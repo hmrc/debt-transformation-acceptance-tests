@@ -242,7 +242,6 @@ class MultipeDebtItemsFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")

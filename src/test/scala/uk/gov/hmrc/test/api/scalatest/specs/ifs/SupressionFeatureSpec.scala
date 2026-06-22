@@ -40,214 +40,16 @@ class SupressionFeatureSpec
 
   override def withFixture(test: OneArgTest) = {
     val context = InterestForecastingContext()
-
     try test(context)
     finally ()
   }
 
   Feature("Suppression") {
-
-    ignore("Suppression - full address postCode") { context =>
-      Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-      And("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
-
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
-
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-      And("the customer has post codes")
-      // TODO: Helper 'theCustomerHasPostCodes' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theCustomerHasPostCodes(context)
-
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
-
-    }
-    ignore("Suppression - Partial postCode Suppression") { context =>
-      Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-      And("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
-
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
-
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-      And("the customer has post codes")
-      // TODO: Helper 'theCustomerHasPostCodes' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theCustomerHasPostCodes(context)
-
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
-
-    }
-    ignore("Suppression - Missing mainTrans") { context =>
-      Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-      And("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
-
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
-
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-      And("the customer has post codes")
-      // TODO: Helper 'theCustomerHasPostCodes' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theCustomerHasPostCodes(context)
-
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
-
-    }
-    ignore("Suppression - Missing SubTrans") { context =>
-      Given("suppression configuration data is created")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-      // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-      When("suppression configuration is sent to ifs service")
-      // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-      And("a debt item")
-      // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // aDebtItem(context)
-
-      And("the debt item has no payment history")
-      // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemHasNoPaymentHistory(context)
-
-      And("no breathing spaces have been applied to the debt item")
-      // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-      And("the customer has post codes")
-      // TODO: Helper 'theCustomerHasPostCodes' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theCustomerHasPostCodes(context)
-
-      When("the debt item is sent to the ifs service")
-      // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtItemIsSentToTheIfsService(context)
-
-      Then("the ifs service wilL return a total debts summary of")
-      // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-      And("the 1st debt summary will contain")
-      // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillContain(context)
-
-      And("the 1st debt summary will have calculation windows")
-      // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-      // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-      // theDebtSummaryWillHaveCalculationWindows(context)
-
-    }
+    val suppressionContext = SuppressionRulesContext()
 
     Scenario(
       "Suppression, 2 payments on different dates during suppression"
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -402,7 +204,6 @@ class SupressionFeatureSpec
     Scenario(
       "Suppression, 2 debts 2 payments on same day for one of the debts"
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -600,7 +401,6 @@ class SupressionFeatureSpec
     Scenario(
       "Suppression, 2 payments after suppression dates"
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -780,7 +580,6 @@ class SupressionFeatureSpec
     Scenario(
       "Suppression, open ended suppression no payment history"
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -884,7 +683,6 @@ class SupressionFeatureSpec
     Scenario(
       "Suppression, open ended suppression with payment history"
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -1008,8 +806,6 @@ class SupressionFeatureSpec
     Scenario(
       "Suppression, 2 debts, 1 matching on period end"
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
-
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -1254,11 +1050,9 @@ class SupressionFeatureSpec
     }
 
     Scenario(
-      "Suppression applied by all criteria on a single debt item.",
+      "Suppression applied by all criteria on 2 debt items.",
       DTD_3325
     ) { context =>
-      val suppressionContext = SuppressionRulesContext()
-
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
         suppressions = List(
@@ -1379,7 +1173,7 @@ class SupressionFeatureSpec
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val subtransSuppression        = Some(
+      val subTransSuppression        = Some(
         SuppressionApplied(
           reason = "SUBTRANS",
           description = "COVID",
@@ -1424,7 +1218,7 @@ class SupressionFeatureSpec
           amountOnIntDueWindow = 500000,
           breathingSpaceApplied = false,
           unpaidAmountWindow = 500000,
-          suppressionApplied = subtransSuppression,
+          suppressionApplied = subTransSuppression,
           suppressionsApplied = None
         ),
         CalculationWindow(
@@ -1582,124 +1376,4 @@ class SupressionFeatureSpec
       theDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindows)
     }
   }
-
-  ignore("Suppression applied by all criteria on a single debt item.", DTD_3325) { context =>
-    Given("suppression configuration data is created")
-    // TODO: No matching helper method found for this step. Validate and call the correct helper.
-    // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    When("suppression configuration is sent to ifs service")
-    // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-    And("a debt item")
-    // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // aDebtItem(context)
-
-    And("the debt item has no payment history")
-    // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtItemHasNoPaymentHistory(context)
-
-    And("no breathing spaces have been applied to the debt item")
-    // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-    And("the customer has post codes")
-    // TODO: Helper 'theCustomerHasPostCodes' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theCustomerHasPostCodes(context)
-
-    When("the debt item is sent to the ifs service")
-    // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtItemIsSentToTheIfsService(context)
-
-    Then("the ifs service wilL return a total debts summary of")
-    // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-    And("the 1st debt summary will contain")
-    // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtSummaryWillContain(context)
-
-    And("the 1st debt summary will have calculation windows")
-    // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtSummaryWillHaveCalculationWindows(context)
-
-  }
-  ignore("Suppression applied by all criteria on 2 debt items.") { context =>
-    Given("suppression configuration data is created")
-    // TODO: No matching helper method found for this step. Validate and call the correct helper.
-    // TODO: This step had a feature table; convert the values into typed builder/model inputs.
-
-    When("suppression configuration is sent to ifs service")
-    // TODO: No matching helper method found for this step. Validate and call the correct helper.
-
-    And("a debt item")
-    // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // aDebtItem(context)
-
-    And("the debt item has no payment history")
-    // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtItemHasNoPaymentHistory(context)
-
-    And("a debt item")
-    // TODO: Helper 'aDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // aDebtItem(context)
-
-    And("the debt item has no payment history")
-    // TODO: Helper 'theDebtItemHasNoPaymentHistory' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtItemHasNoPaymentHistory(context)
-
-    And("no breathing spaces have been applied to the debt item")
-    // TODO: Helper 'noBreathingSpacesHaveBeenAppliedToTheDebtItem' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // noBreathingSpacesHaveBeenAppliedToTheDebtItem(context)
-
-    And("the customer has post codes")
-    // TODO: Helper 'theCustomerHasPostCodes' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theCustomerHasPostCodes(context)
-
-    When("the debt item is sent to the ifs service")
-    // TODO: Helper 'theDebtItemIsSentToTheIfsService' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtItemIsSentToTheIfsService(context)
-
-    Then("the ifs service wilL return a total debts summary of")
-    // TODO: Helper 'theIfsServiceWillReturnATotalDebtsSummaryOf' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theIfsServiceWillReturnATotalDebtsSummaryOf(context)
-
-    And("the 1st debt summary will contain")
-    // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtSummaryWillContain(context)
-
-    And("the 1st debt summary will have calculation windows")
-    // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtSummaryWillHaveCalculationWindows(context)
-
-    And("the 2nd debt summary will contain")
-    // TODO: Helper 'theDebtSummaryWillContain' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtSummaryWillContain(context)
-
-    And("the 2nd debt summary will have calculation windows")
-    // TODO: Helper 'theDebtSummaryWillHaveCalculationWindows' expects context 'InterestForecastingContext' but this spec uses 'FCStatementOfLiabilityContext'.
-    // Validate whether this scenario should use a different context or whether the helper should be aligned to this spec context.
-    // theDebtSummaryWillHaveCalculationWindows(context)
-
-  }
-
 }

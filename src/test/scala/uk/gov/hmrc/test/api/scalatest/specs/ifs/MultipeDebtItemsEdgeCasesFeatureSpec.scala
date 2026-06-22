@@ -201,7 +201,6 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
         ),
         customerPostCodes = List.empty
       )
-
       aDebtCalculationIsCreated(context, request)
 
       When("the debt item is sent to the IFS service")
@@ -459,7 +458,6 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 3, expected3rdCalculationWindows)
-
     }
 
     Scenario("4. 300 debt items") { context =>
@@ -847,7 +845,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
         "Could not parse body due to requirement failed: Amount paid in payments cannot be greater than Original Amount"
       )
     }
-    // Debt Calculation doesn't have dateCreated so not show if i'm hitting this Scenario
+
     Scenario("8. 1 debt with an interest start date before the debt created") { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
