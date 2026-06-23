@@ -103,7 +103,7 @@ class MultipeDebtItemsFeatureSpec
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
-    Scenario("Interest Bearing. 1 Payment of 1 debt.") { context =>
+    Scenario("Interest Bearing. 2 Payments of 1 debt.") { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(

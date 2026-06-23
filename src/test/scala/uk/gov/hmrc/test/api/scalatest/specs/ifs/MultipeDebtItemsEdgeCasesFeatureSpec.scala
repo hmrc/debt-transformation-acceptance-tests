@@ -23,6 +23,7 @@ import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, Paymen
 import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.tags.DTD_2216
 
 import java.time.LocalDate
 
@@ -961,7 +962,7 @@ class MultipeDebtItemsEdgeCasesFeatureSpec
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
     }
 
-    Scenario("9. 2 SA debts where one has an original amount less than zero") { context =>
+    Scenario("9. 2 SA debts where one has an original amount less than zero", DTD_2216){ context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(

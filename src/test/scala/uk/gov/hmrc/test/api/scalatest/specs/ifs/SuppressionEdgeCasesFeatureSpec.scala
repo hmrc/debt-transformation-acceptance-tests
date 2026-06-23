@@ -24,6 +24,7 @@ import uk.gov.hmrc.test.api.models._
 import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
+import uk.gov.hmrc.test.api.scalatest.tags._
 
 import java.time.LocalDate
 
@@ -47,7 +48,7 @@ class SuppressionEdgeCasesFeatureSpec
     val suppressionContext = SuppressionRulesContext()
 
     Scenario(
-      "Suppression, interest rate change during suppression"
+      "Suppression, interest rate change during suppression",suppression, DTD_2790
     ) { context =>
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
