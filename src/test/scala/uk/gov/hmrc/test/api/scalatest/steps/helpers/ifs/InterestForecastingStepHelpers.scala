@@ -104,9 +104,9 @@ trait InterestForecastingStepHelpers { this: Matchers =>
 
   def theDebtItemIsSentToTheIfsServiceAndFails(
     context: InterestForecastingContext
-    ): Unit = {
+  ): Unit = {
     val requestJson = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
-    val response = InterestForecastingBuilder.getDebtCalculation(requestJson)
+    val response    = InterestForecastingBuilder.getDebtCalculation(requestJson)
 
     context.response = response
     context.status = response.status
@@ -418,8 +418,15 @@ trait InterestForecastingStepHelpers { this: Matchers =>
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will not have any calculation windows$
   def theDebtSummaryWillNotHaveAnyCalculationWindows(context: InterestForecastingContext, summaryIndex: Int): Unit = {
-    // getCountOfCalculationWindows(summaryIndex) shouldBe 0
-    // TODO: Implement typed helper for this step.
+    val response: StandaloneWSResponse = context.response
+    response.status should be(200)
+
+    Json
+      .parse(response.body)
+      .as[DebtCalculationsSummary]
+      .debtCalculations(summaryIndex - 1)
+      .calculationWindows
+      .size shouldBe 0
   }
 
   // ^a debt interest type item$
