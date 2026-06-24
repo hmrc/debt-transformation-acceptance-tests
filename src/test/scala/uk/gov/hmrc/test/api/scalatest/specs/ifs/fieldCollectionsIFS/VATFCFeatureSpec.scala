@@ -286,32 +286,5 @@ class VATFCFeatureSpec
 
     }
 
-//    The below  test should be removed once a UT/IT is created
-    Scenario("periodEnd missing. Interest Indicator as No. No Payment History.") { context =>
-      Given("a fc vat debt calculation")
-      val ifsRequest = FCVATDebtCalculationRequest(
-        debtItems = List(
-          FCVATDebtItems(
-            debtItemChargeId = Some("debtItemChargeId1"),
-            originalAmount = 500000,
-            interestIndicator = "N",
-            periodEnd = "",
-            interestRequestedTo = "2021-04-14",
-            breathingSpaces = Some(List.empty[BreathingSpaces]),
-            paymentHistory = Some(List.empty[PaymentHistory])
-          )
-        )
-      )
-      aFcVatDebtCalculation(context, ifsRequest)
-
-      When("the debt item is sent to the fc vat ifs service")
-      theDebtItemIsSentToTheFcVatIfsService(context)
-
-      Then("the fc vat ifs service will respond with")
-      val expectedError =
-        "{\"statusCode\":400,\"errorMessage\":\"Field at path '/debtItems(0)/periodEnd' missing or invalid\"}"
-      theFcVatIfsServiceWillRespondWith(context, expectedError)
-    }
-
   }
 }

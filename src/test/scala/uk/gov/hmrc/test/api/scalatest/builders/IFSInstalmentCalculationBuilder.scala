@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 import java.time.LocalDate
 
@@ -127,23 +127,6 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
     initialPaymentDays: Option[String] = None,
     paymentPlan: Option[String] = None
   )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'addInitialPayment' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asmapTransposed      = dataTable.transpose().asMap(classOf[String], classOf[String])
-  //   var initialPaymentDate   = ""
-  //   var initialPaymentAmount = "\"\""
-  //   if (asmapTransposed.toString.contains("initialPaymentDays")) {
-  //   var addNumberOfDays = ""
-  //   addNumberOfDays = asmapTransposed.get("initialPaymentDays")
-  //   val localDate       = LocalDate.now()
-  //   initialPaymentDate = localDate.plusDays(addNumberOfDays.toInt).toString
-  // -----------------------------------------------------------------------
-
-  def getBodyAsString(variant: String): String =
-    TestData.loadedFiles(variant)
 
   // -----------------------------------------------------------------------
   // HTTP client methods lifted from legacy Requests with typed context access.

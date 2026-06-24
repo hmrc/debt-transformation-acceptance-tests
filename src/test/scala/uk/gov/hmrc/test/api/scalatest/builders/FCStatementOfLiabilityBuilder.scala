@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.{bearerToken, statementOfLiabilityApiUrl}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 

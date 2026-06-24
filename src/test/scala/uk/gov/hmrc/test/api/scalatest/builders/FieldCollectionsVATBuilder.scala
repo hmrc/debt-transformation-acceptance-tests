@@ -16,11 +16,10 @@
 
 package uk.gov.hmrc.test.api.scalatest.builders
 
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
 
@@ -86,23 +85,6 @@ object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
     debtRespiteTo: Option[String] = None,
     fcVatDebtItem: Option[String] = None
   )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'addFCVATBreathingSpace' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
-  //   var breathingSpaces = ""
-  //   asMapTransposed.asScala.zipWithIndex.foreach { case (breathingSpace, index) =>
-  //   if (breathingSpace.get("debtRespiteTo").toString.contains("-")) {
-  //   breathingSpaces = breathingSpaces.concat(
-  //   getBodyAsString("breathingSpace")
-  //   .replaceAll("<REPLACE_debtRespiteFrom>", breathingSpace.get("debtRespiteFrom"))
-  //   .replaceAll("<REPLACE_debtRespiteTo>", breathingSpace.get("debtRespiteTo"))
-  // -----------------------------------------------------------------------
-
-  def getBodyAsString(variant: String): String =
-    TestData.loadedFiles(variant)
 
   // -----------------------------------------------------------------------
   // HTTP client methods lifted from legacy Requests with typed context access.

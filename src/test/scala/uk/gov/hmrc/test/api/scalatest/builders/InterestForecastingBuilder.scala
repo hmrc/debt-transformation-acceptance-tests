@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.test.api.scalatest.builders
 
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object InterestForecastingBuilder extends BaseRequests with RandomValues {
 
@@ -163,23 +163,6 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     mainTrans: Option[String] = None,
     subTrans: Option[String] = None
   )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'createInterestTypeRequestBody' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asmapTransposed           = dataTable.transpose().asMap(classOf[String], classOf[String])
-  //   var firstItem                 = false
-  //   var debtInterestTypes: String = null
-  //   try ScenarioContext.get("debtInterestTypes")
-  //   catch {
-  //   case _: Exception => firstItem = true
-  //   }
-  //   val debtInterestType = getBodyAsString("debtInterestType")
-  // -----------------------------------------------------------------------
-
-  def getBodyAsString(variant: String): String =
-    TestData.loadedFiles(variant)
 
   // -----------------------------------------------------------------------
   // HTTP client methods lifted from legacy Requests with typed context access.
