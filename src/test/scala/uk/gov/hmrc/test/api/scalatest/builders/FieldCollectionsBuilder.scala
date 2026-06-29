@@ -185,53 +185,57 @@ object FieldCollectionsBuilder extends BaseRequests with RandomValues {
   // -----------------------------------------------------------------------
 
   final case class FCDebtCalculationsSummaryExpected(
-                                        dateOfCalculation: Option[LocalDate] = None,
-                                        combinedDailyAccrual: Option[Int] = None,
-                                        unpaidAmountTotal: Option[Int] = None,
-                                        interestDueCallTotal: Option[Int] = None,
-                                        totalAmountIntTotal: Option[Int]= None,
-                                        amountOnIntDueTotal: Option[Int] = None,
-                                        debtCalculations: Option[List[FCDebtCalculationExpected]] = None
-                                      )
+    dateOfCalculation: Option[LocalDate] = None,
+    combinedDailyAccrual: Option[Int] = None,
+    unpaidAmountTotal: Option[Int] = None,
+    interestDueCallTotal: Option[Int] = None,
+    totalAmountIntTotal: Option[Int] = None,
+    amountOnIntDueTotal: Option[Int] = None,
+    debtCalculations: Option[List[FCDebtCalculationExpected]] = None
+  )
   object FCDebtCalculationsSummaryExpected {
-    implicit val formatDebtCalculation: OFormat[FCDebtCalculationsSummaryExpected] = Json.format[FCDebtCalculationsSummaryExpected]
+    implicit val formatDebtCalculation: OFormat[FCDebtCalculationsSummaryExpected] =
+      Json.format[FCDebtCalculationsSummaryExpected]
   }
 
   final case class FCDebtCalculationExpected(
-                                debtItemChargeId: Option[String] = None,
-                                interestDueDailyAccrual: Option[Int] = None,
-                                interestDueDutyTotal: Option[Int] = None,
-                                amountOnIntDueDuty: Option[Int] = None,
-                                totalAmountIntDuty: Option[Int] = None,
-                                unpaidAmountDuty: Option[Int] = None,
-                                calculationWindows: Option[List[FCCalculationWindowExpected]] = None
-                              )
+    debtItemChargeId: Option[String] = None,
+    interestDueDailyAccrual: Option[Int] = None,
+    interestDueDutyTotal: Option[Int] = None,
+    amountOnIntDueDuty: Option[Int] = None,
+    totalAmountIntDuty: Option[Int] = None,
+    unpaidAmountDuty: Option[Int] = None,
+    calculationWindows: Option[List[FCCalculationWindowExpected]] = None
+  )
   object FCDebtCalculationExpected {
     implicit val formatDebtCalculation: OFormat[FCDebtCalculationExpected] = Json.format[FCDebtCalculationExpected]
   }
 
   final case class FCCalculationWindowExpected(
-                                  periodFrom: Option[LocalDate] = None,
-                                  periodTo: Option[LocalDate] = None,
-                                  numberOfDays: Option[Int] = None,
-                                  interestRate: Option[Double] = None,
-                                  interestDueDailyAccrual: Option[Int] = None,
-                                  interestDueWindow: Option[Int] = None,
-                                  amountOnIntDueWindow: Option[Int] = None,
-                                  unpaidAmountWindow: Option[Int] = None,
-                                  suppressionApplied: Option[SuppressionAppliedExpected] = None
-                                )
+    periodFrom: Option[LocalDate] = None,
+    periodTo: Option[LocalDate] = None,
+    numberOfDays: Option[Int] = None,
+    interestRate: Option[Double] = None,
+    interestDueDailyAccrual: Option[Int] = None,
+    interestDueWindow: Option[Int] = None,
+    amountOnIntDueWindow: Option[Int] = None,
+    unpaidAmountWindow: Option[Int] = None,
+    suppressionApplied: Option[SuppressionAppliedExpected] = None
+  )
 
   object FCCalculationWindowExpected {
     implicit val formatDebtItemCalculationWindow: OFormat[FCCalculationWindowExpected] =
       Json.format[FCCalculationWindowExpected]
   }
 
-  final case class SuppressionAppliedExpected(reason: Option[String] = None, description: Option[String] = None, code: Option[String] = None)
+  final case class SuppressionAppliedExpected(
+    reason: Option[String] = None,
+    description: Option[String] = None,
+    code: Option[String] = None
+  )
   object SuppressionAppliedExpected {
     implicit val formatCalculationWindow: OFormat[SuppressionAppliedExpected] = Json.format[SuppressionAppliedExpected]
   }
-
 
   def getBodyAsString(variant: String): String =
     TestData.loadedFiles(variant)

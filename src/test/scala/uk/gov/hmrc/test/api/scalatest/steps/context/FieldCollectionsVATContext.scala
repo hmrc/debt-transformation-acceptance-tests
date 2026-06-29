@@ -20,7 +20,6 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.FCVATDebtCalculationsSummary
 import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
 
-// Minimal per-scenario context; extend fields as migration progresses.
 final case class FieldCollectionsVATContext(
   var ifsRequest: Option[FCVATDebtCalculationRequest] = None,
   var ifsResponseBody: Option[FCVATDebtCalculationsSummary] = None,

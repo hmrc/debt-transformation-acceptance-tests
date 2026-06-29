@@ -22,6 +22,7 @@ import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
 import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder.{FCVATDebtCalculationExpected, FCVATDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.builders.{FieldCollectionsVATBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.{FieldCollectionsVATContext, InterestForecastingContext}
 
@@ -76,21 +77,21 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   // ^the fc vat ifs service wilL return a total debts summary of$
   def theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(
     context: FieldCollectionsVATContext,
-    expectedResponse: FCVATDebtCalculationsSummary
+    expectedResponse: FCVATDebtCalculationsSummaryExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     withClue("FCDebtCalculationsSummary") {
       withClue("dateOfCalculation") {
-        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation.getOrElse(fail("Missing dateOfCalculation property"))
       }
 
       withClue("combinedDailyAccrual") {
-        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual.getOrElse(fail("Missing combinedDailyAccrual property"))
       }
 
       withClue("unpaidAmountTotal") {
-        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal.getOrElse(fail("Missing unpaidAmountTotal property"))
       }
     }
   }
@@ -99,7 +100,7 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
   def theFcVatDebtSummaryWillContain(
     context: FieldCollectionsVATContext,
     index: Int,
-    expectedResponse: FCVATDebtCalculation
+    expectedResponse: FCVATDebtCalculationExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
@@ -107,15 +108,15 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
 
     withClue("FCDebtCalculation") {
       withClue("debtItemChargeId") {
-        FCVATDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+        FCVATDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId.getOrElse(fail("Missing debtItemChargeId property"))
       }
 
       withClue("interestDueDailyAccrual") {
-        FCVATDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+        FCVATDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual.getOrElse(fail("Missing interestDueDailyAccrual property"))
       }
 
       withClue("interestRate") {
-        FCVATDebtCalculations.interestRate shouldBe expectedResponse.interestRate
+        FCVATDebtCalculations.interestRate shouldBe expectedResponse.interestRate.getOrElse(fail("Missing interestRate property"))
       }
     }
   }

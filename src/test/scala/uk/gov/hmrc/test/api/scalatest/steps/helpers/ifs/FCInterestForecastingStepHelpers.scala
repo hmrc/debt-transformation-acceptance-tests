@@ -20,6 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.FCDebtCalculationsSummary
 import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.builders.{FieldCollectionsBuilder, InterestForecastingBuilder}
@@ -61,7 +62,7 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     context.response = response
 
     val jsonResponseBody = response.body[JsValue]
-    context.ifsResponseBody = Some(jsonResponseBody.as[FCDebtCalculationsSummaryExpected])
+    context.ifsResponseBody = Some(jsonResponseBody.as[FCDebtCalculationsSummary])
     context.status = response.status
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
 
@@ -88,23 +89,23 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
       }
 
       withClue("combinedDailyAccrual") {
-        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual.getOrElse(fail("Missing combinedDailyAccrual field"))
       }
 
       withClue("unpaidAmountTotal") {
-        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal.getOrElse(fail("Missing unpaidAmountTotal field"))
       }
 
       withClue("interestDueCallTotal") {
-        responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal
+        responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal.getOrElse(fail("Missing interestDueCallTotal field"))
       }
 
       withClue("totalAmountIntTotal") {
-        responseBody.totalAmountIntTotal shouldBe expectedResponse.totalAmountIntTotal
+        responseBody.totalAmountIntTotal shouldBe expectedResponse.totalAmountIntTotal.getOrElse(fail("Missing totalAmountIntTotal field"))
       }
 
       withClue("amountOnIntDueTotal") {
-        responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal
+        responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal.getOrElse(fail("Missing amountOnIntDueTotal field"))
       }
     }
   }
@@ -117,31 +118,31 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
-    val FCDebtCalculations = responseBody.debtCalculations.getOrElse(fail("Missing debt calculations in response body"))(index - 1)
+    val FCDebtCalculations = responseBody.debtCalculations(index - 1)
 
     withClue("FCDebtCalculation") {
       withClue("debtItemChargeId") {
-        FCDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+        FCDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId.getOrElse(fail("Missing debtItemChargeId field"))
       }
 
       withClue("interestDueDailyAccrual") {
-        FCDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+        FCDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual.getOrElse(fail("Missing interestDueDailyAccrual field"))
       }
 
       withClue("interestDueDutyTotal") {
-        FCDebtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal
+        FCDebtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal.getOrElse(fail("Missing interestDueDutyTotal field"))
       }
 
       withClue("amountOnIntDueDuty") {
-        FCDebtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty
+        FCDebtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty.getOrElse(fail("Missing amountOnIntDueDuty field"))
       }
 
       withClue("totalAmountIntDuty") {
-        FCDebtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty
+        FCDebtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty.getOrElse(fail("Missing totalAmountIntDuty field"))
       }
 
       withClue("unpaidAmountDuty") {
-        FCDebtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+        FCDebtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty.getOrElse(fail("Missing unpaidAmountDuty field"))
       }
     }
   }
@@ -156,40 +157,40 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
 
     inputs.zipWithIndex.foreach { case (expectedResponse, index) =>
       val actual = responseBody
-        .debtCalculations.getOrElse(fail("Missing debt calculations in response body"))(summaryIndex - 1)
-        .calculationWindows.getOrElse(fail("Missing calculation windows in response body"))(index)
+        .debtCalculations(summaryIndex - 1)
+        .calculationWindows(index)
 
       withClue("FCDebtCalculationsSummary") {
         withClue("periodFrom") {
-          actual.periodFrom shouldBe expectedResponse.periodFrom
+          actual.periodFrom shouldBe expectedResponse.periodFrom.getOrElse(fail("Missing periodFrom field"))
         }
 
         withClue("periodTo") {
-          actual.periodTo shouldBe expectedResponse.periodTo
+          actual.periodTo shouldBe expectedResponse.periodTo.getOrElse(fail("Missing periodTo field"))
         }
 
         withClue("numberOfDays") {
-          actual.numberOfDays shouldBe expectedResponse.numberOfDays
+          actual.numberOfDays shouldBe expectedResponse.numberOfDays.getOrElse(fail("Missing numberOfDays field"))
         }
 
         withClue("interestRate") {
-          actual.interestRate shouldBe expectedResponse.interestRate
+          actual.interestRate shouldBe expectedResponse.interestRate.getOrElse(fail("Missing interestRate field"))
         }
 
         withClue("interestDueDailyAccrual") {
-          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual.getOrElse(fail("Missing interestDueDailyAccrual field"))
         }
 
         withClue("interestDueWindow") {
-          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow
+          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow.getOrElse(fail("Missing interestDueWindow field"))
         }
 
         withClue("amountOnIntDueWindow") {
-          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow
+          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow.getOrElse(fail("Missing amountOnIntDueWindow field"))
         }
 
         withClue("unpaidAmountWindow") {
-          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow
+          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow.getOrElse(fail("Missing unpaidAmountWindow field"))
         }
 
         // only assert suppressionApplied fields if they are present in input
@@ -279,8 +280,8 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   def getFCCountOfCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Int = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
     responseBody
-      .debtCalculations.getOrElse(fail("Missing debt calculations in response body"))(summaryIndex - 1)
-      .calculationWindows.getOrElse(fail("Missing calculation windows in response body"))
+      .debtCalculations(summaryIndex - 1)
+      .calculationWindows
       .size
   }
 

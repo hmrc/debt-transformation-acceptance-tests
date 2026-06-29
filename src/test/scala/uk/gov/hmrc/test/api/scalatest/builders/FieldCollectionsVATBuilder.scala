@@ -21,6 +21,8 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
+import java.time.LocalDate
+
 object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
 
   // -----------------------------------------------------------------------
@@ -87,8 +89,31 @@ object FieldCollectionsVATBuilder extends BaseRequests with RandomValues {
   )
 
   // -----------------------------------------------------------------------
-  // HTTP client methods lifted from legacy Requests with typed context access.
+  // Legacy method 'addFCVATBreathingSpace' looked like template/string-body setup.
+  // Add a typed builder method here if this step is still needed by ScalaTest specs.
+  // Legacy preview:
+  //   val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String])
+  //   var breathingSpaces = ""
+  //   asMapTransposed.asScala.zipWithIndex.foreach { case (breathingSpace, index) =>
+  //   if (breathingSpace.get("debtRespiteTo").toString.contains("-")) {
+  //   breathingSpaces = breathingSpaces.concat(
+  //   getBodyAsString("breathingSpace")
+  //   .replaceAll("<REPLACE_debtRespiteFrom>", breathingSpace.get("debtRespiteFrom"))
+  //   .replaceAll("<REPLACE_debtRespiteTo>", breathingSpace.get("debtRespiteTo"))
   // -----------------------------------------------------------------------
+
+  final case class FCVATDebtCalculationsSummaryExpected(
+    dateOfCalculation: Option[LocalDate] = None,
+    combinedDailyAccrual: Option[Int] = None,
+    unpaidAmountTotal: Option[Int] = None,
+    debtCalculations: Option[List[FCVATDebtCalculationExpected]] = None
+  )
+
+  final case class FCVATDebtCalculationExpected(
+    debtItemChargeId: Option[String] = None,
+    interestDueDailyAccrual: Option[BigDecimal] = None,
+    interestRate: Option[Double] = None
+  )
 
   def getDebtCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
