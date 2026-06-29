@@ -21,7 +21,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
-import uk.gov.hmrc.test.api.models.{FCCalculationWindow, FCDebtCalculation, FCDebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.builders.{FieldCollectionsBuilder, InterestForecastingBuilder}
 import uk.gov.hmrc.test.api.scalatest.steps.context.{FieldCollectionsContext, InterestForecastingContext}
 
@@ -61,7 +61,7 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     context.response = response
 
     val jsonResponseBody = response.body[JsValue]
-    context.ifsResponseBody = Some(jsonResponseBody.as[FCDebtCalculationsSummary])
+    context.ifsResponseBody = Some(jsonResponseBody.as[FCDebtCalculationsSummaryExpected])
     context.status = response.status
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
 
@@ -78,7 +78,7 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   // ^the fc ifs service will return a total debts summary of$
   def theFcIfsServiceWillReturnATotalDebtsSummaryOf(
     context: FieldCollectionsContext,
-    expectedResponse: FCDebtCalculationsSummary
+    expectedResponse: FCDebtCalculationsSummaryExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
@@ -113,11 +113,11 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   def theFcDebtSummaryWillContain(
     context: FieldCollectionsContext,
     index: Int,
-    expectedResponse: FCDebtCalculation
+    expectedResponse: FCDebtCalculationExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
-    val FCDebtCalculations = responseBody.debtCalculations(index - 1)
+    val FCDebtCalculations = responseBody.debtCalculations.getOrElse(fail("Missing debt calculations in response body"))(index - 1)
 
     withClue("FCDebtCalculation") {
       withClue("debtItemChargeId") {
@@ -150,14 +150,14 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
   def theFcDebtSummaryWillHaveCalculationWindows(
     context: FieldCollectionsContext,
     summaryIndex: Int,
-    inputs: List[FCCalculationWindow]
+    inputs: List[FCCalculationWindowExpected]
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     inputs.zipWithIndex.foreach { case (expectedResponse, index) =>
       val actual = responseBody
-        .debtCalculations(summaryIndex - 1)
-        .calculationWindows(index)
+        .debtCalculations.getOrElse(fail("Missing debt calculations in response body"))(summaryIndex - 1)
+        .calculationWindows.getOrElse(fail("Missing calculation windows in response body"))(index)
 
       withClue("FCDebtCalculationsSummary") {
         withClue("periodFrom") {
@@ -278,7 +278,10 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
 
   def getFCCountOfCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Int = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
-    responseBody.debtCalculations(summaryIndex - 1).calculationWindows.size
+    responseBody
+      .debtCalculations.getOrElse(fail("Missing debt calculations in response body"))(summaryIndex - 1)
+      .calculationWindows.getOrElse(fail("Missing calculation windows in response body"))
+      .size
   }
 
 }

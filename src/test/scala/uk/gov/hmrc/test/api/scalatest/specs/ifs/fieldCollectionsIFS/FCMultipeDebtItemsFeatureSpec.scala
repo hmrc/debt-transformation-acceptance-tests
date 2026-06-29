@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.test.api.scalatest.specs.ifs.fieldCollectionsIFS
 
-import org.scalatest.{GivenWhenThen, ScalaTestVersion}
+import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{FCCalculationWindow, FCDebtCalculation, FCDebtCalculationsSummary}
 import uk.gov.hmrc.test.api.models.ifs._
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCInterestForecastingStepHelpers
 
@@ -98,26 +98,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 61,
-        unpaidAmountTotal = 700000,
-        interestDueCallTotal = 8052,
-        totalAmountIntTotal = 708052,
-        amountOnIntDueTotal = 700000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(61),
+        unpaidAmountTotal = Some(700000),
+        interestDueCallTotal = Some(8052),
+        totalAmountIntTotal = Some(708052),
+        amountOnIntDueTotal = Some(700000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 4874,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 404874,
-        unpaidAmountDuty = 400000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(35),
+        interestDueDutyTotal = Some(4874),
+        amountOnIntDueDuty = Some(400000),
+        totalAmountIntDuty = Some(404874),
+        unpaidAmountDuty = Some(400000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -178,26 +178,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 61,
-        unpaidAmountTotal = 700000,
-        interestDueCallTotal = 7852,
-        totalAmountIntTotal = 707852,
-        amountOnIntDueTotal = 700000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(61),
+        unpaidAmountTotal = Some(700000),
+        interestDueCallTotal = Some(7852),
+        totalAmountIntTotal = Some(707852),
+        amountOnIntDueTotal = Some(700000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 4674,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 404674,
-        unpaidAmountDuty = 400000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(35),
+        interestDueDutyTotal = Some(4674),
+        amountOnIntDueDuty = Some(400000),
+        totalAmountIntDuty = Some(404674),
+        unpaidAmountDuty = Some(400000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -240,26 +240,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 35,
-        unpaidAmountTotal = 400000,
-        interestDueCallTotal = 4674,
-        totalAmountIntTotal = 404674,
-        amountOnIntDueTotal = 400000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(35),
+        unpaidAmountTotal = Some(400000),
+        interestDueCallTotal = Some(4674),
+        totalAmountIntTotal = Some(404674),
+        amountOnIntDueTotal = Some(400000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 4674,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 404674,
-        unpaidAmountDuty = 400000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(35),
+        interestDueDutyTotal = Some(4674),
+        amountOnIntDueDuty = Some(400000),
+        totalAmountIntDuty = Some(404674),
+        unpaidAmountDuty = Some(400000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -302,26 +302,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 0,
-        unpaidAmountTotal = 400000,
-        interestDueCallTotal = 0,
-        totalAmountIntTotal = 400000,
-        amountOnIntDueTotal = 400000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(0),
+        unpaidAmountTotal = Some(400000),
+        interestDueCallTotal = Some(0),
+        totalAmountIntTotal = Some(400000),
+        amountOnIntDueTotal = Some(400000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 400000,
-        unpaidAmountDuty = 400000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestDueDutyTotal = Some(0),
+        amountOnIntDueDuty = Some(400000),
+        totalAmountIntDuty = Some(400000),
+        unpaidAmountDuty = Some(400000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -367,26 +367,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 35,
-        unpaidAmountTotal = 400000,
-        interestDueCallTotal = 4674,
-        totalAmountIntTotal = 404674,
-        amountOnIntDueTotal = 400000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(35),
+        unpaidAmountTotal = Some(400000),
+        interestDueCallTotal = Some(4674),
+        totalAmountIntTotal = Some(404674),
+        amountOnIntDueTotal = Some(400000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 4674,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 404674,
-        unpaidAmountDuty = 400000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(35),
+        interestDueDutyTotal = Some(4674),
+        amountOnIntDueDuty = Some(400000),
+        totalAmountIntDuty = Some(404674),
+        unpaidAmountDuty = Some(400000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -415,26 +415,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 44,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 12078,
-        totalAmountIntTotal = 512078,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(44),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(12078),
+        totalAmountIntTotal = Some(512078),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 44,
-        interestDueDutyTotal = 12078,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 512078,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(44),
+        interestDueDutyTotal = Some(12078),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(512078),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -470,40 +470,40 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 0,
-        unpaidAmountTotal = 0,
-        interestDueCallTotal = 2181,
-        totalAmountIntTotal = 2181,
-        amountOnIntDueTotal = 0,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(0),
+        unpaidAmountTotal = Some(0),
+        interestDueCallTotal = Some(2181),
+        totalAmountIntTotal = Some(2181),
+        amountOnIntDueTotal = Some(0),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 2181,
-        amountOnIntDueDuty = 0,
-        totalAmountIntDuty = 2181,
-        unpaidAmountDuty = 0,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestDueDutyTotal = Some(2181),
+        amountOnIntDueDuty = Some(0),
+        totalAmountIntDuty = Some(2181),
+        unpaidAmountDuty = Some(0),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-12-16"),
-          periodTo = LocalDate.parse("2019-02-03"),
-          numberOfDays = 49,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 44,
-          interestDueWindow = 2181,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 502181,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-12-16")),
+          periodTo = Some(LocalDate.parse("2019-02-03")),
+          numberOfDays = Some(49),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(2181),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502181),
           suppressionApplied = None
         )
       )
@@ -534,73 +534,73 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 37,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 35727,
-        totalAmountIntTotal = 535727,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(37),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(35727),
+        totalAmountIntTotal = Some(535727),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 37,
-        interestDueDutyTotal = 35727,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 535727,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(37),
+        interestDueDutyTotal = Some(35727),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(535727),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3,
-          interestDueDailyAccrual = 41,
-          interestDueWindow = 9493,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 509493,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(231),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(9493),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509493),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 498,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 44,
-          interestDueWindow = 22171,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 522171,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(498),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(22171),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(522171),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 44,
-          interestDueWindow = 3951,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 503951,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(3951),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(503951),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-01"),
-          numberOfDays = 3,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 37,
-          interestDueWindow = 112,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 500112,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-01")),
+          numberOfDays = Some(3),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(37),
+          interestDueWindow = Some(112),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500112),
           suppressionApplied = None
         )
       )
@@ -631,51 +631,51 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 35,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 12940,
-        totalAmountIntTotal = 512940,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(35),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(12940),
+        totalAmountIntTotal = Some(512940),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 12940,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 512940,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(35),
+        interestDueDutyTotal = Some(12940),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(512940),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-05-02"),
-          periodTo = LocalDate.parse("2020-12-31"),
-          numberOfDays = 243,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 8631,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 508631,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-05-02")),
+          periodTo = Some(LocalDate.parse("2020-12-31")),
+          numberOfDays = Some(243),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(8631),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(508631),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2021-01-01"),
-          periodTo = LocalDate.parse("2021-05-01"),
-          numberOfDays = 121,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 4309,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 504309,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2021-01-01")),
+          periodTo = Some(LocalDate.parse("2021-05-01")),
+          numberOfDays = Some(121),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(4309),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(504309),
           suppressionApplied = None
         )
       )
@@ -706,95 +706,95 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 35,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 48710,
-        totalAmountIntTotal = 548710,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(35),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(48710),
+        totalAmountIntTotal = Some(548710),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 48710,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 548710,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(35),
+        interestDueDutyTotal = Some(48710),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(548710),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3,
-          interestDueDailyAccrual = 41,
-          interestDueWindow = 9493,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 509493,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(231),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(9493),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509493),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 498,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 44,
-          interestDueWindow = 22171,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 522171,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(498),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(22171),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(522171),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 44,
-          interestDueWindow = 3951,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 503951,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(3951),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(503951),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 8,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 37,
-          interestDueWindow = 300,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 500300,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          numberOfDays = Some(8),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(37),
+          interestDueWindow = Some(300),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500300),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-07"),
-          periodTo = LocalDate.parse("2020-12-31"),
-          numberOfDays = 269,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 9554,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 509554,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-07")),
+          periodTo = Some(LocalDate.parse("2020-12-31")),
+          numberOfDays = Some(269),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(9554),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509554),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2021-01-01"),
-          periodTo = LocalDate.parse("2021-04-01"),
-          numberOfDays = 91,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 3241,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 503241,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2021-01-01")),
+          periodTo = Some(LocalDate.parse("2021-04-01")),
+          numberOfDays = Some(91),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(3241),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(503241),
           suppressionApplied = None
         )
       )
@@ -832,117 +832,117 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 28,
-        unpaidAmountTotal = 400000,
-        interestDueCallTotal = 5933,
-        totalAmountIntTotal = 405933,
-        amountOnIntDueTotal = 400000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(28),
+        unpaidAmountTotal = Some(400000),
+        interestDueCallTotal = Some(5933),
+        totalAmountIntTotal = Some(405933),
+        amountOnIntDueTotal = Some(400000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 28,
-        interestDueDutyTotal = 5933,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 405933,
-        unpaidAmountDuty = 400000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(28),
+        interestDueDutyTotal = Some(5933),
+        amountOnIntDueDuty = Some(400000),
+        totalAmountIntDuty = Some(405933),
+        unpaidAmountDuty = Some(400000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2019-12-16"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 15,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 8,
-          interestDueWindow = 133,
-          amountOnIntDueWindow = 100000,
-          unpaidAmountWindow = 100133,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2019-12-16")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(15),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(133),
+          amountOnIntDueWindow = Some(100000),
+          unpaidAmountWindow = Some(100133),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 8,
-          interestDueWindow = 790,
-          amountOnIntDueWindow = 100000,
-          unpaidAmountWindow = 100790,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(790),
+          amountOnIntDueWindow = Some(100000),
+          unpaidAmountWindow = Some(100790),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 8,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 7,
-          interestDueWindow = 60,
-          amountOnIntDueWindow = 100000,
-          unpaidAmountWindow = 100060,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          numberOfDays = Some(8),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(7),
+          interestDueWindow = Some(60),
+          amountOnIntDueWindow = Some(100000),
+          unpaidAmountWindow = Some(100060),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-07"),
-          periodTo = LocalDate.parse("2020-05-03"),
-          numberOfDays = 27,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 7,
-          interestDueWindow = 191,
-          amountOnIntDueWindow = 100000,
-          unpaidAmountWindow = 100191,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-07")),
+          periodTo = Some(LocalDate.parse("2020-05-03")),
+          numberOfDays = Some(27),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(7),
+          interestDueWindow = Some(191),
+          amountOnIntDueWindow = Some(100000),
+          unpaidAmountWindow = Some(100191),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2019-12-16"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 15,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 534,
-          amountOnIntDueWindow = 400000,
-          unpaidAmountWindow = 400534,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2019-12-16")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(15),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(534),
+          amountOnIntDueWindow = Some(400000),
+          unpaidAmountWindow = Some(400534),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 3161,
-          amountOnIntDueWindow = 400000,
-          unpaidAmountWindow = 403161,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(3161),
+          amountOnIntDueWindow = Some(400000),
+          unpaidAmountWindow = Some(403161),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 8,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 30,
-          interestDueWindow = 240,
-          amountOnIntDueWindow = 400000,
-          unpaidAmountWindow = 400240,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          numberOfDays = Some(8),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(30),
+          interestDueWindow = Some(240),
+          amountOnIntDueWindow = Some(400000),
+          unpaidAmountWindow = Some(400240),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-07"),
-          periodTo = LocalDate.parse("2020-05-05"),
-          numberOfDays = 29,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 28,
-          interestDueWindow = 824,
-          amountOnIntDueWindow = 400000,
-          unpaidAmountWindow = 400824,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-07")),
+          periodTo = Some(LocalDate.parse("2020-05-05")),
+          numberOfDays = Some(29),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(28),
+          interestDueWindow = Some(824),
+          amountOnIntDueWindow = Some(400000),
+          unpaidAmountWindow = Some(400824),
           suppressionApplied = None
         )
       )
@@ -973,95 +973,95 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 37,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 91506,
-        totalAmountIntTotal = 591506,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(37),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(91506),
+        totalAmountIntTotal = Some(591506),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 37,
-        interestDueDutyTotal = 91506,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 591506,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(37),
+        interestDueDutyTotal = Some(91506),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(591506),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2011-01-01"),
-          periodTo = LocalDate.parse("2011-12-31"),
-          numberOfDays = 364,
-          interestRate = 3,
-          interestDueDailyAccrual = 41,
-          interestDueWindow = 14958,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 514958,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2011-01-01")),
+          periodTo = Some(LocalDate.parse("2011-12-31")),
+          numberOfDays = Some(364),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(14958),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(514958),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2012-01-01"),
-          periodTo = LocalDate.parse("2012-12-31"),
-          numberOfDays = 366,
-          interestRate = 3,
-          interestDueDailyAccrual = 40,
-          interestDueWindow = 15000,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 515000,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2012-01-01")),
+          periodTo = Some(LocalDate.parse("2012-12-31")),
+          numberOfDays = Some(366),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(40),
+          interestDueWindow = Some(15000),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(515000),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2013-01-01"),
-          periodTo = LocalDate.parse("2015-12-31"),
-          numberOfDays = 1095,
-          interestRate = 3,
-          interestDueDailyAccrual = 41,
-          interestDueWindow = 45000,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 545000,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2013-01-01")),
+          periodTo = Some(LocalDate.parse("2015-12-31")),
+          numberOfDays = Some(1095),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(45000),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(545000),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2016-01-01"),
-          periodTo = LocalDate.parse("2016-08-22"),
-          numberOfDays = 235,
-          interestRate = 3,
-          interestDueDailyAccrual = 40,
-          interestDueWindow = 9631,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 509631,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2016-01-01")),
+          periodTo = Some(LocalDate.parse("2016-08-22")),
+          numberOfDays = Some(235),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(40),
+          interestDueWindow = Some(9631),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509631),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2016-08-23"),
-          periodTo = LocalDate.parse("2016-12-31"),
-          numberOfDays = 131,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 37,
-          interestDueWindow = 4921,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 504921,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2016-08-23")),
+          periodTo = Some(LocalDate.parse("2016-12-31")),
+          numberOfDays = Some(131),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(37),
+          interestDueWindow = Some(4921),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(504921),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2017-01-01"),
-          periodTo = LocalDate.parse("2017-02-22"),
-          numberOfDays = 53,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 37,
-          interestDueWindow = 1996,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 501996,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2017-01-01")),
+          periodTo = Some(LocalDate.parse("2017-02-22")),
+          numberOfDays = Some(53),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(37),
+          interestDueWindow = Some(1996),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(501996),
           suppressionApplied = None
         )
       )
@@ -1092,51 +1092,51 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 44,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 20695,
-        totalAmountIntTotal = 520695,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(44),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(20695),
+        totalAmountIntTotal = Some(520695),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 44,
-        interestDueDutyTotal = 20695,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 520695,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(44),
+        interestDueDutyTotal = Some(20695),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(520695),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindow = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2017-12-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 262,
-          interestRate = 3,
-          interestDueDailyAccrual = 41,
-          interestDueWindow = 10767,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 510767,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2017-12-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(262),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(10767),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(510767),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-31"),
-          numberOfDays = 223,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 44,
-          interestDueWindow = 9928,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 509928,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-31")),
+          numberOfDays = Some(223),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(9928),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509928),
           suppressionApplied = None
         )
       )
@@ -1178,72 +1178,72 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val expectedSummary = FCDebtCalculationsSummary(
+      val expectedSummary = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 22,
-        unpaidAmountTotal = 300000,
-        interestDueCallTotal = 19188,
-        totalAmountIntTotal = 319188,
-        amountOnIntDueTotal = 300000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(22),
+        unpaidAmountTotal = Some(300000),
+        interestDueCallTotal = Some(19188),
+        totalAmountIntTotal = Some(319188),
+        amountOnIntDueTotal = Some(300000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindows = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2019-01-01"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 364,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 17,
-          interestDueWindow = 6482,
-          amountOnIntDueWindow = 200000,
-          unpaidAmountWindow = 206482,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2019-01-01")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(364),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(17),
+          interestDueWindow = Some(6482),
+          amountOnIntDueWindow = Some(200000),
+          unpaidAmountWindow = Some(206482),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-02-01"),
-          numberOfDays = 32,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 17,
-          interestDueWindow = 568,
-          amountOnIntDueWindow = 200000,
-          unpaidAmountWindow = 200568,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-02-01")),
+          numberOfDays = Some(32),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(17),
+          interestDueWindow = Some(568),
+          amountOnIntDueWindow = Some(200000),
+          unpaidAmountWindow = Some(200568),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2019-01-01"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 364,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 26,
-          interestDueWindow = 9723,
-          amountOnIntDueWindow = 300000,
-          unpaidAmountWindow = 309723,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2019-01-01")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(364),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(9723),
+          amountOnIntDueWindow = Some(300000),
+          unpaidAmountWindow = Some(309723),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 26,
-          interestDueWindow = 2370,
-          amountOnIntDueWindow = 300000,
-          unpaidAmountWindow = 302370,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(2370),
+          amountOnIntDueWindow = Some(300000),
+          unpaidAmountWindow = Some(302370),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-03-31"),
-          numberOfDays = 2,
-          interestRate = 2.75,
-          interestDueDailyAccrual = 22,
-          interestDueWindow = 45,
-          amountOnIntDueWindow = 300000,
-          unpaidAmountWindow = 300045,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-03-31")),
+          numberOfDays = Some(2),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(22),
+          interestDueWindow = Some(45),
+          amountOnIntDueWindow = Some(300000),
+          unpaidAmountWindow = Some(300045),
           suppressionApplied = None
         )
       )
@@ -1281,50 +1281,50 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val expectedSummary = FCDebtCalculationsSummary(
+      val expectedSummary = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 35,
-        unpaidAmountTotal = 400000,
-        interestDueCallTotal = 16136,
-        totalAmountIntTotal = 416136,
-        amountOnIntDueTotal = 400000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(35),
+        unpaidAmountTotal = Some(400000),
+        interestDueCallTotal = Some(16136),
+        totalAmountIntTotal = Some(416136),
+        amountOnIntDueTotal = Some(400000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindows = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-03-15"),
-          numberOfDays = 73,
-          interestRate = 3.0,
-          interestDueDailyAccrual = 8,
-          interestDueWindow = 600,
-          amountOnIntDueWindow = 100000,
-          unpaidAmountWindow = 100600,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-03-15")),
+          numberOfDays = Some(73),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(600),
+          amountOnIntDueWindow = Some(100000),
+          unpaidAmountWindow = Some(100600),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3.0,
-          interestDueDailyAccrual = 32,
-          interestDueWindow = 7594,
-          amountOnIntDueWindow = 400000,
-          unpaidAmountWindow = 407594,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(231),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(32),
+          interestDueWindow = Some(7594),
+          amountOnIntDueWindow = Some(400000),
+          unpaidAmountWindow = Some(407594),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-31"),
-          numberOfDays = 223,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 7942,
-          amountOnIntDueWindow = 400000,
-          unpaidAmountWindow = 407942,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-31")),
+          numberOfDays = Some(223),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(7942),
+          amountOnIntDueWindow = Some(400000),
+          unpaidAmountWindow = Some(407942),
           suppressionApplied = None
         )
       )
@@ -1366,61 +1366,61 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val expectedSummary = FCDebtCalculationsSummary(
+      val expectedSummary = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 26,
-        unpaidAmountTotal = 300000,
-        interestDueCallTotal = 15661,
-        totalAmountIntTotal = 315661,
-        amountOnIntDueTotal = 300000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(26),
+        unpaidAmountTotal = Some(300000),
+        interestDueCallTotal = Some(15661),
+        totalAmountIntTotal = Some(315661),
+        amountOnIntDueTotal = Some(300000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st fc debt summary will have calculation windows")
       val expected1stCalculationWindows = List(
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3,
-          interestDueDailyAccrual = 16,
-          interestDueWindow = 3797,
-          amountOnIntDueWindow = 200000,
-          unpaidAmountWindow = 203797,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(231),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(16),
+          interestDueWindow = Some(3797),
+          amountOnIntDueWindow = Some(200000),
+          unpaidAmountWindow = Some(203797),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2018-09-01"),
-          numberOfDays = 12,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 17,
-          interestDueWindow = 213,
-          amountOnIntDueWindow = 200000,
-          unpaidAmountWindow = 200213,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2018-09-01")),
+          numberOfDays = Some(12),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(17),
+          interestDueWindow = Some(213),
+          amountOnIntDueWindow = Some(200000),
+          unpaidAmountWindow = Some(200213),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3,
-          interestDueDailyAccrual = 24,
-          interestDueWindow = 5695,
-          amountOnIntDueWindow = 300000,
-          unpaidAmountWindow = 305695,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(231),
+          interestRate = Some(3),
+          interestDueDailyAccrual = Some(24),
+          interestDueWindow = Some(5695),
+          amountOnIntDueWindow = Some(300000),
+          unpaidAmountWindow = Some(305695),
           suppressionApplied = None
         ),
-        FCCalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-31"),
-          numberOfDays = 223,
-          interestRate = 3.25,
-          interestDueDailyAccrual = 26,
-          interestDueWindow = 5956,
-          amountOnIntDueWindow = 300000,
-          unpaidAmountWindow = 305956,
+        FCCalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-31")),
+          numberOfDays = Some(223),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(5956),
+          amountOnIntDueWindow = Some(300000),
+          unpaidAmountWindow = Some(305956),
           suppressionApplied = None
         )
       )
@@ -1473,178 +1473,178 @@ class FCMultipeDebtItemsFeatureSpec
         theDebtItemIsSentToTheFcIfsService(context)
 
         Then("the fc ifs service will return a total debts summary of")
-        val expectedSummary = FCDebtCalculationsSummary(
+        val expectedSummary = FCDebtCalculationsSummaryExpected(
           dateOfCalculation = Some(LocalDate.now()),
-          combinedDailyAccrual = 52,
-          unpaidAmountTotal = 600000,
-          interestDueCallTotal = 37775,
-          totalAmountIntTotal = 637775,
-          amountOnIntDueTotal = 600000,
-          debtCalculations = List.empty[FCDebtCalculation]
+          combinedDailyAccrual = Some(52),
+          unpaidAmountTotal = Some(600000),
+          interestDueCallTotal = Some(37775),
+          totalAmountIntTotal = Some(637775),
+          amountOnIntDueTotal = Some(600000),
+          debtCalculations = None
         )
         theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
         And("the 1st fc debt summary will contain")
-        val expected1stDebtCalculation = FCDebtCalculation(
-          debtItemChargeId = "123",
-          interestDueDailyAccrual = 26,
-          interestDueDutyTotal = 19409,
-          amountOnIntDueDuty = 300000,
-          totalAmountIntDuty = 319409,
-          unpaidAmountDuty = 300000,
-          calculationWindows = List.empty[FCCalculationWindow]
+        val expected1stDebtCalculation = FCDebtCalculationExpected(
+          debtItemChargeId = Some("123"),
+          interestDueDailyAccrual = Some(26),
+          interestDueDutyTotal = Some(19409),
+          amountOnIntDueDuty = Some(300000),
+          totalAmountIntDuty = Some(319409),
+          unpaidAmountDuty = Some(300000),
+          calculationWindows = None
         )
         theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculation)
 
         And("the 1st fc debt summary will have calculation windows")
         val expected1stCalculationWindows = List(
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-01"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 231,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1898,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101898,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-01")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            numberOfDays = Some(231),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1898),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101898),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-03-15"),
-            numberOfDays = 207,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1843,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101843,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-03-15")),
+            numberOfDays = Some(207),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1843),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101843),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-01"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 231,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1898,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101898,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-01")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            numberOfDays = Some(231),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1898),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101898),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-04-15"),
-            numberOfDays = 238,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 2119,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 102119,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-04-15")),
+            numberOfDays = Some(238),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(2119),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(102119),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-01"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 231,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 24,
-            interestDueWindow = 5695,
-            amountOnIntDueWindow = 300000,
-            unpaidAmountWindow = 305695,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-01")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            numberOfDays = Some(231),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(24),
+            interestDueWindow = Some(5695),
+            amountOnIntDueWindow = Some(300000),
+            unpaidAmountWindow = Some(305695),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-03-31"),
-            numberOfDays = 223,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 26,
-            interestDueWindow = 5956,
-            amountOnIntDueWindow = 300000,
-            unpaidAmountWindow = 305956,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-03-31")),
+            numberOfDays = Some(223),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(26),
+            interestDueWindow = Some(5956),
+            amountOnIntDueWindow = Some(300000),
+            unpaidAmountWindow = Some(305956),
             suppressionApplied = None
           )
         )
         theFcDebtSummaryWillHaveCalculationWindows(context, 1, expected1stCalculationWindows)
 
         And("the 2nd fc debt summary will contain")
-        val expected2ndDebtCalculation = FCDebtCalculation(
-          debtItemChargeId = "456",
-          interestDueDailyAccrual = 26,
-          interestDueDutyTotal = 18366,
-          amountOnIntDueDuty = 300000,
-          totalAmountIntDuty = 318366,
-          unpaidAmountDuty = 300000,
-          calculationWindows = List.empty[FCCalculationWindow]
+        val expected2ndDebtCalculation = FCDebtCalculationExpected(
+          debtItemChargeId = Some("456"),
+          interestDueDailyAccrual = Some(26),
+          interestDueDutyTotal = Some(18366),
+          amountOnIntDueDuty = Some(300000),
+          totalAmountIntDuty = Some(318366),
+          unpaidAmountDuty = Some(300000),
+          calculationWindows = None
         )
         theFcDebtSummaryWillContain(context, 2, expected2ndDebtCalculation)
 
         And("the 2nd fc debt summary will have calculation windows")
         val expected2ndCalculationWindows = List(
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-16"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 216,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1775,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101775,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-16")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            numberOfDays = Some(216),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1775),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101775),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-01-20"),
-            numberOfDays = 153,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1362,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101362,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-01-20")),
+            numberOfDays = Some(153),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1362),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101362),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-16"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 216,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1775,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101775,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-16")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            numberOfDays = Some(216),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1775),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101775),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-03-10"),
-            numberOfDays = 202,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 8,
-            interestDueWindow = 1798,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 101798,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-03-10")),
+            numberOfDays = Some(202),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1798),
+            amountOnIntDueWindow = Some(100000),
+            unpaidAmountWindow = Some(101798),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-16"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 216,
-            interestRate = 3.0,
-            interestDueDailyAccrual = 24,
-            interestDueWindow = 5326,
-            amountOnIntDueWindow = 300000,
-            unpaidAmountWindow = 305326,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-16")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            numberOfDays = Some(216),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(24),
+            interestDueWindow = Some(5326),
+            amountOnIntDueWindow = Some(300000),
+            unpaidAmountWindow = Some(305326),
             suppressionApplied = None
           ),
-          FCCalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-04-14"),
-            numberOfDays = 237,
-            interestRate = 3.25,
-            interestDueDailyAccrual = 26,
-            interestDueWindow = 6330,
-            amountOnIntDueWindow = 300000,
-            unpaidAmountWindow = 306330,
+          FCCalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-04-14")),
+            numberOfDays = Some(237),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(26),
+            interestDueWindow = Some(6330),
+            amountOnIntDueWindow = Some(300000),
+            unpaidAmountWindow = Some(306330),
             suppressionApplied = None
           )
         )
@@ -1675,26 +1675,26 @@ class FCMultipeDebtItemsFeatureSpec
       theDebtItemIsSentToTheFcIfsService(context)
 
       Then("the fc ifs service will return a total debts summary of")
-      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummary(
+      val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
         dateOfCalculation = Some(LocalDate.now()),
-        combinedDailyAccrual = 0,
-        unpaidAmountTotal = 500000,
-        interestDueCallTotal = 0,
-        totalAmountIntTotal = 500000,
-        amountOnIntDueTotal = 500000,
-        debtCalculations = List.empty[FCDebtCalculation]
+        combinedDailyAccrual = Some(0),
+        unpaidAmountTotal = Some(500000),
+        interestDueCallTotal = Some(0),
+        totalAmountIntTotal = Some(500000),
+        amountOnIntDueTotal = Some(500000),
+        debtCalculations = None
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
-      val expected1stDebtCalculations = FCDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500000,
-        unpaidAmountDuty = 500000,
-        calculationWindows = List.empty[FCCalculationWindow]
+      val expected1stDebtCalculations = FCDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestDueDutyTotal = Some(0),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(500000),
+        unpaidAmountDuty = Some(500000),
+        calculationWindows = None
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 

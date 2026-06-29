@@ -21,6 +21,8 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
+import java.time.LocalDate
+
 object FieldCollectionsBuilder extends BaseRequests with RandomValues {
 
   // -----------------------------------------------------------------------
@@ -181,6 +183,58 @@ object FieldCollectionsBuilder extends BaseRequests with RandomValues {
   //   var chargedInterest = ""
   //   asMapTransposed.zipWithIndex.foreach { case (chargedInte, index) =>
   // -----------------------------------------------------------------------
+
+  final case class FCDebtCalculationsSummaryExpected(
+                                        dateOfCalculation: Option[LocalDate] = None,
+                                        combinedDailyAccrual: Option[Int] = None,
+                                        unpaidAmountTotal: Option[Int] = None,
+                                        interestDueCallTotal: Option[Int] = None,
+                                        totalAmountIntTotal: Option[Int]= None,
+                                        amountOnIntDueTotal: Option[Int] = None,
+                                        debtCalculations: Option[List[FCDebtCalculationExpected]] = None
+                                      )
+  object FCDebtCalculationsSummaryExpected {
+    implicit val formatDebtCalculation: OFormat[FCDebtCalculationsSummaryExpected] = Json.format[FCDebtCalculationsSummaryExpected]
+  }
+
+  final case class FCDebtCalculationExpected(
+                                debtItemChargeId: Option[String] = None,
+                                interestDueDailyAccrual: Option[Int] = None,
+                                interestDueDutyTotal: Option[Int] = None,
+                                amountOnIntDueDuty: Option[Int] = None,
+                                totalAmountIntDuty: Option[Int] = None,
+                                unpaidAmountDuty: Option[Int] = None,
+                                calculationWindows: Option[List[FCCalculationWindowExpected]] = None
+                              )
+  object FCDebtCalculationExpected {
+    implicit val formatDebtCalculation: OFormat[FCDebtCalculationExpected] = Json.format[FCDebtCalculationExpected]
+  }
+
+  final case class FCCalculationWindowExpected(
+                                  periodFrom: Option[LocalDate] = None,
+                                  periodTo: Option[LocalDate] = None,
+                                  numberOfDays: Option[Int] = None,
+                                  interestRate: Option[Double] = None,
+                                  interestDueDailyAccrual: Option[Int] = None,
+                                  interestDueWindow: Option[Int] = None,
+                                  amountOnIntDueWindow: Option[Int] = None,
+                                  unpaidAmountWindow: Option[Int] = None,
+                                  suppressionApplied: Option[SuppressionAppliedExpected] = None
+                                )
+
+  object FCCalculationWindowExpected {
+    implicit val formatDebtItemCalculationWindow: OFormat[FCCalculationWindowExpected] =
+      Json.format[FCCalculationWindowExpected]
+  }
+
+  final case class SuppressionAppliedExpected(reason: Option[String] = None, description: Option[String] = None, code: Option[String] = None)
+  object SuppressionAppliedExpected {
+    implicit val formatCalculationWindow: OFormat[SuppressionAppliedExpected] = Json.format[SuppressionAppliedExpected]
+  }
+
+
+  def getBodyAsString(variant: String): String =
+    TestData.loadedFiles(variant)
 
   // -----------------------------------------------------------------------
   // HTTP client methods lifted from legacy Requests with typed context access.
