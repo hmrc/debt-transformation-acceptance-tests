@@ -20,7 +20,6 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs._
-import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCInterestForecastingStepHelpers
