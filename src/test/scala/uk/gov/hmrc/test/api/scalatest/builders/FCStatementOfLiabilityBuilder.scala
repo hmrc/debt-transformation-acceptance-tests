@@ -22,6 +22,8 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
+import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.bearerToken
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
@@ -29,6 +31,14 @@ object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
     enrolments = Seq("read:statement-of-liability"),
     userType = getRandomAffinityGroup
   )
+
+
+  case class FCSolCalculationExpected(
+    debtId: Option[String],
+    interestDueDebtTotal: Option[BigInt],
+    totalAmountIntDebt: Option[BigDecimal]
+  )
+
 
   def getFCStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))

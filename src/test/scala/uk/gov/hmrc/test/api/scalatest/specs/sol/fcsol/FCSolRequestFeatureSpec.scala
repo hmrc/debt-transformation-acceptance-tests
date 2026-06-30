@@ -18,6 +18,8 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol.fcsol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
+import uk.gov.hmrc.test.api.models.sol.{FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
+import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.FCSolCalculationExpected
 import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
@@ -101,20 +103,19 @@ class FCSolRequestFeatureSpec
         combinedDailyAccrual = 0
       )
 
-      And("the 1st multiple fc statement of liability debt summary will contain duties")
-      theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+      And("the fc statement of liability debt summary will contain duties")
+      theFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
-        summaryIndex = 0,
         Seq(
-          FCSolCalculation(
-            debtId = "duty01",
-            interestDueDebtTotal = BigInt("0"),
-            totalAmountIntDebt = BigDecimal("10910")
+          FCSolCalculationExpected(
+            debtId = Some("duty01"),
+            interestDueDebtTotal = Some(BigInt("0")),
+            totalAmountIntDebt = Some(BigDecimal("10910"))
           ),
-          FCSolCalculation(
-            debtId = "duty02",
-            interestDueDebtTotal = BigInt("0"),
-            totalAmountIntDebt = BigDecimal("11910")
+          FCSolCalculationExpected(
+            debtId = Some("duty02"),
+            interestDueDebtTotal = Some(BigInt("0")),
+            totalAmountIntDebt = Some(BigDecimal("11910"))
           )
         )
       )
@@ -133,7 +134,7 @@ class FCSolRequestFeatureSpec
             interestStartDate = "2020-05-13",
             interestRequestedTo = "2021-08-01",
             interestIndicator = "Y",
-            chargedInterest = BigDecimal("1000"),
+            chargedInterest = BigDecimal("0"),
             periodEnd = "2020-05-13",
             paymentHistory = List(
               PaymentHistory(
@@ -155,20 +156,20 @@ class FCSolRequestFeatureSpec
         amountIntTotal = BigDecimal("9700"),
         combinedDailyAccrual = 0
       )
-      And("the 1st multiple fc statement of liability debt summary will contain duties")
-      theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+      And("the fc statement of liability debt summary will contain duties")
+      theFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
-        summaryIndex = 0,
         Seq(
-          FCSolCalculation(
-            debtId = "duty01",
-            interestDueDebtTotal = BigInt("0"),
-            totalAmountIntDebt = BigDecimal("10012")
+          FCSolCalculationExpected(
+            debtId = Some("duty01"),
+            interestDueDebtTotal = Some(BigInt("0")),
+            totalAmountIntDebt = Some(BigDecimal("10012"))
           )
         )
       )
 
     }
+
     Scenario("2. FC Sol request with invalid or empty original amount.") { context =>
       Given("fc sol request")
       val request = SolMultipleDebtsRequest(
@@ -226,15 +227,14 @@ class FCSolRequestFeatureSpec
         combinedDailyAccrual = 0
       )
 
-      And("the 1st multiple fc statement of liability debt summary will contain duties")
-      theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+      And("the fc statement of liability debt summary will contain duties")
+      theFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
-        summaryIndex = 0,
         Seq(
-          FCSolCalculation(
-            debtId = "XS002610170037",
-            interestDueDebtTotal = BigInt("0"),
-            totalAmountIntDebt = BigDecimal("9999999999")
+          FCSolCalculationExpected(
+            debtId = Some("XS002610170037"),
+            interestDueDebtTotal = Some(BigInt("0")),
+            totalAmountIntDebt = Some(BigDecimal("9999999999"))
           )
         )
       )
