@@ -295,11 +295,14 @@ class InstalmentCalculationSingleDebtFeatureSpec
 
         Then("IFS response contains expected values")
         val instalmentsResponse = InstalmentResponseExpected(
-            instalmentNumber = Some(1),
-            dueDate = Some(LocalDate.parse("2025-08-25")),
-            intRate = Some(6.5)
-          )
-        ifsResponseContainsExpectedValuesNew(context, instalmentsResponse)  //rename method and remove New from the end in next task for DTD-4626
+          instalmentNumber = Some(1),
+          dueDate = Some(LocalDate.parse("2025-08-25")),
+          intRate = Some(6.5)
+        )
+        ifsResponseContainsExpectedValuesNew(
+          context,
+          instalmentsResponse
+        ) // rename method and remove New from the end in next task for DTD-4626
 
     }
 

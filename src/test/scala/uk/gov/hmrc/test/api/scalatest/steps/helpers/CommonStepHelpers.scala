@@ -25,9 +25,9 @@ trait CommonStepHelpers { this: Matchers =>
 
   // ^service returns debt statement of liability data$
   def serviceReturnsDebtStatementOfLiabilityData(
-                                                  context: StatementOfLiabilityContext,
-                                                  expectedResponse: SolCalculationSummaryResponse
-                                                ): Unit = {
+    context: StatementOfLiabilityContext,
+    expectedResponse: SolCalculationSummaryResponse
+  ): Unit = {
     val actual = context.responseBody
     println(s"actualResponseBody : " + actual)
     println(s"expectedResponse : " + Some(expectedResponse))
@@ -99,7 +99,6 @@ trait CommonStepHelpers { this: Matchers =>
       case None         => fail("Response body is empty")
     }
   }
-
 
   // ^suppression data has been created$
   def suppressionDataHasBeenCreated(context: FCStatementOfLiabilityContext): Unit = {

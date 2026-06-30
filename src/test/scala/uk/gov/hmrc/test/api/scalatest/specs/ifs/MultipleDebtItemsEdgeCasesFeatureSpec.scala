@@ -962,7 +962,7 @@ class MultipleDebtItemsEdgeCasesFeatureSpec
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
     }
 
-    Scenario("9. 2 SA debts where one has an original amount less than zero", DTD_2216){ context =>
+    Scenario("9. 2 SA debts where one has an original amount less than zero", DTD_2216) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
         debtItems = List(

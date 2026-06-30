@@ -80,7 +80,7 @@ trait BaseRequests extends RandomValues with BaseUris {
       (Json.parse(accessToken.body) \ "access_token").as[String]
     }
 
-   TestConfiguration.env match {
+    TestConfiguration.env match {
       case "local" =>
         createLocalBearerToken(enrolments, userType, utr)
       case _       =>

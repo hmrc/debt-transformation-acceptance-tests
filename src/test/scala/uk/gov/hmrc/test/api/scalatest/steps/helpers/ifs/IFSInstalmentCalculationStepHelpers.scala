@@ -286,7 +286,7 @@ trait IFSInstalmentCalculationStepHelpers {
   }
 
   // ^ifs service returns single payment frequency instalment calculation plan$
- def ifsServiceReturnsSinglePaymentFrequencyInstalmentCalculationPlan(
+  def ifsServiceReturnsSinglePaymentFrequencyInstalmentCalculationPlan(
     context: IFSInstalmentCalculationContext
   ): Unit = {
     val response: StandaloneWSResponse = context.response
@@ -695,7 +695,7 @@ trait IFSInstalmentCalculationStepHelpers {
     }
   }
 
-  //rename method and remove New from the end and remove the above method to assert in next task for DTD-4626
+  // rename method and remove New from the end and remove the above method to assert in next task for DTD-4626
   def ifsResponseContainsExpectedValuesNew(
     context: IFSInstalmentCalculationContext,
     expectedResponse: InstalmentResponseExpected
@@ -709,27 +709,27 @@ trait IFSInstalmentCalculationStepHelpers {
       .lift(responseIndex)
       .getOrElse(fail(s"Missing instalment at index [$responseIndex] in response"))
 
-      withClue(s"instalments[$responseIndex]") {
+    withClue(s"instalments[$responseIndex]") {
 
-        expectedResponse.instalmentNumber.foreach { v =>
-          withClue("instalmentNumber: ") {
-            actualInstalment.instalmentNumber shouldBe v
-          }
+      expectedResponse.instalmentNumber.foreach { v =>
+        withClue("instalmentNumber: ") {
+          actualInstalment.instalmentNumber shouldBe v
         }
+      }
 
-        expectedResponse.dueDate.foreach { v =>
-          withClue("dueDate: ") {
-            actualInstalment.dueDate shouldBe v
-          }
+      expectedResponse.dueDate.foreach { v =>
+        withClue("dueDate: ") {
+          actualInstalment.dueDate shouldBe v
         }
+      }
 
-        expectedResponse.intRate.foreach { v =>
-          withClue("intRate: ") {
-            actualInstalment.intRate shouldBe v
-          }
+      expectedResponse.intRate.foreach { v =>
+        withClue("intRate: ") {
+          actualInstalment.intRate shouldBe v
+        }
       }
     }
-    }
+  }
 
   // ^ifs service returns weekly frequency instalment calculation plan with initial payment$
   def ifsServiceReturnsWeeklyFrequencyInstalmentCalculationPlanWithInitialPayment(

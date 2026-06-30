@@ -48,7 +48,9 @@ class SupressionFeatureSpec
     val suppressionContext = SuppressionRulesContext()
 
     Scenario(
-      "Suppression, 2 payments on different dates during suppression",suppression, DTD_2790
+      "Suppression, 2 payments on different dates during suppression",
+      suppression,
+      DTD_2790
     ) { context =>
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
