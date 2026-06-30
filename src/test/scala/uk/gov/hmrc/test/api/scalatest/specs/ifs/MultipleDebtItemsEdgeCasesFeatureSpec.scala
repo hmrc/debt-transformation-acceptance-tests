@@ -27,7 +27,7 @@ import uk.gov.hmrc.test.api.scalatest.tags.DTD_2216
 
 import java.time.LocalDate
 
-class MultipeDebtItemsEdgeCasesFeatureSpec
+class MultipleDebtItemsEdgeCasesFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers

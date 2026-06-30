@@ -27,9 +27,61 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 trait InterestForecastingStepHelpers { this: Matchers =>
 
+  // ^a debt calculation$
   def aDebtCalculationIsCreated(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
 
+  // ^no debt item$
+  def noDebtItem(context: InterestForecastingContext): Unit = {
+    // createInterestForcastingRequestWithNoDebtItems()
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^a rule has been updated$
+  def aRuleHasBeenUpdated(
+    context: InterestForecastingContext,
+    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
+  ): Unit = {
+    // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
+    // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
+  }
+
+  // ^the current set of rules$
+  def theCurrentSetOfRules(context: InterestForecastingContext): Unit = {
+    // Migration hint: response assertion
+    // val responseGEtRules = getAllRules
+    // val collection        = Json.parse(responseGEtRules.body).as[GetRulesResponse]
+    // val existingProdRules = collection.rules.find(_.version == 1)
+    // existingProdRules match {
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^(.*) debt items$
+  def debtItems(context: InterestForecastingContext, numberItems: Int): Unit = {
+    // Migration hint: legacy InterestForecastingContext usage
+    // var debtItems: String = null
+    // var n                 = 0
+    // while (n < numberItems) {
+    // val debtItem = getBodyAsString("debtItem")
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^the debt item has payment history$
+  def theDebtItemHasPaymentHistory(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
+  ): Unit = {
+    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
+    // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
+  }
+
+  // ^the debt item has no payment history$
+  def theDebtItemHasNoPaymentHistory(context: InterestForecastingContext): Unit = {
+    // customerWithNoPaymentHistory()
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^the debt item(s) is sent to the ifs service$
   def theDebtItemIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
     val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtCalculation(requestJson)
@@ -61,6 +113,7 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
   }
 
+  // ^the debt interest type request is sent to the ifs service$
   def theDebtInterestTypeRequestIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
     val requestJson                    = Json.toJson(context.ditRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtInterestTypeRequestBody(requestJson)
@@ -80,6 +133,7 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     println(jsonResponseBody)
   }
 
+  // ^the ifs service will return a total debts summary of$
   def theIfsServiceWillReturnATotalDebtsSummaryOf(
     context: InterestForecastingContext,
     expectedResponse: DebtCalculationsSummary
@@ -108,6 +162,7 @@ trait InterestForecastingStepHelpers { this: Matchers =>
 
   }
 
+  // ^the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain$
   def theDebtSummaryWillContain(
     context: InterestForecastingContext,
     index: Int,
@@ -160,6 +215,27 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
+  // ^the ifs service will respond with (.*)$
+  def theIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
+    // Migration hint: legacy InterestForecastingContext usage, response assertion
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // response.body   should include(expectedMessage)
+    // response.status should be(400)
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^the ifs service will respond with$
+  def theIfsServiceWillRespondWith2(context: InterestForecastingContext): Unit = {
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // val errorResponse                  = Json.parse(response.body).as[Errors]
+    // locally {
+    // val fieldName = "statusCode"
+    // Inferred legacy table keys: response
+    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
+    // Add a typed expected-response parameter and compare it against context.responseBody.
+  }
+
+  // ^the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows$
   def theDebtSummaryWillHaveCalculationWindows(
     context: InterestForecastingContext,
     summaryIndex: Int,
@@ -235,6 +311,7 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
+  // ^the ([0-9])(?:st|nd|rd|th) debt summary will have suppression applied calculation windows$
   def theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(
     context: InterestForecastingContext,
     summaryIndex: Int,
@@ -290,6 +367,56 @@ trait InterestForecastingStepHelpers { this: Matchers =>
       }
     }
   }
+
+  // ^Ifs service returns response code (.*)$
+  def ifsServiceReturnsResponseCode(context: InterestForecastingContext, expectedCode: Int): Unit = {
+    // Migration hint: legacy InterestForecastingContext usage, response assertion
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // response.status should be(expectedCode)
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^Ifs service returns error message (.*)$
+  def ifsServiceReturnsErrorMessage(context: InterestForecastingContext, expectedMessage: String): Unit = {
+    // Migration hint: legacy InterestForecastingContext usage
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // val responseBody                   = response.body.stripMargin
+    // print("response message*****************************" + responseBody)
+    // responseBody should be(expectedMessage)
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^the debt item has breathing spaces applied$
+  def theDebtItemHasBreathingSpacesApplied(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
+  ): Unit = {
+    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
+    // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
+  }
+
+  // ^no breathing spaces have been applied to the debt item$
+  def noBreathingSpacesHaveBeenAppliedToTheDebtItem(context: InterestForecastingContext): Unit = {
+    // noBreathingSpace()
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^the customer has post codes$
+  def theCustomerHasPostCodes(
+    context: InterestForecastingContext,
+    inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]
+  ): Unit = {
+    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
+    // Suggested type: InterestForecastingBuilder.CustomerPostCodesInput
+  }
+
+  // ^no post codes have been provided for the customer$
+  def noPostCodesHaveBeenProvidedForTheCustomer(context: InterestForecastingContext): Unit = {
+    // noCustomerPostCodes()
+    // TODO: Implement typed helper for this step.
+  }
+
+  // ^the ([0-9])(?:st|nd|rd|th) debt summary will not have any calculation windows$
   def theDebtSummaryWillNotHaveAnyCalculationWindows(context: InterestForecastingContext, summaryIndex: Int): Unit = {
     val response: StandaloneWSResponse = context.response
     response.status should be(200)
@@ -302,9 +429,11 @@ trait InterestForecastingStepHelpers { this: Matchers =>
       .size shouldBe 0
   }
 
+  // ^a debt interest type item$
   def aDebtInterestTypeItem(context: InterestForecastingContext, debtInterestType: Seq[DebtInterestTypeRequest]): Unit =
     context.ditRequest = Some(debtInterestType)
 
+  // ^the ([0-9])(?:st|nd|rd|th) debt interest type response summary will contain$
   def theDebtInterestTypeResponseSummaryWillContain(
     context: InterestForecastingContext,
     index: Int,
@@ -338,6 +467,24 @@ trait InterestForecastingStepHelpers { this: Matchers =>
         responseBody.useChargeReference shouldBe expectedResponse.useChargeReference
       }
     }
+  }
+
+  // ^the ([0-9])(?:st|nd|rd|th) debt applied suppression summary contains values as$
+  def theDebtAppliedSuppressionSummaryContainsValuesAs(
+    context: InterestForecastingContext,
+    summaryIndex: Int,
+    inputs: Seq[SuppressionApplied]
+  ): Unit = {
+    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
+    // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
+    // val maybeSuppression = for {
+    // debt        <-
+    // TODO: Assertion step. Check models and builders to use to compare against.
+    // Compare 'inputs' against the actual parsed response from context.responseBody.
+    // Suggested approach:
+    //   context.status shouldBe 200
+    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
+    //   // Assert the relevant element/field against inputs.
   }
 
 }

@@ -25,7 +25,7 @@ import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
-  private val bearerToken: String = createBearerToken(
+  val bearerToken: String = createBearerToken(
     enrolments = Seq("read:statement-of-liability"),
     userType = getRandomAffinityGroup
   )
