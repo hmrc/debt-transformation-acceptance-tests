@@ -1,4 +1,0 @@
-        {
-              "postCode":"<REPLACE_postCode>",
-              "postCodeDate": "<REPLACE_postCodeDate>"
-        }

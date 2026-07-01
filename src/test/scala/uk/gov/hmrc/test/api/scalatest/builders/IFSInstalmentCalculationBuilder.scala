@@ -146,7 +146,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
   def getInstalmentCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken =
       createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
-    val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
+    val baseUri     = s"$interestForecastingApiUrl/instalment-calculation"
 
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -165,7 +165,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/instalment-calculation"
+    val baseUri     = s"$interestForecastingApiUrl/instalment-calculation"
 
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -188,7 +188,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",

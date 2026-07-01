@@ -1,9 +1,0 @@
-{
-  "debtItems": [
-    <REPLACE_debtItems>
-  ],
-  "customerPostCodes": [
-  <REPLACE_customerPostCodes>
-  ]
-
-}

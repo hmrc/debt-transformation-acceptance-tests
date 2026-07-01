@@ -18,11 +18,11 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol.fcsol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{Debt, FCSolCalculation, FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
+import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 
-class FCSolrequestFeatureSpec
+class FCSolRequestFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers

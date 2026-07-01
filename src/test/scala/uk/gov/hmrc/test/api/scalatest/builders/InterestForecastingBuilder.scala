@@ -19,7 +19,6 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object InterestForecastingBuilder extends BaseRequests with RandomValues {
@@ -171,7 +170,7 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
   def getDebtCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken =
       createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
-    val baseUri     = s"$interestForecostingApiUrl/debt-calculation"
+    val baseUri     = s"$interestForecastingApiUrl/debt-calculation"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -181,12 +180,12 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
-  def getDebtInterestTypeRequestBody(context: InterestForecastingContext, json: JsValue): StandaloneWSResponse = {
+  def getDebtInterestTypeRequestBody(json: JsValue): StandaloneWSResponse = {
     val bearerToken = createBearerToken(
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/debt-interest-type"
+    val baseUri     = s"$interestForecastingApiUrl/debt-interest-type"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",

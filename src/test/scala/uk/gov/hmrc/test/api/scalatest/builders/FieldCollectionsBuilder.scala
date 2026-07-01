@@ -32,7 +32,7 @@ object FieldCollectionsBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/fc-debt-calculation"
+    val baseUri     = s"$interestForecastingApiUrl/fc-debt-calculation"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",

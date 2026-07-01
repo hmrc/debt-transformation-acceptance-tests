@@ -1,3 +1,0 @@
-{
-   "suppression":[ <REPLACE_suppressions> ]
-}

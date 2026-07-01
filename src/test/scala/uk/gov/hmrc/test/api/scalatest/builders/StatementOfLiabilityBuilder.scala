@@ -21,11 +21,12 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolDebtsRequest
-import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests.bearerToken
-import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
+
+  private val bearerToken: String =
+    createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
 
   def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
     val baseUri              = s"$statementOfLiabilityApiUrl/sol"
@@ -43,18 +44,6 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
     println(s"request headers :::::::::::::::::::  ${headers.toString()}")
 
     WsClient.post(baseUri, headers = headers, jsonRequest)
-  }
-
-  def getStatementLiabilityHelloWorld(context: StatementOfLiabilityContext, endpoint: String): StandaloneWSResponse = {
-    val bearerToken =
-      createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
-    val baseUri     = s"$statementOfLiabilityApiUrl$endpoint"
-    val headers     = Map(
-      "Authorization" -> s"Bearer $bearerToken",
-      "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
-    )
-    WsClient.get(baseUri, headers = headers)
   }
 
 }

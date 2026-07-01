@@ -3,13 +3,13 @@
 set -e
 
 environment="local"
-tags="not @ignore"
+scalaTestTags="\"WIP IGNORE\""
 if [ $# -gt 0 -a "$1" != "$environment" ];
 then
   environment="$1"
-  tags="not @ignore"
+    scalaTestTags="\"WIP IGNORE\""
 fi
 
-echo "*** running on $environment for tags '$tags' ***"
+echo "*** running on $environment for scala tags '$scalaTestTags' ***"
 
-sbt -Dsecurity.assessment="true" -Denvironment="$environment" -Dcucumber.options="--tags '$tags'" clean "testOnly uk.gov.hmrc.test.api.cucumber.runner.StatementOfLiabilityApiTestRunner"
+sbt -Dsecurity.assessment="true" -Denvironment="$environment" clean "testOnly uk.gov.hmrc.test.api.scalatest.specs.* -- -l $scalaTestTags"

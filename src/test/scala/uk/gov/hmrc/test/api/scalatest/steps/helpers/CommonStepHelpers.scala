@@ -18,7 +18,6 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers
 
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.SolCalculationSummaryResponse
-import uk.gov.hmrc.test.api.scalatest.builders.SuppressionRulesBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.{FCStatementOfLiabilityContext, StatementOfLiabilityContext}
 
 // TODO: Validate that FCStatementOfLiabilityContext is the correct context for helpers migrated from commonSteps.scala.
@@ -107,15 +106,6 @@ trait CommonStepHelpers { this: Matchers =>
     // addSuppressions(dataTable)
     // TODO: No matching generated builder input or existing model was found.
     // Add a typed parameter and wire it into context or request JSON.
-  }
-
-  // ^suppression rules have been created$
-  def suppressionRulesHaveBeenCreated(
-    context: FCStatementOfLiabilityContext,
-    inputs: Seq[SuppressionRulesBuilder.SuppressionsInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using SuppressionRulesBuilder.
-    // Suggested type: SuppressionRulesBuilder.SuppressionsInput
   }
 
   // ^service returns response code (.*)$

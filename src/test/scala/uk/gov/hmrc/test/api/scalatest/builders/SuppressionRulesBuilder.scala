@@ -21,55 +21,10 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolDebtsRequest
-import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
-import uk.gov.hmrc.test.api.requests.StatementOfLiabilityRequests.bearerToken
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object SuppressionRulesBuilder extends BaseRequests with RandomValues {
-
-  // -----------------------------------------------------------------------
-  // Typed input generated from legacy method: addSuppressions(DataTable)
-  // Legacy DataTable code is inference-only and is not emitted.
-  // -----------------------------------------------------------------------
-  final case class SuppressionsInput(
-    code: Option[String] = None,
-    description: Option[String] = None,
-    enabled: Option[String] = None,
-    fromDate: Option[String] = None,
-    reason: Option[String] = None,
-    suppressionId: Option[String] = None,
-    suppressions: Option[String] = None,
-    toDate: Option[String] = None
-  )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'addSuppressions' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asMapTransposed = dataTable.asMaps[String, String](classOf[String], classOf[String]).asScala
-  //   var suppressions    = ""
-  //   var id: String      = null
-  //   asMapTransposed.zipWithIndex.foreach { case (suppression, index) =>
-  //   val parsedFromDate = suppression.get("fromDate").toString match {
-  //   case "yesterday"         => LocalDate.now().minusDays(1).toString
-  //   case "2 months from now" => LocalDate.now().plusMonths(2).toString
-  //   case other               => other
-  // -----------------------------------------------------------------------
-
-  // -----------------------------------------------------------------------
-  // Typed input generated from legacy method: addSuppressionRules(DataTable)
-  // Legacy DataTable code is inference-only and is not emitted.
-  // -----------------------------------------------------------------------
-  final case class SuppressionRulesInput(
-    mainTrans: Option[String] = None,
-    periodEnd: Option[String] = None,
-    postCode: Option[String] = None,
-    rule: Option[String] = None,
-    ruleId: Option[String] = None,
-    suppressionIds: Option[String] = None,
-    suppressionRules: Option[String] = None
-  )
 
   // -----------------------------------------------------------------------
   // Legacy method 'addSuppressionRules' looked like template/string-body setup.
@@ -98,39 +53,14 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
     subTrans: Option[String] = None
   )
 
-  // Best-effort typed model builder from legacy constructor usage.
-  def toSuppressionInformation(in: SuppressionCriteriaInput): SuppressionInformation =
-    // TODO: review inferred defaults below before relying on this method.
-    SuppressionInformation(
-      dateFrom = /* TODO: supply dateFrom: String */ "",
-      dateTo = in.dateTo,
-      reason = /* TODO: supply reason: String */ "",
-      reasonDesc = /* TODO: supply reasonDesc: String */ "",
-      suppressionChargeDescription = /* TODO: supply suppressionChargeDescription: String */ "",
-      postcode = in.postcode,
-      mainTrans = in.mainTrans,
-      subTrans = in.subTrans,
-      checkPeriodEnd = in.checkPeriodEnd
-    )
-
-  def toSuppressionInformationSeq(inputs: Seq[SuppressionCriteriaInput]): Seq[SuppressionInformation] =
-    inputs.map(toSuppressionInformation)
-
-  // Best-effort typed model builder from legacy constructor usage.
-  def toSuppressionRequest(in: SuppressionCriteriaInput): SuppressionRequest =
-    // TODO: review inferred defaults below before relying on this method.
-    SuppressionRequest(
-      suppressions = /* TODO: supply suppressions: Seq[SuppressionInformation] */ Seq.empty[SuppressionInformation]
-    )
-
-  def toSuppressionRequestSeq(inputs: Seq[SuppressionCriteriaInput]): Seq[SuppressionRequest] =
-    inputs.map(toSuppressionRequest)
-
   // -----------------------------------------------------------------------
   // HTTP client methods lifted from legacy Requests with typed context access.
   // -----------------------------------------------------------------------
 
   def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
+    val bearerToken =
+      createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
+
     val baseUri              = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 
@@ -153,7 +83,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -168,7 +98,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -184,7 +114,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/old"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions/old"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -200,7 +130,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:suppression-rule"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppression-rules/old"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -215,7 +145,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:suppression-rule"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppression-rules/old"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppression-rules/old"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -230,7 +160,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions/overrides"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -245,7 +175,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecostingApiUrl/test-only/suppressions"
+    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions"
     val headers     = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
