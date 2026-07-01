@@ -33,6 +33,13 @@ To run all debt transformation acceptance test run the below `.sh` script
 `run_interest_forecasting_api_tests.sh`
 `run_statement_of_liability_api_tests.sh`
 
+To run the scalaTests on the runner
+
+1. Right click on the src/test package
+2. Select "Run > ScalaTest in 'test'...
+
+will run the scalaTests in the runner
+
 Available Endpoints
 
 ```
