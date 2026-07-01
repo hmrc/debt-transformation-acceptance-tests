@@ -20,14 +20,10 @@ sleep 2
 
 scala_exit=0
 
-printf "\n\n\n\n*****************STARTING SCALATEST TESTS*****************\n\n"
 echo "*** running on $environment for scala tags '$scalaTestTags' ***"
 sbt -Denvironment="$environment" clean \
-  "testOnly uk.gov.hmrc.test.api.scalatest.specs.* -- -l $scalaTestTags" \
+  "testOnly uk.gov.hmrc.test.api.scalatest.specs.ifs.* -- -l $scalaTestTags" \
   || scala_exit=$?
-
-scala_result=$([ $scala_exit -eq 0 ] && echo "PASSED" || echo "FAILED")
-printf "\n\n\n\nScalaTest Tests: $scala_result\n\n"
 
 if [ $scala_exit -ne 0 ]; then
   exit 1
