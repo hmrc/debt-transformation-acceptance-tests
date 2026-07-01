@@ -21,7 +21,8 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol._
 import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
-import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
+import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
+import uk.gov.hmrc.test.api.scalatest.steps.context.{StatementOfLiabilityContext, SuppressionRulesContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 
@@ -32,15 +33,17 @@ class SolWilthSuppressionFeatureSpec
     with StatementOfLiabilityStepHelpers
     with SuppressionStepHelpers {
 
-  override type FixtureParam = SuppressionRulesContext
+  override type FixtureParam = StatementOfLiabilityContext
 
   override def withFixture(test: OneArgTest) = {
-    val context = SuppressionRulesContext()
+    val context = StatementOfLiabilityContext()
     try test(context)
     finally ()
   }
 
   Feature("Sol With Suppression") {
+
+    val suppressionContext = SuppressionRulesContext()
 
     Scenario("Customer Outputs SoL where suppression is applied") { context =>
       Given("suppression configuration data is created")
@@ -59,54 +62,54 @@ class SolWilthSuppressionFeatureSpec
           )
         )
       )
-      suppressionConfigurationDataIsCreated(context, ifsRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, ifsRequest)
 
       When("suppression configuration is sent to ifs service")
-      suppressionConfigurationIsSentToIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("debt details")
       val solRequest = SolDebtsRequest(
         solType = "CO",
         customerUniqueRef = "NEHA1234",
         debts = List(
-          Debt(
-            debtId = "debt008",
-            interestRequestedTo = "2021-03-08"
-          )
+          Debt(debtId = "debt008", interestRequestedTo = "2021-03-08")
         )
       )
       debtDetails(context, solRequest)
 
       When("a debt statement of liability is requested")
-      aRequestIsSentToSolServiceToGetSolCalculation(context)
+      aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse = SolCalculationSummaryResponse(
-        amountIntTotal = 500177,
-        combinedDailyAccrual = 35,
-        debts = List(
-          SolCalculation(
-            debtId = "debt008",
-            mainTrans = "1545",
-            debtTypeDescription = "CO: TPSS Contract Settlement",
-            interestDueDebtTotal = 177,
-            totalAmountIntDebt = 500177,
-            combinedDailyAccrual = 35,
-            parentMainTrans = None,
-            duties = Vector(
-              SolDuty(
-                subTrans = "1090",
-                dutyTypeDescription = Some("CO: TGPEN"),
-                unpaidAmountDuty = 500000,
-                combinedDailyAccrual = 35,
-                interestBearing = true,
-                interestOnlyIndicator = false
-              )
-            )
-          )
+      val expectedSummary = SolCalculationSummaryResponseExpected(
+        amountIntTotal = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedSummary)
+
+      And("the 1st sol debt summary will contain")
+      val expected1stDebt = SolCalculationExpected(
+        debtId = Some("debt008"),
+        mainTrans = Some("1545"),
+        debtTypeDescription = Some("CO: TPSS Contract Settlement"),
+        interestDueDebtTotal = Some(BigInt(177)),
+        totalAmountIntDebt = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      theCustomerStatementOfLiabilityContainsDebtValuesAs(context, 1, expected1stDebt)
+
+      And("the 1st sol debt summary will contain duties")
+      val expected1stDuties = List(
+        SolDutyExpected(
+          subTrans = Some("1090"),
+          dutyTypeDescription = Some("CO: TGPEN"),
+          unpaidAmountDuty = Some(BigInt(500000)),
+          combinedDailyAccrual = Some(BigInt(35)),
+          interestBearing = Some(true),
+          interestOnlyIndicator = Some(false)
         )
       )
-      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
+      theSolDebtSummaryWillContainDuties(context, 1, expected1stDuties)
     }
 
     Scenario("Customer Outputs SoL suppression NOT applied to a different postcode") { context =>
@@ -126,54 +129,41 @@ class SolWilthSuppressionFeatureSpec
           )
         )
       )
-      suppressionConfigurationDataIsCreated(context, ifsRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, ifsRequest)
 
       When("suppression configuration is sent to ifs service")
-      suppressionConfigurationIsSentToIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("debt details")
       val solRequest = SolDebtsRequest(
         solType = "CO",
         customerUniqueRef = "NEHA1234",
         debts = List(
-          Debt(
-            debtId = "debt008",
-            interestRequestedTo = "2021-03-08"
-          )
+          Debt(debtId = "debt008", interestRequestedTo = "2021-03-08")
         )
       )
       debtDetails(context, solRequest)
 
       When("a debt statement of liability is requested")
-      aRequestIsSentToSolServiceToGetSolCalculation(context)
+      aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse = SolCalculationSummaryResponse(
-        amountIntTotal = 500249,
-        combinedDailyAccrual = 35,
-        debts = List(
-          SolCalculation(
-            debtId = "debt008",
-            mainTrans = "1545",
-            debtTypeDescription = "CO: TPSS Contract Settlement",
-            interestDueDebtTotal = 249,
-            totalAmountIntDebt = 500249,
-            combinedDailyAccrual = 35,
-            parentMainTrans = None,
-            duties = Vector(
-              SolDuty(
-                subTrans = "1090",
-                dutyTypeDescription = Some("CO: TGPEN"),
-                unpaidAmountDuty = 500000,
-                combinedDailyAccrual = 35,
-                interestBearing = true,
-                interestOnlyIndicator = false
-              )
-            )
-          )
-        )
+      val expectedSummary = SolCalculationSummaryResponseExpected(
+        amountIntTotal = Some(BigInt(500249)),
+        combinedDailyAccrual = Some(BigInt(35))
       )
-      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedSummary)
+
+      And("the 1st sol debt summary will contain")
+      val expected1stDebt = SolCalculationExpected(
+        debtId = Some("debt008"),
+        mainTrans = Some("1545"),
+        debtTypeDescription = Some("CO: TPSS Contract Settlement"),
+        interestDueDebtTotal = Some(BigInt(249)),
+        totalAmountIntDebt = Some(BigInt(500249)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      theCustomerStatementOfLiabilityContainsDebtValuesAs(context, 1, expected1stDebt)
     }
 
     Scenario("Customer Outputs SoL where suppression is applied by Period End") { context =>
@@ -193,54 +183,54 @@ class SolWilthSuppressionFeatureSpec
           )
         )
       )
-      suppressionConfigurationDataIsCreated(context, ifsRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, ifsRequest)
 
       When("suppression configuration is sent to ifs service")
-      suppressionConfigurationIsSentToIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("debt details")
       val solRequest = SolDebtsRequest(
         solType = "CO",
         customerUniqueRef = "NEHA1234",
         debts = List(
-          Debt(
-            debtId = "debt008",
-            interestRequestedTo = "2021-03-08"
-          )
+          Debt(debtId = "debt008", interestRequestedTo = "2021-03-08")
         )
       )
       debtDetails(context, solRequest)
 
       When("a debt statement of liability is requested")
-      aRequestIsSentToSolServiceToGetSolCalculation(context)
+      aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse = SolCalculationSummaryResponse(
-        amountIntTotal = 500177,
-        combinedDailyAccrual = 35,
-        debts = List(
-          SolCalculation(
-            debtId = "debt008",
-            mainTrans = "1545",
-            debtTypeDescription = "CO: TPSS Contract Settlement",
-            interestDueDebtTotal = 177,
-            totalAmountIntDebt = 500177,
-            combinedDailyAccrual = 35,
-            parentMainTrans = None,
-            duties = Vector(
-              SolDuty(
-                subTrans = "1090",
-                dutyTypeDescription = Some("CO: TGPEN"),
-                unpaidAmountDuty = 500000,
-                combinedDailyAccrual = 35,
-                interestBearing = true,
-                interestOnlyIndicator = false
-              )
-            )
-          )
+      val expectedSummary = SolCalculationSummaryResponseExpected(
+        amountIntTotal = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedSummary)
+
+      And("the 1st sol debt summary will contain")
+      val expected1stDebt = SolCalculationExpected(
+        debtId = Some("debt008"),
+        mainTrans = Some("1545"),
+        debtTypeDescription = Some("CO: TPSS Contract Settlement"),
+        interestDueDebtTotal = Some(BigInt(177)),
+        totalAmountIntDebt = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      theCustomerStatementOfLiabilityContainsDebtValuesAs(context, 1, expected1stDebt)
+
+      And("the 1st sol debt summary will contain duties")
+      val expected1stDuties = List(
+        SolDutyExpected(
+          subTrans = Some("1090"),
+          dutyTypeDescription = Some("CO: TGPEN"),
+          unpaidAmountDuty = Some(BigInt(500000)),
+          combinedDailyAccrual = Some(BigInt(35)),
+          interestBearing = Some(true),
+          interestOnlyIndicator = Some(false)
         )
       )
-      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
+      theSolDebtSummaryWillContainDuties(context, 1, expected1stDuties)
     }
 
     Scenario("Customer Outputs SoL where suppression is applied by Main Trans") { context =>
@@ -260,54 +250,54 @@ class SolWilthSuppressionFeatureSpec
           )
         )
       )
-      suppressionConfigurationDataIsCreated(context, ifsRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, ifsRequest)
 
       When("suppression configuration is sent to ifs service")
-      suppressionConfigurationIsSentToIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("debt details")
       val solRequest = SolDebtsRequest(
         solType = "CO",
         customerUniqueRef = "NEHA1234",
         debts = List(
-          Debt(
-            debtId = "debt008",
-            interestRequestedTo = "2021-03-08"
-          )
+          Debt(debtId = "debt008", interestRequestedTo = "2021-03-08")
         )
       )
       debtDetails(context, solRequest)
 
       When("a debt statement of liability is requested")
-      aRequestIsSentToSolServiceToGetSolCalculation(context)
+      aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse = SolCalculationSummaryResponse(
-        amountIntTotal = 500177,
-        combinedDailyAccrual = 35,
-        debts = List(
-          SolCalculation(
-            debtId = "debt008",
-            mainTrans = "1545",
-            debtTypeDescription = "CO: TPSS Contract Settlement",
-            interestDueDebtTotal = 177,
-            totalAmountIntDebt = 500177,
-            combinedDailyAccrual = 35,
-            parentMainTrans = None,
-            duties = Vector(
-              SolDuty(
-                subTrans = "1090",
-                dutyTypeDescription = Some("CO: TGPEN"),
-                unpaidAmountDuty = 500000,
-                combinedDailyAccrual = 35,
-                interestBearing = true,
-                interestOnlyIndicator = false
-              )
-            )
-          )
+      val expectedSummary = SolCalculationSummaryResponseExpected(
+        amountIntTotal = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedSummary)
+
+      And("the 1st sol debt summary will contain")
+      val expected1stDebt = SolCalculationExpected(
+        debtId = Some("debt008"),
+        mainTrans = Some("1545"),
+        debtTypeDescription = Some("CO: TPSS Contract Settlement"),
+        interestDueDebtTotal = Some(BigInt(177)),
+        totalAmountIntDebt = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      theCustomerStatementOfLiabilityContainsDebtValuesAs(context, 1, expected1stDebt)
+
+      And("the 1st sol debt summary will contain duties")
+      val expected1stDuties = List(
+        SolDutyExpected(
+          subTrans = Some("1090"),
+          dutyTypeDescription = Some("CO: TGPEN"),
+          unpaidAmountDuty = Some(BigInt(500000)),
+          combinedDailyAccrual = Some(BigInt(35)),
+          interestBearing = Some(true),
+          interestOnlyIndicator = Some(false)
         )
       )
-      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
+      theSolDebtSummaryWillContainDuties(context, 1, expected1stDuties)
     }
 
     Scenario("Customer Outputs SoL suppression NOT applied to a different subTrans") { context =>
@@ -327,54 +317,41 @@ class SolWilthSuppressionFeatureSpec
           )
         )
       )
-      suppressionConfigurationDataIsCreated(context, ifsRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, ifsRequest)
 
       When("suppression configuration is sent to ifs service")
-      suppressionConfigurationIsSentToIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("debt details")
       val solRequest = SolDebtsRequest(
         solType = "CO",
         customerUniqueRef = "NEHA1234",
         debts = List(
-          Debt(
-            debtId = "debt008",
-            interestRequestedTo = "2021-03-08"
-          )
+          Debt(debtId = "debt008", interestRequestedTo = "2021-03-08")
         )
       )
       debtDetails(context, solRequest)
 
       When("a debt statement of liability is requested")
-      aRequestIsSentToSolServiceToGetSolCalculation(context)
+      aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse = SolCalculationSummaryResponse(
-        amountIntTotal = 500249,
-        combinedDailyAccrual = 35,
-        debts = List(
-          SolCalculation(
-            debtId = "debt008",
-            mainTrans = "1545",
-            debtTypeDescription = "CO: TPSS Contract Settlement",
-            interestDueDebtTotal = 249,
-            totalAmountIntDebt = 500249,
-            combinedDailyAccrual = 35,
-            parentMainTrans = None,
-            duties = Vector(
-              SolDuty(
-                subTrans = "1090",
-                dutyTypeDescription = Some("CO: TGPEN"),
-                unpaidAmountDuty = 500000,
-                combinedDailyAccrual = 35,
-                interestBearing = true,
-                interestOnlyIndicator = false
-              )
-            )
-          )
-        )
+      val expectedSummary = SolCalculationSummaryResponseExpected(
+        amountIntTotal = Some(BigInt(500249)),
+        combinedDailyAccrual = Some(BigInt(35))
       )
-      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedSummary)
+
+      And("the 1st sol debt summary will contain")
+      val expected1stDebt = SolCalculationExpected(
+        debtId = Some("debt008"),
+        mainTrans = Some("1545"),
+        debtTypeDescription = Some("CO: TPSS Contract Settlement"),
+        interestDueDebtTotal = Some(BigInt(249)),
+        totalAmountIntDebt = Some(BigInt(500249)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      theCustomerStatementOfLiabilityContainsDebtValuesAs(context, 1, expected1stDebt)
     }
 
     Scenario("Customer Outputs SoL where suppression is applied - based on testRegime") { context =>
@@ -394,54 +371,55 @@ class SolWilthSuppressionFeatureSpec
           )
         )
       )
-      suppressionConfigurationDataIsCreated(context, ifsRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, ifsRequest)
 
       When("suppression configuration is sent to ifs service")
-      suppressionConfigurationIsSentToIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("debt details")
       val solRequest = SolDebtsRequest(
         solType = "CO",
         customerUniqueRef = "NEHA1234",
         debts = List(
-          Debt(
-            debtId = "debt008",
-            interestRequestedTo = "2021-03-08"
-          )
+          Debt(debtId = "debt008", interestRequestedTo = "2021-03-08")
         )
       )
       debtDetails(context, solRequest)
 
       When("a debt statement of liability is requested")
-      aRequestIsSentToSolServiceToGetSolCalculation(context)
+      aDebtStatementOfLiabilityIsRequested(context)
 
       Then("service returns debt statement of liability data")
-      val expectedResponse = SolCalculationSummaryResponse(
-        amountIntTotal = 500177,
-        combinedDailyAccrual = 35,
-        debts = List(
-          SolCalculation(
-            debtId = "debt008",
-            mainTrans = "1545",
-            debtTypeDescription = "CO: TPSS Contract Settlement",
-            interestDueDebtTotal = 177,
-            totalAmountIntDebt = 500177,
-            combinedDailyAccrual = 35,
-            parentMainTrans = None,
-            duties = Vector(
-              SolDuty(
-                subTrans = "1090",
-                dutyTypeDescription = Some("CO: TGPEN"),
-                unpaidAmountDuty = 500000,
-                combinedDailyAccrual = 35,
-                interestBearing = true,
-                interestOnlyIndicator = false
-              )
-            )
-          )
+      val expectedSummary = SolCalculationSummaryResponseExpected(
+        amountIntTotal = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      serviceReturnsDebtStatementOfLiabilityData(context, expectedSummary)
+
+      And("the 1st sol debt summary will contain")
+      val expected1stDebt = SolCalculationExpected(
+        debtId = Some("debt008"),
+        mainTrans = Some("1545"),
+        debtTypeDescription = Some("CO: TPSS Contract Settlement"),
+        interestDueDebtTotal = Some(BigInt(177)),
+        totalAmountIntDebt = Some(BigInt(500177)),
+        combinedDailyAccrual = Some(BigInt(35))
+      )
+      theCustomerStatementOfLiabilityContainsDebtValuesAs(context, 1, expected1stDebt)
+
+      And("the 1st sol debt summary will contain duties")
+      val expected1stDuties = List(
+        SolDutyExpected(
+          subTrans = Some("1090"),
+          dutyTypeDescription = Some("CO: TGPEN"),
+          unpaidAmountDuty = Some(BigInt(500000)),
+          combinedDailyAccrual = Some(BigInt(35)),
+          interestBearing = Some(true),
+          interestOnlyIndicator = Some(false)
         )
       )
-      serviceReturnsDebtStatementOfLiabilityDataWithSuppresion(context, expectedResponse)
+      theSolDebtSummaryWillContainDuties(context, 1, expected1stDuties)
     }
+
   }
 }

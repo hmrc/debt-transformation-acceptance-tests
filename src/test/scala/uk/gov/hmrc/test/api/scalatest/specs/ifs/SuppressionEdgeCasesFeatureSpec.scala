@@ -19,8 +19,9 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.ifs.{CustomerPostCode, DebtCalculationRequest, DebtItem}
 import uk.gov.hmrc.test.api.models._
+import uk.gov.hmrc.test.api.models.ifs.{CustomerPostCode, DebtCalculationRequest, DebtItem}
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected, SuppressionAppliedExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
@@ -48,7 +49,9 @@ class SuppressionEdgeCasesFeatureSpec
     val suppressionContext = SuppressionRulesContext()
 
     Scenario(
-      "Suppression, interest rate change during suppression",suppression, DTD_2790
+      "Suppression, interest rate change during suppression",
+      suppression,
+      DTD_2790
     ) { context =>
       Given("suppression configuration data is created")
       val suppressionRequest = SuppressionRequest(
@@ -86,10 +89,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2020-01-05"
-          )
+          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-01-05")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -98,79 +98,76 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 51,
-        interestDueCallTotal = 4251,
-        amountIntTotal = 504251,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(51),
+        interestDueCallTotal = Some(4251),
+        amountIntTotal = Some(504251),
+        unpaidAmountTotal = Some(500000),
+        amountOnIntDueTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 92,
-        interestDueDailyAccrual = 51,
-        interestDueDutyTotal = 4251,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 504251,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(92),
+        interestDueDailyAccrual = Some(51),
+        interestDueDutyTotal = Some(4251),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(504251),
+        amountOnIntDueDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-04-01"),
-          periodTo = LocalDate.parse("2022-04-04"),
-          numberOfDays = 3,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-04-01")),
+          periodTo = Some(LocalDate.parse("2022-04-04")),
+          numberOfDays = Some(3),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          LocalDate.parse("2022-04-05"),
-          periodTo = LocalDate.parse("2022-04-05"),
-          numberOfDays = 1,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-04-05")),
+          periodTo = Some(LocalDate.parse("2022-04-05")),
+          numberOfDays = Some(1),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          LocalDate.parse("2022-04-06"),
-          periodTo = LocalDate.parse("2022-05-23"),
-          numberOfDays = 48,
-          interestRate = 3.25,
-          interestDueWindow = 2136,
-          interestDueDailyAccrual = 44,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502136,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-04-06")),
+          periodTo = Some(LocalDate.parse("2022-05-23")),
+          numberOfDays = Some(48),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(2136),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502136),
+          breathingSpaceApplied = Some(false)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -215,10 +212,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2020-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -227,118 +221,109 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 51,
-        interestDueCallTotal = 5706,
-        amountIntTotal = 505706,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(51),
+        interestDueCallTotal = Some(5706),
+        amountIntTotal = Some(505706),
+        unpaidAmountTotal = Some(500000),
+        amountOnIntDueTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 128,
-        interestDueDailyAccrual = 51,
-        interestDueDutyTotal = 5706,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 505706,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(128),
+        interestDueDailyAccrual = Some(51),
+        interestDueDutyTotal = Some(5706),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(505706),
+        amountOnIntDueDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-01"),
-          periodTo = LocalDate.parse("2022-01-06"),
-          numberOfDays = 5,
-          interestRate = 2.6,
-          interestDueWindow = 178,
-          interestDueDailyAccrual = 35,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500178,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-01")),
+          periodTo = Some(LocalDate.parse("2022-01-06")),
+          numberOfDays = Some(5),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(178),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500178),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-07"),
-          periodTo = LocalDate.parse("2022-02-20"),
-          numberOfDays = 45,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-07")),
+          periodTo = Some(LocalDate.parse("2022-02-20")),
+          numberOfDays = Some(45),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-02-21"),
-          periodTo = LocalDate.parse("2022-03-05"),
-          numberOfDays = 13,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-02-21")),
+          periodTo = Some(LocalDate.parse("2022-03-05")),
+          numberOfDays = Some(13),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-03-06"),
-          periodTo = LocalDate.parse("2022-04-04"),
-          numberOfDays = 30,
-          interestRate = 3.0,
-          interestDueWindow = 1232,
-          interestDueDailyAccrual = 41,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 501232,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-03-06")),
+          periodTo = Some(LocalDate.parse("2022-04-04")),
+          numberOfDays = Some(30),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(1232),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(501232),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-04-05"),
-          periodTo = LocalDate.parse("2022-05-23"),
-          numberOfDays = 49,
-          interestRate = 3.25,
-          interestDueWindow = 2181,
-          interestDueDailyAccrual = 44,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502181,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-04-05")),
+          periodTo = Some(LocalDate.parse("2022-05-23")),
+          numberOfDays = Some(49),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(2181),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502181),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-05-24"),
-          periodTo = LocalDate.parse("2022-07-04"),
-          numberOfDays = 42,
-          interestRate = 3.5,
-          interestDueWindow = 2013,
-          interestDueDailyAccrual = 47,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502013,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-05-24")),
+          periodTo = Some(LocalDate.parse("2022-07-04")),
+          numberOfDays = Some(42),
+          interestRate = Some(3.5),
+          interestDueDailyAccrual = Some(47),
+          interestDueWindow = Some(2013),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502013),
+          breathingSpaceApplied = Some(false)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -394,10 +379,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2020-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -406,151 +388,138 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 51,
-        interestDueCallTotal = 5090,
-        amountIntTotal = 505090,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(51),
+        interestDueCallTotal = Some(5090),
+        amountIntTotal = Some(505090),
+        unpaidAmountTotal = Some(500000),
+        amountOnIntDueTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 113,
-        interestDueDailyAccrual = 51,
-        interestDueDutyTotal = 5090,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 505090,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(113),
+        interestDueDailyAccrual = Some(51),
+        interestDueDutyTotal = Some(5090),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(505090),
+        amountOnIntDueDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
-      val overlappingSuppressions    = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE; LEGISLATIVE",
-          description = "COVID; COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-01"),
-          periodTo = LocalDate.parse("2022-01-06"),
-          numberOfDays = 5,
-          interestRate = 2.6,
-          interestDueWindow = 178,
-          interestDueDailyAccrual = 35,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500178,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-01")),
+          periodTo = Some(LocalDate.parse("2022-01-06")),
+          numberOfDays = Some(5),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(178),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500178),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-07"),
-          periodTo = LocalDate.parse("2022-02-20"),
-          numberOfDays = 45,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = overlappingSuppressions,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-07")),
+          periodTo = Some(LocalDate.parse("2022-02-20")),
+          numberOfDays = Some(45),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE; LEGISLATIVE"),
+              description = Some("COVID; COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-02-21"),
-          periodTo = LocalDate.parse("2022-03-05"),
-          numberOfDays = 13,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = overlappingSuppressions,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-02-21")),
+          periodTo = Some(LocalDate.parse("2022-03-05")),
+          numberOfDays = Some(13),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE; LEGISLATIVE"),
+              description = Some("COVID; COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-03-06"),
-          periodTo = LocalDate.parse("2022-03-20"),
-          numberOfDays = 15,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-03-06")),
+          periodTo = Some(LocalDate.parse("2022-03-20")),
+          numberOfDays = Some(15),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-03-21"),
-          periodTo = LocalDate.parse("2022-04-04"),
-          numberOfDays = 15,
-          interestRate = 3.0,
-          interestDueWindow = 616,
-          interestDueDailyAccrual = 41,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500616,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-03-21")),
+          periodTo = Some(LocalDate.parse("2022-04-04")),
+          numberOfDays = Some(15),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(616),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500616),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-04-05"),
-          periodTo = LocalDate.parse("2022-05-23"),
-          numberOfDays = 49,
-          interestRate = 3.25,
-          interestDueWindow = 2181,
-          interestDueDailyAccrual = 44,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502181,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-04-05")),
+          periodTo = Some(LocalDate.parse("2022-05-23")),
+          numberOfDays = Some(49),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(2181),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502181),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-05-24"),
-          periodTo = LocalDate.parse("2022-07-04"),
-          numberOfDays = 42,
-          interestRate = 3.5,
-          interestDueWindow = 2013,
-          interestDueDailyAccrual = 47,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502013,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-05-24")),
+          periodTo = Some(LocalDate.parse("2022-07-04")),
+          numberOfDays = Some(42),
+          interestRate = Some(3.5),
+          interestDueDailyAccrual = Some(47),
+          interestDueWindow = Some(2013),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502013),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-07-05"),
-          periodTo = LocalDate.parse("2022-07-06"),
-          numberOfDays = 2,
-          interestRate = 3.75,
-          interestDueWindow = 102,
-          interestDueDailyAccrual = 51,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500102,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-07-05")),
+          periodTo = Some(LocalDate.parse("2022-07-06")),
+          numberOfDays = Some(2),
+          interestRate = Some(3.75),
+          interestDueDailyAccrual = Some(51),
+          interestDueWindow = Some(102),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500102),
+          breathingSpaceApplied = Some(false)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -606,10 +575,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2020-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -618,164 +584,156 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 51,
-        interestDueCallTotal = 5054,
-        amountIntTotal = 505054,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(51),
+        interestDueCallTotal = Some(5054),
+        amountIntTotal = Some(505054),
+        unpaidAmountTotal = Some(500000),
+        amountOnIntDueTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 112,
-        interestDueDailyAccrual = 51,
-        interestDueDutyTotal = 5054,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 505054,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(112),
+        interestDueDailyAccrual = Some(51),
+        interestDueDutyTotal = Some(5054),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(505054),
+        amountOnIntDueDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
-      val overlappingSuppressions    = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE; LEGISLATIVE",
-          description = "COVID; COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-01"),
-          periodTo = LocalDate.parse("2022-01-05"),
-          numberOfDays = 4,
-          interestRate = 2.6,
-          interestDueWindow = 142,
-          interestDueDailyAccrual = 35,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500142,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-01")),
+          periodTo = Some(LocalDate.parse("2022-01-05")),
+          numberOfDays = Some(4),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(142),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500142),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-06"),
-          periodTo = LocalDate.parse("2022-01-06"),
-          numberOfDays = 1,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-06")),
+          periodTo = Some(LocalDate.parse("2022-01-06")),
+          numberOfDays = Some(1),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-07"),
-          periodTo = LocalDate.parse("2022-02-20"),
-          numberOfDays = 45,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = overlappingSuppressions,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-07")),
+          periodTo = Some(LocalDate.parse("2022-02-20")),
+          numberOfDays = Some(45),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE; LEGISLATIVE"),
+              description = Some("COVID; COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-02-21"),
-          periodTo = LocalDate.parse("2022-03-05"),
-          numberOfDays = 13,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = overlappingSuppressions,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-02-21")),
+          periodTo = Some(LocalDate.parse("2022-03-05")),
+          numberOfDays = Some(13),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE; LEGISLATIVE"),
+              description = Some("COVID; COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-03-06"),
-          periodTo = LocalDate.parse("2022-03-20"),
-          numberOfDays = 15,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-03-06")),
+          periodTo = Some(LocalDate.parse("2022-03-20")),
+          numberOfDays = Some(15),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          interestDueWindow = Some(0),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-03-21"),
-          periodTo = LocalDate.parse("2022-04-04"),
-          numberOfDays = 15,
-          interestRate = 3.0,
-          interestDueWindow = 616,
-          interestDueDailyAccrual = 41,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500616,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-03-21")),
+          periodTo = Some(LocalDate.parse("2022-04-04")),
+          numberOfDays = Some(15),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(616),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500616),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-04-05"),
-          periodTo = LocalDate.parse("2022-05-23"),
-          numberOfDays = 49,
-          interestRate = 3.25,
-          interestDueWindow = 2181,
-          interestDueDailyAccrual = 44,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502181,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-04-05")),
+          periodTo = Some(LocalDate.parse("2022-05-23")),
+          numberOfDays = Some(49),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(2181),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502181),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-05-24"),
-          periodTo = LocalDate.parse("2022-07-04"),
-          numberOfDays = 42,
-          interestRate = 3.5,
-          interestDueWindow = 2013,
-          interestDueDailyAccrual = 47,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502013,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-05-24")),
+          periodTo = Some(LocalDate.parse("2022-07-04")),
+          numberOfDays = Some(42),
+          interestRate = Some(3.5),
+          interestDueDailyAccrual = Some(47),
+          interestDueWindow = Some(2013),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(502013),
+          breathingSpaceApplied = Some(false)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-07-05"),
-          periodTo = LocalDate.parse("2022-07-06"),
-          numberOfDays = 2,
-          interestRate = 3.75,
-          interestDueWindow = 102,
-          interestDueDailyAccrual = 51,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500102,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-07-05")),
+          periodTo = Some(LocalDate.parse("2022-07-06")),
+          numberOfDays = Some(2),
+          interestRate = Some(3.75),
+          interestDueDailyAccrual = Some(51),
+          interestDueWindow = Some(102),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(500102),
+          breathingSpaceApplied = Some(false)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -820,10 +778,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2019-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -832,66 +787,52 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 88,
-        interestDueCallTotal = 6837,
-        amountIntTotal = 506837,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(88),
+        interestDueCallTotal = Some(6837),
+        amountIntTotal = Some(506837),
+        unpaidAmountTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 77,
-        interestDueDailyAccrual = 88,
-        interestDueDutyTotal = 6837,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 506837,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(77),
+        interestDueDailyAccrual = Some(88),
+        interestDueDutyTotal = Some(6837),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(506837),
+        amountOnIntDueDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2024-03-01"),
-          periodTo = LocalDate.parse("2024-04-20"),
-          numberOfDays = 50,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2024-03-01")),
+          periodTo = Some(LocalDate.parse("2024-04-20")),
+          numberOfDays = Some(50),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2024-04-21"),
-          periodTo = LocalDate.parse("2024-07-06"),
-          numberOfDays = 77,
-          interestRate = 6.5,
-          interestDueWindow = 6837,
-          interestDueDailyAccrual = 88,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 506837,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2024-04-21")),
+          periodTo = Some(LocalDate.parse("2024-07-06")),
+          numberOfDays = Some(77),
+          interestRate = Some(6.5),
+          interestDueDailyAccrual = Some(88),
+          unpaidAmountWindow = Some(506837),
+          breathingSpaceApplied = Some(false)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -936,10 +877,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2019-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -948,66 +886,52 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 88,
-        interestDueCallTotal = 6837,
-        amountIntTotal = 506837,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(88),
+        interestDueCallTotal = Some(6837),
+        amountIntTotal = Some(506837),
+        unpaidAmountTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 77,
-        interestDueDailyAccrual = 88,
-        interestDueDutyTotal = 6837,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 506837,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(77),
+        interestDueDailyAccrual = Some(88),
+        interestDueDutyTotal = Some(6837),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(506837),
+        amountOnIntDueDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2024-04-01"),
-          periodTo = LocalDate.parse("2024-04-20"),
-          numberOfDays = 19,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2024-04-01")),
+          periodTo = Some(LocalDate.parse("2024-04-20")),
+          numberOfDays = Some(19),
+          interestRate = Some(0.0),
+          interestDueDailyAccrual = Some(0),
+          unpaidAmountWindow = Some(500000),
+          breathingSpaceApplied = Some(false),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2024-04-21"),
-          periodTo = LocalDate.parse("2024-07-06"),
-          numberOfDays = 77,
-          interestRate = 6.5,
-          interestDueWindow = 6837,
-          interestDueDailyAccrual = 88,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 506837,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2024-04-21")),
+          periodTo = Some(LocalDate.parse("2024-07-06")),
+          numberOfDays = Some(77),
+          interestRate = Some(6.5),
+          interestDueDailyAccrual = Some(88),
+          unpaidAmountWindow = Some(506837),
+          breathingSpaceApplied = Some(false)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -1025,7 +949,7 @@ class SuppressionEdgeCasesFeatureSpec
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
             suppressionChargeDescription = "SA-Suppression",
-            postcode = Some("EC2M 2LS"),
+            postcode = None,
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -1052,10 +976,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M 2LS",
-            postCodeDate = "2019-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -1064,92 +985,62 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 37,
-        interestDueCallTotal = 1468,
-        amountIntTotal = 501468,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(37),
+        interestDueCallTotal = Some(1468),
+        amountIntTotal = Some(501468),
+        unpaidAmountTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 34,
-        interestDueDailyAccrual = 37,
-        interestDueDutyTotal = 1468,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 501468,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(34),
+        interestDueDailyAccrual = Some(37),
+        interestDueDutyTotal = Some(1468),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(501468),
+        amountOnIntDueDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
-      val singleSuppression          = Some(
-        SuppressionApplied(
-          reason = "LEGISLATIVE",
-          description = "COVID",
-          code = "Converted from new suppression style"
-        )
-      )
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 28,
-          interestRate = 3.25,
-          interestDueWindow = 1243,
-          interestDueDailyAccrual = 44,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 501243,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(28),
+          interestRate = Some(3.25),
+          amountOnIntDueWindow = Some(500000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-02"),
-          numberOfDays = 4,
-          interestRate = 2.75,
-          interestDueWindow = 150,
-          interestDueDailyAccrual = 37,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500150,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-02")),
+          numberOfDays = Some(4),
+          interestRate = Some(2.75),
+          amountOnIntDueWindow = Some(500000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-03"),
-          periodTo = LocalDate.parse("2020-04-04"),
-          numberOfDays = 2,
-          interestRate = 0.0,
-          interestDueWindow = 0,
-          interestDueDailyAccrual = 0,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500000,
-          suppressionApplied = singleSuppression,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-03")),
+          periodTo = Some(LocalDate.parse("2020-04-04")),
+          numberOfDays = Some(2),
+          interestRate = Some(0.0),
+          amountOnIntDueWindow = Some(500000),
+          suppressionApplied = Some(
+            SuppressionAppliedExpected(
+              reason = Some("LEGISLATIVE"),
+              description = Some("COVID"),
+              code = Some("Converted from new suppression style")
+            )
+          )
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-05"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 2,
-          interestRate = 2.75,
-          interestDueWindow = 75,
-          interestDueDailyAccrual = 37,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500075,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-05")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          numberOfDays = Some(2),
+          interestRate = Some(2.75),
+          amountOnIntDueWindow = Some(500000)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -1194,18 +1085,9 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(
-            postCode = "EC2M",
-            postCodeDate = "2018-07-06"
-          ),
-          CustomerPostCode(
-            postCode = "EC2M 4QQ",
-            postCodeDate = "2019-07-06"
-          ),
-          CustomerPostCode(
-            postCode = "EC2M 4QR",
-            postCodeDate = "2020-07-06"
-          )
+          CustomerPostCode(postCode = "EC2M", postCodeDate = "2018-07-06"),
+          CustomerPostCode(postCode = "EC2M 4QQ", postCodeDate = "2019-07-06"),
+          CustomerPostCode(postCode = "EC2M 4QR", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -1214,34 +1096,29 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 0,
-        amountIntTotal = 500000,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(0),
+        interestDueCallTotal = Some(0),
+        amountIntTotal = Some(500000),
+        unpaidAmountTotal = Some(500000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = false,
-        numberOfChargeableDays = 0,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500000,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(false),
+        numberOfChargeableDays = Some(0),
+        interestDueDailyAccrual = Some(0),
+        interestDueDutyTotal = Some(0),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(500000),
+        amountOnIntDueDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the debt summary will have no calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
+
   }
 }

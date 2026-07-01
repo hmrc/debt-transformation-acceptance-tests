@@ -17,12 +17,9 @@
 package uk.gov.hmrc.test.api.scalatest.steps.context
 
 import uk.gov.hmrc.test.api.models.SuppressionRequest
-import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
 
 final case class SuppressionRulesContext(
   var suppressionRequest: Option[SuppressionRequest] = None,
-  var solRequest: Option[SolDebtsRequest] = None,
-  var solResponseBody: Option[SolCalculationSummaryResponse] = None,
   var status: Int = 0,
   var headers: Map[String, String] = Map.empty
 )

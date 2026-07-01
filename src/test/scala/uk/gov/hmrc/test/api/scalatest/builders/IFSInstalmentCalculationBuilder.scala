@@ -25,129 +25,15 @@ import java.time.LocalDate
 
 object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
 
-  // -----------------------------------------------------------------------
-  // Typed input generated from legacy method: addDebtItemChargesToInstalmentCalculation(DataTable)
-  // Legacy DataTable code is inference-only and is not emitted.
-  // -----------------------------------------------------------------------
-  final case class DebtItemChargesToInstalmentCalculationInput(
-    debtAmount: Option[BigDecimal] = None,
-    debtId: Option[String] = None,
-    debtItemCharges: Option[String] = None,
-    interestStartDate: Option[BigDecimal] = None,
-    mainTrans: Option[String] = None,
-    paymentPlan: Option[String] = None,
-    periodEnd: Option[String] = None,
-    subTrans: Option[String] = None
+  final case class InstalmentCalculationSummaryResponseExpected(
+    dateOfCalculation: Option[LocalDate] = None,
+    numberOfInstalments: Option[Long] = None,
+    planInterest: Option[Int] = None,
+    interestAccrued: Option[Int] = None,
+    totalInterest: Option[Int] = None,
+    duration: Option[Long] = None,
+    instalments: Option[Seq[InstalmentResponseExpected]] = None
   )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'addDebtItemChargesToInstalmentCalculation' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asMapTransposed = dataTable.asMaps(classOf[String], classOf[String]).asScala
-  //   var debtItemCharges = ""
-  //   asMapTransposed.zipWithIndex.foreach { case (debtItemCharge, index) =>
-  //   val periodEnd         = if (debtItemCharge.containsKey("periodEnd")) {
-  //   s"""
-  //   |,"periodEnd": "${debtItemCharge.get("periodEnd")}"
-  //   |""".stripMargin
-  //   } else ""
-  // -----------------------------------------------------------------------
-
-  // -----------------------------------------------------------------------
-  // Typed input generated from legacy method: createInstalmentCalculationRequestBody(DataTable)
-  // Legacy DataTable code is inference-only and is not emitted.
-  // -----------------------------------------------------------------------
-  final case class InstalmentCalculationRequestBodyInput(
-    duration: Option[Int] = None,
-    durationOrInstalmentAmount: Option[BigDecimal] = None,
-    instalmentPaymentAmount: Option[BigDecimal] = None,
-    instalmentPaymentDate: Option[String] = None,
-    instalmentPaymentDay: Option[String] = None,
-    interestCallDueTotal: Option[BigDecimal] = None,
-    isQuoteDateNonInclusive: Option[Boolean] = None,
-    paymentFrequency: Option[String] = None,
-    paymentPlan: Option[String] = None,
-    quoteDate: Option[String] = None,
-    quoteType: Option[String] = None
-  )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'createInstalmentCalculationRequestBody' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
-  //   var firstItem           = false
-  //   var paymentPlan: String = null
-  //   try ScenarioContext.get("paymentPlan")
-  //   catch {
-  //   case _: Exception => firstItem = true
-  //   }
-  //   val dateTime                = LocalDateTime.now()
-  // -----------------------------------------------------------------------
-
-  // -----------------------------------------------------------------------
-  // Typed input generated from legacy method: debtPlanDetailsWithInitialPaymentDatePlus129Request(DataTable)
-  // Legacy DataTable code is inference-only and is not emitted.
-  // -----------------------------------------------------------------------
-  final case class DebtPlanDetailsWithInitialPaymentDatePlus129RequestInput(
-    initialPaymentAmount: Option[BigDecimal] = None,
-    initialPaymentDate: Option[String] = None,
-    instalmentAmount: Option[BigDecimal] = None,
-    instalmentPaymentAmount: Option[BigDecimal] = None,
-    instalmentPaymentDate: Option[String] = None,
-    interestCallDueTotal: Option[BigDecimal] = None,
-    paymentFrequency: Option[String] = None,
-    paymentPlan: Option[String] = None,
-    quoteDate: Option[String] = None
-  )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'debtPlanDetailsWithInitialPaymentDatePlus129Request' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asmapTransposed     = dataTable.transpose().asMap(classOf[String], classOf[String])
-  //   var firstItem           = false
-  //   var paymentPlan: String = null
-  //   try ScenarioContext.get("paymentPlan")
-  //   catch {
-  //   case _: Exception => firstItem = true
-  //   }
-  //   val dateTime              = LocalDateTime.now()
-  // -----------------------------------------------------------------------
-
-  // -----------------------------------------------------------------------
-  // Typed input generated from legacy method: addInitialPayment(DataTable)
-  // Legacy DataTable code is inference-only and is not emitted.
-  // -----------------------------------------------------------------------
-  final case class InitialPaymentInput(
-    initialPayment: Option[String] = None,
-    initialPaymentAmount: Option[BigDecimal] = None,
-    initialPaymentDate: Option[String] = None,
-    initialPaymentDays: Option[String] = None,
-    paymentPlan: Option[String] = None
-  )
-
-  // -----------------------------------------------------------------------
-  // Legacy method 'addInitialPayment' looked like template/string-body setup.
-  // Add a typed builder method here if this step is still needed by ScalaTest specs.
-  // Legacy preview:
-  //   val asmapTransposed      = dataTable.transpose().asMap(classOf[String], classOf[String])
-  //   var initialPaymentDate   = ""
-  //   var initialPaymentAmount = "\"\""
-  //   if (asmapTransposed.toString.contains("initialPaymentDays")) {
-  //   var addNumberOfDays = ""
-  //   addNumberOfDays = asmapTransposed.get("initialPaymentDays")
-  //   val localDate       = LocalDate.now()
-  //   initialPaymentDate = localDate.plusDays(addNumberOfDays.toInt).toString
-  // -----------------------------------------------------------------------
-
-  def getBodyAsString(variant: String): String =
-    TestData.loadedFiles(variant)
-
-  // -----------------------------------------------------------------------
-  // HTTP client methods lifted from legacy Requests with typed context access.
-  // -----------------------------------------------------------------------
 
   final case class InstalmentResponseExpected(
     debtId: Option[String] = None,

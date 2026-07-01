@@ -40,24 +40,24 @@ class SolDebtDetailsUnhappyPathFeatureSpec
   Feature("Statement of liability Unhappy Path (Service Errors)") {
 
     Scenario("Send error message where no debt items are provided when SoL is called - DTD-545") { context =>
-      Given("a request to sol with no debt items provided")
+      Given("debt details")
       val request = SolDebtsRequest(
         solType = "UI",
         customerUniqueRef = "XZ0000100351724",
-        debts = List()
+        debts = List.empty
       )
-      statementOfLiabilityMultipleDebtRequests(context, request)
+      debtDetails(context, request)
 
       When("a debt statement of liability is requested")
       statementOfLiabilityIsRequestedWithoutDebt(context)
 
       Then("the sol service respond with code 400")
       theSolServiceRespondWith(
-        statusCode = 400,
-        message =
-          "{\"reason\":\"Could not parse body due to requirement failed: Debts which are mandatory, are missing\",\"message\":\"Invalid Json\"}",
-        context
+        context,
+        400,
+        """{"reason":"Could not parse body due to requirement failed: Debts which are mandatory, are missing","message":"Invalid Json"}"""
       )
     }
+
   }
 }

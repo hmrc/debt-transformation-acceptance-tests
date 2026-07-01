@@ -21,8 +21,9 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
 import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
-import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
+import uk.gov.hmrc.test.api.scalatest.steps.context.{IFSInstalmentCalculationContext, SuppressionRulesContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags.DTD_417
 
 import java.time.LocalDate
@@ -33,7 +34,8 @@ class InstalmentCalculationSuppressionsFeatureSpec
     with Matchers
     with FCInterestForecastingStepHelpers
     with IFSInstalmentCalculationStepHelpers
-    with InterestForecastingStepHelpers {
+    with InterestForecastingStepHelpers
+    with SuppressionStepHelpers {
 
   override type FixtureParam = IFSInstalmentCalculationContext
 
@@ -44,7 +46,8 @@ class InstalmentCalculationSuppressionsFeatureSpec
   }
 
   Feature("Suppression Period ends after quote date") {
-    val dateInFuture = Some(LocalDate.now().plusYears(1).toString)
+    val dateInFuture       = Some(LocalDate.now().plusYears(1).toString)
+    val suppressionContext = SuppressionRulesContext()
 
     Scenario(
       "Instalment calculation has been requested where a postcode suppression period ends after the quote date"
@@ -65,10 +68,10 @@ class InstalmentCalculationSuppressionsFeatureSpec
           )
         )
       )
-      suppressionInformationDetails(context, suppressionRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      theSuppressionConfigurationIsSentToTheIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("instalment calculation details with postcode date a year in the past")
       val ifsRequest = InstalmentCalculationRequest(
@@ -134,10 +137,10 @@ class InstalmentCalculationSuppressionsFeatureSpec
           )
         )
       )
-      suppressionInformationDetails(context, suppressionRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      theSuppressionConfigurationIsSentToTheIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("instalment calculation details with postcode date a year in the past")
       val ifsRequest = InstalmentCalculationRequest(
@@ -203,10 +206,10 @@ class InstalmentCalculationSuppressionsFeatureSpec
           )
         )
       )
-      suppressionInformationDetails(context, suppressionRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      theSuppressionConfigurationIsSentToTheIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("instalment calculation details with postcode date a year in the past")
       val ifsRequest = InstalmentCalculationRequest(
@@ -271,10 +274,10 @@ class InstalmentCalculationSuppressionsFeatureSpec
           )
         )
       )
-      suppressionInformationDetails(context, suppressionRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      theSuppressionConfigurationIsSentToTheIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("instalment calculation details with postcode date a year in the past")
       val ifsRequest = InstalmentCalculationRequest(
@@ -338,10 +341,10 @@ class InstalmentCalculationSuppressionsFeatureSpec
           )
         )
       )
-      suppressionInformationDetails(context, suppressionRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      theSuppressionConfigurationIsSentToTheIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("instalment calculation details with postcode date a year in the past")
       val ifsRequest = InstalmentCalculationRequest(
@@ -405,10 +408,10 @@ class InstalmentCalculationSuppressionsFeatureSpec
           )
         )
       )
-      suppressionInformationDetails(context, suppressionRequest)
+      suppressionConfigurationDataIsCreated(suppressionContext, suppressionRequest)
 
       When("suppression configuration is sent to ifs service")
-      theSuppressionConfigurationIsSentToTheIfsService(context)
+      suppressionConfigurationIsSentToIfsService(suppressionContext)
 
       And("instalment calculation details with postcode date a year in the past")
       val ifsRequest = InstalmentCalculationRequest(

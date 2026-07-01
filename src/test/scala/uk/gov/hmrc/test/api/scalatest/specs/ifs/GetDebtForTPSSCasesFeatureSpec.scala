@@ -20,7 +20,7 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
-import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 
@@ -65,49 +65,50 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 35,
-        interestDueCallTotal = 249,
-        amountIntTotal = 500249,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
-      )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
-
-      And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 7,
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 249,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500249,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
-      )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
-
-      And("the 1st debt summary will have calculation windows")
-      val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2021-03-01"),
-          periodTo = LocalDate.parse("2021-03-08"),
-          numberOfDays = 7,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 249,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 500249,
-          breathingSpaceApplied = false,
-          suppressionApplied = None,
-          suppressionsApplied = None
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(35),
+          interestDueCallTotal = Some(249),
+          unpaidAmountTotal = Some(500000),
+          amountIntTotal = Some(500249),
+          amountOnIntDueTotal = Some(500000)
         )
       )
-      theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
+
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(true),
+          interestDueDailyAccrual = Some(35),
+          interestDueDutyTotal = Some(249),
+          unpaidAmountDuty = Some(500000),
+          totalAmountIntDuty = Some(500249),
+          numberOfChargeableDays = Some(7),
+          amountOnIntDueDuty = Some(500000),
+          interestOnlyIndicator = Some(false)
+        )
+      )
+
+      And("the 1st debt summary will have calculation windows")
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2021-03-01")),
+            periodTo = Some(LocalDate.parse("2021-03-08")),
+            numberOfDays = Some(7),
+            interestRate = Some(2.6),
+            interestDueDailyAccrual = Some(35),
+            interestDueWindow = Some(249),
+            amountOnIntDueWindow = Some(500000),
+            unpaidAmountWindow = Some(500249)
+          )
+        )
+      )
     }
 
     Scenario("Non Interest Bearing TPSS MainTrans 1520 debt") { context =>
@@ -133,31 +134,32 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 0,
-        amountIntTotal = 500000,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(0),
+          interestDueCallTotal = Some(0),
+          unpaidAmountTotal = Some(500000),
+          amountIntTotal = Some(500000),
+          amountOnIntDueTotal = Some(500000)
+        )
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = false,
-        numberOfChargeableDays = 0,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500000,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(false),
+          interestDueDailyAccrual = Some(0),
+          interestDueDutyTotal = Some(0),
+          unpaidAmountDuty = Some(500000),
+          totalAmountIntDuty = Some(500000),
+          numberOfChargeableDays = Some(0),
+          amountOnIntDueDuty = Some(500000),
+          interestOnlyIndicator = Some(false)
+        )
       )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the debt summary will have no calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
@@ -179,10 +181,7 @@ class GetDebtForTPSSCasesFeatureSpec
             breathingSpaces = Some(List.empty),
             paymentHistory = Some(
               List(
-                PaymentHistory(
-                  paymentAmount = 500000,
-                  paymentDate = "2021-03-04"
-                )
+                PaymentHistory(paymentAmount = 500000, paymentDate = "2021-03-04")
               )
             )
           )
@@ -195,49 +194,50 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 106,
-        amountIntTotal = 106,
-        amountOnIntDueTotal = 0,
-        unpaidAmountTotal = 0,
-        debtCalculations = List.empty
-      )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
-
-      And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 3,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 106,
-        amountOnIntDueDuty = 0,
-        totalAmountIntDuty = 106,
-        unpaidAmountDuty = 0,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
-      )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
-
-      And("the 1st debt summary will have calculation windows")
-      val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2021-03-01"),
-          periodTo = LocalDate.parse("2021-03-04"),
-          numberOfDays = 3,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 106,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 500106,
-          breathingSpaceApplied = false,
-          suppressionApplied = None,
-          suppressionsApplied = None
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(0),
+          interestDueCallTotal = Some(106),
+          unpaidAmountTotal = Some(0),
+          amountIntTotal = Some(106),
+          amountOnIntDueTotal = Some(0)
         )
       )
-      theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
+
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(true),
+          interestDueDailyAccrual = Some(0),
+          interestDueDutyTotal = Some(106),
+          unpaidAmountDuty = Some(0),
+          totalAmountIntDuty = Some(106),
+          numberOfChargeableDays = Some(3),
+          amountOnIntDueDuty = Some(0),
+          interestOnlyIndicator = Some(false)
+        )
+      )
+
+      And("the 1st debt summary will have calculation windows")
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2021-03-01")),
+            periodTo = Some(LocalDate.parse("2021-03-04")),
+            numberOfDays = Some(3),
+            interestRate = Some(2.6),
+            interestDueDailyAccrual = Some(35),
+            interestDueWindow = Some(106),
+            amountOnIntDueWindow = Some(500000),
+            unpaidAmountWindow = Some(500106)
+          )
+        )
+      )
     }
 
     Scenario(
@@ -256,10 +256,7 @@ class GetDebtForTPSSCasesFeatureSpec
             breathingSpaces = Some(List.empty),
             paymentHistory = Some(
               List(
-                PaymentHistory(
-                  paymentAmount = 500000,
-                  paymentDate = "2021-02-04"
-                )
+                PaymentHistory(paymentAmount = 500000, paymentDate = "2021-02-04")
               )
             )
           )
@@ -272,34 +269,32 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 0,
-        amountIntTotal = 0,
-        amountOnIntDueTotal = 0,
-        unpaidAmountTotal = 0,
-        debtCalculations = List.empty
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(0),
+          interestDueCallTotal = Some(0),
+          unpaidAmountTotal = Some(0),
+          amountIntTotal = Some(0),
+          amountOnIntDueTotal = Some(0)
+        )
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 0,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 0,
-        totalAmountIntDuty = 0,
-        unpaidAmountDuty = 0,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(true),
+          interestDueDailyAccrual = Some(0),
+          interestDueDutyTotal = Some(0),
+          unpaidAmountDuty = Some(0),
+          totalAmountIntDuty = Some(0),
+          numberOfChargeableDays = Some(0),
+          amountOnIntDueDuty = Some(0),
+          interestOnlyIndicator = Some(false)
+        )
       )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
-
-      And("the debt summary will have no calculation windows")
-      theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
     Scenario("Non Interest Bearing where amount has been paid off") { context =>
@@ -316,14 +311,8 @@ class GetDebtForTPSSCasesFeatureSpec
             breathingSpaces = Some(List.empty),
             paymentHistory = Some(
               List(
-                PaymentHistory(
-                  paymentAmount = 300000,
-                  paymentDate = "2021-03-23"
-                ),
-                PaymentHistory(
-                  paymentAmount = 200000,
-                  paymentDate = "2021-04-05"
-                )
+                PaymentHistory(paymentAmount = 300000, paymentDate = "2021-03-23"),
+                PaymentHistory(paymentAmount = 200000, paymentDate = "2021-04-05")
               )
             )
           )
@@ -336,31 +325,32 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 0,
-        amountIntTotal = 0,
-        amountOnIntDueTotal = 0,
-        unpaidAmountTotal = 0,
-        debtCalculations = List.empty
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(0),
+          interestDueCallTotal = Some(0),
+          unpaidAmountTotal = Some(0),
+          amountIntTotal = Some(0),
+          amountOnIntDueTotal = Some(0)
+        )
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = false,
-        numberOfChargeableDays = 0,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 0,
-        totalAmountIntDuty = 0,
-        unpaidAmountDuty = 0,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(false),
+          interestDueDailyAccrual = Some(0),
+          interestDueDutyTotal = Some(0),
+          unpaidAmountDuty = Some(0),
+          totalAmountIntDuty = Some(0),
+          numberOfChargeableDays = Some(0),
+          amountOnIntDueDuty = Some(0),
+          interestOnlyIndicator = Some(false)
+        )
       )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the debt summary will have no calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
@@ -390,31 +380,32 @@ class GetDebtForTPSSCasesFeatureSpec
         theDebtItemIsSentToTheIfsService(context)
 
         Then("the IFS service will return a total debts summary")
-        val expectedResponse = DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 500000,
-          amountOnIntDueTotal = 500000,
-          unpaidAmountTotal = 500000,
-          debtCalculations = List.empty
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummaryExpected(
+            combinedDailyAccrual = Some(0),
+            interestDueCallTotal = Some(0),
+            unpaidAmountTotal = Some(500000),
+            amountIntTotal = Some(500000),
+            amountOnIntDueTotal = Some(500000)
+          )
         )
-        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
         And("the 1st debt summary will contain")
-        val expectedDebtSummary = DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = false,
-          numberOfChargeableDays = 0,
-          interestDueDailyAccrual = 0,
-          interestDueDutyTotal = 0,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 500000,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculationExpected(
+            interestBearing = Some(false),
+            interestDueDailyAccrual = Some(0),
+            interestDueDutyTotal = Some(0),
+            unpaidAmountDuty = Some(500000),
+            totalAmountIntDuty = Some(500000),
+            numberOfChargeableDays = Some(0),
+            amountOnIntDueDuty = Some(500000),
+            interestOnlyIndicator = Some(false)
+          )
         )
-        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the debt summary will have no calculation windows")
         theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
@@ -435,10 +426,7 @@ class GetDebtForTPSSCasesFeatureSpec
               breathingSpaces = Some(List.empty),
               paymentHistory = Some(
                 List(
-                  PaymentHistory(
-                    paymentAmount = 100000,
-                    paymentDate = "2021-03-04"
-                  )
+                  PaymentHistory(paymentAmount = 100000, paymentDate = "2021-03-04")
                 )
               )
             )
@@ -451,31 +439,32 @@ class GetDebtForTPSSCasesFeatureSpec
         theDebtItemIsSentToTheIfsService(context)
 
         Then("the IFS service will return a total debts summary")
-        val expectedResponse = DebtCalculationsSummary(
-          combinedDailyAccrual = 0,
-          interestDueCallTotal = 0,
-          amountIntTotal = 400000,
-          amountOnIntDueTotal = 400000,
-          unpaidAmountTotal = 400000,
-          debtCalculations = List.empty
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummaryExpected(
+            combinedDailyAccrual = Some(0),
+            interestDueCallTotal = Some(0),
+            unpaidAmountTotal = Some(400000),
+            amountIntTotal = Some(400000),
+            amountOnIntDueTotal = Some(400000)
+          )
         )
-        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
         And("the 1st debt summary will contain")
-        val expectedDebtSummary = DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = false,
-          numberOfChargeableDays = 0,
-          interestDueDailyAccrual = 0,
-          interestDueDutyTotal = 0,
-          amountOnIntDueDuty = 400000,
-          totalAmountIntDuty = 400000,
-          unpaidAmountDuty = 400000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculationExpected(
+            interestBearing = Some(false),
+            interestDueDailyAccrual = Some(0),
+            interestDueDutyTotal = Some(0),
+            unpaidAmountDuty = Some(400000),
+            totalAmountIntDuty = Some(400000),
+            numberOfChargeableDays = Some(0),
+            amountOnIntDueDuty = Some(400000),
+            interestOnlyIndicator = Some(false)
+          )
         )
-        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the debt summary will have no calculation windows")
         theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
@@ -496,10 +485,7 @@ class GetDebtForTPSSCasesFeatureSpec
               breathingSpaces = Some(List.empty),
               paymentHistory = Some(
                 List(
-                  PaymentHistory(
-                    paymentAmount = 100000,
-                    paymentDate = "2021-03-04"
-                  )
+                  PaymentHistory(paymentAmount = 100000, paymentDate = "2021-03-04")
                 )
               )
             ),
@@ -522,78 +508,76 @@ class GetDebtForTPSSCasesFeatureSpec
         theDebtItemIsSentToTheIfsService(context)
 
         Then("the IFS service will return a total debts summary")
-        val expectedResponse = DebtCalculationsSummary(
-          combinedDailyAccrual = 28,
-          interestDueCallTotal = 220,
-          amountIntTotal = 900220,
-          amountOnIntDueTotal = 900000,
-          unpaidAmountTotal = 900000,
-          debtCalculations = List.empty
-        )
-        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
-
-        And("the 1st debt summary will contain")
-        val expectedDebtSummary = DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 10,
-          interestDueDailyAccrual = 28,
-          interestDueDutyTotal = 220,
-          amountOnIntDueDuty = 400000,
-          totalAmountIntDuty = 400220,
-          unpaidAmountDuty = 400000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
-        )
-        theDebtSummaryWillContain(context, 1, expectedDebtSummary)
-
-        And("the 1st debt summary will have calculation windows")
-        val expectedCalculationWindows = List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2021-03-01"),
-            periodTo = LocalDate.parse("2021-03-04"),
-            numberOfDays = 3,
-            interestRate = 2.6,
-            interestDueDailyAccrual = 7,
-            interestDueWindow = 21,
-            amountOnIntDueWindow = 100000,
-            unpaidAmountWindow = 100021,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
-          ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2021-03-01"),
-            periodTo = LocalDate.parse("2021-03-08"),
-            numberOfDays = 7,
-            interestRate = 2.6,
-            interestDueDailyAccrual = 28,
-            interestDueWindow = 199,
-            amountOnIntDueWindow = 400000,
-            unpaidAmountWindow = 400199,
-            breathingSpaceApplied = false,
-            suppressionApplied = None,
-            suppressionsApplied = None
+        theIfsServiceWillReturnATotalDebtsSummaryOf(
+          context,
+          DebtCalculationsSummaryExpected(
+            combinedDailyAccrual = Some(28),
+            interestDueCallTotal = Some(220),
+            unpaidAmountTotal = Some(900000),
+            amountIntTotal = Some(900220),
+            amountOnIntDueTotal = Some(900000)
           )
         )
-        theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
+
+        And("the 1st debt summary will contain")
+        theDebtSummaryWillContain(
+          context,
+          1,
+          DebtCalculationExpected(
+            interestBearing = Some(true),
+            interestDueDailyAccrual = Some(28),
+            interestDueDutyTotal = Some(220),
+            unpaidAmountDuty = Some(400000),
+            totalAmountIntDuty = Some(400220),
+            numberOfChargeableDays = Some(10),
+            amountOnIntDueDuty = Some(400000),
+            interestOnlyIndicator = Some(false)
+          )
+        )
+
+        And("the 1st debt summary will have calculation windows")
+        theDebtSummaryWillHaveCalculationWindows(
+          context,
+          1,
+          List(
+            CalculationWindowExpected(
+              periodFrom = Some(LocalDate.parse("2021-03-01")),
+              periodTo = Some(LocalDate.parse("2021-03-04")),
+              numberOfDays = Some(3),
+              interestRate = Some(2.6),
+              interestDueDailyAccrual = Some(7),
+              interestDueWindow = Some(21),
+              amountOnIntDueWindow = Some(100000),
+              unpaidAmountWindow = Some(100021)
+            ),
+            CalculationWindowExpected(
+              periodFrom = Some(LocalDate.parse("2021-03-01")),
+              periodTo = Some(LocalDate.parse("2021-03-08")),
+              numberOfDays = Some(7),
+              interestRate = Some(2.6),
+              interestDueDailyAccrual = Some(28),
+              interestDueWindow = Some(199),
+              amountOnIntDueWindow = Some(400000),
+              unpaidAmountWindow = Some(400199)
+            )
+          )
+        )
 
         And("the 2nd debt summary will contain")
-        val expected2ndDebtSummary = DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("456"),
-          interestBearing = false,
-          numberOfChargeableDays = 0,
-          interestDueDailyAccrual = 0,
-          interestDueDutyTotal = 0,
-          amountOnIntDueDuty = 500000,
-          totalAmountIntDuty = 500000,
-          unpaidAmountDuty = 500000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        theDebtSummaryWillContain(
+          context,
+          2,
+          DebtCalculationExpected(
+            interestBearing = Some(false),
+            interestDueDailyAccrual = Some(0),
+            interestDueDutyTotal = Some(0),
+            unpaidAmountDuty = Some(500000),
+            totalAmountIntDuty = Some(500000),
+            numberOfChargeableDays = Some(0),
+            amountOnIntDueDuty = Some(500000),
+            interestOnlyIndicator = Some(false)
+          )
         )
-        theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
         And("the 2nd debt summary will have no calculation windows")
         theDebtSummaryWillNotHaveAnyCalculationWindows(context, 2)
@@ -622,49 +606,50 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 35,
-        interestDueCallTotal = 249,
-        amountIntTotal = 500249,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
-      )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
-
-      And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 7,
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 249,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500249,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
-      )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
-
-      And("the 1st debt summary will have calculation windows")
-      val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2021-03-01"),
-          periodTo = LocalDate.parse("2021-03-08"),
-          numberOfDays = 7,
-          interestRate = 2.6,
-          interestDueDailyAccrual = 35,
-          interestDueWindow = 249,
-          amountOnIntDueWindow = 500000,
-          unpaidAmountWindow = 500249,
-          breathingSpaceApplied = false,
-          suppressionApplied = None,
-          suppressionsApplied = None
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(35),
+          interestDueCallTotal = Some(249),
+          unpaidAmountTotal = Some(500000),
+          amountIntTotal = Some(500249),
+          amountOnIntDueTotal = Some(500000)
         )
       )
-      theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
+
+      And("the 1st debt summary will contain")
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(true),
+          interestDueDailyAccrual = Some(35),
+          interestDueDutyTotal = Some(249),
+          unpaidAmountDuty = Some(500000),
+          totalAmountIntDuty = Some(500249),
+          numberOfChargeableDays = Some(7),
+          amountOnIntDueDuty = Some(500000),
+          interestOnlyIndicator = Some(false)
+        )
+      )
+
+      And("the 1st debt summary will have calculation windows")
+      theDebtSummaryWillHaveCalculationWindows(
+        context,
+        1,
+        List(
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2021-03-01")),
+            periodTo = Some(LocalDate.parse("2021-03-08")),
+            numberOfDays = Some(7),
+            interestRate = Some(2.6),
+            interestDueDailyAccrual = Some(35),
+            interestDueWindow = Some(249),
+            amountOnIntDueWindow = Some(500000),
+            unpaidAmountWindow = Some(500249)
+          )
+        )
+      )
     }
 
     Scenario("Non Interest Bearing TPSS MainTrans 2421 debt") { context =>
@@ -690,34 +675,36 @@ class GetDebtForTPSSCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the IFS service will return a total debts summary")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 0,
-        amountIntTotal = 500000,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      theIfsServiceWillReturnATotalDebtsSummaryOf(
+        context,
+        DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(0),
+          interestDueCallTotal = Some(0),
+          unpaidAmountTotal = Some(500000),
+          amountIntTotal = Some(500000),
+          amountOnIntDueTotal = Some(500000)
+        )
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = false,
-        numberOfChargeableDays = 0,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500000,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      theDebtSummaryWillContain(
+        context,
+        1,
+        DebtCalculationExpected(
+          interestBearing = Some(false),
+          interestDueDailyAccrual = Some(0),
+          interestDueDutyTotal = Some(0),
+          unpaidAmountDuty = Some(500000),
+          totalAmountIntDuty = Some(500000),
+          numberOfChargeableDays = Some(0),
+          amountOnIntDueDuty = Some(500000),
+          interestOnlyIndicator = Some(false)
+        )
       )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the debt summary will have no calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
+
   }
 }

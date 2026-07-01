@@ -20,7 +20,7 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
-import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 
@@ -65,29 +65,22 @@ class InterestRateChangesEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 13200,
-        interestDueCallTotal = 3795900,
-        amountIntTotal = 153795900,
-        amountOnIntDueTotal = 150000000,
-        unpaidAmountTotal = 150000000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(13200),
+        interestDueCallTotal = Some(3795900),
+        amountIntTotal = Some(153795900),
+        amountOnIntDueTotal = Some(150000000),
+        unpaidAmountTotal = Some(150000000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 300th debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("300"),
-        interestBearing = true,
-        numberOfChargeableDays = 302,
-        interestDueDailyAccrual = 44,
-        interestDueDutyTotal = 12653,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 512653,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(302),
+        interestDueDailyAccrual = Some(44),
+        interestDueDutyTotal = Some(12653),
+        unpaidAmountDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 300, expectedDebtSummary)
     }
@@ -138,288 +131,200 @@ class InterestRateChangesEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 62,
-        interestDueCallTotal = 48638,
-        amountIntTotal = 848638,
-        amountOnIntDueTotal = 800000,
-        unpaidAmountTotal = 800000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(62),
+        interestDueCallTotal = Some(48638),
+        amountOnIntDueTotal = Some(800000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 2005,
-        interestDueDailyAccrual = 21,
-        interestDueDutyTotal = 33983,
-        amountOnIntDueDuty = 300000,
-        totalAmountIntDuty = 333983,
-        unpaidAmountDuty = 300000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        numberOfChargeableDays = Some(2005),
+        interestDueDailyAccrual = Some(21),
+        interestDueDutyTotal = Some(33983),
+        unpaidAmountDuty = Some(300000)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-06-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 80,
-          interestRate = 3.0,
-          interestDueWindow = 657,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100657,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-06-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(80),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(657),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-15"),
-          numberOfDays = 207,
-          interestRate = 3.25,
-          interestDueWindow = 1843,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 101843,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-15")),
+          numberOfDays = Some(207),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(1843),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-06-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 80,
-          interestRate = 3.0,
-          interestDueWindow = 657,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100657,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-06-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(80),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(657),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 498,
-          interestRate = 3.25,
-          interestDueWindow = 4434,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 104434,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(498),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(4434),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueWindow = 790,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100790,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(790),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 8,
-          interestRate = 2.75,
-          interestDueWindow = 60,
-          interestDueDailyAccrual = 7,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100060,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          numberOfDays = Some(8),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(7),
+          interestDueWindow = Some(60),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-07"),
-          periodTo = LocalDate.parse("2020-04-15"),
-          numberOfDays = 9,
-          interestRate = 2.6,
-          interestDueWindow = 63,
-          interestDueDailyAccrual = 7,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100063,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-07")),
+          periodTo = Some(LocalDate.parse("2020-04-15")),
+          numberOfDays = Some(9),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(7),
+          interestDueWindow = Some(63),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-06-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 80,
-          interestRate = 3.0,
-          interestDueWindow = 1972,
-          interestDueDailyAccrual = 24,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 301972,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-06-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(80),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(24),
+          interestDueWindow = Some(1972),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 498,
-          interestRate = 3.25,
-          interestDueWindow = 13302,
-          interestDueDailyAccrual = 26,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 313302,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(498),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(13302),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueWindow = 2370,
-          interestDueDailyAccrual = 26,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 302370,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(2370),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 8,
-          interestRate = 2.75,
-          interestDueWindow = 180,
-          interestDueDailyAccrual = 22,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 300180,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          numberOfDays = Some(8),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(22),
+          interestDueWindow = Some(180),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-07"),
-          periodTo = LocalDate.parse("2020-12-31"),
-          numberOfDays = 269,
-          interestRate = 2.6,
-          interestDueWindow = 5732,
-          interestDueDailyAccrual = 21,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 305732,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-07")),
+          periodTo = Some(LocalDate.parse("2020-12-31")),
+          numberOfDays = Some(269),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(21),
+          interestDueWindow = Some(5732),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2021-01-01"),
-          periodTo = LocalDate.parse("2021-03-31"),
-          numberOfDays = 90,
-          interestRate = 2.6,
-          interestDueWindow = 1923,
-          interestDueDailyAccrual = 21,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 301923,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2021-01-01")),
+          periodTo = Some(LocalDate.parse("2021-03-31")),
+          numberOfDays = Some(90),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(21),
+          interestDueWindow = Some(1923),
+          amountOnIntDueWindow = Some(300000)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
 
       And("the 2nd debt summary will contain")
-      val expected2ndDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("456"),
-        interestBearing = true,
-        numberOfChargeableDays = 365,
-        interestDueDailyAccrual = 41,
-        interestDueDutyTotal = 14655,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 514655,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expected2ndDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(365),
+        interestDueDailyAccrual = Some(41),
+        interestDueDutyTotal = Some(14655),
+        unpaidAmountDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
       And("the 2nd debt summary will have calculation windows")
       val expected2ndCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2009-01-01"),
-          periodTo = LocalDate.parse("2009-01-05"),
-          numberOfDays = 4,
-          interestRate = 5.5,
-          interestDueWindow = 301,
-          interestDueDailyAccrual = 75,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 500301,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2009-01-01")),
+          periodTo = Some(LocalDate.parse("2009-01-05")),
+          numberOfDays = Some(4),
+          interestRate = Some(5.5),
+          interestDueDailyAccrual = Some(75),
+          interestDueWindow = Some(301),
+          amountOnIntDueWindow = Some(500000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2009-01-06"),
-          periodTo = LocalDate.parse("2009-01-26"),
-          numberOfDays = 21,
-          interestRate = 4.5,
-          interestDueWindow = 1294,
-          interestDueDailyAccrual = 61,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 501294,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2009-01-06")),
+          periodTo = Some(LocalDate.parse("2009-01-26")),
+          numberOfDays = Some(21),
+          interestRate = Some(4.5),
+          interestDueDailyAccrual = Some(61),
+          interestDueWindow = Some(1294),
+          amountOnIntDueWindow = Some(500000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2009-01-27"),
-          periodTo = LocalDate.parse("2009-03-23"),
-          numberOfDays = 56,
-          interestRate = 3.5,
-          interestDueWindow = 2684,
-          interestDueDailyAccrual = 47,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 502684,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2009-01-27")),
+          periodTo = Some(LocalDate.parse("2009-03-23")),
+          numberOfDays = Some(56),
+          interestRate = Some(3.5),
+          interestDueDailyAccrual = Some(47),
+          interestDueWindow = Some(2684),
+          amountOnIntDueWindow = Some(500000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2009-03-24"),
-          periodTo = LocalDate.parse("2009-09-28"),
-          numberOfDays = 189,
-          interestRate = 2.5,
-          interestDueWindow = 6472,
-          interestDueDailyAccrual = 34,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 506472,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2009-03-24")),
+          periodTo = Some(LocalDate.parse("2009-09-28")),
+          numberOfDays = Some(189),
+          interestRate = Some(2.5),
+          interestDueDailyAccrual = Some(34),
+          interestDueWindow = Some(6472),
+          amountOnIntDueWindow = Some(500000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2009-09-29"),
-          periodTo = LocalDate.parse("2010-01-01"),
-          numberOfDays = 95,
-          interestRate = 3.0,
-          interestDueWindow = 3904,
-          interestDueDailyAccrual = 41,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 503904,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2009-09-29")),
+          periodTo = Some(LocalDate.parse("2010-01-01")),
+          numberOfDays = Some(95),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(3904),
+          amountOnIntDueWindow = Some(500000)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindows)
@@ -457,111 +362,70 @@ class InterestRateChangesEdgeCasesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 28,
-        interestDueCallTotal = 14420,
-        amountIntTotal = 414420,
-        amountOnIntDueTotal = 400000,
-        unpaidAmountTotal = 400000,
-        debtCalculations = List.empty
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(28),
+        interestDueCallTotal = Some(14420),
+        unpaidAmountTotal = Some(400000)
       )
       theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 552,
-        interestDueDailyAccrual = 28,
-        interestDueDutyTotal = 14420,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 414420,
-        unpaidAmountDuty = 400000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(552),
+        totalAmountIntDuty = Some(414420)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 88,
-          interestRate = 3.25,
-          interestDueWindow = 781,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100781,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(8),
+          interestDueWindow = Some(781),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-07"),
-          numberOfDays = 9,
-          interestRate = 2.75,
-          interestDueWindow = 67,
-          interestDueDailyAccrual = 7,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100067,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-07")),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(7),
+          interestDueWindow = Some(67),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 88,
-          interestRate = 3.25,
-          interestDueWindow = 3125,
-          interestDueDailyAccrual = 35,
-          amountOnIntDueWindow = 400000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 403125,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(3125),
+          amountOnIntDueWindow = Some(400000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-04-06"),
-          numberOfDays = 8,
-          interestRate = 2.75,
-          interestDueWindow = 240,
-          interestDueDailyAccrual = 30,
-          amountOnIntDueWindow = 400000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 400240,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-04-06")),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(30),
+          interestDueWindow = Some(240),
+          amountOnIntDueWindow = Some(400000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-04-07"),
-          periodTo = LocalDate.parse("2020-12-31"),
-          numberOfDays = 269,
-          interestRate = 2.6,
-          interestDueWindow = 7643,
-          interestDueDailyAccrual = 28,
-          amountOnIntDueWindow = 400000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 407643,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-04-07")),
+          periodTo = Some(LocalDate.parse("2020-12-31")),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(28),
+          interestDueWindow = Some(7643),
+          amountOnIntDueWindow = Some(400000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2021-01-01"),
-          periodTo = LocalDate.parse("2021-03-31"),
-          numberOfDays = 90,
-          interestRate = 2.6,
-          interestDueWindow = 2564,
-          interestDueDailyAccrual = 28,
-          amountOnIntDueWindow = 400000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 402564,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2021-01-01")),
+          periodTo = Some(LocalDate.parse("2021-03-31")),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(28),
+          interestDueWindow = Some(2564),
+          amountOnIntDueWindow = Some(400000)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)

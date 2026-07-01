@@ -22,6 +22,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks.forEvery
 import org.scalatest.prop.Tables.Table
 import uk.gov.hmrc.test.api.models.{DebtInterestType, DebtInterestTypeRequest}
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.DebtInterestTypeExpected
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
 
@@ -215,11 +216,11 @@ class DebtInterestTypeFeatureSpec
           theDebtInterestTypeRequestIsSentToTheIfsService(context)
 
           Then("the 1st debt interest type response summary will contain")
-          val expectedResponse = DebtInterestType(
-            mainTrans = mainTrans,
-            subTrans = subTrans,
-            interestBearing = interestBearing,
-            useChargeReference = useChargeReference
+          val expectedResponse = DebtInterestTypeExpected(
+            mainTrans = Some(mainTrans),
+            subTrans = Some(subTrans),
+            interestBearing = Some(interestBearing),
+            useChargeReference = Some(useChargeReference)
           )
           theDebtInterestTypeResponseSummaryWillContain(context, 1, expectedResponse)
 

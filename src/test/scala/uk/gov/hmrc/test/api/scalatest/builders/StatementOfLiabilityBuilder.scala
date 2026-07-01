@@ -27,6 +27,32 @@ import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
+  case class SolCalculationSummaryResponseExpected(
+    amountIntTotal: Option[BigInt] = None,
+    combinedDailyAccrual: Option[BigInt] = None,
+    debts: Option[List[SolCalculationExpected]] = None
+  )
+
+  case class SolCalculationExpected(
+    debtId: Option[String] = None,
+    mainTrans: Option[String] = None,
+    debtTypeDescription: Option[String] = None,
+    interestDueDebtTotal: Option[BigInt] = None,
+    totalAmountIntDebt: Option[BigInt] = None,
+    combinedDailyAccrual: Option[BigInt] = None,
+    parentMainTrans: Option[String] = None,
+    duties: Option[Seq[SolDutyExpected]] = None
+  )
+
+  case class SolDutyExpected(
+    subTrans: Option[String] = None,
+    dutyTypeDescription: Option[String] = None,
+    unpaidAmountDuty: Option[BigInt] = None,
+    combinedDailyAccrual: Option[BigInt] = None,
+    interestBearing: Option[Boolean] = None,
+    interestOnlyIndicator: Option[Boolean] = None
+  )
+
   def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
     val baseUri              = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))

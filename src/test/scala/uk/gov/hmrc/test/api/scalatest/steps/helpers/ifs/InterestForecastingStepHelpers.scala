@@ -16,13 +16,16 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
+import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
 import uk.gov.hmrc.test.api.models._
+import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder._
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 trait InterestForecastingStepHelpers { this: Matchers =>
@@ -30,56 +33,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   // ^a debt calculation$
   def aDebtCalculationIsCreated(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
-
-  // ^no debt item$
-  def noDebtItem(context: InterestForecastingContext): Unit = {
-    // createInterestForcastingRequestWithNoDebtItems()
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^a rule has been updated$
-  def aRuleHasBeenUpdated(
-    context: InterestForecastingContext,
-    input: InterestForecastingBuilder.InterestTypeRequestBodyInput
-  ): Unit = {
-    // TODO: Wire input into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.InterestTypeRequestBodyInput
-  }
-
-  // ^the current set of rules$
-  def theCurrentSetOfRules(context: InterestForecastingContext): Unit = {
-    // Migration hint: response assertion
-    // val responseGEtRules = getAllRules
-    // val collection        = Json.parse(responseGEtRules.body).as[GetRulesResponse]
-    // val existingProdRules = collection.rules.find(_.version == 1)
-    // existingProdRules match {
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^(.*) debt items$
-  def debtItems(context: InterestForecastingContext, numberItems: Int): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage
-    // var debtItems: String = null
-    // var n                 = 0
-    // while (n < numberItems) {
-    // val debtItem = getBodyAsString("debtItem")
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the debt item has payment history$
-  def theDebtItemHasPaymentHistory(
-    context: InterestForecastingContext,
-    inputs: Seq[InterestForecastingBuilder.PaymentHistoryInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.PaymentHistoryInput
-  }
-
-  // ^the debt item has no payment history$
-  def theDebtItemHasNoPaymentHistory(context: InterestForecastingContext): Unit = {
-    // customerWithNoPaymentHistory()
-    // TODO: Implement typed helper for this step.
-  }
 
   // ^the debt item(s) is sent to the ifs service$
   def theDebtItemIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
@@ -136,176 +89,214 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   // ^the ifs service will return a total debts summary of$
   def theIfsServiceWillReturnATotalDebtsSummaryOf(
     context: InterestForecastingContext,
-    expectedResponse: DebtCalculationsSummary
-  ): Unit = {
+    expectedResponse: DebtCalculationsSummaryExpected
+  )(implicit pos: Position): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
-    withClue("combinedDailyAccrual") {
-      responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+    expectedResponse.combinedDailyAccrual.foreach { v =>
+      withClue("combinedDailyAccrual: ") {
+        responseBody.combinedDailyAccrual shouldBe v
+      }
     }
 
-    withClue("interestDueCallTotal") {
-      responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal
+    expectedResponse.interestDueCallTotal.foreach { v =>
+      withClue("interestDueCallTotal: ") {
+        responseBody.interestDueCallTotal shouldBe v
+      }
     }
 
-    withClue("amountIntTotal") {
-      responseBody.amountIntTotal shouldBe expectedResponse.amountIntTotal
+    expectedResponse.amountIntTotal.foreach { v =>
+      withClue("amountIntTotal: ") {
+        responseBody.amountIntTotal shouldBe v
+      }
     }
 
-    withClue("amountOnIntDueTotal") {
-      responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal
+    expectedResponse.amountOnIntDueTotal.foreach { v =>
+      withClue("amountOnIntDueTotal: ") {
+        responseBody.amountOnIntDueTotal shouldBe v
+      }
     }
 
-    withClue("unpaidAmountTotal") {
-      responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+    expectedResponse.unpaidAmountTotal.foreach { v =>
+      withClue("unpaidAmountTotal: ") {
+        responseBody.unpaidAmountTotal shouldBe v
+      }
     }
-
   }
 
   // ^the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain$
   def theDebtSummaryWillContain(
     context: InterestForecastingContext,
     index: Int,
-    expectedResponse: DebtCalculation
-  ): Unit = {
+    expectedResponse: DebtCalculationExpected
+  )(implicit pos: Position): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
-    val debtCalculations = responseBody.debtCalculations(index - 1)
+    val debtCalculations = responseBody.debtCalculations
+      .lift(index - 1)
+      .getOrElse(fail(s"Missing debtCalculation at index [${index - 1}] in response"))
 
-    withClue("DebtCalculations") {
-      withClue("debtItemChargeId") {
-        debtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+    withClue(s"debtCalculations[${index - 1}]") {
+
+      expectedResponse.debtItemChargeId.foreach { v =>
+        withClue("debtItemChargeId: ") {
+          debtCalculations.debtItemChargeId shouldBe Some(v)
+        }
       }
 
-      withClue("debtID") {
-        debtCalculations.debtID shouldBe expectedResponse.debtID
+      expectedResponse.debtID.foreach { v =>
+        withClue("debtID: ") {
+          debtCalculations.debtID shouldBe Some(v)
+        }
       }
 
-      withClue("interestBearing") {
-        debtCalculations.interestBearing shouldBe expectedResponse.interestBearing
+      expectedResponse.interestBearing.foreach { v =>
+        withClue("interestBearing: ") {
+          debtCalculations.interestBearing shouldBe v
+        }
       }
 
-      withClue("numberOfChargeableDays") {
-        debtCalculations.numberOfChargeableDays shouldBe expectedResponse.numberOfChargeableDays
+      expectedResponse.numberOfChargeableDays.foreach { v =>
+        withClue("numberOfChargeableDays: ") {
+          debtCalculations.numberOfChargeableDays shouldBe v
+        }
       }
 
-      withClue("interestDueDailyAccrual") {
-        debtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+      expectedResponse.interestDueDailyAccrual.foreach { v =>
+        withClue("interestDueDailyAccrual: ") {
+          debtCalculations.interestDueDailyAccrual shouldBe v
+        }
       }
 
-      withClue("interestDueDutyTotal") {
-        debtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal
+      expectedResponse.interestDueDutyTotal.foreach { v =>
+        withClue("interestDueDutyTotal: ") {
+          debtCalculations.interestDueDutyTotal shouldBe v
+        }
       }
 
-      withClue("amountOnIntDueDuty") {
-        debtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty
+      expectedResponse.amountOnIntDueDuty.foreach { v =>
+        withClue("amountOnIntDueDuty: ") {
+          debtCalculations.amountOnIntDueDuty shouldBe v
+        }
       }
 
-      withClue("totalAmountIntDuty") {
-        debtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty
+      expectedResponse.totalAmountIntDuty.foreach { v =>
+        withClue("totalAmountIntDuty: ") {
+          debtCalculations.totalAmountIntDuty shouldBe v
+        }
       }
 
-      withClue("totalAmountIntDuty") {
-        debtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+      expectedResponse.unpaidAmountDuty.foreach { v =>
+        withClue("unpaidAmountDuty: ") {
+          debtCalculations.unpaidAmountDuty shouldBe v
+        }
       }
 
-      withClue("totalAmountIntDuty") {
-        debtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+      expectedResponse.interestOnlyIndicator.foreach { v =>
+        withClue("interestOnlyIndicator: ") {
+          debtCalculations.interestOnlyIndicator shouldBe v
+        }
       }
     }
   }
 
   // ^the ifs service will respond with (.*)$
   def theIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage, response assertion
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.body   should include(expectedMessage)
-    // response.status should be(400)
-    // TODO: Implement typed helper for this step.
-  }
+    val response: StandaloneWSResponse = context.response
 
-  // ^the ifs service will respond with$
-  def theIfsServiceWillRespondWith2(context: InterestForecastingContext): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // val errorResponse                  = Json.parse(response.body).as[Errors]
-    // locally {
-    // val fieldName = "statusCode"
-    // Inferred legacy table keys: response
-    // TODO: Assertion step with a table, but no matching generated builder input or existing model was found.
-    // Add a typed expected-response parameter and compare it against context.responseBody.
+    response.body   should include(expectedMessage)
+    response.status should be(400)
   }
 
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows$
   def theDebtSummaryWillHaveCalculationWindows(
     context: InterestForecastingContext,
     summaryIndex: Int,
-    inputs: List[CalculationWindow]
-  ): Unit = {
+    inputs: List[CalculationWindowExpected]
+  )(implicit pos: Position): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(
       fail("Missing response body in context")
     )
 
-    inputs.zipWithIndex.foreach { case (expectedResponse, index) =>
-      val actual = responseBody
-        .debtCalculations(summaryIndex - 1)
-        .calculationWindows(index)
+    inputs.zipWithIndex.foreach { case (window, index) =>
+      val actual = responseBody.debtCalculations
+        .lift(summaryIndex - 1)
+        .getOrElse(fail(s"Missing debtCalculation at index [${summaryIndex - 1}] in response"))
+        .calculationWindows
+        .lift(index)
+        .getOrElse(fail(s"Missing calculationWindow at index [$index] in response"))
 
-      withClue("CalculationWindows") {
+      window.periodFrom.foreach { v =>
         withClue("periodFrom: ") {
-          actual.periodFrom shouldBe expectedResponse.periodFrom
+          actual.periodFrom.toString shouldBe v.toString
         }
+      }
 
+      window.periodTo.foreach { v =>
         withClue("periodTo: ") {
-          actual.periodTo shouldBe expectedResponse.periodTo
+          actual.periodTo.toString shouldBe v.toString
         }
+      }
 
+      window.numberOfDays.foreach { v =>
         withClue("numberOfDays: ") {
-          actual.numberOfDays shouldBe expectedResponse.numberOfDays
+          actual.numberOfDays.toString shouldBe v.toString
         }
+      }
 
+      window.interestRate.foreach { v =>
         withClue("interestRate: ") {
-          actual.interestRate shouldBe expectedResponse.interestRate
+          actual.interestRate.toString shouldBe v.toString
         }
+      }
 
+      window.interestDueDailyAccrual.foreach { v =>
         withClue("interestDueDailyAccrual: ") {
-          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+          actual.interestDueDailyAccrual.toString shouldBe v.toString
         }
+      }
 
+      window.interestDueWindow.foreach { v =>
         withClue("interestDueWindow: ") {
-          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow
+          actual.interestDueWindow.toString shouldBe v.toString
         }
+      }
 
-        withClue("amountOnIntDueWindow: ") {
-          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow
-        }
-
+      window.unpaidAmountWindow.foreach { v =>
         withClue("unpaidAmountWindow: ") {
-          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow
+          actual.unpaidAmountWindow.toString shouldBe v.toString
+        }
+      }
+
+      window.amountOnIntDueWindow.foreach { v =>
+        withClue("amountOnIntDueWindow: ") {
+          actual.amountOnIntDueWindow.toString shouldBe v.toString
+        }
+      }
+
+      window.suppressionApplied.foreach { suppression =>
+        suppression.reason.filter(_.nonEmpty).foreach { v =>
+          withClue("reason: ") {
+            actual.suppressionApplied.head.reason shouldBe v
+          }
         }
 
+        suppression.description.filter(_.nonEmpty).foreach { v =>
+          withClue("description: ") {
+            actual.suppressionApplied.head.description shouldBe v
+          }
+        }
+
+        suppression.code.filter(_.nonEmpty).foreach { v =>
+          withClue("code: ") {
+            actual.suppressionApplied.head.code shouldBe v
+          }
+        }
+      }
+
+      window.breathingSpaceApplied.foreach { v =>
         withClue("breathingSpaceApplied: ") {
-          actual.breathingSpaceApplied shouldBe expectedResponse.breathingSpaceApplied
-        }
-
-        // only assert suppressionApplied fields if they are present in input
-        expectedResponse.suppressionApplied.foreach { expectedSuppression =>
-          if (expectedSuppression.reason.nonEmpty) {
-            withClue("reason: ") {
-              actual.suppressionApplied.head.reason shouldBe expectedSuppression.reason
-            }
-          }
-
-          if (expectedSuppression.description.nonEmpty) {
-            withClue("description: ") {
-              actual.suppressionApplied.head.description shouldBe expectedSuppression.description
-            }
-          }
-
-          if (expectedSuppression.code.nonEmpty) {
-            withClue("code: ") {
-              actual.suppressionApplied.head.code shouldBe expectedSuppression.code
-            }
-          }
+          actual.breathingSpaceApplied.toString shouldBe v.toString
         }
       }
     }
@@ -316,117 +307,94 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     context: InterestForecastingContext,
     summaryIndex: Int,
     windowIndex: Int,
-    expectedResponse: SuppressionsApplied
-  ): Unit = {
+    expectedResponse: SuppressionsAppliedExpected
+  )(implicit pos: Position): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(
       fail("Missing response body in context")
     )
 
-    val calculationWindows = responseBody
-      .debtCalculations(summaryIndex - 1)
+    val calculationWindows = responseBody.debtCalculations
+      .lift(summaryIndex - 1)
+      .getOrElse(fail(s"Missing debtCalculation at index [${summaryIndex - 1}] in response"))
       .calculationWindows
 
-    if (calculationWindows.isDefinedAt(windowIndex - 1)) {
-      val suppressions = calculationWindows(windowIndex - 1).suppressionsApplied
-        .getOrElse(List.empty)
+    val suppressions = calculationWindows
+      .lift(windowIndex - 1)
+      .flatMap(_.suppressionsApplied)
+      .getOrElse(List.empty)
 
-      suppressions.foreach { suppression =>
-        withClue("SuppressionsApplied") {
-          withClue("dateFrom") {
-            suppression.dateFrom shouldBe expectedResponse.dateFrom
+    suppressions.foreach { suppression =>
+      withClue(s"suppressionsApplied[${windowIndex - 1}]") {
+
+        expectedResponse.dateFrom.foreach { v =>
+          withClue("dateFrom: ") {
+            suppression.dateFrom shouldBe v
           }
+        }
 
-          withClue("dateTo") {
-            suppression.dateTo shouldBe expectedResponse.dateTo
+        expectedResponse.dateTo.foreach { v =>
+          withClue("dateTo: ") {
+            suppression.dateTo shouldBe Some(v)
           }
+        }
 
-          withClue("reason") {
-            suppression.reason shouldBe expectedResponse.reason
+        expectedResponse.reason.foreach { v =>
+          withClue("reason: ") {
+            suppression.reason shouldBe v
           }
+        }
 
-          withClue("reasonDesc") {
-            suppression.reasonDesc shouldBe expectedResponse.reasonDesc
+        expectedResponse.reasonDesc.foreach { v =>
+          withClue("reasonDesc: ") {
+            suppression.reasonDesc shouldBe v
           }
+        }
 
-          withClue("postcode") {
-            suppression.postcode shouldBe expectedResponse.postcode
+        expectedResponse.postcode.foreach { v =>
+          withClue("postcode: ") {
+            suppression.postcode shouldBe Some(v)
           }
+        }
 
-          withClue("mainTrans") {
-            suppression.mainTrans shouldBe expectedResponse.mainTrans
+        expectedResponse.mainTrans.foreach { v =>
+          withClue("mainTrans: ") {
+            suppression.mainTrans shouldBe v
           }
+        }
 
-          withClue("subTrans") {
-            suppression.subTrans shouldBe expectedResponse.subTrans
+        expectedResponse.subTrans.foreach { v =>
+          withClue("subTrans: ") {
+            suppression.subTrans shouldBe v
           }
+        }
 
-          withClue("periodEnd") {
-            suppression.periodEnd shouldBe expectedResponse.periodEnd
+        expectedResponse.periodEnd.foreach { v =>
+          withClue("periodEnd: ") {
+            suppression.periodEnd shouldBe v
           }
         }
       }
     }
   }
 
-  // ^Ifs service returns response code (.*)$
-  def ifsServiceReturnsResponseCode(context: InterestForecastingContext, expectedCode: Int): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage, response assertion
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.status should be(expectedCode)
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^Ifs service returns error message (.*)$
-  def ifsServiceReturnsErrorMessage(context: InterestForecastingContext, expectedMessage: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // val responseBody                   = response.body.stripMargin
-    // print("response message*****************************" + responseBody)
-    // responseBody should be(expectedMessage)
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the debt item has breathing spaces applied$
-  def theDebtItemHasBreathingSpacesApplied(
-    context: InterestForecastingContext,
-    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
-  }
-
-  // ^no breathing spaces have been applied to the debt item$
-  def noBreathingSpacesHaveBeenAppliedToTheDebtItem(context: InterestForecastingContext): Unit = {
-    // noBreathingSpace()
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the customer has post codes$
-  def theCustomerHasPostCodes(
-    context: InterestForecastingContext,
-    inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.CustomerPostCodesInput
-  }
-
-  // ^no post codes have been provided for the customer$
-  def noPostCodesHaveBeenProvidedForTheCustomer(context: InterestForecastingContext): Unit = {
-    // noCustomerPostCodes()
-    // TODO: Implement typed helper for this step.
-  }
-
   // ^the ([0-9])(?:st|nd|rd|th) debt summary will not have any calculation windows$
-  def theDebtSummaryWillNotHaveAnyCalculationWindows(context: InterestForecastingContext, summaryIndex: Int): Unit = {
-    val response: StandaloneWSResponse = context.response
+  def theDebtSummaryWillNotHaveAnyCalculationWindows(context: InterestForecastingContext, summaryIndex: Int)(implicit
+    pos: Position
+  ): Unit = {
+    val response = context.response
     response.status should be(200)
 
-    Json
-      .parse(response.body)
-      .as[DebtCalculationsSummary]
-      .debtCalculations(summaryIndex - 1)
-      .calculationWindows
-      .size shouldBe 0
+    val responseBody = context.ifsResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    withClue(s"debtCalculations[${summaryIndex - 1}] should have no calculation windows: ") {
+      responseBody.debtCalculations
+        .lift(summaryIndex - 1)
+        .getOrElse(fail(s"Missing debtCalculation at index [${summaryIndex - 1}] in response"))
+        .calculationWindows
+        .size shouldBe 0
+    }
   }
 
   // ^a debt interest type item$
@@ -437,54 +405,44 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   def theDebtInterestTypeResponseSummaryWillContain(
     context: InterestForecastingContext,
     index: Int,
-    expectedResponse: DebtInterestType
-  ): Unit = {
-    val response: StandaloneWSResponse = context.response
+    expectedResponse: DebtInterestTypeExpected
+  )(implicit pos: Position): Unit = {
+    val response = context.response
     response.status should be(200)
 
-    val responseBody: DebtInterestType = Json.parse(response.body).as[DebtInterestTypeResponse].debts(index - 1)
+    val responseBody = Json
+      .parse(response.body)
+      .as[DebtInterestTypeResponse]
+      .debts
+      .lift(index - 1)
+      .getOrElse(fail(s"Missing debt at index [${index - 1}] in response"))
 
-    locally {
-      withClue("interestBearing") {
-        responseBody.interestBearing shouldBe expectedResponse.interestBearing
+    withClue(s"debts[${index - 1}]") {
+
+      expectedResponse.interestBearing.foreach { v =>
+        withClue("interestBearing: ") {
+          responseBody.interestBearing shouldBe v
+        }
+      }
+
+      expectedResponse.mainTrans.foreach { v =>
+        withClue("mainTrans: ") {
+          responseBody.mainTrans shouldBe v
+        }
+      }
+
+      expectedResponse.subTrans.foreach { v =>
+        withClue("subTrans: ") {
+          responseBody.subTrans shouldBe v
+        }
+      }
+
+      expectedResponse.useChargeReference.foreach { v =>
+        withClue("useChargeReference: ") {
+          responseBody.useChargeReference shouldBe v
+        }
       }
     }
-    locally {
-
-      withClue(s"mainTrans") {
-        responseBody.mainTrans shouldBe expectedResponse.mainTrans
-      }
-    }
-
-    locally {
-      withClue("subTrans") {
-        responseBody.subTrans shouldBe expectedResponse.subTrans
-      }
-    }
-
-    locally {
-      withClue("useChargeReference") {
-        responseBody.useChargeReference shouldBe expectedResponse.useChargeReference
-      }
-    }
-  }
-
-  // ^the ([0-9])(?:st|nd|rd|th) debt applied suppression summary contains values as$
-  def theDebtAppliedSuppressionSummaryContainsValuesAs(
-    context: InterestForecastingContext,
-    summaryIndex: Int,
-    inputs: Seq[SuppressionApplied]
-  ): Unit = {
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // asMapTransposed.asScala.zipWithIndex.foreach { case (window, index) =>
-    // val maybeSuppression = for {
-    // debt        <-
-    // TODO: Assertion step. Check models and builders to use to compare against.
-    // Compare 'inputs' against the actual parsed response from context.responseBody.
-    // Suggested approach:
-    //   context.status shouldBe 200
-    //   val actualResponse = Json.parse(context.responseBody).as[/* TODO response model */]
-    //   // Assert the relevant element/field against inputs.
   }
 
 }

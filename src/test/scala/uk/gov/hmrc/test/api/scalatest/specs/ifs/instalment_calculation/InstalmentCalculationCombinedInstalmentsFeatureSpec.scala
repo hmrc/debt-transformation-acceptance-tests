@@ -20,7 +20,7 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
-import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
+import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.{InstalmentCalculationSummaryResponseExpected, InstalmentResponseExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
 
@@ -69,33 +69,24 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
       theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "true")
 
       Then("IFS response contains expected values")
-      val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-        dateOfCalculation = LocalDate.parse("2021-06-10"),
-        numberOfInstalments = 4,
-        planInterest = 27,
-        interestAccrued = 300,
-        totalInterest = 327,
-        duration = 4,
-        instalments = Seq(
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2021-08-01"),
-            amountDue = 1000,
-            instalmentBalance = 4000,
-            instalmentInterestAccrued = 15,
-            expectedPayment = 1000,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 4,
-            dueDate = LocalDate.parse("2021-11-01"),
-            amountDue = 1327,
-            instalmentBalance = 1000,
-            instalmentInterestAccrued = 2,
-            expectedPayment = 4327,
-            intRate = 2.6
+      val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+        numberOfInstalments = Some(4),
+        planInterest = Some(27),
+        interestAccrued = Some(300),
+        totalInterest = Some(327),
+        duration = Some(4),
+        instalments = Some(
+          Seq(
+            InstalmentResponseExpected(
+              instalmentNumber = Some(1),
+              dueDate = Some(LocalDate.parse("2021-08-01")),
+              amountDue = Some(1000)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(4),
+              dueDate = Some(LocalDate.parse("2021-11-01")),
+              amountDue = Some(1327)
+            )
           )
         )
       )
@@ -130,33 +121,24 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
       theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "false")
 
       Then("IFS response contains expected values")
-      val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-        dateOfCalculation = LocalDate.parse("2021-06-10"),
-        numberOfInstalments = 5,
-        planInterest = 27,
-        interestAccrued = 300,
-        totalInterest = 327,
-        duration = 5,
-        instalments = Seq(
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2021-08-01"),
-            amountDue = 1000,
-            instalmentBalance = 4000,
-            instalmentInterestAccrued = 15,
-            expectedPayment = 1000,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 5,
-            dueDate = LocalDate.parse("2021-12-01"),
-            amountDue = 327,
-            instalmentBalance = 0,
-            instalmentInterestAccrued = 0,
-            expectedPayment = 4327,
-            intRate = 2.6
+      val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+        numberOfInstalments = Some(5),
+        planInterest = Some(27),
+        interestAccrued = Some(300),
+        totalInterest = Some(327),
+        duration = Some(5),
+        instalments = Some(
+          Seq(
+            InstalmentResponseExpected(
+              instalmentNumber = Some(1),
+              dueDate = Some(LocalDate.parse("2021-08-01")),
+              amountDue = Some(1000)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(5),
+              dueDate = Some(LocalDate.parse("2021-12-01")),
+              amountDue = Some(327)
+            )
           )
         )
       )
@@ -192,33 +174,24 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
         theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "false")
 
         Then("IFS response contains expected values")
-        val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-          dateOfCalculation = LocalDate.parse("2021-06-10"),
-          numberOfInstalments = 5,
-          planInterest = 0,
-          interestAccrued = 0,
-          totalInterest = 0,
-          duration = 5,
-          instalments = Seq(
-            InstalmentResponse(
-              debtId = "TPSSDebt1",
-              instalmentNumber = 1,
-              dueDate = LocalDate.parse("2021-08-01"),
-              amountDue = 999,
-              instalmentBalance = 4000,
-              instalmentInterestAccrued = 0,
-              expectedPayment = 999,
-              intRate = 0
-            ),
-            InstalmentResponse(
-              debtId = "TPSSDebt1",
-              instalmentNumber = 5,
-              dueDate = LocalDate.parse("2021-12-01"),
-              amountDue = 4,
-              instalmentBalance = 4,
-              instalmentInterestAccrued = 0,
-              expectedPayment = 4000,
-              intRate = 0
+        val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+          numberOfInstalments = Some(5),
+          planInterest = Some(0),
+          interestAccrued = Some(0),
+          totalInterest = Some(0),
+          duration = Some(5),
+          instalments = Some(
+            Seq(
+              InstalmentResponseExpected(
+                instalmentNumber = Some(1),
+                dueDate = Some(LocalDate.parse("2021-08-01")),
+                amountDue = Some(999)
+              ),
+              InstalmentResponseExpected(
+                instalmentNumber = Some(5),
+                dueDate = Some(LocalDate.parse("2021-12-01")),
+                amountDue = Some(4)
+              )
             )
           )
         )
@@ -255,33 +228,24 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
       theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "true")
 
       Then("IFS response contains expected values")
-      val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-        dateOfCalculation = LocalDate.parse("2021-06-10"),
-        numberOfInstalments = 4,
-        planInterest = 0,
-        interestAccrued = 0,
-        totalInterest = 0,
-        duration = 4,
-        instalments = Seq(
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2021-08-01"),
-            amountDue = 999,
-            instalmentBalance = 4000,
-            instalmentInterestAccrued = 0,
-            expectedPayment = 999,
-            intRate = 0
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 4,
-            dueDate = LocalDate.parse("2021-11-01"),
-            amountDue = 1003,
-            instalmentBalance = 1003,
-            instalmentInterestAccrued = 0,
-            expectedPayment = 4000,
-            intRate = 0
+      val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+        numberOfInstalments = Some(4),
+        planInterest = Some(0),
+        interestAccrued = Some(0),
+        totalInterest = Some(0),
+        duration = Some(4),
+        instalments = Some(
+          Seq(
+            InstalmentResponseExpected(
+              instalmentNumber = Some(1),
+              dueDate = Some(LocalDate.parse("2021-08-01")),
+              amountDue = Some(999)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(4),
+              dueDate = Some(LocalDate.parse("2021-11-01")),
+              amountDue = Some(1003)
+            )
           )
         )
       )
@@ -318,43 +282,29 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
       theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "true")
 
       Then("IFS response contains expected values")
-      val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-        dateOfCalculation = LocalDate.parse("2021-06-10"),
-        numberOfInstalments = 4,
-        planInterest = 18,
-        interestAccrued = 300,
-        totalInterest = 318,
-        duration = 3,
-        instalments = Seq(
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2021-07-01"),
-            amountDue = 1000,
-            instalmentBalance = 4000,
-            instalmentInterestAccrued = 6,
-            expectedPayment = 1000,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 2,
-            dueDate = LocalDate.parse("2021-08-01"),
-            amountDue = 999,
-            instalmentBalance = 3000,
-            instalmentInterestAccrued = 6,
-            expectedPayment = 1999,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 4,
-            dueDate = LocalDate.parse("2021-10-01"),
-            amountDue = 1320,
-            instalmentBalance = 1002,
-            instalmentInterestAccrued = 2,
-            expectedPayment = 4318,
-            intRate = 2.6
+      val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+        numberOfInstalments = Some(4),
+        planInterest = Some(18),
+        interestAccrued = Some(300),
+        totalInterest = Some(318),
+        duration = Some(3),
+        instalments = Some(
+          Seq(
+            InstalmentResponseExpected(
+              instalmentNumber = Some(1),
+              dueDate = Some(LocalDate.parse("2021-07-01")),
+              amountDue = Some(1000)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(2),
+              dueDate = Some(LocalDate.parse("2021-08-01")),
+              amountDue = Some(999)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(4),
+              dueDate = Some(LocalDate.parse("2021-10-01")),
+              amountDue = Some(1320)
+            )
           )
         )
       )
@@ -397,43 +347,29 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
       theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "true")
 
       Then("IFS response contains expected values")
-      val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-        dateOfCalculation = LocalDate.parse("2021-06-10"),
-        numberOfInstalments = 6,
-        planInterest = 185,
-        interestAccrued = 1000,
-        totalInterest = 1185,
-        duration = 4,
-        instalments = Seq(
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2021-07-01"),
-            amountDue = 5000,
-            instalmentBalance = 16000,
-            instalmentInterestAccrued = 25,
-            expectedPayment = 5000,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 2,
-            dueDate = LocalDate.parse("2021-08-01"),
-            amountDue = 6000,
-            instalmentBalance = 11000,
-            instalmentInterestAccrued = 24,
-            expectedPayment = 11000,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "DRIERDebt1",
-            instalmentNumber = 6,
-            dueDate = LocalDate.parse("2021-11-01"),
-            amountDue = 8185,
-            instalmentBalance = 7000,
-            instalmentInterestAccrued = 15,
-            expectedPayment = 31185,
-            intRate = 2.6
+      val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+        numberOfInstalments = Some(6),
+        planInterest = Some(185),
+        interestAccrued = Some(1000),
+        totalInterest = Some(1185),
+        duration = Some(4),
+        instalments = Some(
+          Seq(
+            InstalmentResponseExpected(
+              instalmentNumber = Some(1),
+              dueDate = Some(LocalDate.parse("2021-07-01")),
+              amountDue = Some(5000)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(2),
+              dueDate = Some(LocalDate.parse("2021-08-01")),
+              amountDue = Some(6000)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(6),
+              dueDate = Some(LocalDate.parse("2021-11-01")),
+              amountDue = Some(8185)
+            )
           )
         )
       )
@@ -468,33 +404,24 @@ class InstalmentCalculationCombinedInstalmentsFeatureSpec
       theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(context, "true")
 
       Then("IFS response contains expected values")
-      val instalmentCalculationResponse = InstalmentCalculationSummaryResponse(
-        dateOfCalculation = LocalDate.parse("2021-06-10"),
-        numberOfInstalments = 5,
-        planInterest = 27,
-        interestAccrued = 1003,
-        totalInterest = 1030,
-        duration = 5,
-        instalments = Seq(
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 1,
-            dueDate = LocalDate.parse("2021-08-01"),
-            amountDue = 1006,
-            instalmentBalance = 4000,
-            instalmentInterestAccrued = 15,
-            expectedPayment = 1006,
-            intRate = 2.6
-          ),
-          InstalmentResponse(
-            debtId = "TPSSDebt1",
-            instalmentNumber = 5,
-            dueDate = LocalDate.parse("2021-12-01"),
-            amountDue = 1006,
-            instalmentBalance = 0,
-            instalmentInterestAccrued = 0,
-            expectedPayment = 5030,
-            intRate = 2.6
+      val instalmentCalculationResponse = InstalmentCalculationSummaryResponseExpected(
+        numberOfInstalments = Some(5),
+        planInterest = Some(27),
+        interestAccrued = Some(1003),
+        totalInterest = Some(1030),
+        duration = Some(5),
+        instalments = Some(
+          Seq(
+            InstalmentResponseExpected(
+              instalmentNumber = Some(1),
+              dueDate = Some(LocalDate.parse("2021-08-01")),
+              amountDue = Some(1006)
+            ),
+            InstalmentResponseExpected(
+              instalmentNumber = Some(5),
+              dueDate = Some(LocalDate.parse("2021-12-01")),
+              amountDue = Some(1006)
+            )
           )
         )
       )

@@ -20,7 +20,7 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
-import uk.gov.hmrc.test.api.models.{CalculationWindow, DebtCalculation, DebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 
@@ -65,59 +65,50 @@ class InterestRateChangesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 44,
-        interestDueCallTotal = 20695,
-        amountIntTotal = 520695,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedSummary = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(44),
+        interestDueCallTotal = Some(20695),
+        amountIntTotal = Some(520695),
+        amountOnIntDueTotal = Some(500000),
+        unpaidAmountTotal = Some(500000)
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
+      val expectedDebtSummary = DebtCalculationExpected(
         debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 485,
-        interestDueDailyAccrual = 44,
-        interestDueDutyTotal = 20695,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 520695,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(485),
+        interestDueDailyAccrual = Some(44),
+        interestDueDutyTotal = Some(20695),
+        amountOnIntDueDuty = Some(500000),
+        totalAmountIntDuty = Some(520695),
+        unpaidAmountDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2017-12-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 262,
-          interestRate = 3.0,
-          interestDueWindow = 10767,
-          interestDueDailyAccrual = 41,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 510767,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2017-12-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          numberOfDays = Some(262),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(10767),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(510767)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-31"),
-          numberOfDays = 223,
-          interestRate = 3.25,
-          interestDueWindow = 9928,
-          interestDueDailyAccrual = 44,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 509928,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-31")),
+          numberOfDays = Some(223),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(44),
+          interestDueWindow = Some(9928),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509928)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -137,14 +128,8 @@ class InterestRateChangesFeatureSpec
             breathingSpaces = Some(List.empty),
             paymentHistory = Some(
               List(
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2020-02-01"
-                ),
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2020-02-01"
-                )
+                PaymentHistory(paymentAmount = 100000, paymentDate = "2020-02-01"),
+                PaymentHistory(paymentAmount = 100000, paymentDate = "2020-02-01")
               )
             )
           )
@@ -157,98 +142,72 @@ class InterestRateChangesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 22,
-        interestDueCallTotal = 19188,
-        amountIntTotal = 319188,
-        amountOnIntDueTotal = 300000,
-        unpaidAmountTotal = 300000,
-        debtCalculations = List.empty
+      val expectedSummary = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(22),
+        interestDueCallTotal = Some(19188),
+        amountIntTotal = Some(319188),
+        amountOnIntDueTotal = Some(300000),
+        unpaidAmountTotal = Some(300000)
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 851,
-        interestDueDailyAccrual = 22,
-        interestDueDutyTotal = 19188,
-        amountOnIntDueDuty = 300000,
-        totalAmountIntDuty = 319188,
-        unpaidAmountDuty = 300000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        numberOfChargeableDays = Some(851)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2019-01-01"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 364,
-          interestRate = 3.25,
-          interestDueWindow = 6482,
-          interestDueDailyAccrual = 17,
-          amountOnIntDueWindow = 200000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 206482,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2019-01-01")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(364),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(17),
+          interestDueWindow = Some(6482),
+          unpaidAmountWindow = Some(206482),
+          amountOnIntDueWindow = Some(200000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-02-01"),
-          numberOfDays = 32,
-          interestRate = 3.25,
-          interestDueWindow = 568,
-          interestDueDailyAccrual = 17,
-          amountOnIntDueWindow = 200000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 200568,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-02-01")),
+          numberOfDays = Some(32),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(17),
+          interestDueWindow = Some(568),
+          unpaidAmountWindow = Some(200568),
+          amountOnIntDueWindow = Some(200000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2019-01-01"),
-          periodTo = LocalDate.parse("2019-12-31"),
-          numberOfDays = 364,
-          interestRate = 3.25,
-          interestDueWindow = 9723,
-          interestDueDailyAccrual = 26,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 309723,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2019-01-01")),
+          periodTo = Some(LocalDate.parse("2019-12-31")),
+          numberOfDays = Some(364),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(9723),
+          unpaidAmountWindow = Some(309723),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-01-01"),
-          periodTo = LocalDate.parse("2020-03-29"),
-          numberOfDays = 89,
-          interestRate = 3.25,
-          interestDueWindow = 2370,
-          interestDueDailyAccrual = 26,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 302370,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-01-01")),
+          periodTo = Some(LocalDate.parse("2020-03-29")),
+          numberOfDays = Some(89),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(26),
+          interestDueWindow = Some(2370),
+          unpaidAmountWindow = Some(302370),
+          amountOnIntDueWindow = Some(300000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2020-03-30"),
-          periodTo = LocalDate.parse("2020-03-31"),
-          numberOfDays = 2,
-          interestRate = 2.75,
-          interestDueWindow = 45,
-          interestDueDailyAccrual = 22,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 300045,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2020-03-30")),
+          periodTo = Some(LocalDate.parse("2020-03-31")),
+          numberOfDays = Some(2),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(22),
+          interestDueWindow = Some(45),
+          unpaidAmountWindow = Some(300045),
+          amountOnIntDueWindow = Some(300000)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -268,10 +227,7 @@ class InterestRateChangesFeatureSpec
             breathingSpaces = Some(List.empty),
             paymentHistory = Some(
               List(
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2018-03-15"
-                )
+                PaymentHistory(paymentAmount = 100000, paymentDate = "2018-03-15")
               )
             )
           )
@@ -284,72 +240,41 @@ class InterestRateChangesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 35,
-        interestDueCallTotal = 16136,
-        amountIntTotal = 416136,
-        amountOnIntDueTotal = 400000,
-        unpaidAmountTotal = 400000,
-        debtCalculations = List.empty
+      val expectedSummary = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(35),
+        interestDueCallTotal = Some(16136),
+        unpaidAmountTotal = Some(400000)
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 527,
-        interestDueDailyAccrual = 35,
-        interestDueDutyTotal = 16136,
-        amountOnIntDueDuty = 400000,
-        totalAmountIntDuty = 416136,
-        unpaidAmountDuty = 400000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        numberOfChargeableDays = Some(527)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-03-15"),
-          numberOfDays = 73,
-          interestRate = 3.0,
-          interestDueWindow = 600,
-          interestDueDailyAccrual = 8,
-          amountOnIntDueWindow = 100000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 100600,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-03-15")),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(8),
+          amountOnIntDueWindow = Some(100000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3.0,
-          interestDueWindow = 7594,
-          interestDueDailyAccrual = 32,
-          amountOnIntDueWindow = 400000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 407594,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(32),
+          amountOnIntDueWindow = Some(400000)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-31"),
-          numberOfDays = 223,
-          interestRate = 3.25,
-          interestDueWindow = 7942,
-          interestDueDailyAccrual = 35,
-          amountOnIntDueWindow = 400000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 407942,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-31")),
+          interestRate = Some(3.25),
+          interestDueDailyAccrual = Some(35),
+          amountOnIntDueWindow = Some(400000)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -369,14 +294,8 @@ class InterestRateChangesFeatureSpec
             breathingSpaces = Some(List.empty),
             paymentHistory = Some(
               List(
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2018-09-01"
-                ),
-                PaymentHistory(
-                  paymentAmount = 100000,
-                  paymentDate = "2018-09-01"
-                )
+                PaymentHistory(paymentAmount = 100000, paymentDate = "2018-09-01"),
+                PaymentHistory(paymentAmount = 100000, paymentDate = "2018-09-01")
               )
             )
           )
@@ -389,85 +308,39 @@ class InterestRateChangesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 26,
-        interestDueCallTotal = 15661,
-        amountIntTotal = 315661,
-        amountOnIntDueTotal = 300000,
-        unpaidAmountTotal = 300000,
-        debtCalculations = List.empty
+      val expectedSummary = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(26),
+        interestDueCallTotal = Some(15661),
+        amountIntTotal = Some(315661),
+        unpaidAmountTotal = Some(300000)
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
-
-      And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 697,
-        interestDueDailyAccrual = 26,
-        interestDueDutyTotal = 15661,
-        amountOnIntDueDuty = 300000,
-        totalAmountIntDuty = 315661,
-        unpaidAmountDuty = 300000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
-      )
-      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3.0,
-          interestDueWindow = 3797,
-          interestDueDailyAccrual = 16,
-          amountOnIntDueWindow = 200000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 203797,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          interestRate = Some(3.0),
+          interestDueWindow = Some(3797)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2018-09-01"),
-          numberOfDays = 12,
-          interestRate = 3.25,
-          interestDueWindow = 213,
-          interestDueDailyAccrual = 17,
-          amountOnIntDueWindow = 200000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 200213,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2018-09-01")),
+          interestRate = Some(3.25),
+          interestDueWindow = Some(213)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-01-01"),
-          periodTo = LocalDate.parse("2018-08-20"),
-          numberOfDays = 231,
-          interestRate = 3.0,
-          interestDueWindow = 5695,
-          interestDueDailyAccrual = 24,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 305695,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-01-01")),
+          periodTo = Some(LocalDate.parse("2018-08-20")),
+          interestRate = Some(3.0),
+          interestDueWindow = Some(5695)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2018-08-21"),
-          periodTo = LocalDate.parse("2019-03-31"),
-          numberOfDays = 223,
-          interestRate = 3.25,
-          interestDueWindow = 5956,
-          interestDueDailyAccrual = 26,
-          amountOnIntDueWindow = 300000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 305956,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2018-08-21")),
+          periodTo = Some(LocalDate.parse("2019-03-31")),
+          interestRate = Some(3.25),
+          interestDueWindow = Some(5956)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
@@ -517,210 +390,122 @@ class InterestRateChangesFeatureSpec
         theDebtItemIsSentToTheIfsService(context)
 
         Then("the ifs service will return a total debts summary of")
-        val expectedResponse = DebtCalculationsSummary(
-          combinedDailyAccrual = 52,
-          interestDueCallTotal = 37775,
-          amountIntTotal = 637775,
-          amountOnIntDueTotal = 600000,
-          unpaidAmountTotal = 600000,
-          debtCalculations = List.empty
+        val expectedSummary = DebtCalculationsSummaryExpected(
+          combinedDailyAccrual = Some(52),
+          interestDueCallTotal = Some(37775),
+          amountIntTotal = Some(637775),
+          amountOnIntDueTotal = Some(600000)
         )
-        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+        theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
         And("the 1st debt summary will contain")
-        val expectedDebtSummary = DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("123"),
-          interestBearing = true,
-          numberOfChargeableDays = 1361,
-          interestDueDailyAccrual = 26,
-          interestDueDutyTotal = 19409,
-          amountOnIntDueDuty = 300000,
-          totalAmountIntDuty = 319409,
-          unpaidAmountDuty = 300000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        val expectedDebtSummary = DebtCalculationExpected(
+          numberOfChargeableDays = Some(1361),
+          interestDueDailyAccrual = Some(26),
+          interestDueDutyTotal = Some(19409),
+          amountOnIntDueDuty = Some(300000)
         )
         theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
         And("the 1st debt summary will have calculation windows")
         val expectedCalculationWindows = List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-01"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 231,
-            interestRate = 3.0,
-            interestDueWindow = 1898,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101898,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-01")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1898)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-03-15"),
-            numberOfDays = 207,
-            interestRate = 3.25,
-            interestDueWindow = 1843,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101843,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-03-15")),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1843)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-01"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 231,
-            interestRate = 3.0,
-            interestDueWindow = 1898,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101898,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-01")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1898)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-04-15"),
-            numberOfDays = 238,
-            interestRate = 3.25,
-            interestDueWindow = 2119,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 102119,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-04-15")),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(2119)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-01"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 231,
-            interestRate = 3.0,
-            interestDueWindow = 5695,
-            interestDueDailyAccrual = 24,
-            amountOnIntDueWindow = 300000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 305695,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-01")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(24),
+            interestDueWindow = Some(5695)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-03-31"),
-            numberOfDays = 223,
-            interestRate = 3.25,
-            interestDueWindow = 5956,
-            interestDueDailyAccrual = 26,
-            amountOnIntDueWindow = 300000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 305956,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-03-31")),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(26),
+            interestDueWindow = Some(5956)
           )
         )
         theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
 
         And("the 2nd debt summary will contain")
-        val expected2ndDebtSummary = DebtCalculation(
-          debtItemChargeId = None,
-          debtID = Some("456"),
-          interestBearing = true,
-          numberOfChargeableDays = 1240,
-          interestDueDailyAccrual = 26,
-          interestDueDutyTotal = 18366,
-          amountOnIntDueDuty = 300000,
-          totalAmountIntDuty = 318366,
-          unpaidAmountDuty = 300000,
-          interestOnlyIndicator = false,
-          calculationWindows = Nil
+        val expected2ndDebtSummary = DebtCalculationExpected(
+          numberOfChargeableDays = Some(1240),
+          interestDueDailyAccrual = Some(26),
+          interestDueDutyTotal = Some(18366),
+          amountOnIntDueDuty = Some(300000)
         )
         theDebtSummaryWillContain(context, 2, expected2ndDebtSummary)
 
         And("the 2nd debt summary will have calculation windows")
         val expected2ndCalculationWindows = List(
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-16"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 216,
-            interestRate = 3.0,
-            interestDueWindow = 1775,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101775,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-16")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1775)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-01-20"),
-            numberOfDays = 153,
-            interestRate = 3.25,
-            interestDueWindow = 1362,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101362,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-01-20")),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1362)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-16"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 216,
-            interestRate = 3.0,
-            interestDueWindow = 1775,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101775,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-16")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1775)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-03-10"),
-            numberOfDays = 202,
-            interestRate = 3.25,
-            interestDueWindow = 1798,
-            interestDueDailyAccrual = 8,
-            amountOnIntDueWindow = 100000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 101798,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-03-10")),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(8),
+            interestDueWindow = Some(1798)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-01-16"),
-            periodTo = LocalDate.parse("2018-08-20"),
-            numberOfDays = 216,
-            interestRate = 3.0,
-            interestDueWindow = 5326,
-            interestDueDailyAccrual = 24,
-            amountOnIntDueWindow = 300000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 305326,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-01-16")),
+            periodTo = Some(LocalDate.parse("2018-08-20")),
+            interestRate = Some(3.0),
+            interestDueDailyAccrual = Some(24),
+            interestDueWindow = Some(5326)
           ),
-          CalculationWindow(
-            periodFrom = LocalDate.parse("2018-08-21"),
-            periodTo = LocalDate.parse("2019-04-14"),
-            numberOfDays = 237,
-            interestRate = 3.25,
-            interestDueWindow = 6330,
-            interestDueDailyAccrual = 26,
-            amountOnIntDueWindow = 300000,
-            breathingSpaceApplied = false,
-            unpaidAmountWindow = 306330,
-            suppressionApplied = None,
-            suppressionsApplied = None
+          CalculationWindowExpected(
+            periodFrom = Some(LocalDate.parse("2018-08-21")),
+            periodTo = Some(LocalDate.parse("2019-04-14")),
+            interestRate = Some(3.25),
+            interestDueDailyAccrual = Some(26),
+            interestDueWindow = Some(6330)
           )
         )
         theDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindows)
@@ -749,33 +534,23 @@ class InterestRateChangesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 0,
-        interestDueCallTotal = 0,
-        amountIntTotal = 500000,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedSummary = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(0),
+        amountIntTotal = Some(500000),
+        amountOnIntDueTotal = Some(500000)
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 0,
-        interestDueDailyAccrual = 0,
-        interestDueDutyTotal = 0,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 500000,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        numberOfChargeableDays = Some(0),
+        interestDueDailyAccrual = Some(0),
+        totalAmountIntDuty = Some(500000)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
-      And("the debt summary will have no calculation windows")
+      And("the 1st debt summary will not have any calculation windows")
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
@@ -802,72 +577,59 @@ class InterestRateChangesFeatureSpec
       theDebtItemIsSentToTheIfsService(context)
 
       Then("the ifs service will return a total debts summary of")
-      val expectedResponse = DebtCalculationsSummary(
-        combinedDailyAccrual = 41,
-        interestDueCallTotal = 13363,
-        amountIntTotal = 513363,
-        amountOnIntDueTotal = 500000,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty
+      val expectedSummary = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(41),
+        interestDueCallTotal = Some(13363),
+        unpaidAmountTotal = Some(500000),
+        amountIntTotal = Some(513363),
+        amountOnIntDueTotal = Some(500000)
       )
-      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedSummary)
 
       And("the 1st debt summary will contain")
-      val expectedDebtSummary = DebtCalculation(
-        debtItemChargeId = None,
-        debtID = Some("123"),
-        interestBearing = true,
-        numberOfChargeableDays = 366,
-        interestDueDailyAccrual = 41,
-        interestDueDutyTotal = 13363,
-        amountOnIntDueDuty = 500000,
-        totalAmountIntDuty = 513363,
-        unpaidAmountDuty = 500000,
-        interestOnlyIndicator = false,
-        calculationWindows = Nil
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        interestDueDailyAccrual = Some(41),
+        interestDueDutyTotal = Some(13363),
+        unpaidAmountDuty = Some(500000),
+        totalAmountIntDuty = Some(513363),
+        numberOfChargeableDays = Some(366),
+        amountOnIntDueDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
       )
       theDebtSummaryWillContain(context, 1, expectedDebtSummary)
 
       And("the 1st debt summary will have calculation windows")
       val expectedCalculationWindows = List(
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2021-04-03"),
-          periodTo = LocalDate.parse("2022-01-06"),
-          numberOfDays = 278,
-          interestRate = 2.6,
-          interestDueWindow = 9901,
-          interestDueDailyAccrual = 35,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 509901,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2021-04-03")),
+          periodTo = Some(LocalDate.parse("2022-01-06")),
+          numberOfDays = Some(278),
+          interestRate = Some(2.6),
+          interestDueDailyAccrual = Some(35),
+          interestDueWindow = Some(9901),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(509901)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-01-07"),
-          periodTo = LocalDate.parse("2022-02-20"),
-          numberOfDays = 45,
-          interestRate = 2.75,
-          interestDueWindow = 1695,
-          interestDueDailyAccrual = 37,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 501695,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-01-07")),
+          periodTo = Some(LocalDate.parse("2022-02-20")),
+          numberOfDays = Some(45),
+          interestRate = Some(2.75),
+          interestDueDailyAccrual = Some(37),
+          interestDueWindow = Some(1695),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(501695)
         ),
-        CalculationWindow(
-          periodFrom = LocalDate.parse("2022-02-21"),
-          periodTo = LocalDate.parse("2022-04-04"),
-          numberOfDays = 43,
-          interestRate = 3.0,
-          interestDueWindow = 1767,
-          interestDueDailyAccrual = 41,
-          amountOnIntDueWindow = 500000,
-          breathingSpaceApplied = false,
-          unpaidAmountWindow = 501767,
-          suppressionApplied = None,
-          suppressionsApplied = None
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("2022-02-21")),
+          periodTo = Some(LocalDate.parse("2022-04-04")),
+          numberOfDays = Some(43),
+          interestRate = Some(3.0),
+          interestDueDailyAccrual = Some(41),
+          interestDueWindow = Some(1767),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(501767)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)

@@ -16,43 +16,315 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
+import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder
+import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
-  def theSolServiceRespondWith(statusCode: Int, message: String, context: StatementOfLiabilityContext): Unit = {
+  // ^the sol service will respond with$
+  def theSolServiceRespondWith(context: StatementOfLiabilityContext, statusCode: Int, message: String): Unit = {
     context.status       shouldBe statusCode
     context.errorMessage shouldBe Some(message)
   }
 
-  // ^statement of liability multiple debt requests$
-  def statementOfLiabilityMultipleDebtRequests(
+  // ^debt details$
+  def debtDetails(
     context: StatementOfLiabilityContext,
     request: SolDebtsRequest
   ): Unit = {
-
     println("SolDebtsRequest : " + request)
-    context.request = Some(request)
+    context.solRequest = Some(request)
   }
 
   // ^a debt statement of liability is requested$
   def aDebtStatementOfLiabilityIsRequested(context: StatementOfLiabilityContext): Unit = {
-    val response         = StatementOfLiabilityBuilder.getStatementOfLiability(context.request)
+    val response         = StatementOfLiabilityBuilder.getStatementOfLiability(context.solRequest)
     val jsonResponseBody = response.body[JsValue]
     context.status = response.status
-    context.responseBody = Some(jsonResponseBody.as[SolCalculationSummaryResponse])
+    context.solResponseBody = Some(jsonResponseBody.as[SolCalculationSummaryResponse])
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
+  // ^statement of liability Is Requested Without Debt$
   def statementOfLiabilityIsRequestedWithoutDebt(context: StatementOfLiabilityContext): Unit = {
-    val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.request)
+    val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.solRequest)
     context.status = response.status
     context.errorMessage = Some(response.body)
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
+
+  // ^service returns debt statement of liability data$
+  def serviceReturnsDebtStatementOfLiabilityData(
+    context: StatementOfLiabilityContext,
+    expectedResponse: SolCalculationSummaryResponseExpected
+  )(implicit pos: Position): Unit = {
+    context.status shouldBe 200
+
+    val actual = context.solResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    expectedResponse.amountIntTotal.foreach { v =>
+      withClue("amountIntTotal: ") {
+        actual.amountIntTotal shouldBe v
+      }
+    }
+
+    expectedResponse.combinedDailyAccrual.foreach { v =>
+      withClue("combinedDailyAccrual: ") {
+        actual.combinedDailyAccrual shouldBe v
+      }
+    }
+  }
+
+  // ^the Customer Statement Of Liability Contains Debt Values As$
+  def theCustomerStatementOfLiabilityContainsDebtValuesAs(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    expectedDebt: SolCalculationExpected
+  )(implicit pos: Position): Unit = {
+    val actual = context.solResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    val actualDebt = actual.debts
+      .lift(debtIndex - 1)
+      .getOrElse(fail(s"Missing debt at index [${debtIndex - 1}] in response"))
+
+    withClue(s"debts[${debtIndex - 1}]") {
+
+      expectedDebt.debtId.foreach { v =>
+        withClue("debtId: ") {
+          actualDebt.debtId shouldBe v
+        }
+      }
+
+      expectedDebt.mainTrans.foreach { v =>
+        withClue("mainTrans: ") {
+          actualDebt.mainTrans shouldBe v
+        }
+      }
+
+      expectedDebt.debtTypeDescription.foreach { v =>
+        withClue("debtTypeDescription: ") {
+          actualDebt.debtTypeDescription shouldBe v
+        }
+      }
+
+      expectedDebt.interestDueDebtTotal.foreach { v =>
+        withClue("interestDueDebtTotal: ") {
+          actualDebt.interestDueDebtTotal shouldBe v
+        }
+      }
+
+      expectedDebt.totalAmountIntDebt.foreach { v =>
+        withClue("totalAmountIntDebt: ") {
+          actualDebt.totalAmountIntDebt shouldBe v
+        }
+      }
+
+      expectedDebt.combinedDailyAccrual.foreach { v =>
+        withClue("combinedDailyAccrual: ") {
+          actualDebt.combinedDailyAccrual shouldBe v
+        }
+      }
+
+      expectedDebt.parentMainTrans.foreach { v =>
+        withClue("parentMainTrans: ") {
+          actualDebt.parentMainTrans shouldBe Some(v)
+        }
+      }
+    }
+  }
+
+  // ^the Customer Statement Of Liability Contains Duty Values As$
+  def theCustomerStatementOfLiabilityContainsDutyValuesAs(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    expectedDuties: List[SolDutyExpected]
+  )(implicit pos: Position): Unit = {
+
+    val actual = context.solResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    val actualDuties = actual.debts
+      .lift(debtIndex - 1)
+      .getOrElse(fail(s"Missing debt at index [${debtIndex - 1}] in response"))
+      .duties
+
+    withClue(s"debts[${debtIndex - 1}].duties") {
+
+      actualDuties.zip(expectedDuties).zipWithIndex.foreach { case ((actualDuty, expectedDuty), dutyIndex) =>
+
+        withClue(s"duties[$dutyIndex]") {
+
+          expectedDuty.subTrans.foreach { v =>
+            withClue("subTrans: ") {
+              actualDuty.subTrans shouldBe v
+            }
+          }
+
+          expectedDuty.dutyTypeDescription.foreach { v =>
+            withClue("dutyTypeDescription: ") {
+              actualDuty.dutyTypeDescription shouldBe Some(v)
+            }
+          }
+
+          expectedDuty.unpaidAmountDuty.foreach { v =>
+            withClue("unpaidAmountDuty: ") {
+              actualDuty.unpaidAmountDuty shouldBe v
+            }
+          }
+
+          expectedDuty.combinedDailyAccrual.foreach { v =>
+            withClue("combinedDailyAccrual: ") {
+              actualDuty.combinedDailyAccrual shouldBe v
+            }
+          }
+
+          expectedDuty.interestBearing.foreach { v =>
+            withClue("interestBearing: ") {
+              actualDuty.interestBearing shouldBe v
+            }
+          }
+
+          expectedDuty.interestOnlyIndicator.foreach { v =>
+            withClue("interestOnlyIndicator: ") {
+              actualDuty.interestOnlyIndicator shouldBe v
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ^the Sol Debt Summary Will Contain Duties$
+  def theSolDebtSummaryWillContainDuties(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    expectedDuties: List[SolDutyExpected]
+  )(implicit pos: Position): Unit = {
+    val actual = context.solResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    val actualDuties = actual.debts
+      .lift(debtIndex - 1)
+      .getOrElse(fail(s"Missing debt at index [${debtIndex - 1}] in response"))
+      .duties
+
+    withClue(s"debts[${debtIndex - 1}].duties") {
+
+      withClue("duties list length: ") {
+        actualDuties.length shouldBe expectedDuties.length
+      }
+
+      actualDuties.zip(expectedDuties).zipWithIndex.foreach { case ((actualDuty, expectedDuty), dutyIndex) =>
+
+        withClue(s"duties[$dutyIndex]") {
+
+          expectedDuty.subTrans.foreach { v =>
+            withClue("subTrans: ") {
+              actualDuty.subTrans shouldBe v
+            }
+          }
+
+          expectedDuty.dutyTypeDescription.foreach { v =>
+            withClue("dutyTypeDescription: ") {
+              actualDuty.dutyTypeDescription.toString should include(v)
+            }
+          }
+
+          expectedDuty.unpaidAmountDuty.foreach { v =>
+            withClue("unpaidAmountDuty: ") {
+              actualDuty.unpaidAmountDuty shouldBe v
+            }
+          }
+
+          expectedDuty.combinedDailyAccrual.foreach { v =>
+            withClue("combinedDailyAccrual: ") {
+              actualDuty.combinedDailyAccrual shouldBe v
+            }
+          }
+
+          expectedDuty.interestBearing.foreach { v =>
+            withClue("interestBearing: ") {
+              actualDuty.interestBearing shouldBe v
+            }
+          }
+
+          expectedDuty.interestOnlyIndicator.foreach { v =>
+            withClue("interestOnlyIndicator: ") {
+              actualDuty.interestOnlyIndicator shouldBe v
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ^the Multiple Statement Of Liability Duties Summary Will Contain$
+  def theMultipleStatementOfLiabilityDutiesSummaryWillContain(
+    context: StatementOfLiabilityContext,
+    debtIndex: Int,
+    expectedDuty: SolDutyExpected
+  )(implicit pos: Position): Unit = {
+    val actual = context.solResponseBody.getOrElse(
+      fail("Missing response body in context")
+    )
+
+    val actualDuty = actual.debts
+      .lift(debtIndex - 1)
+      .getOrElse(fail(s"Missing debt at index [${debtIndex - 1}] in response"))
+      .duties
+      .headOption
+      .getOrElse(fail(s"No duties found for debt at index [${debtIndex - 1}]"))
+
+    withClue(s"debts[${debtIndex - 1}].duties.head") {
+
+      expectedDuty.subTrans.foreach { v =>
+        withClue("subTrans: ") {
+          actualDuty.subTrans shouldBe v
+        }
+      }
+
+      expectedDuty.dutyTypeDescription.foreach { v =>
+        withClue("dutyTypeDescription: ") {
+          actualDuty.dutyTypeDescription shouldBe v
+        }
+      }
+
+      expectedDuty.unpaidAmountDuty.foreach { v =>
+        withClue("unpaidAmountDuty: ") {
+          actualDuty.unpaidAmountDuty shouldBe v
+        }
+      }
+
+      expectedDuty.combinedDailyAccrual.foreach { v =>
+        withClue("combinedDailyAccrual: ") {
+          actualDuty.combinedDailyAccrual shouldBe v
+        }
+      }
+
+      expectedDuty.interestBearing.foreach { v =>
+        withClue("interestBearing: ") {
+          actualDuty.interestBearing shouldBe v
+        }
+      }
+
+      expectedDuty.interestOnlyIndicator.foreach { v =>
+        withClue("interestOnlyIndicator: ") {
+          actualDuty.interestOnlyIndicator shouldBe v
+        }
+      }
+    }
+  }
+
 }

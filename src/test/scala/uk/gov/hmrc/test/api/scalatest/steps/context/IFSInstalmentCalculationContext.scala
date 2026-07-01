@@ -17,13 +17,12 @@
 package uk.gov.hmrc.test.api.scalatest.steps.context
 
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, SuppressionRequest}
+import uk.gov.hmrc.test.api.models.InstalmentCalculationSummaryResponse
 import uk.gov.hmrc.test.api.models.ifs.InstalmentCalculationRequest
 
 final case class IFSInstalmentCalculationContext(
   var ifsRequest: Option[InstalmentCalculationRequest] = None,
   var ifsResponseBody: Option[InstalmentCalculationSummaryResponse] = None,
-  var siRequest: Option[SuppressionRequest] = None,
   var response: StandaloneWSResponse = null,
   var status: Int = 0,
   var headers: Map[String, String] = Map.empty
