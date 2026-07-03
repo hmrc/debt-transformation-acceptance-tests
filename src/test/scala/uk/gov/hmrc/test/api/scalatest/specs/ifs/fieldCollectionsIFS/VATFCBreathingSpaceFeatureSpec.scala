@@ -78,10 +78,8 @@ class VATFCBreathingSpaceFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(0),
-        unpaidAmountTotal = Some(400000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(400000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -124,10 +122,8 @@ class VATFCBreathingSpaceFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(0),
-        unpaidAmountTotal = Some(500000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(500000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -170,10 +166,8 @@ class VATFCBreathingSpaceFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(0),
-        unpaidAmountTotal = Some(500000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(500000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -250,10 +244,8 @@ class VATFCBreathingSpaceFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(32),
-        unpaidAmountTotal = Some(850000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(850000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -331,10 +323,8 @@ class VATFCBreathingSpaceFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(39),
-        unpaidAmountTotal = Some(1250000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(1250000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 

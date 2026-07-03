@@ -21,6 +21,7 @@ import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.{FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.FCSolCalculationExpected
 import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FcSolDebt, PaymentHistory, SolMultipleDebtsRequest}
+import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.{FCSolCalculationExpected, FCSolCalculationSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
 
@@ -97,11 +98,11 @@ class FCSolRequestFeatureSpec
       aDebtFcStatementOfLiabilityIsRequested(context)
 
       Then("service returns fc debt statement of liability data")
-      serviceReturnsFcDebtStatementOfLiabilityData(
-        context,
-        amountIntTotal = 19200,
-        combinedDailyAccrual = 0
+      val expectedResponse = FCSolCalculationSummaryExpected(
+        amountIntTotal = Some(19200),
+        combinedDailyAccrual = Some(0)
       )
+      serviceReturnsFcDebtStatementOfLiabilityData(context, expectedResponse)
 
       And("the fc statement of liability debt summary will contain duties")
       theFcStatementOfLiabilityDebtSummaryWillContainDuties(
@@ -151,11 +152,12 @@ class FCSolRequestFeatureSpec
       aDebtFcStatementOfLiabilityIsRequested(context)
 
       Then("service returns fc debt statement of liability data")
-      serviceReturnsFcDebtStatementOfLiabilityData(
-        context,
-        amountIntTotal = BigDecimal("9700"),
-        combinedDailyAccrual = 0
+      val expectedResponse = FCSolCalculationSummaryExpected(
+        amountIntTotal = Some(9700),
+        combinedDailyAccrual = Some(0)
       )
+      serviceReturnsFcDebtStatementOfLiabilityData(context, expectedResponse)
+
       And("the fc statement of liability debt summary will contain duties")
       theFcStatementOfLiabilityDebtSummaryWillContainDuties(
         context,
@@ -221,11 +223,11 @@ class FCSolRequestFeatureSpec
       aDebtFcStatementOfLiabilityIsRequested(context)
 
       Then("service returns fc debt statement of liability data")
-      serviceReturnsFcDebtStatementOfLiabilityData(
-        context,
-        amountIntTotal = BigDecimal("9999999999"),
-        combinedDailyAccrual = 0
+      val expectedResponse = FCSolCalculationSummaryExpected(
+        amountIntTotal = Some(BigDecimal("9999999999")),
+        combinedDailyAccrual = Some(0)
       )
+      serviceReturnsFcDebtStatementOfLiabilityData(context, expectedResponse)
 
       And("the fc statement of liability debt summary will contain duties")
       theFcStatementOfLiabilityDebtSummaryWillContainDuties(

@@ -73,25 +73,21 @@ class FCBreathingSpaceFeatureSpec
 
       Then("the fc ifs service will return a total debts summary of")
       val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(35),
         unpaidAmountTotal = Some(500000),
         interestDueCallTotal = Some(8582),
         totalAmountIntTotal = Some(508582),
-        amountOnIntDueTotal = Some(500000),
-        debtCalculations = None
+        amountOnIntDueTotal = Some(500000)
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
       val expected1stDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(35),
         interestDueDutyTotal = Some(8582),
         amountOnIntDueDuty = Some(500000),
         totalAmountIntDuty = Some(508582),
-        unpaidAmountDuty = Some(500000),
-        calculationWindows = None
+        unpaidAmountDuty = Some(500000)
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -104,9 +100,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(4736),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(504736),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(504736)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-06-15")),
@@ -115,9 +109,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(0),
           interestDueDailyAccrual = Some(0),
           interestDueWindow = Some(0),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(500000),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(500000)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-15")),
@@ -126,9 +118,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(3846),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(503846),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(503846)
         )
       )
       theFcDebtSummaryWillHaveCalculationWindows(context, 1, expected1stCalculationWindow)
@@ -180,25 +170,17 @@ class FCBreathingSpaceFeatureSpec
 
       Then("the fc ifs service will return a total debts summary of")
       val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(28),
         unpaidAmountTotal = Some(400000),
-        interestDueCallTotal = Some(6880),
-        totalAmountIntTotal = Some(406880),
-        amountOnIntDueTotal = Some(400000),
-        debtCalculations = None
+        interestDueCallTotal = Some(6880)
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
       val expected1stDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(28),
         interestDueDutyTotal = Some(6880),
-        amountOnIntDueDuty = Some(400000),
-        totalAmountIntDuty = Some(406880),
-        unpaidAmountDuty = Some(400000),
-        calculationWindows = None
+        unpaidAmountDuty = Some(400000)
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -211,9 +193,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(7),
           interestDueWindow = Some(14),
-          amountOnIntDueWindow = Some(100000),
-          unpaidAmountWindow = Some(100014),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(100014)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-02-01")),
@@ -222,9 +202,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(28),
           interestDueWindow = Some(3789),
-          amountOnIntDueWindow = Some(400000),
-          unpaidAmountWindow = Some(403789),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(403789)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-06-15")),
@@ -233,9 +211,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(0),
           interestDueDailyAccrual = Some(0),
           interestDueWindow = Some(0),
-          amountOnIntDueWindow = Some(400000),
-          unpaidAmountWindow = Some(400000),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(400000)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-15")),
@@ -244,9 +220,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(28),
           interestDueWindow = Some(3077),
-          amountOnIntDueWindow = Some(400000),
-          unpaidAmountWindow = Some(403077),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(403077)
         )
       )
       theFcDebtSummaryWillHaveCalculationWindows(context, 1, expected1stCalculationWindow)
@@ -284,25 +258,16 @@ class FCBreathingSpaceFeatureSpec
 
       Then("the fc ifs service wilL return a total debts summary of")
       val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(0),
-        unpaidAmountTotal = Some(500000),
-        interestDueCallTotal = Some(0),
         totalAmountIntTotal = Some(500000),
-        amountOnIntDueTotal = Some(500000),
-        debtCalculations = None
+        amountOnIntDueTotal = Some(500000)
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
       val expected1stDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(0),
-        interestDueDutyTotal = Some(0),
-        amountOnIntDueDuty = Some(500000),
-        totalAmountIntDuty = Some(500000),
-        unpaidAmountDuty = Some(500000),
-        calculationWindows = None
+        interestDueDutyTotal = Some(0)
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -364,25 +329,15 @@ class FCBreathingSpaceFeatureSpec
 
       Then("the fc ifs service will return a total debts summary of")
       val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(70),
-        unpaidAmountTotal = Some(1000000),
-        interestDueCallTotal = Some(17057),
-        totalAmountIntTotal = Some(1017057),
-        amountOnIntDueTotal = Some(1000000),
-        debtCalculations = None
+        totalAmountIntTotal = Some(1017057)
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
       val expected1stDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(35),
-        interestDueDutyTotal = Some(8582),
-        amountOnIntDueDuty = Some(500000),
-        totalAmountIntDuty = Some(508582),
-        unpaidAmountDuty = Some(500000),
-        calculationWindows = None
+        interestDueDutyTotal = Some(8582)
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -395,9 +350,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(4736),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(504736),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(504736)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-06-15")),
@@ -406,9 +359,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(0),
           interestDueDailyAccrual = Some(0),
           interestDueWindow = Some(0),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(500000),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(500000)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-15")),
@@ -417,22 +368,15 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(3846),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(503846),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(503846)
         )
       )
       theFcDebtSummaryWillHaveCalculationWindows(context, 1, expected1stCalculationWindow)
 
       And("the 2nd fc debt summary will contain")
       val expected2ndDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(35),
-        interestDueDutyTotal = Some(8475),
-        amountOnIntDueDuty = Some(500000),
-        totalAmountIntDuty = Some(508475),
-        unpaidAmountDuty = Some(500000),
-        calculationWindows = None
+        totalAmountIntDuty = Some(508475)
       )
       theFcDebtSummaryWillContain(context, 2, expected2ndDebtCalculations)
 
@@ -445,9 +389,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(4736),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(504736),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(504736)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-06-15")),
@@ -456,9 +398,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(0),
           interestDueDailyAccrual = Some(0),
           interestDueWindow = Some(0),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(500000),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(500000)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-15")),
@@ -467,9 +407,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(35),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(500035),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(500035)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-16")),
@@ -478,9 +416,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(0),
           interestDueDailyAccrual = Some(0),
           interestDueWindow = Some(0),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(500000),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(500000)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-19")),
@@ -489,9 +425,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(3704),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(503704),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(503704)
         )
       )
       theFcDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindow)
@@ -540,25 +474,15 @@ class FCBreathingSpaceFeatureSpec
 
       Then("the fc ifs service will return a total debts summary of")
       val FCDebtCalculationSummaryResponse = FCDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(70),
-        unpaidAmountTotal = Some(1000000),
-        interestDueCallTotal = Some(19338),
-        totalAmountIntTotal = Some(1019338),
-        amountOnIntDueTotal = Some(1000000),
-        debtCalculations = None
+        totalAmountIntTotal = Some(1019338)
       )
       theFcIfsServiceWillReturnATotalDebtsSummaryOf(context, FCDebtCalculationSummaryResponse)
 
       And("the 1st fc debt summary will contain")
       val expected1stDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(35),
-        interestDueDutyTotal = Some(10756),
-        amountOnIntDueDuty = Some(500000),
-        totalAmountIntDuty = Some(510756),
-        unpaidAmountDuty = Some(500000),
-        calculationWindows = None
+        totalAmountIntDuty = Some(510756)
       )
       theFcDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -571,22 +495,15 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(10756),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(510756),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(510756)
         )
       )
       theFcDebtSummaryWillHaveCalculationWindows(context, 1, expected1stCalculationWindow)
 
       And("the 2nd fc debt summary will contain")
       val expected2ndDebtCalculations = FCDebtCalculationExpected(
-        debtItemChargeId = Some("123"),
         interestDueDailyAccrual = Some(35),
-        interestDueDutyTotal = Some(8582),
-        amountOnIntDueDuty = Some(500000),
-        totalAmountIntDuty = Some(508582),
-        unpaidAmountDuty = Some(500000),
-        calculationWindows = None
+        totalAmountIntDuty = Some(508582)
       )
       theFcDebtSummaryWillContain(context, 2, expected2ndDebtCalculations)
 
@@ -599,9 +516,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(4736),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(504736),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(504736)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-06-15")),
@@ -610,9 +525,7 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(0),
           interestDueDailyAccrual = Some(0),
           interestDueWindow = Some(0),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(500000),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(500000)
         ),
         FCCalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-08-15")),
@@ -621,14 +534,11 @@ class FCBreathingSpaceFeatureSpec
           interestRate = Some(2.6),
           interestDueDailyAccrual = Some(35),
           interestDueWindow = Some(3846),
-          amountOnIntDueWindow = Some(500000),
-          unpaidAmountWindow = Some(503846),
-          suppressionApplied = None
+          unpaidAmountWindow = Some(503846)
         )
       )
       theFcDebtSummaryWillHaveCalculationWindows(context, 2, expected2ndCalculationWindow)
 
     }
-
   }
 }

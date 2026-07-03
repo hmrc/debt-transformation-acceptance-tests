@@ -25,7 +25,7 @@ import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
-import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.FCSolCalculationExpected
+import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.{FCSolCalculationExpected, FCSolCalculationSummaryExpected}
 
 trait FCStatementOfLiabilityStepHelpers {
   this: Matchers =>
@@ -45,12 +45,25 @@ trait FCStatementOfLiabilityStepHelpers {
 
   def serviceReturnsFcDebtStatementOfLiabilityData(
     context: FCStatementOfLiabilityContext,
-    amountIntTotal: BigDecimal,
-    combinedDailyAccrual: Int
+    expectedResponse: FCSolCalculationSummaryExpected
   ): Unit = {
-    context.status                                   shouldBe 200
-    context.responseBody.map(_.amountIntTotal)       shouldBe Some(amountIntTotal)
-    context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
+    context.status shouldBe 200
+
+    val actualFcSolResponse = context.responseBody.getOrElse(fail("Missing actual FCSolCalculationSummaryResponse"))
+
+    withClue("FCSolCalculationSummaryResponse") {
+      expectedResponse.amountIntTotal.foreach { e =>
+        withClue("amountIntTotal") {
+          actualFcSolResponse.amountIntTotal shouldBe e
+        }
+      }
+
+      expectedResponse.combinedDailyAccrual.foreach { e =>
+        withClue("combinedDailyAccrual") {
+          actualFcSolResponse.combinedDailyAccrual shouldBe e
+        }
+      }
+    }
   }
 
   def theFcStatementOfLiabilityDebtSummaryWillContainDuties(

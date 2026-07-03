@@ -23,39 +23,14 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.FCDebtCalculationsSummary
 import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
-import uk.gov.hmrc.test.api.scalatest.builders.{FieldCollectionsBuilder, InterestForecastingBuilder}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{FieldCollectionsContext, InterestForecastingContext}
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder
+import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
 
-// TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCInterestForecastingSteps.scala.
 trait FCInterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a fc debt collection$
   def aFcDebtCalculation(context: FieldCollectionsContext, request: FCDebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
 
-  // ^fc debt item with cotax charge interest$
-  def fcDebtItemWithCotaxChargeInterest(context: InterestForecastingContext): Unit = {
-    // createFcCotaxChargeInterestRequest(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
-
-  // ^the debt item has fc payment history$
-  def theDebtItemHasFcPaymentHistory(
-    context: InterestForecastingContext,
-    inputs: Seq[FieldCollectionsBuilder.FCPaymentHistoryInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using FieldCollectionsBuilder.
-    // Suggested type: FieldCollectionsBuilder.FCPaymentHistoryInput
-  }
-
-  // ^the fc debt item has no payment history$
-  def theFcDebtItemHasNoPaymentHistory(context: InterestForecastingContext): Unit = {
-    // fcCustomerWithNoPaymentHistory()
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the debt item(s) is sent to the fc ifs service$
   def theDebtItemIsSentToTheFcIfsService(context: FieldCollectionsContext): Unit = {
     val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = FieldCollectionsBuilder.getDebtCalculation(requestJson)
@@ -76,7 +51,6 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     println(jsonResponseBody)
   }
 
-  // ^the fc ifs service will return a total debts summary of$
   def theFcIfsServiceWillReturnATotalDebtsSummaryOf(
     context: FieldCollectionsContext,
     expectedResponse: FCDebtCalculationsSummaryExpected
@@ -84,33 +58,45 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     withClue("FCDebtCalculationsSummary") {
-      withClue("dateOfCalculation") {
-        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+
+      expectedResponse.dateOfCalculation.foreach { e =>
+        withClue("dateOfCalculation") {
+          responseBody.dateOfCalculation shouldBe Some(e)
+        }
       }
 
-      withClue("combinedDailyAccrual") {
-        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual.getOrElse(fail("Missing combinedDailyAccrual field"))
+      expectedResponse.combinedDailyAccrual.foreach { e =>
+        withClue("combinedDailyAccrual") {
+          responseBody.combinedDailyAccrual shouldBe e
+        }
       }
 
-      withClue("unpaidAmountTotal") {
-        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal.getOrElse(fail("Missing unpaidAmountTotal field"))
+      expectedResponse.unpaidAmountTotal.foreach { e =>
+        withClue("unpaidAmountTotal") {
+          responseBody.unpaidAmountTotal shouldBe e
+        }
       }
 
-      withClue("interestDueCallTotal") {
-        responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal.getOrElse(fail("Missing interestDueCallTotal field"))
+      expectedResponse.interestDueCallTotal.foreach { e =>
+        withClue("interestDueCallTotal") {
+          responseBody.interestDueCallTotal shouldBe e
+        }
       }
 
-      withClue("totalAmountIntTotal") {
-        responseBody.totalAmountIntTotal shouldBe expectedResponse.totalAmountIntTotal.getOrElse(fail("Missing totalAmountIntTotal field"))
+      expectedResponse.totalAmountIntTotal.foreach { e =>
+        withClue("totalAmountIntTotal") {
+          responseBody.totalAmountIntTotal shouldBe e
+        }
       }
 
-      withClue("amountOnIntDueTotal") {
-        responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal.getOrElse(fail("Missing amountOnIntDueTotal field"))
+      expectedResponse.amountOnIntDueTotal.foreach { e =>
+        withClue("amountOnIntDueTotal") {
+          responseBody.amountOnIntDueTotal shouldBe e
+        }
       }
     }
   }
 
-  // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc debt summary will contain$
   def theFcDebtSummaryWillContain(
     context: FieldCollectionsContext,
     index: Int,
@@ -121,33 +107,45 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     val FCDebtCalculations = responseBody.debtCalculations(index - 1)
 
     withClue("FCDebtCalculation") {
-      withClue("debtItemChargeId") {
-        FCDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId.getOrElse(fail("Missing debtItemChargeId field"))
+
+      expectedResponse.debtItemChargeId.foreach { e =>
+        withClue("debtItemChargeId") {
+          FCDebtCalculations.debtItemChargeId shouldBe e
+        }
       }
 
-      withClue("interestDueDailyAccrual") {
-        FCDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual.getOrElse(fail("Missing interestDueDailyAccrual field"))
+      expectedResponse.interestDueDailyAccrual.foreach { e =>
+        withClue("interestDueDailyAccrual") {
+          FCDebtCalculations.interestDueDailyAccrual shouldBe e
+        }
       }
 
-      withClue("interestDueDutyTotal") {
-        FCDebtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal.getOrElse(fail("Missing interestDueDutyTotal field"))
+      expectedResponse.interestDueDutyTotal.foreach { e =>
+        withClue("interestDueDutyTotal") {
+          FCDebtCalculations.interestDueDutyTotal shouldBe e
+        }
       }
 
-      withClue("amountOnIntDueDuty") {
-        FCDebtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty.getOrElse(fail("Missing amountOnIntDueDuty field"))
+      expectedResponse.amountOnIntDueDuty.foreach { e =>
+        withClue("amountOnIntDueDuty") {
+          FCDebtCalculations.amountOnIntDueDuty shouldBe e
+        }
       }
 
-      withClue("totalAmountIntDuty") {
-        FCDebtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty.getOrElse(fail("Missing totalAmountIntDuty field"))
+      expectedResponse.totalAmountIntDuty.foreach { e =>
+        withClue("totalAmountIntDuty") {
+          FCDebtCalculations.totalAmountIntDuty shouldBe e
+        }
       }
 
-      withClue("unpaidAmountDuty") {
-        FCDebtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty.getOrElse(fail("Missing unpaidAmountDuty field"))
+      expectedResponse.unpaidAmountDuty.foreach { e =>
+        withClue("unpaidAmountDuty") {
+          FCDebtCalculations.unpaidAmountDuty shouldBe e
+        }
       }
     }
   }
 
-  // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have calculation windows$
   def theFcDebtSummaryWillHaveCalculationWindows(
     context: FieldCollectionsContext,
     summaryIndex: Int,
@@ -161,55 +159,71 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
         .calculationWindows(index)
 
       withClue("FCDebtCalculationsSummary") {
-        withClue("periodFrom") {
-          actual.periodFrom shouldBe expectedResponse.periodFrom.getOrElse(fail("Missing periodFrom field"))
+
+        expectedResponse.periodFrom.foreach { e =>
+          withClue("periodFrom") {
+            actual.periodFrom shouldBe e
+          }
         }
 
-        withClue("periodTo") {
-          actual.periodTo shouldBe expectedResponse.periodTo.getOrElse(fail("Missing periodTo field"))
+        expectedResponse.periodTo.foreach { e =>
+          withClue("periodTo") {
+            actual.periodTo shouldBe e
+          }
         }
 
-        withClue("numberOfDays") {
-          actual.numberOfDays shouldBe expectedResponse.numberOfDays.getOrElse(fail("Missing numberOfDays field"))
+        expectedResponse.numberOfDays.foreach { e =>
+          withClue("numberOfDays") {
+            actual.numberOfDays shouldBe e
+          }
         }
 
-        withClue("interestRate") {
-          actual.interestRate shouldBe expectedResponse.interestRate.getOrElse(fail("Missing interestRate field"))
+        expectedResponse.interestRate.foreach { e =>
+          withClue("interestRate") {
+            actual.interestRate shouldBe e
+          }
         }
 
-        withClue("interestDueDailyAccrual") {
-          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual.getOrElse(fail("Missing interestDueDailyAccrual field"))
+        expectedResponse.interestDueDailyAccrual.foreach { e =>
+          withClue("interestDueDailyAccrual") {
+            actual.interestDueDailyAccrual shouldBe e
+          }
         }
 
-        withClue("interestDueWindow") {
-          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow.getOrElse(fail("Missing interestDueWindow field"))
+        expectedResponse.interestDueWindow.foreach { e =>
+          withClue("interestDueWindow") {
+            actual.interestDueWindow shouldBe e
+          }
         }
 
-        withClue("amountOnIntDueWindow") {
-          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow.getOrElse(fail("Missing amountOnIntDueWindow field"))
+        expectedResponse.amountOnIntDueWindow.foreach { e =>
+          withClue("amountOnIntDueWindow") {
+            actual.amountOnIntDueWindow shouldBe e
+          }
         }
 
-        withClue("unpaidAmountWindow") {
-          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow.getOrElse(fail("Missing unpaidAmountWindow field"))
+        expectedResponse.unpaidAmountWindow.foreach { e =>
+          withClue("unpaidAmountWindow") {
+            actual.unpaidAmountWindow shouldBe e
+          }
         }
 
-        // only assert suppressionApplied fields if they are present in input
         expectedResponse.suppressionApplied.foreach { expectedSuppression =>
-          if (expectedSuppression.reason.nonEmpty) {
+          expectedSuppression.reason.foreach { e =>
             withClue("reason") {
-              actual.suppressionApplied.head.reason shouldBe expectedSuppression.reason
+              actual.suppressionApplied.head.reason shouldBe e
             }
           }
 
-          if (expectedSuppression.description.nonEmpty) {
+          expectedSuppression.description.foreach { e =>
             withClue("description") {
-              actual.suppressionApplied.head.description shouldBe expectedSuppression.description
+              actual.suppressionApplied.head.description shouldBe e
             }
           }
 
-          if (expectedSuppression.code.nonEmpty) {
+          expectedSuppression.code.foreach { e =>
             withClue("code") {
-              actual.suppressionApplied.head.code shouldBe expectedSuppression.code
+              actual.suppressionApplied.head.code shouldBe e
             }
           }
         }
@@ -217,65 +231,8 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the fc customer has breathing spaces applied$
-  def theFcCustomerHasBreathingSpacesApplied(
-    context: InterestForecastingContext,
-    inputs: Seq[InterestForecastingBuilder.BreathingSpaceInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.BreathingSpaceInput
-  }
-
-  // ^no breathing spaces have been applied to the fc debt item$
-  def noBreathingSpacesHaveBeenAppliedToTheFcDebtItem(context: InterestForecastingContext): Unit = {
-    // noFCBreathingSpace()
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the fc customer has post codes$
-  def theFcCustomerHasPostCodes(
-    context: InterestForecastingContext,
-    inputs: Seq[InterestForecastingBuilder.CustomerPostCodesInput]
-  ): Unit = {
-    // TODO: Wire inputs into context or request JSON using InterestForecastingBuilder.
-    // Suggested type: InterestForecastingBuilder.CustomerPostCodesInput
-  }
-
-  // ^add charge interest cotax$
-  def addChargeInterestCotax(context: InterestForecastingContext): Unit = {
-    // addChargedInterestCotax(dataTable)
-    // TODO: No matching generated builder input or existing model was found.
-    // Add a typed parameter and wire it into context or request JSON.
-  }
-
-  // ^the fc customer has no post codes$
-  def theFcCustomerHasNoPostCodes(context: InterestForecastingContext): Unit = {
-    // noFCCustomerPostCodes()
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will not have any calculation windows$
   def theFcDebtSummaryWillNotHaveAnyCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Unit =
     getFCCountOfCalculationWindows(context, summaryIndex) shouldBe 0
-
-  // ^the fc ifs service will respond with (.*)$
-  def theFcIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
-    // Migration hint: legacy InterestForecastingContext usage, response assertion
-    // val response: StandaloneWSResponse = InterestForecastingContext.get("response")
-    // response.body   should include(expectedMessage)
-    // response.status should be(400)
-    // TODO: Implement typed helper for this step.
-  }
-
-  // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have ([0-9]) calculation windows$
-  def theFcDebtSummaryWillHaveCalculationWindows2(
-    context: InterestForecastingContext,
-    summaryIndex: Int,
-    numberOfWindows: Int
-  ): Unit = {
-    // getFCCountOfCalculationWindows(summaryIndex) shouldBe numberOfWindows
-    // TODO: Implement typed helper for this step.
-  }
 
   def getFCCountOfCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Int = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))

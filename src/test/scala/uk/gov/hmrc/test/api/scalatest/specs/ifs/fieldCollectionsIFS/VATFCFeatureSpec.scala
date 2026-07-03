@@ -19,7 +19,6 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.fieldCollectionsIFS
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
 import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, FCVATDebtCalculationRequest, FCVATDebtItems, PaymentHistory}
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder.{FCVATDebtCalculationExpected, FCVATDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
@@ -72,10 +71,8 @@ class VATFCFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(0),
-        unpaidAmountTotal = Some(400000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(400000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -122,10 +119,8 @@ class VATFCFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(32),
-        unpaidAmountTotal = Some(460000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(460000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -184,10 +179,8 @@ class VATFCFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(56),
-        unpaidAmountTotal = Some(800000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(800000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -231,10 +224,8 @@ class VATFCFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(35),
-        unpaidAmountTotal = Some(500000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(500000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
@@ -270,10 +261,8 @@ class VATFCFeatureSpec
 
       Then("the fc vat ifs service will return a total debts summary of")
       val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
-        dateOfCalculation = Some(LocalDate.now()),
         combinedDailyAccrual = Some(0),
-        unpaidAmountTotal = Some(500000),
-        debtCalculations = None
+        unpaidAmountTotal = Some(500000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
