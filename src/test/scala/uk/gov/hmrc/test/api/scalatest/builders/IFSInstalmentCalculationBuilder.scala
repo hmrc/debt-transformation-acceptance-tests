@@ -25,6 +25,16 @@ import java.time.LocalDate
 
 object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
 
+  final case class InstalmentCalculationSummaryResponseExpected(
+    dateOfCalculation: Option[LocalDate] = None,
+    numberOfInstalments: Option[Long] = None,
+    planInterest: Option[Int] = None,
+    interestAccrued: Option[Int] = None,
+    totalInterest: Option[Int] = None,
+    duration: Option[Long] = None,
+    instalments: Option[Seq[InstalmentResponseExpected]] = None
+  )
+
   final case class InstalmentResponseExpected(
     debtId: Option[String] = None,
     instalmentNumber: Option[Int] = None,
