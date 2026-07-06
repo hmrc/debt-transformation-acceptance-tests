@@ -22,10 +22,9 @@ import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.FCDebtCalculationsSummary
 import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
-import uk.gov.hmrc.test.api.models.{FCCalculationWindow, FCDebtCalculation, FCDebtCalculationsSummary}
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder
-import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
+import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
 
 trait FCInterestForecastingStepHelpers { this: Matchers =>
 

@@ -20,13 +20,10 @@ import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
 import uk.gov.hmrc.test.api.models.FCVATDebtCalculationsSummary
+import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder.{FCVATDebtCalculationExpected, FCVATDebtCalculationsSummaryExpected}
-import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder
-import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
-import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
-import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
 
 trait FCVATInterestForecastingStepHelpers { this: Matchers =>

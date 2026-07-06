@@ -23,6 +23,7 @@ import uk.gov.hmrc.test.api.models.ifs._
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCInterestForecastingStepHelpers
+
 import java.time.LocalDate
 
 class FCBreathingSpaceFeatureSpec

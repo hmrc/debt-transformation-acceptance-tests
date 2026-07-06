@@ -26,7 +26,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.{StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 
-class SolWilthSuppressionFeatureSpec
+class SolWithSuppressionFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
     with Matchers

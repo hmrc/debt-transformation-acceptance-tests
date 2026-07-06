@@ -17,8 +17,8 @@
 package uk.gov.hmrc.test.api.scalatest.steps.context
 
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.models.{DebtCalculationsSummary, DebtInterestTypeRequest, DebtInterestTypeResponse}
 import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
+import uk.gov.hmrc.test.api.models.{DebtCalculationsSummary, DebtInterestTypeRequest, DebtInterestTypeResponse}
 
 final case class InterestForecastingContext(
   var ifsRequest: Option[DebtCalculationRequest] = None,

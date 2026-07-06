@@ -19,13 +19,10 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
-import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.models.sol.{FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import play.api.libs.json.JsValue
-import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.{FCSolCalculationExpected, FCSolCalculationSummaryExpected}
+import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 
 trait FCStatementOfLiabilityStepHelpers {
   this: Matchers =>

@@ -19,8 +19,6 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.models.sol.SolDebtsRequest
-import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object SuppressionRulesBuilder extends BaseRequests with RandomValues {
