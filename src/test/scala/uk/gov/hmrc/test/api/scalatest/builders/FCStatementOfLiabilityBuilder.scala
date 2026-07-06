@@ -22,14 +22,11 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
 import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
-import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.bearerToken
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
-  val bearerToken: String = createBearerToken(
-    enrolments = Seq("read:statement-of-liability"),
-    userType = getRandomAffinityGroup)
+  val bearerToken: String =
+    createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
 
   final case class FCSolCalculationSummaryExpected(
     amountIntTotal: Option[BigDecimal] = None,

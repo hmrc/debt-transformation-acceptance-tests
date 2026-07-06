@@ -24,8 +24,6 @@ import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder.{FCVAT
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCVATInterestForecastingStepHelpers
 
-import java.time.LocalDate
-
 class VATFCFeatureSpec
     extends FixtureAnyFeatureSpec
     with GivenWhenThen
