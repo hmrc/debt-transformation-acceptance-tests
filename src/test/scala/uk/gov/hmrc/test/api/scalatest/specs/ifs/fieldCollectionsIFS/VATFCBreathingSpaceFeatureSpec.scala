@@ -20,11 +20,9 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, FCVATDebtCalculationRequest, FCVATDebtItems, PaymentHistory}
-import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder.{FCVATDebtCalculationExpected, FCVATDebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.FCVATInterestForecastingStepHelpers
-
-import java.time.LocalDate
 
 class VATFCBreathingSpaceFeatureSpec
     extends FixtureAnyFeatureSpec
@@ -77,19 +75,17 @@ class VATFCBreathingSpaceFeatureSpec
       theDebtItemIsSentToTheFcVatIfsService(context)
 
       Then("the fc vat ifs service will return a total debts summary of")
-      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
-        dateOfCalculation = LocalDate.now(),
-        combinedDailyAccrual = 0,
-        unpaidAmountTotal = 400000,
-        debtCalculations = List.empty[FCVATDebtCalculation]
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(0),
+        unpaidAmountTotal = Some(400000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
       And("the 1st fc vat debt summary will contain")
-      val expected1stDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestRate = 0
+      val expected1stDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestRate = Some(0)
       )
       theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -123,19 +119,17 @@ class VATFCBreathingSpaceFeatureSpec
       theDebtItemIsSentToTheFcVatIfsService(context)
 
       Then("the fc vat ifs service will return a total debts summary of")
-      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
-        dateOfCalculation = LocalDate.now(),
-        combinedDailyAccrual = 0,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty[FCVATDebtCalculation]
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(0),
+        unpaidAmountTotal = Some(500000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
       And("the 1st fc vat debt summary will contain")
-      val expected1stDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestRate = 0
+      val expected1stDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestRate = Some(0)
       )
       theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -169,19 +163,17 @@ class VATFCBreathingSpaceFeatureSpec
       theDebtItemIsSentToTheFcVatIfsService(context)
 
       Then("the fc vat ifs service will return a total debts summary of")
-      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
-        dateOfCalculation = LocalDate.now(),
-        combinedDailyAccrual = 0,
-        unpaidAmountTotal = 500000,
-        debtCalculations = List.empty[FCVATDebtCalculation]
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(0),
+        unpaidAmountTotal = Some(500000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
       And("the 1st fc vat debt summary will contain")
-      val expected1stDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestRate = 0
+      val expected1stDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestRate = Some(0)
       )
       theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
@@ -249,27 +241,25 @@ class VATFCBreathingSpaceFeatureSpec
       theDebtItemIsSentToTheFcVatIfsService(context)
 
       Then("the fc vat ifs service will return a total debts summary of")
-      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
-        dateOfCalculation = LocalDate.now(),
-        combinedDailyAccrual = 32,
-        unpaidAmountTotal = 850000,
-        debtCalculations = List.empty[FCVATDebtCalculation]
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(32),
+        unpaidAmountTotal = Some(850000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
       And("the 1st fc vat debt summary will contain")
-      val expected1stDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestRate = 0
+      val expected1stDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestRate = Some(0)
       )
       theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 2nd fc vat debt summary will contain")
-      val expected2ndDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "debtItemChargeId1",
-        interestDueDailyAccrual = 32,
-        interestRate = 2.6
+      val expected2ndDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("debtItemChargeId1"),
+        interestDueDailyAccrual = Some(32),
+        interestRate = Some(2.6)
       )
       theFcVatDebtSummaryWillContain(context, 2, expected2ndDebtCalculations)
 
@@ -330,27 +320,25 @@ class VATFCBreathingSpaceFeatureSpec
       theDebtItemIsSentToTheFcVatIfsService(context)
 
       Then("the fc vat ifs service will return a total debts summary of")
-      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummary(
-        dateOfCalculation = LocalDate.now(),
-        combinedDailyAccrual = 39,
-        unpaidAmountTotal = 1250000,
-        debtCalculations = List.empty[FCVATDebtCalculation]
+      val FCVATDebtCalculationSummaryResponse = FCVATDebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(39),
+        unpaidAmountTotal = Some(1250000)
       )
       theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(context, FCVATDebtCalculationSummaryResponse)
 
       And("the 1st fc vat debt summary will contain")
-      val expected1stDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "123",
-        interestDueDailyAccrual = 0,
-        interestRate = 0
+      val expected1stDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("123"),
+        interestDueDailyAccrual = Some(0),
+        interestRate = Some(0)
       )
       theFcVatDebtSummaryWillContain(context, 1, expected1stDebtCalculations)
 
       And("the 2nd fc vat debt summary will contain")
-      val expected2ndDebtCalculations = FCVATDebtCalculation(
-        debtItemChargeId = "debtItemChargeId1",
-        interestDueDailyAccrual = 39,
-        interestRate = 2.6
+      val expected2ndDebtCalculations = FCVATDebtCalculationExpected(
+        debtItemChargeId = Some("debtItemChargeId1"),
+        interestDueDailyAccrual = Some(39),
+        interestRate = Some(2.6)
       )
       theFcVatDebtSummaryWillContain(context, 2, expected2ndDebtCalculations)
     }

@@ -21,22 +21,25 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolMultipleDebtsRequest
-import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests.{bearerToken, statementOfLiabilityApiUrl}
-import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues, TestData}
+import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object FCStatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
-  final case class FCDebtsInput(
-    debtDetails: Option[String] = None,
-    debtId: Option[String] = None,
-    interestIndicator: Option[Boolean] = None,
-    interestRequestedTo: Option[BigDecimal] = None,
-    interestStartDate: Option[BigDecimal] = None,
-    originalAmount: Option[BigDecimal] = None,
-    periodEnd: Option[String] = None,
-    solDescription: Option[String] = None
+  val bearerToken: String =
+    createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
+
+  final case class FCSolCalculationSummaryExpected(
+    amountIntTotal: Option[BigDecimal] = None,
+    combinedDailyAccrual: Option[Int] = None,
+    debts: Option[List[FCSolCalculationExpected]] = None
   )
+
+  final case class FCSolCalculationExpected(
+    debtId: Option[String] = None,
+    interestDueDebtTotal: Option[BigInt] = None,
+    totalAmountIntDebt: Option[BigDecimal] = None
+  )
+
   def getFCStatementOfLiability(maybeRequest: Option[SolMultipleDebtsRequest]): StandaloneWSResponse = {
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 

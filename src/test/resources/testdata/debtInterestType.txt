@@ -1,5 +1,0 @@
-   [ {
-
-          "subTrans": "<REPLACE_subTrans>",
-          "mainTrans": "<REPLACE_mainTrans>"
-    }]

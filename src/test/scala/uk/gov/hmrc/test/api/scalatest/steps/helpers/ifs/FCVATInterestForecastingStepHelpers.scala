@@ -21,18 +21,19 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.ifs.FCVATDebtCalculationRequest
+import uk.gov.hmrc.test.api.models.FCVATDebtCalculationsSummary
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder.{FCVATDebtCalculationExpected, FCVATDebtCalculationsSummaryExpected}
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder
+import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
 import uk.gov.hmrc.test.api.models.{FCVATDebtCalculation, FCVATDebtCalculationsSummary}
 import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsVATBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsVATContext
 
-// TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCVATInterestForecastingSteps.scala.
 trait FCVATInterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a fc vat debt calculation$
   def aFcVatDebtCalculation(context: FieldCollectionsVATContext, request: FCVATDebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
 
-  // ^the debt item(s) is sent to the fc vat ifs service$
   def theDebtItemIsSentToTheFcVatIfsService(context: FieldCollectionsVATContext): Unit = {
     val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = FieldCollectionsVATBuilder.getDebtCalculation(requestJson)
@@ -58,54 +59,63 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the fc vat ifs service wilL return a total debts summary of$
   def theFcVatIfsServiceWillReturnATotalDebtsSummaryOf(
     context: FieldCollectionsVATContext,
-    expectedResponse: FCVATDebtCalculationsSummary
+    expectedResponse: FCVATDebtCalculationsSummaryExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     withClue("FCDebtCalculationsSummary") {
-      withClue("dateOfCalculation") {
-        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+      expectedResponse.dateOfCalculation.foreach { e =>
+        withClue("dateOfCalculation") {
+          responseBody.dateOfCalculation shouldBe e
+        }
       }
 
-      withClue("combinedDailyAccrual") {
-        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+      expectedResponse.combinedDailyAccrual.foreach { e =>
+        withClue("combinedDailyAccrual") {
+          responseBody.combinedDailyAccrual shouldBe e
+        }
       }
 
-      withClue("unpaidAmountTotal") {
-        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+      expectedResponse.unpaidAmountTotal.foreach { e =>
+        withClue("unpaidAmountTotal") {
+          responseBody.unpaidAmountTotal shouldBe e
+        }
       }
     }
   }
 
-  // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc vat debt summary will contain$
   def theFcVatDebtSummaryWillContain(
     context: FieldCollectionsVATContext,
     index: Int,
-    expectedResponse: FCVATDebtCalculation
+    expectedResponse: FCVATDebtCalculationExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     val FCVATDebtCalculations = responseBody.debtCalculations(index - 1)
 
     withClue("FCDebtCalculation") {
-      withClue("debtItemChargeId") {
-        FCVATDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+      expectedResponse.debtItemChargeId.foreach { e =>
+        withClue("debtItemChargeId") {
+          FCVATDebtCalculations.debtItemChargeId shouldBe e
+        }
       }
 
-      withClue("interestDueDailyAccrual") {
-        FCVATDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+      expectedResponse.interestDueDailyAccrual.foreach { e =>
+        withClue("interestDueDailyAccrual") {
+          FCVATDebtCalculations.interestDueDailyAccrual shouldBe e
+        }
       }
 
-      withClue("interestRate") {
-        FCVATDebtCalculations.interestRate shouldBe expectedResponse.interestRate
+      expectedResponse.interestRate.foreach { e =>
+        withClue("interestRate") {
+          FCVATDebtCalculations.interestRate shouldBe e
+        }
       }
     }
   }
 
-  // ^the fc vat ifs service will respond with (.*)$
   def theFcVatIfsServiceWillRespondWith(context: FieldCollectionsVATContext, expectedMessage: String): Unit = {
     val response = Option(context.response).getOrElse(fail("Missing response in context"))
 

@@ -17,12 +17,15 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.JsValue
+import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import uk.gov.hmrc.test.api.models.sol.{FCSolCalculation, FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
-import uk.gov.hmrc.test.api.requests.FCStatementOfLiabilityRequests
-import uk.gov.hmrc.test.api.scalatest.builders.{FCStatementOfLiabilityBuilder, InterestForecastingBuilder}
+import uk.gov.hmrc.test.api.models.sol.{FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
+import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.FCStatementOfLiabilityContext
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder.{FCSolCalculationExpected, FCSolCalculationSummaryExpected}
 
 trait FCStatementOfLiabilityStepHelpers {
   this: Matchers =>
@@ -42,27 +45,49 @@ trait FCStatementOfLiabilityStepHelpers {
 
   def serviceReturnsFcDebtStatementOfLiabilityData(
     context: FCStatementOfLiabilityContext,
-    amountIntTotal: BigDecimal,
-    combinedDailyAccrual: Int
+    expectedResponse: FCSolCalculationSummaryExpected
   ): Unit = {
-    context.status                                   shouldBe 200
-    context.responseBody.map(_.amountIntTotal)       shouldBe Some(amountIntTotal)
-    context.responseBody.map(_.combinedDailyAccrual) shouldBe Some(combinedDailyAccrual)
+    context.status shouldBe 200
+
+    val actualFcSolResponse = context.responseBody.getOrElse(fail("Missing actual FCSolCalculationSummaryResponse"))
+
+    withClue("FCSolCalculationSummaryResponse") {
+      expectedResponse.amountIntTotal.foreach { e =>
+        withClue("amountIntTotal") {
+          actualFcSolResponse.amountIntTotal shouldBe e
+        }
+      }
+
+      expectedResponse.combinedDailyAccrual.foreach { e =>
+        withClue("combinedDailyAccrual") {
+          actualFcSolResponse.combinedDailyAccrual shouldBe e
+        }
+      }
+    }
   }
 
-  def theMultipleFcStatementOfLiabilityDebtSummaryWillContainDuties(
+  def theFcStatementOfLiabilityDebtSummaryWillContainDuties(
     context: FCStatementOfLiabilityContext,
-    summaryIndex: Int,
-    inputs: Seq[FCSolCalculation]
+    expectedDebts: Seq[FCSolCalculationExpected]
   ): Unit = {
 
     context.status shouldBe 200
-    val actualDebts = context.responseBody.get.debts
-    actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
-    actualDebts(summaryIndex).debtId shouldBe inputs.head.debtId
+    val actualDebts = context.responseBody.getOrElse(fail("Missing actual FCSolCalculationSummaryResponse")).debts
+
+    expectedDebts.zipWithIndex.foreach { case (expectedDebt, index) =>
+      actualDebts(index).debtId               shouldBe expectedDebt.debtId.getOrElse(fail("Missing expected debtId field"))
+      actualDebts(index).interestDueDebtTotal shouldBe expectedDebt.interestDueDebtTotal.getOrElse(
+        fail("Missing expected interestDueDebtTotal field")
+      )
+      actualDebts(index).totalAmountIntDebt   shouldBe expectedDebt.totalAmountIntDebt.getOrElse(
+        fail("Missing expected totalAmountIntDebt field")
+      )
+    }
+
   }
+
   def theFcSolServiceWillRespondWith(context: FCStatementOfLiabilityContext, expectedMessage: String): Unit = {
-    val response = FCStatementOfLiabilityRequests.getFCStatementOfLiability(context.request)
+    val response = FCStatementOfLiabilityBuilder.getFCStatementOfLiability(context.request)
     response.status shouldBe 400
     response.body     should include(expectedMessage)
   }

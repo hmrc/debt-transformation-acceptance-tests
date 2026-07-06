@@ -1,5 +1,0 @@
-{
-  "debtItems": [
-    <REPLACE_fcDebtItem>
-  ]
-}

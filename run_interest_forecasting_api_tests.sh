@@ -2,13 +2,11 @@
 
 environment="local"
 
-cucumberTags="not @wip and not @ignore"
 scalaTestTags="\"WIP IGNORE\""
 
 if [ $# -gt 0 -a "$1" != "$environment" ];
 then
   environment="$1"
-  cucumberTags="not @wip and not @ignore"
   scalaTestTags="\"WIP IGNORE\""
 fi
 
@@ -21,25 +19,12 @@ fi
 sleep 2
 
 scala_exit=0
-cucumber_exit=0
 
-printf "\n\n\n\n*****************STARTING SCALATEST TESTS*****************\n\n"
 echo "*** running on $environment for scala tags '$scalaTestTags' ***"
 sbt -Denvironment="$environment" clean \
-  "testOnly uk.gov.hmrc.test.api.scalatest.specs.* -- -l $scalaTestTags" \
+  "testOnly uk.gov.hmrc.test.api.scalatest.specs.ifs.* -- -l $scalaTestTags" \
   || scala_exit=$?
 
-printf "\n\n\n\n*****************STARTING CUCUMBER TESTS*****************\n\n"
-echo "*** running on $environment for cucumber tags '$cucumberTags' ***"
-sbt -Denvironment="$environment" \
-  -Dcucumber.options="--tags '$cucumberTags'" \
-  'testOnly uk.gov.hmrc.test.api.cucumber.runner.InterestForecastingApiTestRunner' \
-  || cucumber_exit=$?
-
-scala_result=$([ $scala_exit -eq 0 ] && echo "PASSED" || echo "FAILED")
-cucumber_result=$([ $cucumber_exit -eq 0 ] && echo "PASSED" || echo "FAILED")
-printf "\n\n\n\nScalaTest Tests: $scala_result | Cucumber Tests: $cucumber_result\n\n"
-
-if [ $scala_exit -ne 0 ] || [ $cucumber_exit -ne 0 ]; then
+if [ $scala_exit -ne 0 ]; then
   exit 1
 fi

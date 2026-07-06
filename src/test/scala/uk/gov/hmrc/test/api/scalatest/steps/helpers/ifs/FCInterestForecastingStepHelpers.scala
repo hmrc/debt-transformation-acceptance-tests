@@ -20,19 +20,17 @@ import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.models.FCDebtCalculationsSummary
 import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
 import uk.gov.hmrc.test.api.models.{FCCalculationWindow, FCDebtCalculation, FCDebtCalculationsSummary}
-import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.FieldCollectionsContext
+import uk.gov.hmrc.test.api.scalatest.builders.FieldCollectionsBuilder.{FCCalculationWindowExpected, FCDebtCalculationExpected, FCDebtCalculationsSummaryExpected}
 
-// TODO: Validate that InterestForecastingContext is the correct context for helpers migrated from FCInterestForecastingSteps.scala.
 trait FCInterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a fc debt collection$
   def aFcDebtCalculation(context: FieldCollectionsContext, request: FCDebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
 
-  // ^the debt item(s) is sent to the fc ifs service$
   def theDebtItemIsSentToTheFcIfsService(context: FieldCollectionsContext): Unit = {
     val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = FieldCollectionsBuilder.getDebtCalculation(requestJson)
@@ -53,82 +51,105 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     println(jsonResponseBody)
   }
 
-  // ^the fc ifs service will return a total debts summary of$
   def theFcIfsServiceWillReturnATotalDebtsSummaryOf(
     context: FieldCollectionsContext,
-    expectedResponse: FCDebtCalculationsSummary
+    expectedResponse: FCDebtCalculationsSummaryExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     withClue("FCDebtCalculationsSummary") {
-      withClue("dateOfCalculation") {
-        responseBody.dateOfCalculation shouldBe expectedResponse.dateOfCalculation
+
+      expectedResponse.dateOfCalculation.foreach { e =>
+        withClue("dateOfCalculation") {
+          responseBody.dateOfCalculation shouldBe Some(e)
+        }
       }
 
-      withClue("combinedDailyAccrual") {
-        responseBody.combinedDailyAccrual shouldBe expectedResponse.combinedDailyAccrual
+      expectedResponse.combinedDailyAccrual.foreach { e =>
+        withClue("combinedDailyAccrual") {
+          responseBody.combinedDailyAccrual shouldBe e
+        }
       }
 
-      withClue("unpaidAmountTotal") {
-        responseBody.unpaidAmountTotal shouldBe expectedResponse.unpaidAmountTotal
+      expectedResponse.unpaidAmountTotal.foreach { e =>
+        withClue("unpaidAmountTotal") {
+          responseBody.unpaidAmountTotal shouldBe e
+        }
       }
 
-      withClue("interestDueCallTotal") {
-        responseBody.interestDueCallTotal shouldBe expectedResponse.interestDueCallTotal
+      expectedResponse.interestDueCallTotal.foreach { e =>
+        withClue("interestDueCallTotal") {
+          responseBody.interestDueCallTotal shouldBe e
+        }
       }
 
-      withClue("totalAmountIntTotal") {
-        responseBody.totalAmountIntTotal shouldBe expectedResponse.totalAmountIntTotal
+      expectedResponse.totalAmountIntTotal.foreach { e =>
+        withClue("totalAmountIntTotal") {
+          responseBody.totalAmountIntTotal shouldBe e
+        }
       }
 
-      withClue("amountOnIntDueTotal") {
-        responseBody.amountOnIntDueTotal shouldBe expectedResponse.amountOnIntDueTotal
+      expectedResponse.amountOnIntDueTotal.foreach { e =>
+        withClue("amountOnIntDueTotal") {
+          responseBody.amountOnIntDueTotal shouldBe e
+        }
       }
     }
   }
 
-  // ^the ([0-9]\\d*)(?:st|nd|rd|th) fc debt summary will contain$
   def theFcDebtSummaryWillContain(
     context: FieldCollectionsContext,
     index: Int,
-    expectedResponse: FCDebtCalculation
+    expectedResponse: FCDebtCalculationExpected
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
     val FCDebtCalculations = responseBody.debtCalculations(index - 1)
 
     withClue("FCDebtCalculation") {
-      withClue("debtItemChargeId") {
-        FCDebtCalculations.debtItemChargeId shouldBe expectedResponse.debtItemChargeId
+
+      expectedResponse.debtItemChargeId.foreach { e =>
+        withClue("debtItemChargeId") {
+          FCDebtCalculations.debtItemChargeId shouldBe e
+        }
       }
 
-      withClue("interestDueDailyAccrual") {
-        FCDebtCalculations.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+      expectedResponse.interestDueDailyAccrual.foreach { e =>
+        withClue("interestDueDailyAccrual") {
+          FCDebtCalculations.interestDueDailyAccrual shouldBe e
+        }
       }
 
-      withClue("interestDueDutyTotal") {
-        FCDebtCalculations.interestDueDutyTotal shouldBe expectedResponse.interestDueDutyTotal
+      expectedResponse.interestDueDutyTotal.foreach { e =>
+        withClue("interestDueDutyTotal") {
+          FCDebtCalculations.interestDueDutyTotal shouldBe e
+        }
       }
 
-      withClue("amountOnIntDueDuty") {
-        FCDebtCalculations.amountOnIntDueDuty shouldBe expectedResponse.amountOnIntDueDuty
+      expectedResponse.amountOnIntDueDuty.foreach { e =>
+        withClue("amountOnIntDueDuty") {
+          FCDebtCalculations.amountOnIntDueDuty shouldBe e
+        }
       }
 
-      withClue("totalAmountIntDuty") {
-        FCDebtCalculations.totalAmountIntDuty shouldBe expectedResponse.totalAmountIntDuty
+      expectedResponse.totalAmountIntDuty.foreach { e =>
+        withClue("totalAmountIntDuty") {
+          FCDebtCalculations.totalAmountIntDuty shouldBe e
+        }
       }
 
-      withClue("unpaidAmountDuty") {
-        FCDebtCalculations.unpaidAmountDuty shouldBe expectedResponse.unpaidAmountDuty
+      expectedResponse.unpaidAmountDuty.foreach { e =>
+        withClue("unpaidAmountDuty") {
+          FCDebtCalculations.unpaidAmountDuty shouldBe e
+        }
       }
     }
   }
 
-  // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will have calculation windows$
   def theFcDebtSummaryWillHaveCalculationWindows(
     context: FieldCollectionsContext,
     summaryIndex: Int,
-    inputs: List[FCCalculationWindow]
+    inputs: List[FCCalculationWindowExpected]
   ): Unit = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
 
@@ -138,55 +159,71 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
         .calculationWindows(index)
 
       withClue("FCDebtCalculationsSummary") {
-        withClue("periodFrom") {
-          actual.periodFrom shouldBe expectedResponse.periodFrom
+
+        expectedResponse.periodFrom.foreach { e =>
+          withClue("periodFrom") {
+            actual.periodFrom shouldBe e
+          }
         }
 
-        withClue("periodTo") {
-          actual.periodTo shouldBe expectedResponse.periodTo
+        expectedResponse.periodTo.foreach { e =>
+          withClue("periodTo") {
+            actual.periodTo shouldBe e
+          }
         }
 
-        withClue("numberOfDays") {
-          actual.numberOfDays shouldBe expectedResponse.numberOfDays
+        expectedResponse.numberOfDays.foreach { e =>
+          withClue("numberOfDays") {
+            actual.numberOfDays shouldBe e
+          }
         }
 
-        withClue("interestRate") {
-          actual.interestRate shouldBe expectedResponse.interestRate
+        expectedResponse.interestRate.foreach { e =>
+          withClue("interestRate") {
+            actual.interestRate shouldBe e
+          }
         }
 
-        withClue("interestDueDailyAccrual") {
-          actual.interestDueDailyAccrual shouldBe expectedResponse.interestDueDailyAccrual
+        expectedResponse.interestDueDailyAccrual.foreach { e =>
+          withClue("interestDueDailyAccrual") {
+            actual.interestDueDailyAccrual shouldBe e
+          }
         }
 
-        withClue("interestDueWindow") {
-          actual.interestDueWindow shouldBe expectedResponse.interestDueWindow
+        expectedResponse.interestDueWindow.foreach { e =>
+          withClue("interestDueWindow") {
+            actual.interestDueWindow shouldBe e
+          }
         }
 
-        withClue("amountOnIntDueWindow") {
-          actual.amountOnIntDueWindow shouldBe expectedResponse.amountOnIntDueWindow
+        expectedResponse.amountOnIntDueWindow.foreach { e =>
+          withClue("amountOnIntDueWindow") {
+            actual.amountOnIntDueWindow shouldBe e
+          }
         }
 
-        withClue("unpaidAmountWindow") {
-          actual.unpaidAmountWindow shouldBe expectedResponse.unpaidAmountWindow
+        expectedResponse.unpaidAmountWindow.foreach { e =>
+          withClue("unpaidAmountWindow") {
+            actual.unpaidAmountWindow shouldBe e
+          }
         }
 
-        // only assert suppressionApplied fields if they are present in input
         expectedResponse.suppressionApplied.foreach { expectedSuppression =>
-          if (expectedSuppression.reason.nonEmpty) {
+          expectedSuppression.reason.foreach { e =>
             withClue("reason") {
-              actual.suppressionApplied.head.reason shouldBe expectedSuppression.reason
+              actual.suppressionApplied.head.reason shouldBe e
             }
           }
 
-          if (expectedSuppression.description.nonEmpty) {
+          expectedSuppression.description.foreach { e =>
             withClue("description") {
-              actual.suppressionApplied.head.description shouldBe expectedSuppression.description
+              actual.suppressionApplied.head.description shouldBe e
             }
           }
 
-          if (expectedSuppression.code.nonEmpty) {
+          expectedSuppression.code.foreach { e =>
             withClue("code") {
-              actual.suppressionApplied.head.code shouldBe expectedSuppression.code
+              actual.suppressionApplied.head.code shouldBe e
             }
           }
         }
@@ -194,13 +231,15 @@ trait FCInterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the ([0-9])(?:st|nd|rd|th) fc debt summary will not have any calculation windows$
   def theFcDebtSummaryWillNotHaveAnyCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Unit =
     getFCCountOfCalculationWindows(context, summaryIndex) shouldBe 0
 
   def getFCCountOfCalculationWindows(context: FieldCollectionsContext, summaryIndex: Int): Int = {
     val responseBody = context.ifsResponseBody.getOrElse(fail("Missing response body in context"))
-    responseBody.debtCalculations(summaryIndex - 1).calculationWindows.size
+    responseBody
+      .debtCalculations(summaryIndex - 1)
+      .calculationWindows
+      .size
   }
 
 }

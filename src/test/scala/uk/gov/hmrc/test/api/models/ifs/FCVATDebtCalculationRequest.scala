@@ -25,7 +25,7 @@ final case class FCVATDebtItems(
   periodEnd: String,
   interestRequestedTo: String,
   breathingSpaces: Option[List[BreathingSpaces]],
-  paymentHistory: Option[List[PaymentHistory]],
+  paymentHistory: Option[List[PaymentHistory]]
 )
 
 object FCVATDebtItems {

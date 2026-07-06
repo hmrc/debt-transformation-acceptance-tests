@@ -20,7 +20,6 @@ import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.FCDebtCalculationsSummary
 import uk.gov.hmrc.test.api.models.ifs.FCDebtCalculationRequest
 
-// Minimal per-scenario context; extend fields as migration progresses.
 final case class FieldCollectionsContext(
   var ifsRequest: Option[FCDebtCalculationRequest] = None,
   var ifsResponseBody: Option[FCDebtCalculationsSummary] = None,

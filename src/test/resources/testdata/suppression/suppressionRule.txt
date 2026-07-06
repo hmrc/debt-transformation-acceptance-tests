@@ -1,5 +1,0 @@
-{
- 			"ruleId": "<REPLACE_ruleId>",
- 			"rule": "<REPLACE_rule> -> suppression = <REPLACE_suppressionIds>",
- 			"enabled": true
- 		}
