@@ -21,7 +21,7 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks.forEvery
 import org.scalatest.prop.Tables.Table
-import uk.gov.hmrc.test.api.models.{DebtInterestType, DebtInterestTypeRequest}
+import uk.gov.hmrc.test.api.models.DebtInterestTypeRequest
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.DebtInterestTypeExpected
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{FCInterestForecastingStepHelpers, IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}

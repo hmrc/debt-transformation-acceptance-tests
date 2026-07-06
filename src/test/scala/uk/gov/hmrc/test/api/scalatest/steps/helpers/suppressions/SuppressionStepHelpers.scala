@@ -25,11 +25,9 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
 trait SuppressionStepHelpers {
   this: Matchers =>
 
-  // ^suppression configuration data is created$
   def suppressionConfigurationDataIsCreated(context: SuppressionRulesContext, request: SuppressionRequest): Unit =
     context.suppressionRequest = Some(request)
 
-  // ^suppression configuration is sent to ifs service$
   def suppressionConfigurationIsSentToIfsService(context: SuppressionRulesContext): Unit = {
     val requestJson         = Json.toJson(context.suppressionRequest.getOrElse(fail("Missing request in context")))
     val suppressionResponse = SuppressionRulesBuilder.putSuppressionData(requestJson)

@@ -27,13 +27,11 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
-  // ^the sol service will respond with$
   def theSolServiceRespondWith(context: StatementOfLiabilityContext, statusCode: Int, message: String): Unit = {
     context.status       shouldBe statusCode
     context.errorMessage shouldBe Some(message)
   }
 
-  // ^debt details$
   def debtDetails(
     context: StatementOfLiabilityContext,
     request: SolDebtsRequest
@@ -42,7 +40,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     context.solRequest = Some(request)
   }
 
-  // ^a debt statement of liability is requested$
   def aDebtStatementOfLiabilityIsRequested(context: StatementOfLiabilityContext): Unit = {
     val response         = StatementOfLiabilityBuilder.getStatementOfLiability(context.solRequest)
     val jsonResponseBody = response.body[JsValue]
@@ -51,7 +48,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
-  // ^statement of liability Is Requested Without Debt$
   def statementOfLiabilityIsRequestedWithoutDebt(context: StatementOfLiabilityContext): Unit = {
     val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.solRequest)
     context.status = response.status
@@ -59,7 +55,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     context.headers = response.headers.map { case (key, values) => key -> values.headOption.getOrElse("") }
   }
 
-  // ^service returns debt statement of liability data$
   def serviceReturnsDebtStatementOfLiabilityData(
     context: StatementOfLiabilityContext,
     expectedResponse: SolCalculationSummaryResponseExpected
@@ -83,7 +78,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the Customer Statement Of Liability Contains Debt Values As$
   def theCustomerStatementOfLiabilityContainsDebtValuesAs(
     context: StatementOfLiabilityContext,
     debtIndex: Int,
@@ -143,7 +137,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the Customer Statement Of Liability Contains Duty Values As$
   def theCustomerStatementOfLiabilityContainsDutyValuesAs(
     context: StatementOfLiabilityContext,
     debtIndex: Int,
@@ -205,7 +198,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the Sol Debt Summary Will Contain Duties$
   def theSolDebtSummaryWillContainDuties(
     context: StatementOfLiabilityContext,
     debtIndex: Int,
@@ -270,7 +262,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the Multiple Statement Of Liability Duties Summary Will Contain$
   def theMultipleStatementOfLiabilityDutiesSummaryWillContain(
     context: StatementOfLiabilityContext,
     debtIndex: Int,

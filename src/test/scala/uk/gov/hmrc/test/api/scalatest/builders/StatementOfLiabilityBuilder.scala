@@ -27,13 +27,13 @@ import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
 
 object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
-  case class SolCalculationSummaryResponseExpected(
+  final case class SolCalculationSummaryResponseExpected(
     amountIntTotal: Option[BigInt] = None,
     combinedDailyAccrual: Option[BigInt] = None,
     debts: Option[List[SolCalculationExpected]] = None
   )
 
-  case class SolCalculationExpected(
+  final case class SolCalculationExpected(
     debtId: Option[String] = None,
     mainTrans: Option[String] = None,
     debtTypeDescription: Option[String] = None,
@@ -44,7 +44,7 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
     duties: Option[Seq[SolDutyExpected]] = None
   )
 
-  case class SolDutyExpected(
+  final case class SolDutyExpected(
     subTrans: Option[String] = None,
     dutyTypeDescription: Option[String] = None,
     unpaidAmountDuty: Option[BigInt] = None,

@@ -38,14 +38,12 @@ trait IFSInstalmentCalculationStepHelpers {
   val quoteDate: LocalDate             = LocalDate.parse(quoteDateString, formatter)
   val instalmentPaymentDate: LocalDate = quoteDate.plusDays(1)
 
-  // ^debt instalment calculation with details$
   def instalmentCalculationDetails(
     context: IFSInstalmentCalculationContext,
     request: InstalmentCalculationRequest
   ): Unit =
     context.ifsRequest = Some(request)
 
-  // ^the instalment calculation detail(s) is sent to the ifs service$
   def theInstalmentCalculationDetailIsSentToTheIfsService(context: IFSInstalmentCalculationContext): Unit = {
     val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = IFSInstalmentCalculationBuilder.getInstalmentCalculation(requestJson)
@@ -66,7 +64,6 @@ trait IFSInstalmentCalculationStepHelpers {
     println(jsonResponseBody)
   }
 
-  // ^the instalment calculation is sent to the ifs service with query parameters$
   def theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(
     context: IFSInstalmentCalculationContext,
     combineLastInstalments: String
@@ -93,7 +90,6 @@ trait IFSInstalmentCalculationStepHelpers {
     println(jsonResponseBody)
   }
 
-  // ^ifs service returns weekly payment frequency instalment calculation plan$
   def ifsServiceReturnsWeeklyPaymentFrequencyInstalmentCalculationPlan(
     context: IFSInstalmentCalculationContext
   ): Unit = {
@@ -136,7 +132,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns an interest bearing payment instalment plan$
   def ifsServiceReturnsAnInterestBearingPaymentInstalmentPlan(context: IFSInstalmentCalculationContext): Unit = {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
@@ -177,7 +172,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns an non-interest bearing payment instalment plan$
   def ifsServiceReturnsAnNonInterestBearingPaymentInstalmentPlan(context: IFSInstalmentCalculationContext): Unit = {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
@@ -218,7 +212,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns single payment frequency instalment calculation plan$
   def ifsServiceReturnsSinglePaymentFrequencyInstalmentCalculationPlan(
     context: IFSInstalmentCalculationContext
   ): Unit = {
@@ -261,7 +254,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns 2-Weekly frequency instalment calculation plan$
   def ifsServiceReturns2WeeklyFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
@@ -311,13 +303,11 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^the IFS request should return status (.*)$
   def theIfsRequestShouldReturnStatus(context: IFSInstalmentCalculationContext, status: Int): Unit = {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe status
   }
 
-  // ^the ([0-9]\\d*)(?:st|nd|rd|th) instalment should have an interest accrued of (.*)$
   def theInstalmentShouldHaveAnInterestAccruedOf(
     context: IFSInstalmentCalculationContext,
     index: Int,
@@ -329,7 +319,6 @@ trait IFSInstalmentCalculationStepHelpers {
     responseBody.instalments(index - 1).instalmentInterestAccrued shouldBe interestAccrued
   }
 
-  // ^ifs service returns 4-Weekly frequency instalment calculation plan$
   def ifsServiceReturns4WeeklyFrequencyInstalmentCalculationPlan(context: IFSInstalmentCalculationContext): Unit = {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
@@ -369,7 +358,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns Quarterly payment frequency instalment calculation plan$
   def ifsServiceReturnsQuarterlyPaymentFrequencyInstalmentCalculationPlan(
     context: IFSInstalmentCalculationContext
   ): Unit = {
@@ -412,7 +400,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns 6Monthly payment frequency instalment calculation plan$
   def ifsServiceReturns6monthlyPaymentFrequencyInstalmentCalculationPlan(
     context: IFSInstalmentCalculationContext
   ): Unit = {
@@ -455,7 +442,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^ifs service returns Annually payment frequency instalment calculation plan$
   def ifsServiceReturnsAnnuallyPaymentFrequencyInstalmentCalculationPlan(
     context: IFSInstalmentCalculationContext
   ): Unit = {
@@ -504,7 +490,6 @@ trait IFSInstalmentCalculationStepHelpers {
     )
   }
 
-  // ^IFS response contains expected values$
   def ifsResponseContainsExpectedValues(
     context: IFSInstalmentCalculationContext,
     expectedResponse: InstalmentCalculationSummaryResponseExpected
@@ -559,7 +544,6 @@ trait IFSInstalmentCalculationStepHelpers {
     }
   }
 
-  // ^IFS response contains expected values$
   def ifsResponseContainsExpectedValues(
     context: IFSInstalmentCalculationContext,
     expectedResponse: InstalmentResponseExpected
@@ -624,7 +608,6 @@ trait IFSInstalmentCalculationStepHelpers {
     }
   }
 
-  // ^ifs service returns weekly frequency instalment calculation plan with initial payment$
   def ifsServiceReturnsWeeklyFrequencyInstalmentCalculationPlanWithInitialPayment(
     context: IFSInstalmentCalculationContext
   ): Unit = {

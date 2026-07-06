@@ -30,11 +30,9 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
 trait InterestForecastingStepHelpers { this: Matchers =>
 
-  // ^a debt calculation$
   def aDebtCalculationIsCreated(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
 
-  // ^the debt item(s) is sent to the ifs service$
   def theDebtItemIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
     val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtCalculation(requestJson)
@@ -66,7 +64,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
   }
 
-  // ^the debt interest type request is sent to the ifs service$
   def theDebtInterestTypeRequestIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
     val requestJson                    = Json.toJson(context.ditRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtInterestTypeRequestBody(context, requestJson)
@@ -86,7 +83,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     println(jsonResponseBody)
   }
 
-  // ^the ifs service will return a total debts summary of$
   def theIfsServiceWillReturnATotalDebtsSummaryOf(
     context: InterestForecastingContext,
     expectedResponse: DebtCalculationsSummaryExpected
@@ -124,7 +120,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the ([0-9]\\d*)(?:st|nd|rd|th) debt summary will contain$
   def theDebtSummaryWillContain(
     context: InterestForecastingContext,
     index: Int,
@@ -200,7 +195,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the ifs service will respond with (.*)$
   def theIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
     val response: StandaloneWSResponse = context.response
 
@@ -208,7 +202,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     response.status should be(400)
   }
 
-  // ^the ([0-9])(?:st|nd|rd|th) debt summary will have calculation windows$
   def theDebtSummaryWillHaveCalculationWindows(
     context: InterestForecastingContext,
     summaryIndex: Int,
@@ -302,7 +295,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the ([0-9])(?:st|nd|rd|th) debt summary will have suppression applied calculation windows$
   def theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(
     context: InterestForecastingContext,
     summaryIndex: Int,
@@ -377,7 +369,6 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^the ([0-9])(?:st|nd|rd|th) debt summary will not have any calculation windows$
   def theDebtSummaryWillNotHaveAnyCalculationWindows(context: InterestForecastingContext, summaryIndex: Int)(implicit
     pos: Position
   ): Unit = {
@@ -397,11 +388,9 @@ trait InterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  // ^a debt interest type item$
   def aDebtInterestTypeItem(context: InterestForecastingContext, debtInterestType: Seq[DebtInterestTypeRequest]): Unit =
     context.ditRequest = Some(debtInterestType)
 
-  // ^the ([0-9])(?:st|nd|rd|th) debt interest type response summary will contain$
   def theDebtInterestTypeResponseSummaryWillContain(
     context: InterestForecastingContext,
     index: Int,

@@ -26,18 +26,18 @@ import java.time.LocalDate
 
 object InterestForecastingBuilder extends BaseRequests with RandomValues {
 
-  case class DebtInterestTypeResponseExpected(
+  final case class DebtInterestTypeResponseExpected(
     debts: Option[List[DebtInterestTypeExpected]] = None
   )
 
-  case class DebtInterestTypeExpected(
+  final case class DebtInterestTypeExpected(
     mainTrans: Option[String] = None,
     subTrans: Option[String] = None,
     interestBearing: Option[Boolean] = None,
     useChargeReference: Option[Boolean] = None
   )
 
-  case class DebtCalculationsSummaryExpected(
+  final case class DebtCalculationsSummaryExpected(
     combinedDailyAccrual: Option[BigDecimal] = None,
     interestDueCallTotal: Option[BigDecimal] = None,
     amountIntTotal: Option[BigDecimal] = None,
@@ -46,7 +46,7 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     debtCalculations: Option[List[DebtCalculationExpected]] = None
   )
 
-  case class DebtCalculationExpected(
+  final case class DebtCalculationExpected(
     debtItemChargeId: Option[String] = None,
     debtID: Option[String] = None,
     interestBearing: Option[Boolean] = None,
@@ -60,7 +60,7 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     calculationWindows: Option[List[CalculationWindowExpected]] = None
   )
 
-  case class CalculationWindowExpected(
+  final case class CalculationWindowExpected(
     periodFrom: Option[LocalDate] = None,
     periodTo: Option[LocalDate] = None,
     numberOfDays: Option[Long] = None,
@@ -74,13 +74,13 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     suppressionsApplied: Option[List[SuppressionsAppliedExpected]] = None
   )
 
-  case class SuppressionAppliedExpected(
+  final case class SuppressionAppliedExpected(
     reason: Option[String] = None,
     description: Option[String] = None,
     code: Option[String] = None
   )
 
-  case class SuppressionsAppliedExpected(
+  final case class SuppressionsAppliedExpected(
     dateFrom: Option[String] = None,
     dateTo: Option[String] = None,
     reason: Option[String] = None,
