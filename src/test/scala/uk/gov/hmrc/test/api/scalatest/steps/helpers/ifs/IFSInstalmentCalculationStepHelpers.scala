@@ -665,11 +665,4 @@ trait IFSInstalmentCalculationStepHelpers {
     response.status should be(expectedCode)
   }
 
-  def ifsServiceReturnsErrorMessage(context: IFSInstalmentCalculationContext, expectedMessage: String): Unit = {
-    val response: StandaloneWSResponse = context.response
-    val responseBody                   = response.body.stripMargin
-    print("response message*****************************" + responseBody)
-    responseBody should be(expectedMessage)
-  }
-
 }
