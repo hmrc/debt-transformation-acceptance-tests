@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
+import uk.gov.hmrc.test.api.models.ifs.{BreathingSpaces, DebtCalculationRequest, DebtItem, PaymentHistory}
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
@@ -426,6 +426,70 @@ class InterestRateChangesEdgeCasesFeatureSpec
           interestDueDailyAccrual = Some(28),
           interestDueWindow = Some(2564),
           amountOnIntDueWindow = Some(400000)
+        )
+      )
+      theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
+    }
+
+    Scenario(
+      "First Interest rate 7.5% applied"
+    ) { context =>
+      Given("a debt calculation")
+      val request = DebtCalculationRequest(
+        debtItems = List(
+          DebtItem(
+            debtID = Some("123"),
+            originalAmount = 500000,
+            subTrans = "1000",
+            mainTrans = "1525",
+            interestStartDate = Some("1999-03-06"),
+            interestRequestedTo = "1999-12-31",
+            dateCreated = Some("1999-03-06"),
+            breathingSpaces = Some(List.empty),
+            paymentHistory = Some(List.empty)
+          )
+        ),
+        customerPostCodes = List.empty
+      )
+      aDebtCalculationIsCreated(context, request)
+
+      When("the debt item is sent to the ifs service")
+      theDebtItemIsSentToTheIfsService(context)
+
+      Then("the ifs service will return a total debts summary of")
+      val expectedResponse = DebtCalculationsSummaryExpected(
+        combinedDailyAccrual = Some(102),
+        interestDueCallTotal = Some(30821),
+        unpaidAmountTotal = Some(500000),
+        amountIntTotal = Some(530821),
+        amountOnIntDueTotal = Some(500000)
+      )
+      theIfsServiceWillReturnATotalDebtsSummaryOf(context, expectedResponse)
+
+      And("the 1st debt summary will contain")
+      val expectedDebtSummary = DebtCalculationExpected(
+        interestBearing = Some(true),
+        interestDueDailyAccrual = Some(102),
+        interestDueDutyTotal = Some(30821),
+        unpaidAmountDuty = Some(500000),
+        numberOfChargeableDays = Some(300),
+        totalAmountIntDuty = Some(530821),
+        amountOnIntDueDuty = Some(500000),
+        interestOnlyIndicator = Some(false)
+      )
+      theDebtSummaryWillContain(context, 1, expectedDebtSummary)
+
+      And("the 1st debt summary will have calculation windows")
+      val expectedCalculationWindows = List(
+        CalculationWindowExpected(
+          periodFrom = Some(LocalDate.parse("1999-03-06")),
+          periodTo = Some(LocalDate.parse("1999-12-31")),
+          numberOfDays = Some(300),
+          interestRate = Some(7.5),
+          interestDueDailyAccrual = Some(102),
+          interestDueWindow = Some(30821),
+          amountOnIntDueWindow = Some(500000),
+          unpaidAmountWindow = Some(530821)
         )
       )
       theDebtSummaryWillHaveCalculationWindows(context, 1, expectedCalculationWindows)
