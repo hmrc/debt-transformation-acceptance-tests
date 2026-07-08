@@ -113,16 +113,4 @@ trait FCVATInterestForecastingStepHelpers { this: Matchers =>
     }
   }
 
-  def theFcVatIfsServiceWillRespondWith(context: FieldCollectionsVATContext, expectedMessage: String): Unit = {
-    val response = Option(context.response).getOrElse(fail("Missing response in context"))
-
-    withClue("response body should include expected message") {
-      response.body should include(expectedMessage)
-    }
-
-    withClue("response status") {
-      context.status shouldBe 400
-    }
-  }
-
 }
