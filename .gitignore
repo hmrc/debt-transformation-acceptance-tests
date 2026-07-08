@@ -27,14 +27,4 @@ src_managed/
 project/project/*
 project/target
 
-# polling script files
-content.txt
-content_escaped.txt
-etPostResponse4.txt
-et_response.txt
-et_token_response.txt
-qaResponse.txt
-qa_response_escaped.txt
-qa_token_response.txt
-
 !/project/project/*.sbt
