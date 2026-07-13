@@ -23,6 +23,7 @@ import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, Paymen
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
+import uk.gov.hmrc.test.api.scalatest.tags.DTD_4509
 
 import java.time.LocalDate
 
@@ -432,7 +433,7 @@ class InterestRateChangesEdgeCasesFeatureSpec
     }
 
     Scenario(
-      "First Interest rate 7.5% applied"
+      "First Interest rate 7.5% applied", DTD_4509
     ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
