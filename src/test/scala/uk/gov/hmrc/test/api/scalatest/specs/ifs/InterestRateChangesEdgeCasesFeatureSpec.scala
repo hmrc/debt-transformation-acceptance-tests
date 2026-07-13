@@ -433,7 +433,8 @@ class InterestRateChangesEdgeCasesFeatureSpec
     }
 
     Scenario(
-      "First Interest rate 7.5% applied", DTD_4509
+      "First Interest rate 7.5% applied",
+      DTD_4509
     ) { context =>
       Given("a debt calculation")
       val request = DebtCalculationRequest(
