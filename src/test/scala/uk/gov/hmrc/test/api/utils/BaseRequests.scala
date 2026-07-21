@@ -34,6 +34,7 @@ trait BaseRequests extends RandomValues with BaseUris {
       val json =
         Json.obj(
           "affinityGroup"      -> userType,
+          "excludeGnapToken"   -> true,
           "credentialStrength" -> "strong",
           "confidenceLevel"    -> 50,
           "credId"             -> "test",
