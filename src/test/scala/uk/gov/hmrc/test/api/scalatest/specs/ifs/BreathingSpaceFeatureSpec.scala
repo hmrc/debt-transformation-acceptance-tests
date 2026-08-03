@@ -1333,7 +1333,6 @@ class BreathingSpaceFeatureSpec
               dateTo = Some("2024-05-04"),
               reason = "LEGISLATIVE",
               reasonDesc = "COVID",
-              suppressionChargeDescription = "SA-Suppression",
               postcode = None,
               mainTrans = Some("4920"),
               subTrans = None,
