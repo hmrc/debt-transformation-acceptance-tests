@@ -23,7 +23,6 @@ case class SuppressionInformation(
   dateTo: Option[String],
   reason: String,
   reasonDesc: String,
-  suppressionChargeDescription: String,
   postcode: Option[String],
   mainTrans: Option[String],
   subTrans: Option[String],
