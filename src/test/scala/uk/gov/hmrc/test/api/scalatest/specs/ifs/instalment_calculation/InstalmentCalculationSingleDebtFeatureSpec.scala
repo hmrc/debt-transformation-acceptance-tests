@@ -51,8 +51,8 @@ class InstalmentCalculationSingleDebtFeatureSpec
             DebtItemCharge(
               debtId = "1234",
               debtAmount = 100000,
-              subTrans = "1000",
-              mainTrans = "1545"
+              subTrans = "1150",
+              mainTrans = "2420"
             )
           )
         ),
@@ -74,9 +74,9 @@ class InstalmentCalculationSingleDebtFeatureSpec
       val instalmentsResponse = InstalmentResponseExpected(
         instalmentNumber = Some(1),
         dueDate = Some(LocalDate.parse("2020-03-14")),
-        amountDue = Some(4271),
+        amountDue = Some(4166),
         instalmentBalance = Some(100000),
-        intRate = Some(3.25)
+        intRate = Some(0)
       )
       ifsResponseContainsExpectedValues(context, instalmentsResponse)
 
