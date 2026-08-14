@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCu
 import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.{InstalmentCalculationSummaryResponseExpected, InstalmentResponseExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
-import uk.gov.hmrc.test.api.scalatest.tags._
+import uk.gov.hmrc.test.api.scalatest.tags.*
 
 import java.time.LocalDate
 

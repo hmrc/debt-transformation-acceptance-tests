@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.sol
 
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import uk.gov.hmrc.test.api.models.sol.{FCSolCalculationSummaryResponse, SolMultipleDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.FCStatementOfLiabilityBuilder
@@ -85,7 +85,7 @@ trait FCStatementOfLiabilityStepHelpers {
 
   def theFcSolServiceWillRespondWith(context: FCStatementOfLiabilityContext, expectedMessage: String): Unit = {
     val response = FCStatementOfLiabilityBuilder.getFCStatementOfLiability(context.request)
-    response.status shouldBe 400
-    response.body     should include(expectedMessage)
+    response.status             shouldBe 400
+    Json.stringify(response.body) should include(expectedMessage)
   }
 }

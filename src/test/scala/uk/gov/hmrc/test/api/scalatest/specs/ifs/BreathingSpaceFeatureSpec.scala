@@ -19,13 +19,13 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models._
-import uk.gov.hmrc.test.api.models.ifs._
+import uk.gov.hmrc.test.api.models.*
+import uk.gov.hmrc.test.api.models.ifs.*
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
-import uk.gov.hmrc.test.api.scalatest.tags._
+import uk.gov.hmrc.test.api.scalatest.tags.*
 
 import java.time.LocalDate
 

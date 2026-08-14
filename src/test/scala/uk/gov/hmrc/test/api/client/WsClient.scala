@@ -20,11 +20,11 @@ import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.util.ByteString
 import org.slf4j.LoggerFactory
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws._
+import play.api.libs.ws.*
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 
 import scala.concurrent.Await
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 import scala.language.postfixOps
 
 object WsClient {
@@ -64,9 +64,9 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq: _*)
-        .addCookies(cookies: _*)
-        .withQueryStringParameters(queryParameters.toSeq: _*)
+        .withHttpHeaders(headers.toSeq*)
+        .addCookies(cookies*)
+        .withQueryStringParameters(queryParameters.toSeq*)
         .withFollowRedirects(followRedirects)
         .get(),
       timeout
@@ -90,7 +90,7 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq: _*)
+        .withHttpHeaders(headers.toSeq*)
         .withFollowRedirects(false)
         .post(json),
       timeout
@@ -119,8 +119,8 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq: _*)
-        .withQueryStringParameters(queryParameters.toSeq: _*)
+        .withHttpHeaders(headers.toSeq*)
+        .withQueryStringParameters(queryParameters.toSeq*)
         .withFollowRedirects(false)
         .post(json),
       timeout
@@ -143,7 +143,7 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq: _*)
+        .withHttpHeaders(headers.toSeq*)
         .withFollowRedirects(false)
         .put(json),
       timeout
@@ -165,7 +165,7 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq: _*)
+        .withHttpHeaders(headers.toSeq*)
         .withFollowRedirects(false)
         .delete(),
       timeout

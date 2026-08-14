@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.utils
 
-import org.scalatest.matchers.should.Matchers._
+import org.scalatest.matchers.should.Matchers.*
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient

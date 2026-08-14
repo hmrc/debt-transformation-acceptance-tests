@@ -17,18 +17,19 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalactic.source.Position
+import org.scalatest.OptionValues
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
-import uk.gov.hmrc.test.api.models._
+import uk.gov.hmrc.test.api.models.*
 import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder._
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.*
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 
-trait InterestForecastingStepHelpers { this: Matchers =>
+trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
 
   def aDebtCalculationIsCreated(context: InterestForecastingContext, request: DebtCalculationRequest): Unit =
     context.ifsRequest = Some(request)
@@ -198,8 +199,8 @@ trait InterestForecastingStepHelpers { this: Matchers =>
   def theIfsServiceWillRespondWith(context: InterestForecastingContext, expectedMessage: String): Unit = {
     val response: StandaloneWSResponse = context.response
 
-    response.body   should include(expectedMessage)
-    response.status should be(400)
+    Json.stringify(response.body) should include(expectedMessage)
+    response.status               should be(400)
   }
 
   def theDebtSummaryWillHaveCalculationWindows(
@@ -350,19 +351,19 @@ trait InterestForecastingStepHelpers { this: Matchers =>
 
         expectedResponse.mainTrans.foreach { v =>
           withClue("mainTrans: ") {
-            suppression.mainTrans shouldBe v
+            suppression.mainTrans.value shouldBe v
           }
         }
 
         expectedResponse.subTrans.foreach { v =>
           withClue("subTrans: ") {
-            suppression.subTrans shouldBe v
+            suppression.subTrans.value shouldBe v
           }
         }
 
         expectedResponse.periodEnd.foreach { v =>
           withClue("periodEnd: ") {
-            suppression.periodEnd shouldBe v
+            suppression.periodEnd.value shouldBe v
           }
         }
       }

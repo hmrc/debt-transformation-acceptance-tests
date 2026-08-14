@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol._
+import uk.gov.hmrc.test.api.models.sol.*
 import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.{StatementOfLiabilityContext, SuppressionRulesContext}

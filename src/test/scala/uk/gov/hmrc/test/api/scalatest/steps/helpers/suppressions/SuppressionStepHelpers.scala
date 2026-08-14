@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions
 
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json._
+import play.api.libs.json.*
 import uk.gov.hmrc.test.api.models.SuppressionRequest
 import uk.gov.hmrc.test.api.scalatest.builders.SuppressionRulesBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext

@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.api.models.sol.{Debt, SolDebtsRequest}
 import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.{FCStatementOfLiabilityStepHelpers, StatementOfLiabilityStepHelpers}
-import uk.gov.hmrc.test.api.scalatest.tags._
+import uk.gov.hmrc.test.api.scalatest.tags.*
 
 class RequestSolForMultipleDebtsFeatureSpec
     extends FixtureAnyFeatureSpec

@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class DebtInterestTypeResponse(debts: List[DebtInterestType])
 case class DebtInterestType(
