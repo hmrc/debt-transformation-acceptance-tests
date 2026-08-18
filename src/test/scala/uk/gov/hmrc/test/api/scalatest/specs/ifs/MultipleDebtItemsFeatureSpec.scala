@@ -50,8 +50,8 @@ class MultipleDebtItemsFeatureSpec
           DebtItem(
             debtID = Some("123"),
             originalAmount = 500000,
-            subTrans = "1090",
-            mainTrans = "1520",
+            subTrans = "1150",
+            mainTrans = "6238",
             interestStartDate = Some("2018-12-16"),
             interestRequestedTo = "2019-04-14",
             breathingSpaces = Some(List.empty),
