@@ -17,27 +17,12 @@
 package uk.gov.hmrc.test.api.conf
 
 import com.typesafe.config.{Config, ConfigFactory}
+import uk.gov.hmrc.api.conf.TestEnvironment
 
-object TestConfiguration {
-  val config: Config        = ConfigFactory.load()
-  val env: String           = config.getString("environment")
-  val defaultConfig: Config = config.getConfig("local")
-  val envConfig: Config     = config.getConfig(env).withFallback(defaultConfig)
+object TestConfiguration extends TestEnvironment {
+  val config: Config    = ConfigFactory.load()
+  val envConfig: Config = config.getConfig(environment).withFallback(config.getConfig("local"))
 
-  def url(service: String): String = {
-    val host = env match {
-      case "local" => s"$environmentHost:${servicePort(service)}"
-      case _       => s"${envConfig.getString(s"services.$service.host")}"
-    }
-    s"$host${serviceRoute(service)}"
-  }
-
-  def environmentHost: String                  = envConfig.getString("services.host")
-  def clientId: String                         = envConfig.getString("clientId")
-  def clientSecret: String                     = envConfig.getString("clientSecret")
-  def servicePort(serviceName: String): String =
-    envConfig.getString(s"services.$serviceName.port")
-
-  def serviceRoute(serviceName: String): String =
-    envConfig.getString(s"services.$serviceName.productionRoute")
+  def clientId: String     = envConfig.getString("clientId")
+  def clientSecret: String = envConfig.getString("clientSecret")
 }
