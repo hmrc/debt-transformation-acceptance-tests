@@ -20,7 +20,7 @@ import org.scalactic.source.Position
 import org.scalatest.OptionValues
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Format.GenericFormat
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.*
@@ -35,7 +35,7 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
     context.ifsRequest = Some(request)
 
   def theDebtItemIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
-    val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+    val requestJson = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtCalculation(requestJson)
     context.response = response
 
@@ -58,7 +58,7 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
     context: InterestForecastingContext
   ): Unit = {
     val requestJson = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
-    val response    = InterestForecastingBuilder.getDebtCalculation(requestJson)
+    val response = InterestForecastingBuilder.getDebtCalculation(requestJson)
 
     context.response = response
     context.status = response.status
@@ -66,7 +66,7 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
   }
 
   def theDebtInterestTypeRequestIsSentToTheIfsService(context: InterestForecastingContext): Unit = {
-    val requestJson                    = Json.toJson(context.ditRequest.getOrElse(fail("Missing request in context")))
+    val requestJson = Json.toJson(context.ditRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = InterestForecastingBuilder.getDebtInterestTypeRequestBody(requestJson)
     context.response = response
 
@@ -200,7 +200,7 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
     val response: StandaloneWSResponse = context.response
 
     Json.stringify(response.body) should include(expectedMessage)
-    response.status               should be(400)
+    response.status should be(400)
   }
 
   def theDebtSummaryWillHaveCalculationWindows(

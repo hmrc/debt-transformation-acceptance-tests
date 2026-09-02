@@ -20,15 +20,15 @@ import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
-import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
+import uk.gov.hmrc.test.api.models.sol.{ SolCalculationSummaryResponse, SolDebtsRequest }
 import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
+import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{ SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected }
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 
 trait StatementOfLiabilityStepHelpers { this: Matchers =>
 
   def theSolServiceRespondWith(context: StatementOfLiabilityContext, statusCode: Int, message: String): Unit = {
-    context.status       shouldBe statusCode
+    context.status shouldBe statusCode
     context.errorMessage shouldBe Some(message)
   }
 
@@ -41,7 +41,7 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
   }
 
   def aDebtStatementOfLiabilityIsRequested(context: StatementOfLiabilityContext): Unit = {
-    val response         = StatementOfLiabilityBuilder.getStatementOfLiability(context.solRequest)
+    val response = StatementOfLiabilityBuilder.getStatementOfLiability(context.solRequest)
     val jsonResponseBody = response.body[JsValue]
     context.status = response.status
     context.solResponseBody = Some(jsonResponseBody.as[SolCalculationSummaryResponse])
@@ -155,7 +155,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     withClue(s"debts[${debtIndex - 1}].duties") {
 
       actualDuties.zip(expectedDuties).zipWithIndex.foreach { case ((actualDuty, expectedDuty), dutyIndex) =>
-
         withClue(s"duties[$dutyIndex]") {
 
           expectedDuty.subTrans.foreach { v =>
@@ -219,7 +218,6 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
       }
 
       actualDuties.zip(expectedDuties).zipWithIndex.foreach { case ((actualDuty, expectedDuty), dutyIndex) =>
-
         withClue(s"duties[$dutyIndex]") {
 
           expectedDuty.subTrans.foreach { v =>

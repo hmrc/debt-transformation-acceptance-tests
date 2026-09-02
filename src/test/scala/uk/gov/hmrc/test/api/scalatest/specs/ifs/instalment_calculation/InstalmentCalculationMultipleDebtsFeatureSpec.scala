@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
-import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.{InstalmentCalculationSummaryResponseExpected, InstalmentResponseExpected}
+import uk.gov.hmrc.test.api.models.ifs.{ DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest }
+import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.{ InstalmentCalculationSummaryResponseExpected, InstalmentResponseExpected }
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.IFSInstalmentCalculationStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags.*
@@ -28,10 +28,7 @@ import uk.gov.hmrc.test.api.scalatest.tags.*
 import java.time.LocalDate
 
 class InstalmentCalculationMultipleDebtsFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with IFSInstalmentCalculationStepHelpers {
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with IFSInstalmentCalculationStepHelpers {
 
   override type FixtureParam = IFSInstalmentCalculationContext
 

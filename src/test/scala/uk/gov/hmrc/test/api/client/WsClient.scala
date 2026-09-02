@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.api.client
 import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.util.ByteString
 import org.slf4j.LoggerFactory
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.*
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 
@@ -60,8 +60,8 @@ object WsClient {
       logger.debug(s"GET request cookies: $cookies")
     }
 
-    val client   = asyncClient
-    val request  = client.url(uri)
+    val client = asyncClient
+    val request = client.url(uri)
     val response = Await.result(
       request
         .withHttpHeaders(headers.toSeq*)
@@ -86,8 +86,8 @@ object WsClient {
     logger.debug(s"POST request headers: $headers")
     logger.debug(s"POST request body: $json")
 
-    val client   = asyncClient
-    val request  = client.url(uri)
+    val client = asyncClient
+    val request = client.url(uri)
     val response = Await.result(
       request
         .withHttpHeaders(headers.toSeq*)
@@ -115,8 +115,8 @@ object WsClient {
     logger.debug(s"POST request headers: $headers")
     logger.debug(s"POST request body: $json")
 
-    val client   = asyncClient
-    val request  = client.url(uri)
+    val client = asyncClient
+    val request = client.url(uri)
     val response = Await.result(
       request
         .withHttpHeaders(headers.toSeq*)
@@ -139,8 +139,8 @@ object WsClient {
     logger.debug(s"PUT request headers: $headers")
     logger.debug(s"PUT request body: $json")
 
-    val client   = asyncClient
-    val request  = client.url(uri)
+    val client = asyncClient
+    val request = client.url(uri)
     val response = Await.result(
       request
         .withHttpHeaders(headers.toSeq*)
@@ -161,8 +161,8 @@ object WsClient {
     logger.info(s"DELETE request URI: $uri")
     logger.debug(s"DELETE request headers: $headers")
 
-    val client   = asyncClient
-    val request  = client.url(uri)
+    val client = asyncClient
+    val request = client.url(uri)
     val response = Await.result(
       request
         .withHttpHeaders(headers.toSeq*)

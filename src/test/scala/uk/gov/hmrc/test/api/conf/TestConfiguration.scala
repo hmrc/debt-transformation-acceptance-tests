@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.test.api.conf
 
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import uk.gov.hmrc.api.conf.TestEnvironment
 
 object TestConfiguration extends TestEnvironment {
-  val config: Config    = ConfigFactory.load()
+  val config: Config = ConfigFactory.load()
   val envConfig: Config = config.getConfig(environment).withFallback(config.getConfig("local"))
 
-  def clientId: String     = envConfig.getString("clientId")
+  def clientId: String = envConfig.getString("clientId")
   def clientSecret: String = envConfig.getString("clientSecret")
 }

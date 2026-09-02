@@ -24,10 +24,7 @@ import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 
 class SolDebtDetailsUnhappyPathFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with StatementOfLiabilityStepHelpers {
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with StatementOfLiabilityStepHelpers {
 
   override type FixtureParam = StatementOfLiabilityContext
 

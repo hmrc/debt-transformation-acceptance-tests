@@ -17,11 +17,11 @@
 package uk.gov.hmrc.test.api.scalatest.builders
 
 import org.scalatest.Assertions.fail
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
 import uk.gov.hmrc.test.api.models.sol.SolDebtsRequest
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
+import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 
 object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
@@ -55,7 +55,7 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
   )
 
   def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
-    val baseUri              = s"$statementOfLiabilityApiUrl/sol"
+    val baseUri = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 
     println("debt management baseUri ************************" + baseUri)

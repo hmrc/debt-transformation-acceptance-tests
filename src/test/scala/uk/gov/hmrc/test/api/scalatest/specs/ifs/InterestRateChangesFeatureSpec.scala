@@ -19,18 +19,15 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.ifs.{DebtCalculationRequest, DebtItem, PaymentHistory}
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
+import uk.gov.hmrc.test.api.models.ifs.{ DebtCalculationRequest, DebtItem, PaymentHistory }
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{ CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected }
 import uk.gov.hmrc.test.api.scalatest.steps.context.InterestForecastingContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 
 import java.time.LocalDate
 
 class InterestRateChangesFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with InterestForecastingStepHelpers {
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with InterestForecastingStepHelpers {
 
   override type FixtureParam = InterestForecastingContext
 

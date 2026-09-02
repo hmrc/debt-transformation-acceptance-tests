@@ -21,8 +21,8 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.*
 import uk.gov.hmrc.test.api.models.ifs.*
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{ CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected }
+import uk.gov.hmrc.test.api.scalatest.steps.context.{ InterestForecastingContext, SuppressionRulesContext }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags.*
@@ -30,10 +30,7 @@ import uk.gov.hmrc.test.api.scalatest.tags.*
 import java.time.LocalDate
 
 class BreathingSpaceFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with InterestForecastingStepHelpers
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with InterestForecastingStepHelpers
     with SuppressionStepHelpers {
 
   override type FixtureParam = InterestForecastingContext

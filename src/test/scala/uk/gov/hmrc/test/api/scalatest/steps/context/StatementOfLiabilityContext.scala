@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.context
 
-import uk.gov.hmrc.test.api.models.sol.{SolCalculationSummaryResponse, SolDebtsRequest}
+import uk.gov.hmrc.test.api.models.sol.{ SolCalculationSummaryResponse, SolDebtsRequest }
 
 final case class StatementOfLiabilityContext(
   var solRequest: Option[SolDebtsRequest] = None,

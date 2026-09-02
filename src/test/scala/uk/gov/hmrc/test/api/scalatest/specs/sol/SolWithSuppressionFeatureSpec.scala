@@ -20,17 +20,14 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.sol.*
-import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
-import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{StatementOfLiabilityContext, SuppressionRulesContext}
+import uk.gov.hmrc.test.api.models.{ SuppressionInformation, SuppressionRequest }
+import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{ SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected }
+import uk.gov.hmrc.test.api.scalatest.steps.context.{ StatementOfLiabilityContext, SuppressionRulesContext }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 
 class SolWithSuppressionFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with StatementOfLiabilityStepHelpers
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with StatementOfLiabilityStepHelpers
     with SuppressionStepHelpers {
 
   override type FixtureParam = StatementOfLiabilityContext
