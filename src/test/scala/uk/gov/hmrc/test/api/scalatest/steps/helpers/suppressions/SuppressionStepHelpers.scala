@@ -29,9 +29,9 @@ trait SuppressionStepHelpers {
     context.suppressionRequest = Some(request)
 
   def suppressionConfigurationIsSentToIfsService(context: SuppressionRulesContext): Unit = {
-    val requestJson         = Json.toJson(context.suppressionRequest.getOrElse(fail("Missing request in context")))
+    val requestJson = Json.toJson(context.suppressionRequest.getOrElse(fail("Missing request in context")))
     val suppressionResponse = SuppressionRulesBuilder.putSuppressionData(requestJson)
-    val suppressionStatus   = suppressionResponse.status
+    val suppressionStatus = suppressionResponse.status
 
     suppressionStatus shouldBe 200
     context.status = suppressionStatus

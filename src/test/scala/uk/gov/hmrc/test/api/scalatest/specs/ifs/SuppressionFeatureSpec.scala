@@ -20,22 +20,18 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.*
-import uk.gov.hmrc.test.api.models.ifs.{CustomerPostCode, DebtCalculationRequest, DebtItem, PaymentHistory}
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected, SuppressionAppliedExpected}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.models.ifs.{ CustomerPostCode, DebtCalculationRequest, DebtItem, PaymentHistory }
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{ CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected, SuppressionAppliedExpected }
+import uk.gov.hmrc.test.api.scalatest.steps.context.{ InterestForecastingContext, SuppressionRulesContext }
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{ IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags.*
 
 import java.time.LocalDate
 
 class SuppressionFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with SuppressionStepHelpers
-    with IFSInstalmentCalculationStepHelpers
-    with InterestForecastingStepHelpers {
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with SuppressionStepHelpers
+    with IFSInstalmentCalculationStepHelpers with InterestForecastingStepHelpers {
 
   override type FixtureParam = InterestForecastingContext
 

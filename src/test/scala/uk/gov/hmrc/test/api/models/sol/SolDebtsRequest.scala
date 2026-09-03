@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.models.sol
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 final case class Debt(
   debtId: String,

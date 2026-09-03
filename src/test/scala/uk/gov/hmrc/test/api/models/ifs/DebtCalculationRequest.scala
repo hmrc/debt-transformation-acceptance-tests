@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.api.models.ifs
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 final case class DebtItem(
   debtID: Option[String],

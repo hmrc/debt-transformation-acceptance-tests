@@ -19,16 +19,13 @@ package uk.gov.hmrc.test.api.scalatest.specs.sol
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.sol.{Debt, SolDebtsRequest}
-import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected}
+import uk.gov.hmrc.test.api.models.sol.{ Debt, SolDebtsRequest }
+import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{ SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected }
 import uk.gov.hmrc.test.api.scalatest.steps.context.StatementOfLiabilityContext
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.sol.StatementOfLiabilityStepHelpers
 
 class SolDebtDetailsRequestFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with StatementOfLiabilityStepHelpers {
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with StatementOfLiabilityStepHelpers {
 
   override type FixtureParam = StatementOfLiabilityContext
 

@@ -21,11 +21,11 @@ import uk.gov.hmrc.test.api.conf.TestConfiguration
 trait BaseUris {
   val statementOfLiabilityApiUrl: String =
     TestConfiguration.url("statement-of-liability")
-  val interestForecastingApiUrl: String  =
+  val interestForecastingApiUrl: String =
     TestConfiguration.url("interest-forecasting")
-  val authLoginApiUri: String            =
+  val authLoginApiUri: String =
     TestConfiguration.url("auth-login-api")
-  val oauthUri: String                   =
+  val oauthUri: String =
     TestConfiguration.url("oauth")
 
 }

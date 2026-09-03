@@ -20,9 +20,9 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.*
-import uk.gov.hmrc.test.api.models.ifs.{CustomerPostCode, DebtCalculationRequest, DebtItem}
+import uk.gov.hmrc.test.api.models.ifs.{ CustomerPostCode, DebtCalculationRequest, DebtItem }
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.*
-import uk.gov.hmrc.test.api.scalatest.steps.context.{InterestForecastingContext, SuppressionRulesContext}
+import uk.gov.hmrc.test.api.scalatest.steps.context.{ InterestForecastingContext, SuppressionRulesContext }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.InterestForecastingStepHelpers
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags.*
@@ -30,10 +30,7 @@ import uk.gov.hmrc.test.api.scalatest.tags.*
 import java.time.LocalDate
 
 class SuppressionByPostCodeFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with SuppressionStepHelpers
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with SuppressionStepHelpers
     with InterestForecastingStepHelpers {
 
   override type FixtureParam = InterestForecastingContext

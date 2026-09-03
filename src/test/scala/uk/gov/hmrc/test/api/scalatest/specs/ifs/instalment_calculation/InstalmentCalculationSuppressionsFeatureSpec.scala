@@ -19,22 +19,18 @@ package uk.gov.hmrc.test.api.scalatest.specs.ifs.instalment_calculation
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.api.models.ifs.{DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest}
-import uk.gov.hmrc.test.api.models.{SuppressionInformation, SuppressionRequest}
-import uk.gov.hmrc.test.api.scalatest.steps.context.{IFSInstalmentCalculationContext, SuppressionRulesContext}
-import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers}
+import uk.gov.hmrc.test.api.models.ifs.{ DebtItemCharge, InstallmentCalculationCustomerPostCode, InstalmentCalculationRequest }
+import uk.gov.hmrc.test.api.models.{ SuppressionInformation, SuppressionRequest }
+import uk.gov.hmrc.test.api.scalatest.steps.context.{ IFSInstalmentCalculationContext, SuppressionRulesContext }
+import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{ IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
 import uk.gov.hmrc.test.api.scalatest.tags.DTD_417
 
 import java.time.LocalDate
 
 class InstalmentCalculationSuppressionsFeatureSpec
-    extends FixtureAnyFeatureSpec
-    with GivenWhenThen
-    with Matchers
-    with IFSInstalmentCalculationStepHelpers
-    with InterestForecastingStepHelpers
-    with SuppressionStepHelpers {
+    extends FixtureAnyFeatureSpec with GivenWhenThen with Matchers with IFSInstalmentCalculationStepHelpers
+    with InterestForecastingStepHelpers with SuppressionStepHelpers {
 
   override type FixtureParam = IFSInstalmentCalculationContext
 
@@ -45,7 +41,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
   }
 
   Feature("Suppression Period ends after quote date") {
-    val dateInFuture       = Some(LocalDate.now().plusYears(1).toString)
+    val dateInFuture = Some(LocalDate.now().plusYears(1).toString)
     val suppressionContext = SuppressionRulesContext()
 
     Scenario(

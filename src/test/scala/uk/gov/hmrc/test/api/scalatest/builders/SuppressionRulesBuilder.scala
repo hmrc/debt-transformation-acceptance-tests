@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
-import uk.gov.hmrc.test.api.utils.{BaseRequests, RandomValues}
+import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 
 object SuppressionRulesBuilder extends BaseRequests with RandomValues {
 
@@ -28,8 +28,8 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       enrolments = Seq("read:suppression-data"),
       userType = getRandomAffinityGroup
     )
-    val baseUri     = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
-    val headers     = Map(
+    val baseUri = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
+    val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"

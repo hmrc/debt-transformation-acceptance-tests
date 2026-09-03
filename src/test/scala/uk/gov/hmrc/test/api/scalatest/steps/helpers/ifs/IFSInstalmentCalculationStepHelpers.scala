@@ -18,13 +18,13 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.models.ifs.InstalmentCalculationRequest
-import uk.gov.hmrc.test.api.models.{InstalmentCalculationSummaryResponse, InstalmentResponse}
+import uk.gov.hmrc.test.api.models.{ InstalmentCalculationSummaryResponse, InstalmentResponse }
 import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder
-import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.{InstalmentCalculationSummaryResponseExpected, InstalmentResponseExpected}
+import uk.gov.hmrc.test.api.scalatest.builders.IFSInstalmentCalculationBuilder.{ InstalmentCalculationSummaryResponseExpected, InstalmentResponseExpected }
 import uk.gov.hmrc.test.api.scalatest.steps.context.IFSInstalmentCalculationContext
 
 import java.time.LocalDate
@@ -33,9 +33,9 @@ import java.time.format.DateTimeFormatter
 trait IFSInstalmentCalculationStepHelpers {
   this: Matchers =>
 
-  var quoteDateString                  = "2022-03-13"
-  val formatter: DateTimeFormatter     = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-  val quoteDate: LocalDate             = LocalDate.parse(quoteDateString, formatter)
+  var quoteDateString = "2022-03-13"
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+  val quoteDate: LocalDate = LocalDate.parse(quoteDateString, formatter)
   val instalmentPaymentDate: LocalDate = quoteDate.plusDays(1)
 
   def instalmentCalculationDetails(
@@ -45,7 +45,7 @@ trait IFSInstalmentCalculationStepHelpers {
     context.ifsRequest = Some(request)
 
   def theInstalmentCalculationDetailIsSentToTheIfsService(context: IFSInstalmentCalculationContext): Unit = {
-    val requestJson                    = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
+    val requestJson = Json.toJson(context.ifsRequest.getOrElse(fail("Missing request in context")))
     val response: StandaloneWSResponse = IFSInstalmentCalculationBuilder.getInstalmentCalculation(requestJson)
     context.response = response
 
@@ -96,8 +96,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -123,8 +123,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -136,8 +136,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualNumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -163,8 +163,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualNumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualNumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -176,8 +176,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualNumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -203,8 +203,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualNumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualNumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -218,8 +218,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -245,8 +245,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -258,8 +258,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -294,8 +294,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -314,7 +314,7 @@ trait IFSInstalmentCalculationStepHelpers {
     interestAccrued: Int
   ): Unit = {
     val response: StandaloneWSResponse = context.response
-    val responseBody                   = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse]
 
     responseBody.instalments(index - 1).instalmentInterestAccrued shouldBe interestAccrued
   }
@@ -323,8 +323,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -349,8 +349,8 @@ trait IFSInstalmentCalculationStepHelpers {
         InstalmentResponse(debtId, 11, instalmentPaymentDate.plusWeeks(10 * 4), 2327, 0, 0, 100000 + 2327, 2.6)
       )
     )
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -364,8 +364,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -391,8 +391,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -406,8 +406,8 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -433,8 +433,8 @@ trait IFSInstalmentCalculationStepHelpers {
         InstalmentResponse(debtId, 12, instalmentPaymentDate.plusMonths(11 * 6), 292, 0, 0, 100000 + 10292, 3)
       )
     )
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -448,12 +448,12 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val debtId       = "debtId"
+    val debtId = "debtId"
     val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
 
     quoteDateString = "2011-03-13"
-    val formatter             = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val quoteDate             = LocalDate.parse(quoteDateString, formatter)
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val quoteDate = LocalDate.parse(quoteDateString, formatter)
     val instalmentPaymentDate = quoteDate.plusDays(1)
 
     val actualnumberOfInstalments =
@@ -481,8 +481,8 @@ trait IFSInstalmentCalculationStepHelpers {
         InstalmentResponse(debtId, 11, instalmentPaymentDate.plusYears(11), 4881, 0, 0, 100000 + 4881, 2.6)
       )
     )
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(
@@ -614,9 +614,9 @@ trait IFSInstalmentCalculationStepHelpers {
     val response: StandaloneWSResponse = context.response
     response.status shouldBe 200
 
-    val instalmentPaymentDate     = quoteDate.plusDays(129)
-    val debtId                    = "debtId"
-    val responseBody              = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
+    val instalmentPaymentDate = quoteDate.plusDays(129)
+    val debtId = "debtId"
+    val responseBody = Json.parse(response.body).as[InstalmentCalculationSummaryResponse].instalments
     val actualnumberOfInstalments =
       Json.parse(response.body).as[InstalmentCalculationSummaryResponse].numberOfInstalments
 
@@ -651,8 +651,8 @@ trait IFSInstalmentCalculationStepHelpers {
       )
     )
 
-    actualnumberOfInstalments             shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
-    responseBody.map(_.dueDate)           shouldBe expectedInstalmentCalculationResponse.instalments.map(
+    actualnumberOfInstalments shouldBe expectedInstalmentCalculationResponse.numberOfInstalments
+    responseBody.map(_.dueDate) shouldBe expectedInstalmentCalculationResponse.instalments.map(
       _.dueDate
     )
     responseBody.map(_.instalmentBalance) shouldBe expectedInstalmentCalculationResponse.instalments.map(

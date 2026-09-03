@@ -21,7 +21,7 @@ package uk.gov.hmrc.test.api.models
  *
  */
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
