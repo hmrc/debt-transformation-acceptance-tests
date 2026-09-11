@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs
 
 import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.{BeforeAndAfterEach, Suite}
+import org.scalatest.{ BeforeAndAfterEach, Suite }
 import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
@@ -32,7 +32,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 trait IFSInstalmentCalculationStepHelpers extends BeforeAndAfterEach {
-  this: Suite with Matchers =>
+  this: Suite & Matchers =>
 
   override def beforeEach(): Unit = {
     super.beforeEach()
