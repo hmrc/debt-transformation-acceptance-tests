@@ -37,5 +37,20 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
     print("url ************************" + baseUri)
     WsClient.put(baseUri, headers = headers, jsonRequest)
   }
+  
+  def deleteSuppressionData: StandaloneWSResponse = {
+    val bearerToken = createBearerToken(
+      enrolments = Seq("read:suppression-data"),
+      userType = getRandomAffinityGroup
+    )
+    val baseUri = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type" -> "application/json",
+      "Accept" -> "application/vnd.hmrc.1.0+json"
+    )
+    print("url ************************" + baseUri)
+    WsClient.delete(baseUri, headers = headers)
+  }
 
 }

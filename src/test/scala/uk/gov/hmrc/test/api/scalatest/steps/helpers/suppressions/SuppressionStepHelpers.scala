@@ -16,15 +16,21 @@
 
 package uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions
 
+import org.scalatest.{BeforeAndAfterEach, Suite}
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.*
 import uk.gov.hmrc.test.api.models.SuppressionRequest
 import uk.gov.hmrc.test.api.scalatest.builders.SuppressionRulesBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
 
-trait SuppressionStepHelpers {
-  this: Matchers =>
+trait SuppressionStepHelpers extends BeforeAndAfterEach{
+  this: Suite with Matchers =>
 
+  override def afterEach(): Unit = {
+    super.afterEach()
+    SuppressionRulesBuilder.deleteSuppressionData
+  }
+  
   def suppressionConfigurationDataIsCreated(context: SuppressionRulesContext, request: SuppressionRequest): Unit =
     context.suppressionRequest = Some(request)
 
