@@ -1106,5 +1106,11 @@ class SuppressionEdgeCasesFeatureSpec
       theDebtSummaryWillNotHaveAnyCalculationWindows(context, 1)
     }
 
+    Scenario("The DELETE endpoint on suppressions should not error") { _ =>
+      When("The DELETE endpoint is called")
+      Then("The response 200 with Empty Body")
+      suppressionConfigurationIsClearedFromIfs()
+    }
+
   }
 }
