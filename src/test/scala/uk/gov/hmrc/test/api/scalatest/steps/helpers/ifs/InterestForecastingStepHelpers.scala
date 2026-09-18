@@ -268,26 +268,6 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
         }
       }
 
-      window.suppressionApplied.foreach { suppression =>
-        suppression.reason.filter(_.nonEmpty).foreach { v =>
-          withClue("reason: ") {
-            actual.suppressionApplied.head.reason shouldBe v
-          }
-        }
-
-        suppression.description.filter(_.nonEmpty).foreach { v =>
-          withClue("description: ") {
-            actual.suppressionApplied.head.description shouldBe v
-          }
-        }
-
-        suppression.code.filter(_.nonEmpty).foreach { v =>
-          withClue("code: ") {
-            actual.suppressionApplied.head.code shouldBe v
-          }
-        }
-      }
-
       window.breathingSpaceApplied.foreach { v =>
         withClue("breathingSpaceApplied: ") {
           actual.breathingSpaceApplied.toString shouldBe v.toString

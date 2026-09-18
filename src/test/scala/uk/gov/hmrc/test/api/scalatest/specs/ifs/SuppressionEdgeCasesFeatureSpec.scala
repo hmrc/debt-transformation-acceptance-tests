@@ -21,7 +21,7 @@ import org.scalatest.featurespec.FixtureAnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.api.models.*
 import uk.gov.hmrc.test.api.models.ifs.{ CustomerPostCode, DebtCalculationRequest, DebtItem }
-import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{ CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected, SuppressionAppliedExpected }
+import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder.{ CalculationWindowExpected, DebtCalculationExpected, DebtCalculationsSummaryExpected }
 import uk.gov.hmrc.test.api.scalatest.steps.context.{ InterestForecastingContext, SuppressionRulesContext }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.ifs.{ IFSInstalmentCalculationStepHelpers, InterestForecastingStepHelpers }
 import uk.gov.hmrc.test.api.scalatest.steps.helpers.suppressions.SuppressionStepHelpers
@@ -126,14 +126,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-04-05")),
@@ -144,14 +137,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-04-06")),
@@ -259,14 +245,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-02-21")),
@@ -277,14 +256,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-03-06")),
@@ -424,14 +396,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE; LEGISLATIVE"),
-              description = Some("COVID; COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-02-21")),
@@ -442,14 +407,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE; LEGISLATIVE"),
-              description = Some("COVID; COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-03-06")),
@@ -460,14 +418,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-03-21")),
@@ -618,14 +569,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-01-07")),
@@ -636,14 +580,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE; LEGISLATIVE"),
-              description = Some("COVID; COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-02-21")),
@@ -654,14 +591,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE; LEGISLATIVE"),
-              description = Some("COVID; COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-03-06")),
@@ -672,14 +602,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestDueWindow = Some(0),
           amountOnIntDueWindow = Some(500000),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2022-03-21")),
@@ -805,14 +728,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestRate = Some(0.0),
           interestDueDailyAccrual = Some(0),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2024-04-21")),
@@ -903,14 +819,7 @@ class SuppressionEdgeCasesFeatureSpec
           interestRate = Some(0.0),
           interestDueDailyAccrual = Some(0),
           unpaidAmountWindow = Some(500000),
-          breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          breathingSpaceApplied = Some(false)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2024-04-21")),
@@ -1013,14 +922,7 @@ class SuppressionEdgeCasesFeatureSpec
           periodTo = Some(LocalDate.parse("2020-04-04")),
           numberOfDays = Some(2),
           interestRate = Some(0.0),
-          amountOnIntDueWindow = Some(500000),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
+          amountOnIntDueWindow = Some(500000)
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2020-04-05")),

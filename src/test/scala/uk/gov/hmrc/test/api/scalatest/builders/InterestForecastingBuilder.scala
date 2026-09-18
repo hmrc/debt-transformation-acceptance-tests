@@ -69,16 +69,9 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
     amountOnIntDueWindow: Option[BigDecimal] = None,
     breathingSpaceApplied: Option[Boolean] = None,
     unpaidAmountWindow: Option[BigDecimal] = None,
-    suppressionApplied: Option[SuppressionAppliedExpected] = None,
     suppressionsApplied: Option[List[SuppressionsAppliedExpected]] = None
   )
-
-  final case class SuppressionAppliedExpected(
-    reason: Option[String] = None,
-    description: Option[String] = None,
-    code: Option[String] = None
-  )
-
+  
   final case class SuppressionsAppliedExpected(
     dateFrom: Option[String] = None,
     dateTo: Option[String] = None,

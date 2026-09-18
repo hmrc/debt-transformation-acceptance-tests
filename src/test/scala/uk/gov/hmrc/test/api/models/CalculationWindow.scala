@@ -30,14 +30,8 @@ case class CalculationWindow(
   amountOnIntDueWindow: BigDecimal,
   breathingSpaceApplied: Boolean,
   unpaidAmountWindow: BigDecimal,
-  suppressionApplied: Option[SuppressionApplied],
   suppressionsApplied: Option[List[SuppressionsApplied]]
 )
-
-case class SuppressionApplied(reason: String, description: String, code: String)
-object SuppressionApplied {
-  implicit val formatCalculationWindow: OFormat[SuppressionApplied] = Json.format[SuppressionApplied]
-}
 
 case class SuppressionsApplied(
   dateFrom: String,

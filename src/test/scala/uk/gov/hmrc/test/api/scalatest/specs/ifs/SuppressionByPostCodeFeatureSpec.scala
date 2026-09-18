@@ -156,13 +156,6 @@ class SuppressionByPostCodeFeatureSpec
             interestDueDailyAccrual = Some(0),
             unpaidAmountWindow = Some(500000),
             breathingSpaceApplied = Some(false),
-            suppressionApplied = Some(
-              SuppressionAppliedExpected(
-                reason = Some("LEGISLATIVE"),
-                description = Some("COVID"),
-                code = Some("Converted from new suppression style")
-              )
-            )
           ),
           CalculationWindowExpected(
             periodFrom = Some(LocalDate.parse("2021-05-05")),
@@ -282,13 +275,6 @@ class SuppressionByPostCodeFeatureSpec
           unpaidAmountWindow = Some(500000),
           amountOnIntDueWindow = Some(500000),
           breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-05-05")),
@@ -407,13 +393,6 @@ class SuppressionByPostCodeFeatureSpec
           interestDueDailyAccrual = Some(0),
           unpaidAmountWindow = Some(500000),
           breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-02-04")),
@@ -423,13 +402,6 @@ class SuppressionByPostCodeFeatureSpec
           interestDueDailyAccrual = Some(0),
           unpaidAmountWindow = Some(500000),
           breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE; LEGISLATIVE"),
-              description = Some("COVID; COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          ),
           suppressionsApplied = Some(
             List(
               SuppressionsAppliedExpected(
@@ -450,13 +422,6 @@ class SuppressionByPostCodeFeatureSpec
           interestDueDailyAccrual = Some(0),
           unpaidAmountWindow = Some(500000),
           breathingSpaceApplied = Some(false),
-          suppressionApplied = Some(
-            SuppressionAppliedExpected(
-              reason = Some("LEGISLATIVE"),
-              description = Some("COVID"),
-              code = Some("Converted from new suppression style")
-            )
-          )
         ),
         CalculationWindowExpected(
           periodFrom = Some(LocalDate.parse("2021-05-05")),
@@ -822,13 +787,6 @@ class SuppressionByPostCodeFeatureSpec
             interestDueDailyAccrual = Some(0),
             unpaidAmountWindow = Some(500000),
             breathingSpaceApplied = Some(false),
-            suppressionApplied = Some(
-              SuppressionAppliedExpected(
-                reason = Some("LEGISLATIVE"),
-                description = Some("COVID"),
-                code = Some("Converted from new suppression style")
-              )
-            )
           ),
           CalculationWindowExpected(
             periodFrom = Some(LocalDate.parse("2021-05-05")),
