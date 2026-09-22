@@ -1,6 +1,11 @@
 # debt-transformation-acceptance-tests
 API test suite for the `Debt Transformation` using ScalaTest and [play-ws](https://github.com/playframework/play-ws) client.
 
+## Bruno API collection - Import guide
+```
+This guide can be found in statement-of-liability and interest-forecasting implementation repo README.md
+```
+
 ## Running the tests
 
 Plugins used in the ATs repo
