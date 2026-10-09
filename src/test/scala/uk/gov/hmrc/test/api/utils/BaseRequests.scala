@@ -60,6 +60,8 @@ trait BaseRequests extends RandomValues with BaseUris {
     TestConfiguration.environment match {
       case "local" =>
         createLocalBearerToken(enrolments, userType, utr)
+      case _ =>
+        throw new IllegalArgumentException("Unsupported environment")
     }
 
   }
