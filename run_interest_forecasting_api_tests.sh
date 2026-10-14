@@ -10,6 +10,13 @@ then
   scalaTestTags="\"WIP IGNORE\""
 fi
 
+if [ "$environment" != "local" ]; then
+  echo "Only the local environment is supported (see README)."
+  exit 1
+fi
+
+
+
 # DTD-216: Workaround to load the rule set
 status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:9946/ping/ping)
 if [[ "$status_code" -ne 200 ]] ; then

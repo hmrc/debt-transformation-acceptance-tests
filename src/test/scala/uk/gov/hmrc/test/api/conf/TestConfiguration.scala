@@ -16,10 +16,6 @@
 
 package uk.gov.hmrc.test.api.conf
 
-import com.typesafe.config.{ Config, ConfigFactory }
 import uk.gov.hmrc.api.conf.TestEnvironment
 
-object TestConfiguration extends TestEnvironment {
-  val config: Config = ConfigFactory.load()
-  val envConfig: Config = config.getConfig(environment).withFallback(config.getConfig("local"))
-}
+object TestConfiguration extends TestEnvironment {}
