@@ -56,13 +56,10 @@ interestForecostingApiUrl/test-only/suppressions/overrides
 interestForecostingApiUrl/test-only/suppressions
 ```
 
-The tests default to the `local` environment.  For a complete list of supported param values, see:
-- `src/test/resources/application.conf` for **environment**
+The tests run only against the `local` environment (the services started by `sm2 --start DTD_ALL`).
+The environment is set in [application.conf](src/test/resources/application.conf) and passed to sbt as `-Denvironment=local`.
 
-#### Running the tests against a test environment
-
-Running the tests against the local environment set the corresponding `host` environment property as specified under
-`<env>.host.services` in the [application.conf](src/test/resources/application.conf).
+#### Running against QA is no longer supported
 
 ### Scalafmt
 This repository uses [Scalafmt](https://scalameta.org/scalafmt/), a code formatter for Scala. The formatting rules configured for this repository are defined within [.scalafmt.conf](.scalafmt.conf).

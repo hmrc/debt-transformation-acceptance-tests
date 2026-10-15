@@ -10,6 +10,11 @@ then
   scalaTestTags="\"WIP IGNORE\""
 fi
 
+if [ "$environment" != "local" ]; then
+  echo "Only the local environment is supported (see README)."
+  exit 1
+fi
+
 scala_exit=0
 
 echo "*** running on $environment for scala tags '$scalaTestTags' ***"

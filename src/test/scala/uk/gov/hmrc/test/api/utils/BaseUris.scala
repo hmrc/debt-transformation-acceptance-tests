@@ -25,7 +25,5 @@ trait BaseUris {
     TestConfiguration.url("interest-forecasting")
   val authLoginApiUri: String =
     TestConfiguration.url("auth-login-api")
-  val oauthUri: String =
-    TestConfiguration.url("oauth")
 
 }
