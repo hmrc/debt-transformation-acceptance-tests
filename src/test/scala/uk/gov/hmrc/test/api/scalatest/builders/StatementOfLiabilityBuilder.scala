@@ -26,7 +26,7 @@ import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
 
   private val bearerToken: String =
-    createBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
+    createEnrolmentBearerToken(enrolments = Seq("read:statement-of-liability"), userType = getRandomAffinityGroup)
 
   final case class SolCalculationSummaryResponseExpected(
     amountIntTotal: Option[BigInt] = None,
@@ -55,6 +55,10 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
   )
 
   def getStatementOfLiability(maybeRequest: Option[SolDebtsRequest]): StandaloneWSResponse = {
+    createLocalInternalAuthToken(
+      repoResourceTypes = Seq("interest-forecasting"),
+      authToken = "local-test-token-sol-ifs"
+    )
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 
