@@ -25,7 +25,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
 
   def putSuppressionData(jsonRequest: JsValue): StandaloneWSResponse = {
     val bearerToken = createEnrolmentBearerToken(
-      enrolments = Seq("read:statement-of-liability"),
+      enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
     val baseUri = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
@@ -40,7 +40,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
 
   def deleteSuppressionData: StandaloneWSResponse = {
     val bearerToken = createEnrolmentBearerToken(
-      enrolments = Seq("read:statement-of-liability"),
+      enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
     val baseUri = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
