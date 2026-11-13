@@ -81,11 +81,11 @@ trait BaseRequests extends RandomValues with BaseUris {
           }
       )
     val response =
-      WsClient.post("http://localhost:8470/test-only/token", Map("Content-Type" -> "application/json"), json)
+      WsClient.post(s"$internalAuthApiUri/test-only/token", Map("Content-Type" -> "application/json"), json)
 
-    if (response.status == 500) {
-      authToken
-    } else {
+    if (response.status != 201)
+      throw new RuntimeException("The internal-auth token hasn't been created correctly.")
+    else {
       val responseBody = Json.parse(response.body)
       val token = (responseBody \ "token").as[String]
       token
