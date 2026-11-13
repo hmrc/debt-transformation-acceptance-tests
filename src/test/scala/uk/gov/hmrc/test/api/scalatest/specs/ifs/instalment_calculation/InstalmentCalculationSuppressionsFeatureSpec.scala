@@ -88,7 +88,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
         customerPostCodes = Some(
           List(
             InstallmentCalculationCustomerPostCode(
-              postCode = "BS39 5DP",
+              postCode = "AA1 1AA",
               postCodeDate = LocalDate.now().minusYears(1).toString
             )
           )
@@ -156,7 +156,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
         customerPostCodes = Some(
           List(
             InstallmentCalculationCustomerPostCode(
-              postCode = "TW3",
+              postCode = "AA1 1AA",
               postCodeDate = LocalDate.now().minusYears(1).toString
             )
           )
@@ -225,7 +225,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
         customerPostCodes = Some(
           List(
             InstallmentCalculationCustomerPostCode(
-              postCode = "TW3",
+              postCode = "AA1 1AA",
               postCodeDate = LocalDate.now().minusYears(1).toString
             )
           )
@@ -291,7 +291,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
         customerPostCodes = Some(
           List(
             InstallmentCalculationCustomerPostCode(
-              postCode = "BS39 5DP",
+              postCode = "AA1 1AA",
               postCodeDate = LocalDate.now().minusYears(1).toString
             )
           )
@@ -357,7 +357,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
         customerPostCodes = Some(
           List(
             InstallmentCalculationCustomerPostCode(
-              postCode = "TW3",
+              postCode = "AA1 1AA",
               postCodeDate = LocalDate.now().minusYears(1).toString
             )
           )
@@ -424,7 +424,7 @@ class InstalmentCalculationSuppressionsFeatureSpec
         customerPostCodes = Some(
           List(
             InstallmentCalculationCustomerPostCode(
-              postCode = "TW3",
+              postCode = "AA1 1AA",
               postCodeDate = LocalDate.now().minusYears(1).toString
             )
           )

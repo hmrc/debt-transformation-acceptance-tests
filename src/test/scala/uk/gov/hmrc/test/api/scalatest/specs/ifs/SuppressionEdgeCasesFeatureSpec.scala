@@ -57,7 +57,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2022-04-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
@@ -84,7 +84,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-01-05")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2020-01-05")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -165,7 +165,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2022-03-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -192,7 +192,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -306,7 +306,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2022-03-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -316,7 +316,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2022-03-20"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -343,7 +343,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -479,7 +479,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2022-03-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = Some("1000"),
             checkPeriodEnd = None
@@ -489,7 +489,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2022-03-20"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = Some("1000"),
             checkPeriodEnd = None
@@ -516,7 +516,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2020-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -663,7 +663,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2024-04-20"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -690,7 +690,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -754,7 +754,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2024-04-20"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -781,7 +781,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -872,7 +872,7 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -946,7 +946,7 @@ class SuppressionEdgeCasesFeatureSpec
             dateTo = Some("2021-05-04"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = Some("1090"),
             checkPeriodEnd = None
@@ -973,9 +973,9 @@ class SuppressionEdgeCasesFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M", postCodeDate = "2018-07-06"),
-          CustomerPostCode(postCode = "EC2M 4QQ", postCodeDate = "2019-07-06"),
-          CustomerPostCode(postCode = "EC2M 4QR", postCodeDate = "2020-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2018-07-06"),
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06"),
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
