@@ -1271,7 +1271,7 @@ class BreathingSpaceFeatureSpec
             paymentHistory = Some(List.empty)
           )
         ),
-        customerPostCodes = List(CustomerPostCode(postCode = "TW3 4QQ", postCodeDate = "2019-07-06"))
+        customerPostCodes = List(CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06"))
       )
       aDebtCalculationIsCreated(context, request)
 
@@ -1356,7 +1356,7 @@ class BreathingSpaceFeatureSpec
               paymentHistory = Some(List.empty)
             )
           ),
-          customerPostCodes = List(CustomerPostCode(postCode = "TW3 4QQ", postCodeDate = "2019-07-06"))
+          customerPostCodes = List(CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06"))
         )
         aDebtCalculationIsCreated(context, request)
 

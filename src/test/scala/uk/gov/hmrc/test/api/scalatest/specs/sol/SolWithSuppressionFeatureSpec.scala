@@ -117,7 +117,7 @@ class SolWithSuppressionFeatureSpec
             dateTo = Some("2021-03-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("NW23 4PT"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
@@ -355,7 +355,7 @@ class SolWithSuppressionFeatureSpec
             dateTo = Some("2021-03-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("TW33 4QQ"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
