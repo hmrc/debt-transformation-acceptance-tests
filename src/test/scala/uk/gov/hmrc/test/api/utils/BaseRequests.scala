@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.api.conf.TestConfiguration
 
 trait BaseRequests extends RandomValues with BaseUris {
 
-  def createBearerToken(
+  def createEnrolmentBearerToken(
     enrolments: Seq[String] = Seq(),
     userType: String = "userType",
     utr: String = "123456789012"
@@ -66,4 +66,29 @@ trait BaseRequests extends RandomValues with BaseUris {
 
   }
 
+  def createLocalInternalAuthToken(repoResourceTypes: Seq[String], authToken: String = "valid-auth-token"): String = {
+    val json =
+      Json.obj(
+        "token"     -> authToken,
+        "principal" -> "object-store",
+        "permissions" ->
+          repoResourceTypes.map { resourceType =>
+            Json.obj(
+              "resourceType"     -> resourceType,
+              "resourceLocation" -> "*",
+              "actions"          -> Json.arr("*")
+            )
+          }
+      )
+    val response =
+      WsClient.post(s"$internalAuthApiUri/test-only/token", Map("Content-Type" -> "application/json"), json)
+
+    if (response.status != 201)
+      throw new RuntimeException("The internal-auth token hasn't been created correctly.")
+    else {
+      val responseBody = Json.parse(response.body)
+      val token = (responseBody \ "token").as[String]
+      token
+    }
+  }
 }
