@@ -117,7 +117,7 @@ class SolWithSuppressionFeatureSpec
             dateTo = Some("2021-03-05"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("AA2 2BB"),
+            postcode = Some("AA2 2AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None

@@ -64,7 +64,7 @@ class SuppressionByPostCodeFeatureSpec
               dateTo = Some("2021-03-01"),
               reason = "LEGISLATIVE",
               reasonDesc = "COVID",
-              postcode = Some("AA2 2BB"),
+              postcode = Some("AA2 2AA"),
               mainTrans = None,
               subTrans = None,
               checkPeriodEnd = None
@@ -96,7 +96,7 @@ class SuppressionByPostCodeFeatureSpec
               postCodeDate = "2020-12-10"
             ),
             CustomerPostCode(
-              postCode = "AA2 2BB",
+              postCode = "AA2 2AA",
               postCodeDate = "2021-04-10"
             )
           )
@@ -133,7 +133,7 @@ class SuppressionByPostCodeFeatureSpec
           dateTo = Some("2021-03-01"),
           reason = Some("LEGISLATIVE"),
           reasonDesc = Some("COVID"),
-          postcode = Some("AA2 2BB")
+          postcode = Some("AA2 2AA")
         )
         theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(context, 1, 1, expected1stSuppressionsApplied)
 
@@ -300,7 +300,7 @@ class SuppressionByPostCodeFeatureSpec
             dateTo = Some("2021-03-01"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("AA2 2BB"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
@@ -342,7 +342,7 @@ class SuppressionByPostCodeFeatureSpec
             postCodeDate = "2021-04-10"
           ),
           CustomerPostCode(
-            postCode = "AA2 2BB",
+            postCode = "AA1 1AA",
             postCodeDate = "2020-12-10"
           )
         )
@@ -379,7 +379,7 @@ class SuppressionByPostCodeFeatureSpec
         dateTo = Some("2021-03-01"),
         reason = Some("LEGISLATIVE"),
         reasonDesc = Some("COVID"),
-        postcode = Some("AA2 2BB")
+        postcode = Some("AA1 1AA")
       )
       theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(context, 1, 1, expected1stSuppressionsApplied)
 
@@ -409,7 +409,7 @@ class SuppressionByPostCodeFeatureSpec
                 dateTo = Some("2021-03-01"),
                 reason = Some("LEGISLATIVE"),
                 reasonDesc = Some("COVID"),
-                postcode = Some("AA2 2BB")
+                postcode = Some("AA1 1AA")
               )
             )
           )
@@ -550,7 +550,7 @@ class SuppressionByPostCodeFeatureSpec
             dateTo = Some("2021-05-04"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("AA1"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
@@ -633,7 +633,7 @@ class SuppressionByPostCodeFeatureSpec
               dateTo = Some("2021-05-04"),
               reason = "LEGISLATIVE",
               reasonDesc = "COVID",
-              postcode = Some("AA1"),
+              postcode = Some("AA1 1AA"),
               mainTrans = None,
               subTrans = None,
               checkPeriodEnd = None
@@ -709,7 +709,7 @@ class SuppressionByPostCodeFeatureSpec
               dateTo = Some("2021-05-04"),
               reason = "LEGISLATIVE",
               reasonDesc = "COVID",
-              postcode = Some("AA1"),
+              postcode = Some("AA1 1AA"),
               mainTrans = None,
               subTrans = None,
               checkPeriodEnd = None
@@ -838,7 +838,7 @@ class SuppressionByPostCodeFeatureSpec
         ),
         customerPostCodes = List(
           CustomerPostCode(
-            postCode = "AA9 9AA",
+            postCode = "AA2 2AA",
             postCodeDate = "2020-07-06"
           )
         )
