@@ -25,5 +25,7 @@ trait BaseUris {
     TestConfiguration.url("interest-forecasting")
   val authLoginApiUri: String =
     TestConfiguration.url("auth-login-api")
+  val internalAuthApiUri: String =
+    TestConfiguration.url("internal-auth")
 
 }

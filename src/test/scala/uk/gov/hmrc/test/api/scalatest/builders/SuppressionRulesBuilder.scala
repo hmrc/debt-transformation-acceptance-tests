@@ -24,8 +24,8 @@ import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 object SuppressionRulesBuilder extends BaseRequests with RandomValues {
 
   def putSuppressionData(jsonRequest: JsValue): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-      enrolments = Seq("read:suppression-data"),
+    val bearerToken = createEnrolmentBearerToken(
+      enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
     val baseUri = s"$interestForecastingApiUrl/test-only/suppressions/overrides"
@@ -39,8 +39,8 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
   }
 
   def deleteSuppressionData: StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-      enrolments = Seq("read:suppression-data"),
+    val bearerToken = createEnrolmentBearerToken(
+      enrolments = Seq("read:interest-forecasting"),
       userType = getRandomAffinityGroup
     )
     val baseUri = s"$interestForecastingApiUrl/test-only/suppressions/overrides"

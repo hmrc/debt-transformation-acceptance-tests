@@ -84,26 +84,23 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
   )
 
   def getDebtCalculation(jsonRequest: JsValue): StandaloneWSResponse = {
-    val bearerToken =
-      createBearerToken(enrolments = Seq("read:interest-forecasting"), userType = getRandomAffinityGroup)
+    val bearerToken = createLocalInternalAuthToken(repoResourceTypes = Seq("interest-forecasting"))
     val baseUri = s"$interestForecastingApiUrl/debt-calculation"
     val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
+      "Authorization" -> bearerToken,
       "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
+      "Accept"        -> "application/vnd.hmrc.1.0+json",
+      "Originator"    -> getRandomOriginator
     )
     print("IFS debt-calculation baseUri ************************" + baseUri)
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
   def getDebtInterestTypeRequestBody(json: JsValue): StandaloneWSResponse = {
-    val bearerToken = createBearerToken(
-      enrolments = Seq("read:interest-forecasting"),
-      userType = getRandomAffinityGroup
-    )
+    val bearerToken = createLocalInternalAuthToken(repoResourceTypes = Seq("interest-forecasting"))
     val baseUri = s"$interestForecastingApiUrl/debt-interest-type"
     val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
+      "Authorization" -> bearerToken,
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
