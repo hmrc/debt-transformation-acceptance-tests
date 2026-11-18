@@ -974,8 +974,8 @@ class SuppressionEdgeCasesFeatureSpec
         ),
         customerPostCodes = List(
           CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2018-07-06"),
-          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06"),
-          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2020-07-06")
+          CustomerPostCode(postCode = "AA2 2AA", postCodeDate = "2019-07-06"),
+          CustomerPostCode(postCode = "AA3 3AA", postCodeDate = "2020-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)

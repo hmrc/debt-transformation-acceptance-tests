@@ -211,11 +211,11 @@ class SuppressionByPostCodeFeatureSpec
             postCodeDate = "2018-07-06"
           ),
           CustomerPostCode(
-            postCode = "AA1 1AA",
+            postCode = "AA2 2AA",
             postCodeDate = "2019-07-06"
           ),
           CustomerPostCode(
-            postCode = "AA1 1AA",
+            postCode = "AA3 3AA",
             postCodeDate = "2020-07-06"
           )
         )
@@ -342,7 +342,7 @@ class SuppressionByPostCodeFeatureSpec
             postCodeDate = "2021-04-10"
           ),
           CustomerPostCode(
-            postCode = "AA1 1AA",
+            postCode = "AA2 2AA",
             postCodeDate = "2020-12-10"
           )
         )
@@ -499,11 +499,11 @@ class SuppressionByPostCodeFeatureSpec
             postCodeDate = "2021-02-06"
           ),
           CustomerPostCode(
-            postCode = "AA1 1AA",
+            postCode = "AA2 2AA",
             postCodeDate = "2019-07-06"
           ),
           CustomerPostCode(
-            postCode = "AA1 1AA",
+            postCode = "AA3 3AA",
             postCodeDate = "2018-07-06"
           )
         )
