@@ -179,7 +179,7 @@ class SuppressionByPostCodeFeatureSpec
             dateTo = Some("2021-05-04"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("AA1 1AA"),
+            postcode = Some("AA3 3AA"),
             mainTrans = Some("1535"),
             subTrans = None,
             checkPeriodEnd = None
@@ -300,7 +300,7 @@ class SuppressionByPostCodeFeatureSpec
             dateTo = Some("2021-03-01"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("AA1 1AA"),
+            postcode = Some("AA2 2AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
@@ -379,7 +379,7 @@ class SuppressionByPostCodeFeatureSpec
         dateTo = Some("2021-03-01"),
         reason = Some("LEGISLATIVE"),
         reasonDesc = Some("COVID"),
-        postcode = Some("AA1 1AA")
+        postcode = Some("AA2 2AA")
       )
       theDebtSummaryWillHaveSuppressionAppliedCalculationWindows(context, 1, 1, expected1stSuppressionsApplied)
 
@@ -409,7 +409,7 @@ class SuppressionByPostCodeFeatureSpec
                 dateTo = Some("2021-03-01"),
                 reason = Some("LEGISLATIVE"),
                 reasonDesc = Some("COVID"),
-                postcode = Some("AA1 1AA")
+                postcode = Some("AA2 2AA")
               )
             )
           )
