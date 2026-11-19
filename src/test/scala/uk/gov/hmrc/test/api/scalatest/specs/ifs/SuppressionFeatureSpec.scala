@@ -57,7 +57,7 @@ class SuppressionFeatureSpec
             dateTo = Some("2024-03-20"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = Some("1535"),
             subTrans = Some("1000"),
             checkPeriodEnd = Some(true)
@@ -90,7 +90,7 @@ class SuppressionFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -222,7 +222,7 @@ class SuppressionFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -372,7 +372,7 @@ class SuppressionFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -512,7 +512,7 @@ class SuppressionFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -599,7 +599,7 @@ class SuppressionFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2019-07-06")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2019-07-06")
         )
       )
       aDebtCalculationIsCreated(context, request)
@@ -902,7 +902,7 @@ class SuppressionFeatureSpec
             dateTo = Some("2022-04-20"),
             reason = "LEGISLATIVE",
             reasonDesc = "COVID",
-            postcode = Some("EC2M 2LS"),
+            postcode = Some("AA1 1AA"),
             mainTrans = None,
             subTrans = None,
             checkPeriodEnd = None
@@ -941,7 +941,7 @@ class SuppressionFeatureSpec
           )
         ),
         customerPostCodes = List(
-          CustomerPostCode(postCode = "EC2M 2LS", postCodeDate = "2022-01-01")
+          CustomerPostCode(postCode = "AA1 1AA", postCodeDate = "2022-01-01")
         )
       )
       aDebtCalculationIsCreated(context, request)
