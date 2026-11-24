@@ -12,6 +12,8 @@ lazy val root = (project in file(".")).settings(
     "-deprecation",
     "-feature",
     "-unchecked",
-    "-source:future-migration"
+    "-Xfatal-warnings",
+    "-source:future-migration",
+    "-Wconf:msg=Flag.*repeatedly:s"
   )
 )
