@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 
 object SuppressionRulesBuilder extends BaseRequests with RandomValues {
@@ -34,7 +35,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
+    logger.info("url ************************ \n" + baseUri)
     WsClient.put(baseUri, headers = headers, jsonRequest)
   }
 
@@ -49,7 +50,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
+    logger.info("url ************************ \n" + baseUri)
     WsClient.delete(baseUri, headers = headers)
   }
 

@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 
 import java.time.LocalDate
@@ -56,7 +57,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("instalment-calculation baseUri ********************" + baseUri)
+    logger.info("instalment-calculation baseUri ******************** \n" + baseUri)
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
@@ -80,8 +81,8 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "combineLastInstalments" -> s"$combineLastInstalments"
     )
 
-    println(s"query string parameters ******************** --> $queryParameters")
-    println(s"instalment-calculation baseUri ******************** --> $baseUri")
+    logger.info(s"query string parameters ******************** --> \n $queryParameters")
+    logger.info(s"instalment-calculation baseUri ******************** --> \n $baseUri")
 
     WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, jsonRequest)
   }
@@ -97,7 +98,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
+    logger.info("url ************************ \n" + baseUri)
     WsClient.put(baseUri, headers = headers, json)
   }
 

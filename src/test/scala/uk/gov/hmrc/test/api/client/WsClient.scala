@@ -47,7 +47,6 @@ object WsClient {
     cookies: Seq[WSCookie] = Seq.empty[WSCookie],
     followRedirects: Boolean = false
   ): StandaloneWSResponse = {
-    println("")
     logger.debug("*********** NEW REQUEST ***********")
     logger.debug(s"GET request URI: $uri")
     if (queryParameters.nonEmpty) {
@@ -72,7 +71,6 @@ object WsClient {
       timeout
     )
 
-    println("")
     logger.debug(s"GET response status: ${response.status}")
     logger.debug(s"GET response headers: ${response.headers}")
     logger.debug(s"GET response body: ${response.body}")
@@ -81,7 +79,6 @@ object WsClient {
   }
 
   def post(uri: String, headers: Map[String, String], json: JsValue): StandaloneWSResponse = {
-    println("")
     logger.info(s"POST request URI: $uri")
     logger.debug(s"POST request headers: $headers")
     logger.debug(s"POST request body: $json")
@@ -96,7 +93,6 @@ object WsClient {
       timeout
     )
 
-    println("")
     logger.debug(s"POST response status: ${response.status}")
     logger.debug(s"POST response headers: ${response.headers}")
     logger.debug(s"POST response body: ${response.body}")
@@ -110,7 +106,6 @@ object WsClient {
     queryParameters: Map[String, String],
     json: JsValue
   ): StandaloneWSResponse = {
-    println("")
     logger.info(s"POST request URI: $uri")
     logger.debug(s"POST request headers: $headers")
     logger.debug(s"POST request body: $json")
@@ -126,7 +121,6 @@ object WsClient {
       timeout
     )
 
-    println("")
     logger.debug(s"POST response status: ${response.status}")
     logger.debug(s"POST response headers: ${response.headers}")
     logger.debug(s"POST response body: ${response.body}")
@@ -157,7 +151,6 @@ object WsClient {
   }
 
   def delete(uri: String, headers: Map[String, String]): StandaloneWSResponse = {
-    println("")
     logger.info(s"DELETE request URI: $uri")
     logger.debug(s"DELETE request headers: $headers")
 
@@ -171,7 +164,6 @@ object WsClient {
       timeout
     )
 
-    println("")
     logger.debug(s"DELETE response status: ${response.status}")
     logger.debug(s"DELETE response headers: ${response.headers}")
     logger.debug(s"DELETE response body: ${response.body}")

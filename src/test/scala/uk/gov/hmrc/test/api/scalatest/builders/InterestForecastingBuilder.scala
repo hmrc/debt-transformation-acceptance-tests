@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.api.scalatest.builders
 import play.api.libs.json.JsValue
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 
 import java.time.LocalDate
@@ -92,7 +93,7 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json",
       "Originator"    -> getRandomOriginator
     )
-    print("IFS debt-calculation baseUri ************************" + baseUri)
+    logger.info("IFS debt-calculation baseUri ************************ \n" + baseUri)
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
@@ -104,8 +105,8 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("IFS debt-interest type baseUri ************************" + baseUri)
-    print("IFS debt-interest Type json********************" + json)
+    logger.info("IFS debt-interest type baseUri ************************ \n" + baseUri)
+    logger.info("IFS debt-interest Type json******************** \n" + json)
 
     WsClient.post(baseUri, headers = headers, json)
   }

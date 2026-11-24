@@ -13,7 +13,6 @@ Plugins used in the ATs repo
 ![plugins.png](images/plugins.png)
 
 Prior to executing the tests ensure you have:
-- Installed [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/)
 - Installed [MongoDB](https://docs.mongodb.com/manual/installation/)
 - Installed/configured [service manager](https://github.com/hmrc/sm2).
 

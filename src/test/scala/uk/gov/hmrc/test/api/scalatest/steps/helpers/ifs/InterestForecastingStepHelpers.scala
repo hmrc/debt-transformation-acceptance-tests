@@ -23,6 +23,7 @@ import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
 import play.api.libs.ws.StandaloneWSResponse
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.models.*
 import uk.gov.hmrc.test.api.models.ifs.DebtCalculationRequest
 import uk.gov.hmrc.test.api.scalatest.builders.InterestForecastingBuilder
@@ -44,14 +45,11 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
     context.status = response.status
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
 
-    println("\n==== REQUEST BODY ====")
-    println(requestJson)
+    logger.info("\n==== REQUEST BODY ==== " + requestJson)
 
-    println("\n==== RESPONSE STATUS ====")
-    println(context.status)
+    logger.info("\n==== RESPONSE STATUS ==== " + context.status)
 
-    println("\n==== RESPONSE BODY ====")
-    println(jsonResponseBody)
+    logger.info("\n==== RESPONSE BODY ==== " + jsonResponseBody)
   }
 
   def theDebtItemIsSentToTheIfsServiceAndFails(
@@ -74,14 +72,11 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
     context.ditResponseBody = Some(jsonResponseBody.as[DebtInterestTypeResponse])
     context.status = response.status
 
-    println("\n==== REQUEST BODY ====")
-    println(requestJson)
+    logger.info("\n==== REQUEST BODY ==== \n" + requestJson)
 
-    println("\n==== RESPONSE STATUS ====")
-    println(context.status)
+    logger.info("\n==== RESPONSE STATUS ==== \n" + context.status)
 
-    println("\n==== RESPONSE BODY ====")
-    println(jsonResponseBody)
+    logger.info("\n==== RESPONSE BODY ==== \n" + jsonResponseBody)
   }
 
   def theIfsServiceWillReturnATotalDebtsSummaryOf(
