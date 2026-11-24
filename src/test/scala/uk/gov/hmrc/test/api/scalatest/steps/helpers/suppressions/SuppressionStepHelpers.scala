@@ -45,9 +45,9 @@ trait SuppressionStepHelpers extends BeforeAndAfterEach {
     context.status = suppressionStatus
     context.headers = suppressionResponse.headers.view.mapValues(_.mkString(", ")).toMap
 
-    logger.info("\n==== SUPPRESSION REQUEST BODY ==== " + requestJson)
+    logger.info("\n==== SUPPRESSION REQUEST BODY ==== \n" + requestJson)
 
-    logger.info("\n==== SUPPRESSION RESPONSE STATUS ==== " + context.status)
+    logger.info("\n==== SUPPRESSION RESPONSE STATUS ==== \n" + context.status)
   }
 
   def suppressionConfigurationIsClearedFromIfs(): Unit = {

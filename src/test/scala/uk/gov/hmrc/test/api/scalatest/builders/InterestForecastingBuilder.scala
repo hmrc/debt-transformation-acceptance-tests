@@ -93,7 +93,7 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json",
       "Originator"    -> getRandomOriginator
     )
-    logger.info("IFS debt-calculation baseUri ************************ " + baseUri)
+    logger.info("IFS debt-calculation baseUri ************************ \n" + baseUri)
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
@@ -105,8 +105,8 @@ object InterestForecastingBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    logger.info("IFS debt-interest type baseUri ************************ " + baseUri)
-    logger.info("IFS debt-interest Type json******************** " + json)
+    logger.info("IFS debt-interest type baseUri ************************ \n" + baseUri)
+    logger.info("IFS debt-interest Type json******************** \n" + json)
 
     WsClient.post(baseUri, headers = headers, json)
   }

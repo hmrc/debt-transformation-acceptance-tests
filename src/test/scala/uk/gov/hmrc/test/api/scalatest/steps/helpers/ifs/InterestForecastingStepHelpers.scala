@@ -72,11 +72,11 @@ trait InterestForecastingStepHelpers extends OptionValues { this: Matchers =>
     context.ditResponseBody = Some(jsonResponseBody.as[DebtInterestTypeResponse])
     context.status = response.status
 
-    logger.info("\n==== REQUEST BODY ==== " + requestJson)
+    logger.info("\n==== REQUEST BODY ==== \n" + requestJson)
 
-    logger.info("\n==== RESPONSE STATUS ==== " + context.status)
+    logger.info("\n==== RESPONSE STATUS ==== \n" + context.status)
 
-    logger.info("\n==== RESPONSE BODY ==== " + jsonResponseBody)
+    logger.info("\n==== RESPONSE BODY ==== \n" + jsonResponseBody)
   }
 
   def theIfsServiceWillReturnATotalDebtsSummaryOf(

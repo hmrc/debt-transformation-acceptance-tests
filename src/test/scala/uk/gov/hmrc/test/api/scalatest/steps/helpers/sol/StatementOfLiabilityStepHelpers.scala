@@ -37,7 +37,7 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     context: StatementOfLiabilityContext,
     request: SolDebtsRequest
   ): Unit = {
-    logger.info("SolDebtsRequest : " + request)
+    logger.info("SolDebtsRequest : \n" + request)
     context.solRequest = Some(request)
   }
 

@@ -61,11 +61,11 @@ trait IFSInstalmentCalculationStepHelpers extends BeforeAndAfterEach {
     context.status = response.status
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
 
-    logger.info("\n==== REQUEST BODY ==== " + requestJson)
+    logger.info("\n==== REQUEST BODY ==== \n" + requestJson)
 
-    logger.info("\n==== RESPONSE STATUS ==== " + context.status)
+    logger.info("\n==== RESPONSE STATUS ==== \n" + context.status)
 
-    logger.info("\n==== RESPONSE BODY ==== " + jsonResponseBody)
+    logger.info("\n==== RESPONSE BODY ==== \n" + jsonResponseBody)
   }
 
   def theInstalmentCalculationIsSentToTheIfsServiceWithQueryParameters(
@@ -84,11 +84,11 @@ trait IFSInstalmentCalculationStepHelpers extends BeforeAndAfterEach {
     context.status = response.status
     context.headers = response.headers.view.mapValues(_.mkString(", ")).toMap
 
-    logger.info("\n==== REQUEST BODY ==== " + requestJson)
+    logger.info("\n==== REQUEST BODY ==== \n" + requestJson)
 
-    logger.info("\n==== RESPONSE STATUS ==== " + context.status)
+    logger.info("\n==== RESPONSE STATUS ==== \n" + context.status)
 
-    logger.info("\n==== RESPONSE BODY ==== " + jsonResponseBody)
+    logger.info("\n==== RESPONSE BODY ==== \n" + jsonResponseBody)
   }
 
   def ifsServiceReturnsWeeklyPaymentFrequencyInstalmentCalculationPlan(

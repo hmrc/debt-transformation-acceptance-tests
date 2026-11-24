@@ -57,7 +57,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    logger.info("instalment-calculation baseUri ******************** " + baseUri)
+    logger.info("instalment-calculation baseUri ******************** \n" + baseUri)
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }
 
@@ -81,8 +81,8 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "combineLastInstalments" -> s"$combineLastInstalments"
     )
 
-    logger.info(s"query string parameters ******************** --> $queryParameters")
-    logger.info(s"instalment-calculation baseUri ******************** --> $baseUri")
+    logger.info(s"query string parameters ******************** --> \n $queryParameters")
+    logger.info(s"instalment-calculation baseUri ******************** --> \n $baseUri")
 
     WsClient.postWithQueryParams(baseUri, headers = headers, queryParameters = queryParameters, jsonRequest)
   }
@@ -98,7 +98,7 @@ object IFSInstalmentCalculationBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    logger.info("url ************************ " + baseUri)
+    logger.info("url ************************ \n" + baseUri)
     WsClient.put(baseUri, headers = headers, json)
   }
 

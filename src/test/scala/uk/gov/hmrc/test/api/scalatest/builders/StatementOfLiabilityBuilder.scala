@@ -63,8 +63,8 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 
-    logger.info("debt management baseUri ************************ " + baseUri)
-    logger.info("debt management request json ******************* " + jsonRequest)
+    logger.info("debt management baseUri ************************ \n" + baseUri)
+    logger.info("debt management request json ******************* \n" + jsonRequest)
 
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -72,7 +72,7 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
 
-    logger.info(s"request headers :::::::::::::::::::  ${headers.toString()}")
+    logger.info(s"request headers ::::::::::::::::::: \n ${headers.toString()}")
 
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }

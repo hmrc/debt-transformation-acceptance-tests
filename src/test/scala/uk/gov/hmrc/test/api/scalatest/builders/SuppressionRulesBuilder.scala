@@ -35,7 +35,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    logger.info("url ************************ " + baseUri)
+    logger.info("url ************************ \n" + baseUri)
     WsClient.put(baseUri, headers = headers, jsonRequest)
   }
 
@@ -50,7 +50,7 @@ object SuppressionRulesBuilder extends BaseRequests with RandomValues {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    logger.info("url ************************ " + baseUri)
+    logger.info("url ************************ \n" + baseUri)
     WsClient.delete(baseUri, headers = headers)
   }
 
