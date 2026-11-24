@@ -20,6 +20,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.{ BeforeAndAfterEach, Suite }
 import play.api.libs.json.*
 import play.api.libs.ws.DefaultBodyReadables.readableAsString
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.models.SuppressionRequest
 import uk.gov.hmrc.test.api.scalatest.builders.SuppressionRulesBuilder
 import uk.gov.hmrc.test.api.scalatest.steps.context.SuppressionRulesContext
@@ -44,11 +45,9 @@ trait SuppressionStepHelpers extends BeforeAndAfterEach {
     context.status = suppressionStatus
     context.headers = suppressionResponse.headers.view.mapValues(_.mkString(", ")).toMap
 
-    println("\n==== SUPPRESSION REQUEST BODY ====")
-    println(Json.stringify(requestJson))
+    logger.info("\n==== SUPPRESSION REQUEST BODY ==== " + requestJson)
 
-    println("\n==== SUPPRESSION RESPONSE STATUS ====")
-    println(context.status)
+    logger.info("\n==== SUPPRESSION RESPONSE STATUS ==== " + context.status)
   }
 
   def suppressionConfigurationIsClearedFromIfs(): Unit = {

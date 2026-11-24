@@ -20,6 +20,7 @@ import org.scalatest.Assertions.fail
 import play.api.libs.json.{ JsValue, Json }
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.test.api.client.WsClient
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.models.sol.SolDebtsRequest
 import uk.gov.hmrc.test.api.utils.{ BaseRequests, RandomValues }
 
@@ -62,8 +63,8 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
     val baseUri = s"$statementOfLiabilityApiUrl/sol"
     val jsonRequest: JsValue = maybeRequest.fold(fail("Missing request for API call"))(Json.toJson(_))
 
-    println("debt management baseUri ************************" + baseUri)
-    println("debt management request json *******************" + jsonRequest)
+    logger.info("debt management baseUri ************************ " + baseUri)
+    logger.info("debt management request json ******************* " + jsonRequest)
 
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
@@ -71,7 +72,7 @@ object StatementOfLiabilityBuilder extends BaseRequests with RandomValues {
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
 
-    println(s"request headers :::::::::::::::::::  ${headers.toString()}")
+    logger.info(s"request headers :::::::::::::::::::  ${headers.toString()}")
 
     WsClient.post(baseUri, headers = headers, jsonRequest)
   }

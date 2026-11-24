@@ -20,6 +20,7 @@ import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.JsValue
 import play.api.libs.ws.JsonBodyReadables.readableAsJson
+import uk.gov.hmrc.test.api.client.WsClient.logger
 import uk.gov.hmrc.test.api.models.sol.{ SolCalculationSummaryResponse, SolDebtsRequest }
 import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder
 import uk.gov.hmrc.test.api.scalatest.builders.StatementOfLiabilityBuilder.{ SolCalculationExpected, SolCalculationSummaryResponseExpected, SolDutyExpected }
@@ -36,7 +37,7 @@ trait StatementOfLiabilityStepHelpers { this: Matchers =>
     context: StatementOfLiabilityContext,
     request: SolDebtsRequest
   ): Unit = {
-    println("SolDebtsRequest : " + request)
+    logger.info("SolDebtsRequest : " + request)
     context.solRequest = Some(request)
   }
 
